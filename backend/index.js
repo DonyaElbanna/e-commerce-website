@@ -16,10 +16,11 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
+
 const InitServer = () => {
   http
     .createServer(app)
     .listen(config.server.port, () =>
-      console.log(`Server is running on port ${config.server.port}`)
+      console.log(`Server is running on port ${config.server.port} 🚀`)
     );
 };
