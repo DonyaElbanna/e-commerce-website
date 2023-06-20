@@ -7,6 +7,7 @@ const { config } = require("./config/default.config");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 const guestRoute = require("./routes/guest.route");
+const categoryRoutes = require("./routes/category.route");
 const attractionRoute = require("./routes/attraction.route");
 const {
   NOT_FOUND,
@@ -55,6 +56,9 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/guest", guestRoute);
+
+app.use("/category", categoryRoutes);
+
 app.use("/attraction", attractionRoute);
 // HANDLE 404
 app.use((req, res, next) => {

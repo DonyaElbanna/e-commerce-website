@@ -51,6 +51,7 @@ const deleteAttraction = async (req, res, next) => {
   }
   res.status(200).send("attract Removed Successfully");
 };
+
 module.exports = {
   addAttraction,
   getAllAttraction,
