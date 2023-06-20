@@ -1,8 +1,7 @@
-import mongoose from "mongoose";
-const categorySchema =
-  new mongoose.Schema() <
-  ICategoryModel >
-  ({
+const mongoose = require("mongoose");
+
+const categorySchema = new mongoose.Schema(
+  {
     type: {
       type: String,
       required: [true, "Please Provide type !"],
@@ -26,8 +25,9 @@ const categorySchema =
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
     id: false,
-  });
+  }
+);
 
 const Category = mongoose.model("Category", categorySchema);
 
-export default Category;
+module.exports = Category;
