@@ -5,11 +5,15 @@ const {
   getAttraction,
   updateAttraction,
   deleteAttraction,
+  SetUrls,
 } = require("../controllers/attraction.controller");
+const { uploadToMulter, uploadPP } = require("../utils/multerConfig");
 
 const router = express.Router();
 
 router.post("/", addAttraction);
+
+router.patch("/upload/:id", uploadToMulter, uploadPP, SetUrls);
 
 router.get("/", getAllAttraction);
 

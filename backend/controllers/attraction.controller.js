@@ -32,6 +32,18 @@ const updateAttraction = async (req, res, next) => {
   res.status(200).send(newAttract);
 };
 
+const SetUrls = async (req, res, next) => {
+  const attract = await attraction.findByIdAndUpdate(
+    { _id: req.params.id },
+    { Images: req.urls }
+  );
+  if (!attract) {
+    return next(AppError.namespace.NOT_FOUND);
+  }
+  const newAttract = await attraction.findById({ _id: req.params.id });
+  res.status(200).send(newAttract);
+};
+
 const deleteAttraction = async (req, res, next) => {
   const attract = await attraction.findByIdAndDelete({ _id: req.params.id });
   if (!attract) {
@@ -45,4 +57,5 @@ module.exports = {
   getAttraction,
   updateAttraction,
   deleteAttraction,
+  SetUrls,
 };
