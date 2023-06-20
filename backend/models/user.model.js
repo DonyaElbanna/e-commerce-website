@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const bcrypt = require("bcrypt");
 
 const UserSchema = new Schema(
   {
@@ -51,5 +52,14 @@ const UserSchema = new Schema(
     id: false,
   }
 );
+
+UserSchema.pre("save", async function () {
+  const currentDocument = this;
+  const modifiedCheck = currentDocument.isModified("password");
+  if (modifiedCheck) {
+    const hashedPassword = await bcrypt.hash(currentDocument.password, 10);
+    currentDocument.password = hashedPassword;
+  }
+});
 
 module.exports = mongoose.model("User", UserSchema);

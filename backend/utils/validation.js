@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const AppError = require("../utils/AppError.util");
 
 const validationSchema = Joi.object({
   email: Joi.string().email().required(),
@@ -9,9 +10,7 @@ const validationSchema = Joi.object({
 const validate = (req, res, next) => {
   const { error } = validationSchema.validate(req.body);
   if (error) {
-    const validationError = new Error(error.message);
-    validationError.status = 400;
-    return next(validationError);
+    return next(new AppError(error.message, 400));
   }
   next();
 };

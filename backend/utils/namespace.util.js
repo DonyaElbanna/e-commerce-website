@@ -5,10 +5,14 @@ const NO_USER_FOUND = "Incorrect email address.";
 const LOW_FUNDS = "Insufficient funds.";
 const UNAUTHORIZED_ACCESS = "Unauthorized access.";
 const FORBIDDEN_ACCESS = "Forbidden.";
-const INVALID_CREDENTIALS = 'Incorrect email or password, please try again.';
+const INVALID_CREDENTIALS = "Incorrect email or password, please try again.";
 const CompanyUndefined = "Company Not found.";
-const employerNotAllowed = "employer not allow check company employers or employer companies in database";
-const adminonly = "Unauthorized access admin only allow "
+const employerNotAllowed =
+  "employer not allow check company employers or employer companies in database";
+const adminonly = "Unauthorized access admin only allow ";
+const DUPLICATE_EMAIL = "This email is already registered";
+const DUPLICATE_USERNAME = "This username is already taken";
+
 exports.namespace = {
   DB_CONNECTED,
   INVALID_CREDENTIALS,
@@ -20,5 +24,7 @@ exports.namespace = {
   CompanyUndefined,
   employerNotAllowed,
   adminonly,
-  NOT_FOUNDUSER
+  NOT_FOUNDUSER,
+  DUPLICATE_EMAIL,
+  DUPLICATE_USERNAME
 };

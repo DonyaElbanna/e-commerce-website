@@ -9,6 +9,8 @@ const path = require("path");
 const guestRoute = require("./routes/guest.route");
 const categoryRoutes = require("./routes/category.route");
 const attractionRoute = require("./routes/attraction.route");
+const signupRoute = require("./routes/signup.route");
+
 const {
   NOT_FOUND,
   UNAUTHORIZED_ACCESS,
@@ -16,7 +18,6 @@ const {
 } = require("./utils/namespace.util");
 
 
-const signupRoute = require("./routes/signup.route");
 
 
 // HANLDE CORS
