@@ -29,6 +29,7 @@ app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.xml());
 app.disable("x-powered-by");
 // ROUTES
+
 app.get('/',(req,res)=>{
   res.json({
     status:200,
@@ -36,7 +37,8 @@ app.get('/',(req,res)=>{
     message :'Backend api running success 🚀🚀 pdf !!'
   })
 })
-app.use("/v1/images", express.static(path.join(__dirname, "images")));
+
+// app.use("/v1/images", express.static(path.join(__dirname, "images")));
 // HANDLE 404
 app.use((req, res, next) => {
   const error = new Error(NOT_FOUND);
