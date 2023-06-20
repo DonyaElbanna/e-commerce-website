@@ -10,6 +10,7 @@ const guestRoute = require("./routes/guest.route");
 const categoryRoutes = require("./routes/category.route");
 const attractionRoute = require("./routes/attraction.route");
 const signupRoute = require("./routes/signup.route");
+const userRoute = require("./routes/user.route");
 
 const {
   NOT_FOUND,
@@ -50,6 +51,7 @@ app.disable("x-powered-by");
 
 // ROUTES
 app.use("/signup", signupRoute);
+app.use("/user", userRoute);
 
 app.get("/", (req, res) => {
   res.json({

@@ -12,6 +12,7 @@ const employerNotAllowed =
 const adminonly = "Unauthorized access admin only allow ";
 const DUPLICATE_EMAIL = "This email is already registered";
 const DUPLICATE_USERNAME = "This username is already taken";
+const FAILURE = "Something went wrong";
 
 exports.namespace = {
   DB_CONNECTED,
@@ -26,5 +27,6 @@ exports.namespace = {
   adminonly,
   NOT_FOUNDUSER,
   DUPLICATE_EMAIL,
-  DUPLICATE_USERNAME
+  DUPLICATE_USERNAME,
+  FAILURE,
 };
