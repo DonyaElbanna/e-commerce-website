@@ -1,22 +1,23 @@
-import mongoose from "mongoose";
-const categorySchema = new mongoose.Schema<ICategoryModel>(
+const mongoose = require("mongoose");
+
+const categorySchema = new mongoose.Schema(
   {
     type: {
-        type:String,  
-        required:[true, "Please Provide type !"]
+      type: String,
+      required: [true, "Please Provide type !"],
     },
     image: {
       type: String,
       required: [true, "Please Provide Image Url!"],
     },
-    image_key:{
-		type:String,
-		required: [true, "Please Provide Image Key!"],
-	},
-    city:{ 
-        type:String,
-        required: [true, "Please Provide city!"],
-    }
+    image_key: {
+      type: String,
+      required: [true, "Please Provide Image Key!"],
+    },
+    city: {
+      type: String,
+      required: [true, "Please Provide city!"],
+    },
   },
   {
     timestamps: true,
@@ -29,4 +30,4 @@ const categorySchema = new mongoose.Schema<ICategoryModel>(
 
 const Category = mongoose.model("Category", categorySchema);
 
-export default Category;
+module.exports = Category;

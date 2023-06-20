@@ -1,41 +1,40 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-
+const { Schema } = mongoose;
 const AttractionSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, "please provide name"],
     },
-    city: {
-      type: String,
-      required: true,
-    },
-    type: {
-      type: String,
-      required: true,
+    CategoryId: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
     },
     status: {
       type: String,
-      required: true,
+      enum: ["available", "notAvailable"],
+      default: "available",
+      required: [true, "please provide status"],
     },
     childAge: {
       type: String,
-      required: true,
+      required: [true, "please provide child min age"],
     },
     duration: {
-      required: true,
+      required: [true, "please provide duration time"],
       type: String,
     },
     childAvailable: {
       type: Boolean,
-      required: true,
+      required: [true, "please provide if child available"],
     },
     AdultPrice: {
       type: Number,
+      required: [true, "please provide adult price"],
     },
     ChildPrice: {
       type: Number,
+      required: [true, "please provide child price"],
     },
     Images: {
       type: Array,
