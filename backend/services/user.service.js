@@ -10,10 +10,13 @@ const add = async (payload, next) => {
       return next(new AppError(DUPLICATE_EMAIL, 409));
     }
     // duplicate username error??
-    const user = await User.create(payload);
+    const user =   new User (payload);
+    await user.save()
+    console.log(user)
     user.password = undefined;
     return user;
   } catch (err) {
+    console.log(err)
     return next(new AppError(NOT_FOUND, 404));
   }
 };
@@ -53,5 +56,12 @@ const remove = async (id, next) => {
     return next(new AppError(NOT_FOUND, 404));
   }
 };
-
-module.exports = { add, getUser, edit, remove };
+const getAllUser = async()=>{
+  try {
+    const users = await User.find();
+    return users;
+  } catch (err) {
+    return next(new AppError(NOT_FOUND, 404));
+  }
+}
+module.exports = { add, getUser, edit, remove,getAllUser};

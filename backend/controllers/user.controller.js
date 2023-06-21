@@ -1,4 +1,4 @@
-const { add, getUser, edit, remove } = require("../services/user.service");
+const { add, getUser, edit, remove,getAllUser } = require("../services/user.service");
 const AppError = require("../utils/AppError.util");
 const { FAILURE } = require("../utils/namespace.util").namespace;
 
@@ -51,10 +51,20 @@ const deleteUser = async (req, res, next) => {
     return next(new AppError(FAILURE, 404));
   }
 };
+const getAllUsers = async (req,res,next)=>{
+  try {
+    const users = await getAllUser()
+    res.status(200).json(users);
 
+  } catch (error) {
+    return next(new AppError(FAILURE, 404));
+
+  }
+}
 module.exports = {
   signup,
   getSingleUser,
   editUser,
   deleteUser,
+  getAllUsers
 };

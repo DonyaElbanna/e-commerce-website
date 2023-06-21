@@ -8,11 +8,13 @@ const {
   getSingleUser,
   editUser,
   deleteUser,
+  getAllUsers
 } = require("../controllers/user.controller");
 
 router.post("", signup);
 
 router.get("/:id", getSingleUser);
+router.get("/", getAllUsers);
 
 router.patch("/:id", editUser);
 
