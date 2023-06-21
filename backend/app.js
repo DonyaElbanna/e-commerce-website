@@ -10,15 +10,12 @@ const guestRoute = require("./routes/guest.route");
 const categoryRoutes = require("./routes/category.route");
 const attractionRoute = require("./routes/attraction.route");
 const userRoute = require("./routes/user.route");
-
+const reviewRoute = require("./routes/review.route");
 const {
   NOT_FOUND,
   UNAUTHORIZED_ACCESS,
   adminonly,
 } = require("./utils/namespace.util");
-
-
-
 
 // HANLDE CORS
 
@@ -53,6 +50,8 @@ app.use("/user", userRoute);
 app.use("/guest", guestRoute);
 app.use("/category", categoryRoutes);
 app.use("/attraction", attractionRoute);
+app.use("/attraction", attractionRoute);
+app.use("/review", reviewRoute);
 app.get("/", (req, res) => {
   res.json({
     status: 200,
@@ -61,7 +60,6 @@ app.get("/", (req, res) => {
   });
 });
 // app.use("/v1/images", express.static(path.join(__dirname, "images")));
-
 
 // HANDLE 404
 app.use((req, res, next) => {
