@@ -12,7 +12,6 @@ const UserSchema = new Schema(
     username: {
       type: String,
       required: true,
-      unique: true,
     },
     password: {
       type: String,
@@ -30,6 +29,12 @@ const UserSchema = new Schema(
       default: "guest",
     },
     wishlist: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Attraction",
+      },
+    ],
+    orders: [
       {
         type: Schema.Types.ObjectId,
         ref: "Attraction",
@@ -54,13 +59,7 @@ const UserSchema = new Schema(
 );
 
 UserSchema.pre("save", async function (next) {
-  // const currentDocument = this;
-  // const modifiedCheck = currentDocument.isModified("password");
-  // if (modifiedCheck) {
-  //   const hashedPassword = await bcrypt.hash(currentDocument.password, 10);
-  //   currentDocument.password = hashedPassword;
-  // }
-  if(!this.isModified("password"))return next()
+  if (!this.isModified("password")) return next();
   const hash = bcrypt.hashSync(this.password, 10);
   this.password = hash;
   return next();

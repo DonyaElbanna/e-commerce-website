@@ -1,11 +1,11 @@
 const Guest = require('../models/guest.model');
-const { default: guestService } = require('../services/guest.service');
+// const { default: guestService } = require('../services/guest.service');
 const AppError = require('../utils/AppError.util');
 const addGuest = async(req, res) => {
     // const guest = new Guest(req.body)
     // await guest.save()
     // res.status(201).send(guest)
-    const guest = await guestService.addGuest(req.body)
+    // const guest = await guestService.addGuest(req.body)
      res.status(201).json({guest:guest})
 }
 

@@ -1,15 +1,20 @@
 const express = require("express");
 const router = express.Router();
+const validate = require("../utils/validation");
+// const RequestValidator = require("../middlewares/requestvalidator.middleware");
+
 const {
+  signup,
   getSingleUser,
   editUser,
   deleteUser,
 } = require("../controllers/user.controller");
-const validate = require("../utils/validation");
+
+router.post("", signup);
 
 router.get("/:id", getSingleUser);
 
-router.patch("/:id", validate, editUser);
+router.patch("/:id", editUser);
 
 router.delete("/:id", deleteUser);
 
