@@ -52,7 +52,9 @@ app.disable("x-powered-by");
 // ROUTES
 app.use("/signup", signupRoute);
 app.use("/user", userRoute);
-
+app.use("/guest", guestRoute);
+app.use("/category", categoryRoutes);
+app.use("/attraction", attractionRoute);
 app.get("/", (req, res) => {
   res.json({
     status: 200,
@@ -62,12 +64,7 @@ app.get("/", (req, res) => {
 });
 // app.use("/v1/images", express.static(path.join(__dirname, "images")));
 
-// Routes
-app.use("/guest", guestRoute);
 
-app.use("/category", categoryRoutes);
-
-app.use("/attraction", attractionRoute);
 // HANDLE 404
 app.use((req, res, next) => {
   const error = new Error(NOT_FOUND);

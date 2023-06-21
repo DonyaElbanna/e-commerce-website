@@ -53,13 +53,17 @@ const UserSchema = new Schema(
   }
 );
 
-UserSchema.pre("save", async function () {
-  const currentDocument = this;
-  const modifiedCheck = currentDocument.isModified("password");
-  if (modifiedCheck) {
-    const hashedPassword = await bcrypt.hash(currentDocument.password, 10);
-    currentDocument.password = hashedPassword;
-  }
+UserSchema.pre("save", async function (next) {
+  // const currentDocument = this;
+  // const modifiedCheck = currentDocument.isModified("password");
+  // if (modifiedCheck) {
+  //   const hashedPassword = await bcrypt.hash(currentDocument.password, 10);
+  //   currentDocument.password = hashedPassword;
+  // }
+  if(!this.isModified("password"))return next()
+  const hash = bcrypt.hashSync(this.password, 10);
+  this.password = hash;
+  return next();
 });
 
 module.exports = mongoose.model("User", UserSchema);
