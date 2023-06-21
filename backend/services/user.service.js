@@ -10,7 +10,10 @@ const add = async (payload, next) => {
       return next(new AppError(DUPLICATE_EMAIL, 409));
     }
     // try same username, different email
-    const user = await User.create(payload);
+    // const user = await User.create(payload);
+    const user = new User(payload);
+    await user.save();
+    console.log(user);
     user.password = undefined;
     return user;
   } catch (err) {
@@ -62,4 +65,35 @@ const getAllUser = async () => {
     return next(new AppError(NOT_FOUND, 404));
   }
 };
-module.exports = { add, getUser, edit, remove, getAllUser };
+
+const addRemoveWishlist = async (id, attractionID, next) => {
+  try {
+    var user = await User.findById(id);
+
+    if (!user) {
+      return next(new AppError(NOT_FOUND, 404));
+    } else {
+      if (user.wishlist.includes(attractionID)) {
+        var updatedUser = await User.findOneAndUpdate(
+          { _id: id },
+          { $pull: { wishlist: attractionID } },
+          { new: true }
+        ).populate("wishlist");
+        console.log("was in wishlist");
+      } else {
+        var updatedUser = await User.findOneAndUpdate(
+          { _id: id },
+          { $addToSet: { wishlist: attractionID } },
+          { new: true }
+        ).populate("wishlist");
+        console.log("was NOT in wishlist");
+      }
+    }
+
+    return updatedUser;
+  } catch (err) {
+    return next(new AppError(NOT_FOUND, 404));
+  }
+};
+
+module.exports = { add, getUser, edit, remove, getAllUser, addRemoveWishlist };
