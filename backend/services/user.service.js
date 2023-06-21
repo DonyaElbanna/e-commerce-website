@@ -1,6 +1,6 @@
 const User = require("../models/user.model");
 const AppError = require("../utils/AppError.util");
-const { DUPLICATE_EMAIL, DUPLICATE_USERNAME, NOT_FOUND } =
+const { DUPLICATE_EMAIL, NOT_FOUND } =
   require("../utils/namespace.util").namespace;
 
 const add = async (payload, next) => {
@@ -9,15 +9,12 @@ const add = async (payload, next) => {
     if (userExists.length !== 0) {
       return next(new AppError(DUPLICATE_EMAIL, 409));
     }
-    // duplicate username error??
-    const user =   new User (payload);
-    await user.save()
-    console.log(user)
+    // try same username, different email
+    const user = await User.create(payload);
     user.password = undefined;
     return user;
   } catch (err) {
-    console.log(err)
-    return next(new AppError(NOT_FOUND, 404));
+    return next(new AppError(FAILURE, 404));
   }
 };
 
@@ -56,12 +53,13 @@ const remove = async (id, next) => {
     return next(new AppError(NOT_FOUND, 404));
   }
 };
-const getAllUser = async()=>{
+
+const getAllUser = async () => {
   try {
     const users = await User.find();
     return users;
   } catch (err) {
     return next(new AppError(NOT_FOUND, 404));
   }
-}
-module.exports = { add, getUser, edit, remove,getAllUser};
+};
+module.exports = { add, getUser, edit, remove, getAllUser };

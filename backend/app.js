@@ -9,7 +9,6 @@ const path = require("path");
 const guestRoute = require("./routes/guest.route");
 const categoryRoutes = require("./routes/category.route");
 const attractionRoute = require("./routes/attraction.route");
-// const signupRoute = require("./routes/signup.route");
 const userRoute = require("./routes/user.route");
 
 const {
@@ -50,7 +49,6 @@ app.use(bodyParser.xml());
 app.disable("x-powered-by");
 
 // ROUTES
-// app.use("/signup", signupRoute);
 app.use("/user", userRoute);
 app.use("/guest", guestRoute);
 app.use("/category", categoryRoutes);
