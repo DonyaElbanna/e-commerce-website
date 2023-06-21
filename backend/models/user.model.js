@@ -66,4 +66,21 @@ UserSchema.pre("save", async function (next) {
   return next();
 });
 
+UserSchema.methods.comparePassword = async function (candidatePassword) {
+  const user = this;
+  return bcrypt.compare(candidatePassword, user.password).catch((err) => false);
+};
+
+UserSchema.pre("findOneAndUpdate", async function (next) {
+  if (!this._update.password) return next();
+
+  const salt = await bcrypt.genSalt(10);
+
+  const hashed = await bcrypt.hash(this._update.password, salt);
+
+  this._update.password = hashed;
+
+  return next();
+});
+
 module.exports = mongoose.model("User", UserSchema);

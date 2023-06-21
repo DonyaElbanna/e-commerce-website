@@ -14,7 +14,7 @@ const getGuest = async(req, res, next) => {
     if (!guest) {
         return next(new AppError('No guest found with this id', 404))
     }
-    res.status(200).send(guest)
+    res.status(200).send(guest) 
 }
 
 const getAllGuests = async(req, res, next) => {

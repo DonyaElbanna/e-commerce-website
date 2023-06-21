@@ -1,4 +1,5 @@
 const User = require("../models/user.model");
+const { default: userService } = require("../services/user.service");
 const AppError = require("../utils/AppError.util");
 const bcrypt = require("bcrypt");
 
@@ -16,26 +17,34 @@ const getSingleUser = async (req, res, next) => {
 };
 
 // only logged user can edit their info
+
+// const edit = async (payload, user) => {
+//   try {
+//       return await User.findByIdAndUpdate(
+//           user._id,
+//           {
+//               username: payload.username,
+//               email: payload.email,
+//               phoneNumber: payload.phoneNumber,
+//               password:payload.password
+//           },
+//           {
+//               upsert: true,
+//               new: true
+//           }
+//       )
+//   } catch (error) {
+//       // await ErrorHandler(error)
+//   }
+// }
 const editUser = async (req, res, next) => {
   const { id } = req.params;
-  const { email, username, password } = req.body;
 
   //! implementing logged user can edit their details (requires auth)
-
+  
   try {
-    const editedUser = await User.findById(id).select("+password");
-    if (editedUser.email !== email) {
-      editedUser.email = email;
-    }
-    if (editedUser.username !== username) {
-      editedUser.username = username;
-    }
-    if (!(await bcrypt.compare(password, editedUser.password))) {
-      editedUser.password = password;
-    }
-    await editedUser.save();
-    editedUser.password = undefined;
-    res.status(200).json({ editedUser });
+    const user = await userService.edit(req.body,id)
+    res.status(202).json({user:user})
   } catch (err) {
     return next(new AppError(FAILURE, 404));
   }
