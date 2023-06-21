@@ -1,15 +1,21 @@
 const express = require("express");
 const router = express.Router();
+
 const {
+  signup,
   getSingleUser,
   editUser,
   deleteUser,
+  getAllUsers,
 } = require("../controllers/user.controller");
-const validate = require("../utils/validation");
+
+router.post("", signup);
 
 router.get("/:id", getSingleUser);
 
-router.patch("/:id", validate, editUser);
+router.get("", getAllUsers);
+
+router.patch("/:id", editUser);
 
 router.delete("/:id", deleteUser);
 

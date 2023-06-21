@@ -11,7 +11,6 @@ const employerNotAllowed =
   "employer not allow check company employers or employer companies in database";
 const adminonly = "Unauthorized access admin only allow ";
 const DUPLICATE_EMAIL = "This email is already registered";
-const DUPLICATE_USERNAME = "This username is already taken";
 const FAILURE = "Something went wrong";
 
 exports.namespace = {
@@ -27,6 +26,5 @@ exports.namespace = {
   adminonly,
   NOT_FOUNDUSER,
   DUPLICATE_EMAIL,
-  DUPLICATE_USERNAME,
   FAILURE,
 };

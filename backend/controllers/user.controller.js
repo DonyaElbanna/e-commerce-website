@@ -1,50 +1,41 @@
-const User = require("../models/user.model");
-const { default: userService } = require("../services/user.service");
+const {
+  add,
+  getUser,
+  edit,
+  remove,
+  getAllUser,
+} = require("../services/user.service");
 const AppError = require("../utils/AppError.util");
-const bcrypt = require("bcrypt");
+const { FAILURE } = require("../utils/namespace.util").namespace;
 
-const { NOT_FOUND, FAILURE } =
-  require("../utils/namespace.util").namespace;
+const signup = async (req, res, next) => {
+  try {
+    const newUser = await add(req.body, next);
+    res.status(201).json(newUser);
+  } catch (err) {
+    return next(new AppError(FAILURE, 404));
+  }
+};
 
 const getSingleUser = async (req, res, next) => {
   const { id } = req.params;
   try {
-    var user = await User.findById(id);
+    var user = await getUser(id, next);
+    res.status(200).json(user);
   } catch (err) {
-    return next(new AppError(NOT_FOUND, 404));
+    return next(new AppError(FAILURE, 404));
   }
-  res.status(200).json({ user });
 };
 
 // only logged user can edit their info
-
-// const edit = async (payload, user) => {
-//   try {
-//       return await User.findByIdAndUpdate(
-//           user._id,
-//           {
-//               username: payload.username,
-//               email: payload.email,
-//               phoneNumber: payload.phoneNumber,
-//               password:payload.password
-//           },
-//           {
-//               upsert: true,
-//               new: true
-//           }
-//       )
-//   } catch (error) {
-//       // await ErrorHandler(error)
-//   }
-// }
 const editUser = async (req, res, next) => {
   const { id } = req.params;
 
   //! implementing logged user can edit their details (requires auth)
-  
+
   try {
-    const user = await userService.edit(req.body,id)
-    res.status(202).json({user:user})
+    const user = await edit(req.body, id, next);
+    res.status(202).json({ user: user });
   } catch (err) {
     return next(new AppError(FAILURE, 404));
   }
@@ -57,18 +48,29 @@ const deleteUser = async (req, res, next) => {
   //! implementing only admin or logged user can delete their account (requires auth)
 
   try {
-    const deletedUser = await User.findByIdAndDelete(id);
+    const deletedUser = await remove(id, next);
     if (!deletedUser) {
-      return next(new AppError(NOT_FOUND, 404));
+      return next(new AppError(FAILURE, 404));
     }
-    res.status(200).json({ deletedUser });
+    res.status(200).json(deletedUser);
   } catch (err) {
-    return next(new AppError(NOT_FOUND, 404));
+    return next(new AppError(FAILURE, 404));
+  }
+};
+
+const getAllUsers = async (req, res, next) => {
+  try {
+    const users = await getAllUser();
+    res.status(200).json(users);
+  } catch (error) {
+    return next(new AppError(FAILURE, 404));
   }
 };
 
 module.exports = {
+  signup,
   getSingleUser,
   editUser,
   deleteUser,
+  getAllUsers,
 };

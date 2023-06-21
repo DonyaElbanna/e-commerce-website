@@ -1,10 +1,10 @@
 const Category = require("../models/category.model");
-const AppError = require("../utils/AppError.util");
-const categoryService = require("../services/category.service");
-
+const AppError = require("../utils/namespace.util");
+// const AppError = require("../lib/errorhandler.lib");
+// const { default: categoryService } = require("../services/category.service");
 const createCategory = async (req, res, next) => {
-  const category = await categoryService.createCategory(req.body);
-  res.status(201).json({ category: category });
+  // const category = await categoryService.createCategory(req.body)
+  res.status(201).json({category:category});
 };
 
 const getAllCategories = async (req, res) => {
