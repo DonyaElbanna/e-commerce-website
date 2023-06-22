@@ -1,8 +1,5 @@
-
 const Footer = () => {
-  return (
-    <div className="fakh-zfa4fs4fa4f">Footer</div>
-  )
-}
+  return <div className="fakh-zfa4fs4fa4f">{/* Footer */}</div>;
+};
 
-export default Footer
+export default Footer;
