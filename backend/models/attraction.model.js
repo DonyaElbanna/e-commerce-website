@@ -49,5 +49,9 @@ const AttractionSchema = new Schema(
     id: false,
   }
 );
-
+AttractionSchema.virtual("review",{
+  ref:"Review",
+  localField:"_id",
+  foreignField:"attraction"
+}) //get All Review related to attraction
 module.exports = mongoose.model("Attraction", AttractionSchema);

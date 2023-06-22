@@ -4,14 +4,19 @@ const {
   edit,
   remove,
   getAllUser,
+  addRemoveWishlist,
 } = require("../services/user.service");
+const authService = require("../services/auth.service");
+
 const AppError = require("../utils/AppError.util");
 const { FAILURE } = require("../utils/namespace.util").namespace;
+const User = require("../models/user.model");
 
 const signup = async (req, res, next) => {
   try {
     const newUser = await add(req.body, next);
-    res.status(201).json(newUser);
+    await authService.sendVerification(newUser,"verify")
+    return res.status(201).json({ message: "create done" });
   } catch (err) {
     return next(new AppError(FAILURE, 404));
   }
@@ -20,7 +25,7 @@ const signup = async (req, res, next) => {
 const getSingleUser = async (req, res, next) => {
   const { id } = req.params;
   try {
-    var user = await getUser(id, next);
+    const user = await getUser(id, next);
     res.status(200).json(user);
   } catch (err) {
     return next(new AppError(FAILURE, 404));
@@ -67,10 +72,25 @@ const getAllUsers = async (req, res, next) => {
   }
 };
 
+const toggleWishlist = async (req, res, next) => {
+  const { id } = req.params;
+  const attractionID = req.body.id;
+  try {
+    const updatedUser = await addRemoveWishlist(id, attractionID, next);
+    if (!updatedUser) {
+      return next(new AppError(FAILURE, 404));
+    }
+    res.status(201).json(updatedUser);
+  } catch (err) {
+    return next(new AppError(FAILURE, 404));
+  }
+};
+
 module.exports = {
   signup,
   getSingleUser,
   editUser,
   deleteUser,
   getAllUsers,
+  toggleWishlist,
 };

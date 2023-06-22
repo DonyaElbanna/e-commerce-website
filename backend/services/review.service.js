@@ -1,7 +1,9 @@
 const ReviewModel = require("../models/review.model");
 const errorHandler = require("../lib/errorhandler.lib");
 const AppError = require("../utils/namespace.util");
-
+const {
+  UpdateAttract,
+} = require("./attraction.service");
 const addReview = async (payload) => {
   const NewReview = await ReviewModel.create(payload);
   if (!NewReview) errorHandler(AppError.namespace.NOT_FOUND);
