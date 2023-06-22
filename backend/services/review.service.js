@@ -32,17 +32,10 @@ const DeleteReview = async (id) => {
   return Review;
 };
 
-const getReviewsByAttract = async (id) => {
-  const Reviews = await ReviewModel.find({ attraction: id });
-  if (!Reviews) errorHandler(AppError.namespace.NOT_FOUND);
-  return Reviews;
-};
-
 module.exports = {
   addReview,
   getAllReviews,
   getReview,
   UpdateReview,
   DeleteReview,
-  getReviewsByAttract,
 };
