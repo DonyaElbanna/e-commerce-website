@@ -6,6 +6,8 @@ const {
   getAllUser,
   addRemoveWishlist,
 } = require("../services/user.service");
+const authService = require("../services/auth.service");
+
 const AppError = require("../utils/AppError.util");
 const { FAILURE } = require("../utils/namespace.util").namespace;
 const User = require("../models/user.model");
@@ -13,7 +15,8 @@ const User = require("../models/user.model");
 const signup = async (req, res, next) => {
   try {
     const newUser = await add(req.body, next);
-    res.status(201).json(newUser);
+    await authService.sendVerification(newUser,"verify")
+    return res.status(201).json({ message: "create done" });
   } catch (err) {
     return next(new AppError(FAILURE, 404));
   }

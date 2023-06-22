@@ -8,13 +8,15 @@ const addAttract = async (payload) => {
   return NewAttract;
 };
 const getAllAttract = async () => {
-  const attractions = await attractionModel.find({});
+  const attractions = await attractionModel.find();
   if (!attractions) errorHandler(AppError.namespace.NOT_FOUND);
   return attractions;
 };
 
 const getAttract = async (payload) => {
-  const attract = await attractionModel.findById({ _id: payload });
+  const attract = await attractionModel
+    .findById(payload)
+    .populate({ path: "review" });
   if (!attract) errorHandler(AppError.namespace.NOT_FOUND);
   return attract;
 };
