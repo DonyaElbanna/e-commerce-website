@@ -1,35 +1,35 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const orderSchema = new Schema( 
+const orderSchema = new Schema(
   {
     attraction: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Attraction",
-      required: [true, "Review Must Belong To An attraction"],
+      required: [true, "An attraction Must Belong To An order"],
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: [true, "Review Must Belong To a User"],
+      required: [true, "A user Must Belong To an order"],
     },
-    adultCount:{
-        type:Number,
+    adultCount: {
+      type: Number,
     },
-    childCount:{
-        type:Number,
+    childCount: {
+      type: Number,
     },
-    AdultTotalPrice:{
-        type:Number,
+    AdultTotalPrice: {
+      type: Number,
     },
-    ChildTotalPrice:{
-        type:Number
+    ChildTotalPrice: {
+      type: Number,
     },
-    travelDate:{
-        type:Date,
-        required:[true, "Date Must Belong To a Order"]
+    travelDate: {
+      type: Date,
+      required: [true, "A date Must Belong To an order"],
     },
-    totalPrice:{
-        type:Number
+    totalPrice: {
+      type: Number,
     },
     // email:{
     //     type:String,
