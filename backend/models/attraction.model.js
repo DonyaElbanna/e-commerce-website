@@ -11,7 +11,7 @@ const AttractionSchema = new Schema(
       ref: "Category",
     },
     status: {
-      type: String, // boolen
+      type: String, //boolen
       enum: ["available", "notAvailable"],
       default: "available",
       required: [true, "please provide status"],
