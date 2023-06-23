@@ -10,10 +10,10 @@ const categorySchema = new mongoose.Schema(
       type: String,
       required: [true, "Please Provide Image Url!"],
     },
-    image_key: {
-      type: String,
-      required: [true, "Please Provide Image Key!"],
-    },
+    // image_key: {
+    //   type: String,
+    //   required: [true, "Please Provide Image Key!"],
+    // },
     city: {
       type: String,
       required: [true, "Please Provide city!"],
