@@ -3,9 +3,9 @@ import Style from "./Navbar.module.css"
 const Navbar = () => {
   return (
     <>
-      <div className="navbar bg-slate-950  py-8 px-12">
+      <div className="navbar bg-black  py-8 px-12">
         <div className="flex-1">
-          <a style={{fontFamily:'Egypt'}} className="text-4xl text-yellow">EGYPT</a>
+          <a style={{fontFamily:'Egypt'}} className="text-4xl text-amber-500 ">EGYPT</a>
         </div>
         <div className="flex gap-4">
           <div className="dropdown dropdown-end">
