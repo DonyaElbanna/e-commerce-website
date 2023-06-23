@@ -1,7 +1,26 @@
-.fakh {
+/* .fakh {
   background-color: red;
 }
 
 .img {
   width: 40%;
+} */
+
+.changeMyColor {
+  fill: green;
+}
+
+/* svg[className="ww"] {
+  width: 2%;
+} */
+.enlarge:hover {
+  transform: scale(1.0091);
+  /* transform: translateX(1.2); */
+}
+
+.svgIcon {
+  position: absolute;
+  right: 0px;
+  margin-top: -12px;
+  /* top: 0%; */
 }
