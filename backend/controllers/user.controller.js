@@ -10,12 +10,11 @@ const authService = require("../services/auth.service");
 
 const AppError = require("../utils/AppError.util");
 const { FAILURE } = require("../utils/namespace.util").namespace;
-const User = require("../models/user.model");
 
 const signup = async (req, res, next) => {
   try {
     const newUser = await add(req.body, next);
-    await authService.sendVerification(newUser,"verify")
+    await authService.sendVerification(newUser, "verify");
     return res.status(201).json({ message: "create done" });
   } catch (err) {
     return next(new AppError(FAILURE, 404));
@@ -35,9 +34,7 @@ const getSingleUser = async (req, res, next) => {
 // only logged user can edit their info
 const editUser = async (req, res, next) => {
   const { id } = req.params;
-
   //! implementing logged user can edit their details (requires auth)
-
   try {
     const user = await edit(req.body, id, next);
     res.status(202).json({ user: user });
@@ -49,9 +46,7 @@ const editUser = async (req, res, next) => {
 // only admin or logged user can delete a user
 const deleteUser = async (req, res, next) => {
   const { id } = req.params;
-
   //! implementing only admin or logged user can delete their account (requires auth)
-
   try {
     const deletedUser = await remove(id, next);
     if (!deletedUser) {
@@ -65,7 +60,7 @@ const deleteUser = async (req, res, next) => {
 
 const getAllUsers = async (req, res, next) => {
   try {
-    const users = await getAllUser();
+    const users = await getAllUser(next);
     res.status(200).json(users);
   } catch (error) {
     return next(new AppError(FAILURE, 404));

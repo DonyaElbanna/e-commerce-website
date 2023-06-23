@@ -12,6 +12,8 @@ const attractionRoute = require("./routes/attraction.route");
 const userRoute = require("./routes/user.route");
 const authRoute = require("./routes/auth.route");
 const reviewRoute = require("./routes/review.route");
+const orderRoute = require("./routes/order.route");
+
 const {
   NOT_FOUND,
   UNAUTHORIZED_ACCESS,
@@ -51,9 +53,10 @@ app.use("/user", userRoute);
 app.use("/guest", guestRoute);
 app.use("/category", categoryRoutes);
 app.use("/attraction", attractionRoute);
-app.use("/auth",authRoute );
-// app.use("/attraction", attractionRoute);
+app.use("/auth", authRoute);
 app.use("/review", reviewRoute);
+app.use("/order", orderRoute);
+
 app.get("/", (req, res) => {
   res.json({
     status: 200,

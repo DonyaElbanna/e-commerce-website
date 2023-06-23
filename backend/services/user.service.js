@@ -57,7 +57,7 @@ const remove = async (id, next) => {
   }
 };
 
-const getAllUser = async () => {
+const getAllUser = async (next) => {
   try {
     const users = await User.find();
     return users;
