@@ -1,12 +1,17 @@
-import './App.css'
-
+import "./App.css";
+import LoginForm from "./components/common/AuthModal/LoginForm";
+import RegisterForm from "./components/common/AuthModal/registerForm";
+import { Route, Routes, useNavigate } from "react-router-dom";
 function App() {
-
+  const navigate = useNavigate();
   return (
     <>
-<h1 className="text-3xl font-bold underline"> Hello world! </h1>
+      <Routes>
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/register" element={<RegisterForm />} />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
