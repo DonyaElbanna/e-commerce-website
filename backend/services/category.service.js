@@ -1,15 +1,25 @@
 const Category = require("../models/category.model");
 const AppError = require("../utils/AppError.util");
 
-const createCategory = async (data) => {
+const create = async (city, catImg, next) => {
   try {
-    return await Category.create(data);
-  } catch (error) {
-    throw new AppError(err);
+    let category = new Category({
+      city: city,
+      image: catImg.secure_url,
+    });
+    await category.save();
+    return category;
+  } catch (err) {
+    return next(new AppError("Error", 404));
   }
+  // try {
+  //   return await Category.create(data);
+  // } catch (error) {
+  //   throw new AppError(err);
+  // }
 };
 
-const getAllCategories = async () => {
+const getCategories = async () => {
   try {
     return await Category.find();
   } catch (error) {
@@ -42,8 +52,8 @@ const deleteCategory = async (id) => {
 };
 
 module.exports = {
-  createCategory,
-  getAllCategories,
+  create,
+  getCategories,
   getCategoryByID,
   editCategory,
   deleteCategory,
