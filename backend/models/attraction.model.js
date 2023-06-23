@@ -6,6 +6,10 @@ const AttractionSchema = new Schema(
       type: String,
       required: [true, "please provide name"],
     },
+    description:{
+      type:String,
+      required:true
+    },
     CategoryId: {
       type: Schema.Types.ObjectId,
       ref: "Category",

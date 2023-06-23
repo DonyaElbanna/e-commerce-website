@@ -5,7 +5,6 @@ const {
   getReviewById,
   updateReview,
   deleteReview,
-  getReviewsByAttraction,
 } = require("../controllers/review.controller");
 
 const router = express.Router();
@@ -20,5 +19,4 @@ router.put("/:id", updateReview);
 
 router.delete("/:id", deleteReview);
 
-router.get("/attraction/:id", getReviewsByAttraction);
 module.exports = router;

@@ -31,15 +31,10 @@ const deleteReview = async (req, res, next) => {
   res.status(200).json({ deletedReview: deletedReview });
 };
 
-const getReviewsByAttraction = async (req, res, next) => {
-  const Review = await getReviewsByAttract(req.params.id);
-  res.status(200).json({ Review: Review });
-};
 module.exports = {
   addNewReview,
   getReviews,
   getReviewById,
   updateReview,
   deleteReview,
-  getReviewsByAttraction,
 };

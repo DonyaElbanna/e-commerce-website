@@ -1,0 +1,10 @@
+footer{
+    background-image: url('../../../icons/bg.jpg');
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center;
+}
+
+#cover{
+    background-color: rgb(65 65 65 / 92%);
+}

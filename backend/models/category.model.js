@@ -2,21 +2,13 @@ const mongoose = require("mongoose");
 
 const categorySchema = new mongoose.Schema(
   {
-    type: {
+    city: {
       type: String,
-      required: [true, "Please Provide type !"],
+      required: [true, "Please Provide city!"],
     },
     image: {
       type: String,
       required: [true, "Please Provide Image Url!"],
-    },
-    // image_key: {
-    //   type: String,
-    //   required: [true, "Please Provide Image Key!"],
-    // },
-    city: {
-      type: String,
-      required: [true, "Please Provide city!"],
     },
   },
   {
