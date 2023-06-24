@@ -13,6 +13,7 @@ const userRoute = require("./routes/user.route");
 const authRoute = require("./routes/auth.route");
 const reviewRoute = require("./routes/review.route");
 const orderRoute = require("./routes/order.route");
+const subCategoryRoute = require("./routes/subcategory.route");
 
 const {
   NOT_FOUND,
@@ -28,7 +29,7 @@ app.use((req, res, next) => {
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
   res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
   if (req.method === "OPTIONS") {
     res.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
     return res.status(200).json({});
@@ -56,6 +57,7 @@ app.use("/attraction", attractionRoute);
 app.use("/auth", authRoute);
 app.use("/review", reviewRoute);
 app.use("/order", orderRoute);
+app.use("/subcat", subCategoryRoute);
 
 app.get("/", (req, res) => {
   res.json({
