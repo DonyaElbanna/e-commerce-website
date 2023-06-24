@@ -1,8 +1,11 @@
+import Slider from "./Slider";
 
 const AttractionDetails = () => {
   return (
-    <div>AttractionDetails</div>
-  )
-}
+    <>
+      <Slider />
+    </>
+  );
+};
 
-export default AttractionDetails
+export default AttractionDetails;
