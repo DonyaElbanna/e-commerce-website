@@ -1,9 +1,11 @@
-import React from "react";
-import Details from "./Details";
+import React, { useState } from "react";
+import BookingForm from "./BookingForm";
 const BookingCard = () => {
+  const [open, setOpen] = useState(false);
+
   return (
     <>
-      <div className="">
+      <div>
         <div className="max-w-md rounded-3xl p-px bg-gradient-to-b from-blue-300 to-pink-300 dark:from-blue-800 dark:to-purple-800 ">
           <div className="rounded-[calc(1.5rem-1px)] p-10 bg-white dark:bg-gray-900 text-center">
             <div className="flex font-bold justify-center">
@@ -12,11 +14,15 @@ const BookingCard = () => {
             </div>
 
             <p className="text-green-600 mt-2">All taxes and fees included</p>
-            <button className="bg-blue-500 mt-3 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+            <button
+              className="bg-blue-500 mt-3 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              onClick={() => setOpen((current) => !current)}
+            >
               Booking Now
             </button>
           </div>
         </div>
+        <div>{open ? <BookingForm /> : ""}</div>
       </div>
     </>
   );
