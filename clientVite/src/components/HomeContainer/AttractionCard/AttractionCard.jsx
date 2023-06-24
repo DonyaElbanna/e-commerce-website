@@ -13,7 +13,6 @@ const AttractionCard = () => {
       {/* <div>
         <img src="/bookmark.svg" className="mw-100" />
       </div> */}
-
       <a
         href="#"
         className={`card w-96 bg-base-100 shadow-xl border-cyan-50 ${Style.enlarge} m-2`}
@@ -43,7 +42,7 @@ const AttractionCard = () => {
           <p>Best place to chill and watch shooting Stars</p>
           <div className="flex flex-left">
             <span className="mx-1 text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 bg-blue-200 text-blue-700 rounded-full w-min">
-              Cruse
+              Desert
             </span>
             <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 bg-blue-200 text-blue-700 rounded-full w-min">
               Fayoum
@@ -107,8 +106,9 @@ const AttractionCard = () => {
               </span>
             </div>
             <span className="text-sm text-gray-500">
-              {/* <span className="text-sm text-gray-400">from:</span> */}
-              <span className="text-3xl font-bold text-gray-900 dark:text-white">
+              {/* from: */}
+              {/* <span className=" text-lg text-gray-400">from:</span> */}
+              <span className="text-3xl font-bold text-gray-300 dark:text-white">
                 $159
               </span>
               /person

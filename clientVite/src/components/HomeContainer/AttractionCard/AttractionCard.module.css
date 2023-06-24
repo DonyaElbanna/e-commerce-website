@@ -6,13 +6,6 @@
   width: 40%;
 } */
 
-.changeMyColor {
-  fill: green;
-}
-
-/* svg[className="ww"] {
-  width: 2%;
-} */
 .enlarge:hover {
   transform: scale(1.0091);
   /* transform: translateX(1.2); */
