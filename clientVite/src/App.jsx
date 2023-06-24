@@ -8,7 +8,6 @@ import AttractionsList from "./components/AttractionsList/AttractionsList";
 import Navbar from "./components/common/NavBar/Navbar";
 import Footer from "./components/common/Footer/Footer";
 function App() {
-  const navigate = useNavigate();
   return (
     <>
       <Navbar />

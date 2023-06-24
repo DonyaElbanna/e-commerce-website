@@ -8,11 +8,6 @@ const images = [
   new URL("../../assets/loginBackground.jpg", import.meta.url).href,
   new URL("../../assets/try2.webp", import.meta.url).href,
   new URL("../../assets/loginBackground.jpg", import.meta.url).href,
-  new URL("../../assets/try2.webp", import.meta.url).href,
-  new URL("../../assets/loginBackground.jpg", import.meta.url).href,
-  new URL("../../assets/try2.webp", import.meta.url).href,
-  new URL("../../assets/loginBackground.jpg", import.meta.url).href,
-  new URL("../../assets/try2.webp", import.meta.url).href,
 ];
 const Slider = () => {
   return (
