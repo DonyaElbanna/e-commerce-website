@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const categorySchema = new mongoose.Schema(
+const subcategorySchema = new mongoose.Schema(
   {
-    city: {
+    type: {
       type: String,
-      required: [true, "Please Provide city!"],
+      required: [true, "Please Provide a type!"],
     },
     image: {
       type: String,
@@ -20,6 +20,6 @@ const categorySchema = new mongoose.Schema(
   }
 );
 
-const Category = mongoose.model("Category", categorySchema);
+const Category = mongoose.model("Subcategory", subcategorySchema);
 
 module.exports = Category;

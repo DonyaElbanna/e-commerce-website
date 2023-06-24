@@ -6,6 +6,10 @@ const AttractionSchema = new Schema(
       type: String,
       required: [true, "please provide name"],
     },
+    description: {
+      type: String,
+      required: true,
+    },
     CategoryId: {
       type: Schema.Types.ObjectId,
       ref: "Category",
@@ -40,6 +44,14 @@ const AttractionSchema = new Schema(
       type: Array,
       default: [],
     },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+    },
+    subcategory: {
+      type: Schema.Types.ObjectId,
+      ref: "Subcategory",
+    },
   },
   {
     timestamps: true,
@@ -49,9 +61,9 @@ const AttractionSchema = new Schema(
     id: false,
   }
 );
-AttractionSchema.virtual("review",{
-  ref:"Review",
-  localField:"_id",
-  foreignField:"attraction"
-}) //get All Review related to attraction
+AttractionSchema.virtual("review", {
+  ref: "Review",
+  localField: "_id",
+  foreignField: "attraction",
+}); //get All Review related to attraction
 module.exports = mongoose.model("Attraction", AttractionSchema);

@@ -1,4 +1,5 @@
 const express = require("express");
+const router = express.Router();
 const {
   getAllCategories,
   createCategory,
@@ -6,10 +7,9 @@ const {
   editCategory,
   deleteCategory,
 } = require("../controllers/category.controller");
+const upload = require("../utils/multer.util");
 
-const router = express.Router();
-
-router.post("/", createCategory);
+router.post("/", upload.single("image"), createCategory);
 
 router.get("/", getAllCategories);
 
