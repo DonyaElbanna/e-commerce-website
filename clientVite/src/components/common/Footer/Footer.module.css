@@ -1,10 +1,40 @@
-footer{
-    background-image: url('../../../icons/bg.jpg');
-    background-repeat: no-repeat;
-    background-size:cover;
-    background-position: center;
+footer {
+  background-image: url("../../../icons/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
-#cover{
-    background-color: rgb(65 65 65 / 92%);
+#cover {
+  background-color: rgb(65 65 65 / 92%);
+}
+
+svg:hover {
+  animation: dance 1s infinite linear;
+}
+
+@keyframes dance {
+  0% {
+    scale: 1;
+
+    transform: rotate(0deg);
+  }
+
+  50% {
+    scale: 1.1;
+
+    transform: rotate(-10deg);
+  }
+
+  80% {
+    scale: 1.1;
+
+    transform: rotate(10deg);
+  }
+
+  100% {
+    scale: 1;
+
+    transform: rotate(0deg);
+  }
 }

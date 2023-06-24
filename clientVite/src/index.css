@@ -1,9 +1,18 @@
-@tailwind base; 
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 @layer components {
-
-    .footerLink {
-        @apply text-xl hover:text-yellow-600 cursor-pointer hover:scale-110
-    }
+  .footerLink {
+    @apply text-xl hover:text-yellow-600 cursor-pointer hover:scale-110;
+  }
 }
+
+@font-face {
+  font-family: Egypt;
+  src: url(../../../../public/fonts/Comforter-Regular.ttf);
+}
+.logoFont {
+  font-family: "Egypt";
+}
+
+
