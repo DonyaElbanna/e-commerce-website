@@ -17,13 +17,17 @@ const Categories = () => {
 
   return (
     <>
-      <div className="container px-5 mx-auto">
+      <div className="container px-5 mx-auto flex items-center">
         <Swiper
           autoplay
           modules={[Virtual]}
           breakpoints={{
-            400: {
-              width: 400,
+            300: {
+              width: 300,
+              slidesPerView: 1,
+            },
+            550: {
+              width: 550,
               slidesPerView: 2,
             },
             768: {
@@ -35,21 +39,17 @@ const Categories = () => {
               slidesPerView: 4,
             },
           }}
-          id="main"
-          width="480"
-          navigation
           spaceBetween={20}
-          slidesPerView={1}
+          slidesPerView={4}
+          loop={true}
           virtual
-          className="relative carousel-center w-100 px-4 pt-4 pb-1 bg-neutral rounded-box my-10"
+          className="cursor-pointer relative carousel-center w-100 px-4 pt-4 pb-1 bg-neutral rounded-box my-10"
         >
           <div>
             {Object.values(cats).map((cat, index) => (
               <SwiperSlide key={cat.id} virtualIndex={index}>
                 <div key={cat.id} className="carousel-item h-32">
-                  <div
-                    className="relative block bg-gray-900 group h-28 "
-                  >
+                  <div className="relative block bg-gray-900 group h-28 ">
                     <img
                       src={cat.image}
                       alt={cat.name}
@@ -64,6 +64,20 @@ const Categories = () => {
             ))}
           </div>
         </Swiper>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1}
+          stroke="currentColor"
+          className="w-8 h-8 stroke-2	ml-3 animate-ping	"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
+          />
+        </svg>
       </div>
     </>
   );
