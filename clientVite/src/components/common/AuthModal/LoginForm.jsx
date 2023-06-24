@@ -67,7 +67,7 @@ const LoginForm = () => {
           <div className="fixed inset-0 bg-gray-300 bg-opacity-75 transition-opacity" />
         </Transition.Child>
 
-        <div className="fixed inset-0 z-10 overflow-y-auto ">
+        <div className="fixed inset-0 z-10 scale-75">
           <div className="flex min-h-full  items-end justify-center p-4 text-center sm:items-center sm:p-0 ">
             <Transition.Child
               as={Fragment}
@@ -87,7 +87,7 @@ const LoginForm = () => {
                       alt="Your Company"
                     />
                   </div>
-                  <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-12 lg:px-8 ">
+                  <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-12 lg:px-8">
                     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                       <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                         Log in to your account

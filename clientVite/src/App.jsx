@@ -3,7 +3,6 @@ import LoginForm from "./components/common/AuthModal/LoginForm";
 import RegisterForm from "./components/common/AuthModal/registerForm";
 import { Route, Routes, useNavigate } from "react-router-dom";
 function App() {
-  const navigate = useNavigate();
   return (
     <>
       <Routes>
