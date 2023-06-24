@@ -1,19 +1,68 @@
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import "flowbite-datepicker";
-const botright_vite = new URL(
-  "../../../assets/loginBackground.jpg",
-  import.meta.url
-).href;
-const BookingForm = () => {
+import Datepicker from "react-tailwindcss-datepicker";
+const options = {
+  title: "Demo Title",
+  autoHide: true,
+  todayBtn: false,
+  clearBtn: true,
+  maxDate: new Date("2030-01-01"),
+  minDate: new Date("1950-01-01"),
+  theme: {
+    background: "bg-gray-700 dark:bg-gray-800",
+    todayBtn: "",
+    clearBtn: "",
+    icons: "",
+    text: "",
+    disabledText: "bg-red-500",
+    input: "",
+    inputIcon: "",
+    selected: "",
+  },
+  icons: {
+    // () => ReactElement | JSX.Element
+    prev: () => <span>Previous</span>,
+    next: () => <span>Next</span>,
+  },
+  datepickerClassNames: "top-12",
+  defaultDate: new Date("2022-01-01"),
+  language: "en",
+};
+
+const BookingForm = (props) => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
+  let [count, setCount] = useState(0);
+  const [show, setShow] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  useEffect(() => {
+    if (!open) {
+      props.setOpenForm(false);
+    }
+  }, [open]);
+
+  const handleChange = (selectedDate) => {
+    setSelectedDate(selectedDate);
+    console.log(selectedDate);
+  };
+  const handleClose = (state) => {
+    setShow(state);
+  };
+
+  const handleClickPlus = () => {
+    count < 10 ? setCount(count++) : setCount(count);
+  };
+
+  const handleClickMins = () => {
+    count > 0 ? setCount(count--) : setCount(count);
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-30"
+        className="relative z-50"
         initialFocus={cancelButtonRef}
         onClose={setOpen}
       >
@@ -48,31 +97,41 @@ const BookingForm = () => {
                         Ticket Booking
                       </h1>
 
-                      <form className="space-y-4 md:space-y-6" action="#">
-                        <div className="relative max-w-sm">
-                          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg
-                              aria-hidden="true"
-                              className="w-5 h-5 text-gray-500 dark:text-gray-400"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                clipRule="evenodd"
-                              ></path>
-                            </svg>
-                          </div>
-                          <input
-                            datepicker="true"
-                            datepicker-title="Flowbite datepicker"
-                            type="text"
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Select date"
+                      <form className="space-y-4 md:space-y-6">
+                        <div>
+                          <Datepicker
+                            options={options}
+                            onChange={handleChange}
+                            show={show}
+                            value={selectedDate}
+                            setShow={handleClose}
+                            required
                           />
                         </div>
+
+                        <div className="border-2 flex justify-between">
+                          <div className="mt-4">
+                            <span className={`p-2 m-3 bg-blue-200`}>
+                              number of people
+                            </span>
+                          </div>
+                          <div>
+                            <button
+                              className="border-2 m-2 p-2"
+                              onClick={handleClickPlus}
+                            >
+                              +
+                            </button>
+                            <span className="text-red-600 ">{count}</span>
+                            <button
+                              className="border-2 m-2 p-2"
+                              onClick={handleClickMins}
+                            >
+                              -
+                            </button>
+                          </div>
+                        </div>
+
                         <div>
                           <label
                             htmlFor="email"
@@ -87,7 +146,7 @@ const BookingForm = () => {
                               id="email"
                               className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                               placeholder="name@company.com"
-                              required=""
+                              required
                             />
                           </div>
                           <div className="mt-2">
@@ -96,7 +155,7 @@ const BookingForm = () => {
                               name="email"
                               className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                               placeholder="john elraqi"
-                              required=""
+                              required
                             />
                           </div>
                           <div className="mt-2">

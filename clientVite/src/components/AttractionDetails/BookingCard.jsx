@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import BookingForm from "./BookingForm";
 const BookingCard = () => {
-  const [open, setOpen] = useState(false);
+  const [openForm, setOpenForm] = useState(false);
 
   return (
     <>
@@ -16,13 +16,13 @@ const BookingCard = () => {
             <p className="text-green-600 mt-2">All taxes and fees included</p>
             <button
               className="bg-blue-500 mt-3 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-              onClick={() => setOpen((current) => !current)}
+              onClick={() => setOpenForm(true)}
             >
               Booking Now
             </button>
           </div>
         </div>
-        <div>{open ? <BookingForm /> : ""}</div>
+        <div>{openForm ? <BookingForm setOpenForm={setOpenForm} /> : ""}</div>
       </div>
     </>
   );
