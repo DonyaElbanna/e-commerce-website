@@ -7,11 +7,8 @@ import Cities from "../components/HomeContainer/Cities/Cities";
 const Home = () => {
   return (
     <>
-      <Navbar />
-      <Categories />
       <Cities />
       <AttractionCard />
-      <Footer />
     </>
   );
 };

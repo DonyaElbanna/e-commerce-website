@@ -54,7 +54,6 @@ const LoginForm = () => {
         className="relative z-10 max-h-50"
         initialFocus={cancelButtonRef}
         onClose={setOpen}
-        
       >
         <Transition.Child
           as={Fragment}
@@ -88,7 +87,7 @@ const LoginForm = () => {
                       alt="Your Company"
                     />
                   </div>
-                  <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-12 lg:px-8 ">
+                  <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-12 lg:px-8">
                     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                       <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                         Log in to your account

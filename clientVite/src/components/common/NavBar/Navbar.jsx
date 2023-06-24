@@ -112,7 +112,7 @@ const Navbar = () => {
                   {/* <img src={avatar} /> */}
                   <img
                     src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
-                    class="w-32 rounded-full"
+                    className="w-32 rounded-full"
                     alt="Avatar"
                   />
                 </div>
