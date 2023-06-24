@@ -1,15 +1,28 @@
-const Category = require("../models/category.model");
-const AppError = require("../utils/namespace.util");
+const AppError = require("../utils/AppError.util");
+const { FAILURE } = require("../utils/namespace.util").namespace;
 // const AppError = require("../lib/errorhandler.lib");
-// const { default: categoryService } = require("../services/category.service");
+const {
+  create,
+  getCategories,
+  default: categoryService,
+} = require("../services/category.service");
+const cloudinary = require("../utils/cloudinary.util");
+
 const createCategory = async (req, res, next) => {
-  // const category = await categoryService.createCategory(req.body)
-  res.status(201).json({category:category});
+  const { city, image } = req.body;
+  const catImg = await cloudinary.uploader.upload(image);
+
+  try {
+    const category = await create(city, catImg, next);
+    res.status(201).json({ category: category });
+  } catch (err) {
+    return next(new AppError(FAILURE, 404));
+  }
 };
 
 const getAllCategories = async (req, res) => {
-  const categories = await categoryService.getAllCategories();
-  res.status(200).json({ categories: categories });
+  const categories = await getCategories();
+  res.status(200).json({ categories });
 };
 
 const getCategoryByID = async (req, res) => {
