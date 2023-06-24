@@ -13,6 +13,7 @@ const userRoute = require("./routes/user.route");
 const authRoute = require("./routes/auth.route");
 const reviewRoute = require("./routes/review.route");
 const orderRoute = require("./routes/order.route");
+const subCategoryRoute = require("./routes/subcategory.route");
 
 const {
   NOT_FOUND,
@@ -56,6 +57,7 @@ app.use("/attraction", attractionRoute);
 app.use("/auth", authRoute);
 app.use("/review", reviewRoute);
 app.use("/order", orderRoute);
+app.use("/subcat", subCategoryRoute);
 
 app.get("/", (req, res) => {
   res.json({
