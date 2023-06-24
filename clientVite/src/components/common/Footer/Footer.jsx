@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <>
-      <footer style={Style.footer} className="mt-10">
+      <footer className="mt-10">
         <div
-          style={{ backgroundColor: "rgb(10 10 10 / 83%)" }}
-          className="pb-10 pt-4 px-5 gap-2"
+          style={{ backgroundColor: "rgb(10 10 10 / 83%)"}}
+          className="pb-10 pt-4 px-5 gap-2 rounded-t-3xl"
         >
           <article className="footer footer-center row">
             <div className=" self-center ">
