@@ -2,7 +2,7 @@ import React from "react";
 const Details = () => {
   return (
     <>
-      <div className="w-1/2">
+      <div className="md:w-2/3 ">
         <p className="font-bold">Top Rate</p>
         <div className="flex items-center mt-2.5 mb-5">
           <svg

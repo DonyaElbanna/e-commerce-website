@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <Routes>
+      <Routes className="bg-black">
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
