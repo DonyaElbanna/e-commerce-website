@@ -5,19 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/virtual";
 
-const Categories = ({ handleFilter }) => {
-  const [subcats, setSubcats] = useState([]);
-
-  useEffect(() => {
-    const getSubcats = async () => {
-      const { data } = await axios.get("http://localhost:9999/subcat");
-      // console.log(data);
-      setSubcats(data.subcategories);
-    };
-    getSubcats();
-  }, []);
-  // console.log(subcats);
-
+const Categories = ({ subcats, handleFilter }) => {
   return (
     <>
       <div className="container px-5 mx-auto flex items-center">
@@ -49,7 +37,7 @@ const Categories = ({ handleFilter }) => {
           className="cursor-pointer relative carousel-center w-100 px-4 pt-4 pb-1 bg-neutral rounded-box my-10"
         >
           <div>
-            {Object.values(subcats).map((cat, index) => (
+            {subcats.map((cat, index) => (
               <SwiperSlide
                 key={cat._id}
                 virtualIndex={index}
