@@ -51,7 +51,7 @@ const LoginForm = () => {
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-10 max-h-50"
+        className="relative z-50 max-h-50"
         initialFocus={cancelButtonRef}
         onClose={setOpen}
       >
@@ -67,8 +67,8 @@ const LoginForm = () => {
           <div className="fixed inset-0 bg-gray-300 bg-opacity-75 transition-opacity" />
         </Transition.Child>
 
-        <div className="fixed inset-0 z-10 scale-75  ">
-          <div className="flex max-h-50  items-end justify-center p-4 text-center sm:items-center sm:p-0 ">
+        <div className="fixed inset-0 z-10 overflow-y-scroll  rounded-lg ">
+          <div className="flex max-h-50  items-end justify-center text-center sm:items-center sm:p-0 ">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -78,31 +78,22 @@ const LoginForm = () => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="  transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8  sm:max-w-sm  border-solid border-2 border-yellow-500 ">
+              {/* md:w-2/5 lg:w-2/5  xl:w-1/4  */}
+              <Dialog.Panel className="m-auto sm:my-8 sm:w-2/5 rounded-lg sm-w-full sm:min-w-fit sm: max-w-xl lg:max-w-sm  bg-white">
                 <Dialog.Title className=" ">
-                  <div className="flex ">
+                  <div className="relative h-40 overflow-hidden active rounded-t-lg">
                     <img
-                      className="w-full "
                       src={botright_vite}
-                      alt="Your Company"
-                    />
+                      className="absolute block w-full "
+                      alt="..."
+                    ></img>
                   </div>
-                  <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-12 lg:px-8">
-                    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                      <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                        Log in to your account
-                      </h2>
-                    </div>
-                    <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
-                      <form className="space-y-6">
+
+                  <div className="flex min-h-full flex-1 flex-col justify-center  px-6 pb-12 lg:px-8">
+                    <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-xl">
+                      <form className="space-y-3">
                         <div>
-                          <label
-                            htmlFor="email"
-                            className="block text-sm font-medium leading-6 text-gray-900"
-                          >
-                            Email address
-                          </label>
-                          <div className="mt-2">
+                          <div className="mt-1">
                             <input
                               type="email"
                               name="email"
@@ -113,42 +104,37 @@ const LoginForm = () => {
                               onChange={(value) => handleChange(value)}
                             />
                           </div>
-                          <p className="text-red-500 text-xs italic">
+                          <p className="text-red-500 text-xs italic mt-1 text-left mx-3">
                             {errors.email}
                           </p>
                         </div>
 
                         <div>
-                          <div className="flex items-center justify-between">
-                            <label
-                              htmlFor="password"
-                              className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                              Password
-                            </label>
-                            <div className="text-sm">
+                          <div>
+                            <div className="mt-2">
+                              <input
+                                type="password"
+                                name="password"
+                                id="password"
+                                placeholder="••••••••"
+                                className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                required=""
+                                onChange={(value) => handleChange(value)}
+                              />
+                            </div>
+
+                            <p className="text-red-500 text-xs italic mt-1 text-left mx-3">
+                              {errors.password}
+                            </p>
+                            <div className="flex items-center justify-end ">
                               <a
                                 href="#"
-                                className="font-semibold text-indigo-600 hover:text-indigo-500"
+                                className="font-semibold text-xs mt-1  text-indigo-600 hover:text-indigo-500"
                               >
                                 Forgot password?
                               </a>
                             </div>
                           </div>
-                          <div className="mt-2">
-                            <input
-                              type="password"
-                              name="password"
-                              id="password"
-                              placeholder="••••••••"
-                              className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                              required=""
-                              onChange={(value) => handleChange(value)}
-                            />
-                          </div>
-                          <p className="text-red-500 text-xs italic">
-                            {errors.password}
-                          </p>
                         </div>
 
                         <div>
