@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/virtual";
 
-const Categories = ({ subcats, handleFilter }) => {
+const Categories = ({ subcats, handleFilter, resetFilters }) => {
   return (
     <>
       <div className="container px-5 mx-auto flex items-center">
@@ -73,6 +73,14 @@ const Categories = ({ subcats, handleFilter }) => {
             d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
           />
         </svg>
+      </div>
+      <div className="text-right mr-10">
+        <button
+          onClick={resetFilters}
+          className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none active:ring-2 active:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:active:ring-gray-700 dark:border-gray-700"
+        >
+          Reset Filters
+        </button>
       </div>
     </>
   );

@@ -42,7 +42,7 @@ const AttractionsList = () => {
     getAttrs();
   }, []);
 
-  // console.log(attrs);
+  console.log(attrs);
 
   const handleFilter = (id) => {
     setFilterID(id);
@@ -53,6 +53,12 @@ const AttractionsList = () => {
     console.log(id, filteredattrs);
     setFilteredAttrs(filteredattrs);
   };
+
+const resetFilters = () => {
+  setFilterID("");
+  setFilteredAttrs(attrs);
+}
+
   return (
     <>
       {attrs.length == 0 || subcats.length == 0 ? (
@@ -60,7 +66,7 @@ const AttractionsList = () => {
       ) : (
         <div className="container p-5 mx-auto">
           <h3 className="text-3xl text-center">{cityName}</h3>
-          <Categories subcats={subcats} handleFilter={handleFilter} />
+          <Categories subcats={subcats} handleFilter={handleFilter} resetFilters={resetFilters} />
           <h3 className="text-3xl mb-8 text-center">Tours</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {!filterID ? (
