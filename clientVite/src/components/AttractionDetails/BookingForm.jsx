@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Datepicker from "react-tailwindcss-datepicker";
+import { date } from "joi";
 const options = {
   title: "Demo Title",
   autoHide: true,
@@ -24,8 +25,8 @@ const options = {
     prev: () => <span>Previous</span>,
     next: () => <span>Next</span>,
   },
-  datepickerClassNames: "top-12",
-  defaultDate: new Date("2022-01-01"),
+  datepickerClassNames: "top-5",
+  defaultDate: new Date(),
   language: "en",
 };
 
@@ -108,7 +109,6 @@ const BookingForm = (props) => {
                             required
                           />
                         </div>
-
                         <div className="border-2 flex justify-between">
                           <div className="mt-4">
                             <span className={`p-2 m-3 bg-blue-200`}>
