@@ -5,7 +5,7 @@ const BookingCard = () => {
 
   return (
     <>
-      <div>
+      <div className="">
         <div className="max-w-md rounded-3xl p-px bg-gradient-to-b from-blue-300 to-pink-300 dark:from-blue-800 dark:to-purple-800 ">
           <div className="rounded-[calc(1.5rem-1px)] p-10 bg-white dark:bg-gray-900 text-center">
             <div className="flex font-bold justify-center">
