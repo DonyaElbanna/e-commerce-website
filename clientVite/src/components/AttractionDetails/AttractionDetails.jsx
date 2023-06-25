@@ -8,9 +8,9 @@ const AttractionDetails = () => {
       <div className="w-3/4 m-auto mt-5">
         <Slider />
 
-        <div className="flex justify-between  mt-3 px-3">
-          <Details />
-          <BookingCard />
+        <div className="container grid grid-cols-3 mt-3 px-3">
+          <Details className="grid-cols-2" />
+          <BookingCard className="col-span-1" />
         </div>
       </div>
     </>

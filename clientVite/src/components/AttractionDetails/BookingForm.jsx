@@ -97,8 +97,8 @@ const BookingForm = (props) => {
                         Ticket Booking
                       </h1>
 
-                      <form className="space-y-4 md:space-y-6">
-                        <div>
+                      <form className="space-y-4 md:space-y-6 ">
+                        <div >
                           <Datepicker
                             options={options}
                             onChange={handleChange}
