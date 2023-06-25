@@ -1,8 +1,7 @@
 const Order = require("../models/order.model");
 const User = require("../models/user.model");
 const AppError = require("../utils/AppError.util");
-const { DUPLICATE_EMAIL, NOT_FOUND } =
-  require("../utils/namespace.util").namespace;
+const { NOT_FOUND } = require("../utils/namespace.util").namespace;
 
 const add = async (payload, next) => {
   try {

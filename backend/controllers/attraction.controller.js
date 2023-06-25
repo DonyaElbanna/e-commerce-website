@@ -6,19 +6,33 @@ const {
   DeleteAttract,
   SetImages,
   getAttractByCategory,
+  getAttractBySubcategory
 } = require("../services/attraction.service");
+const cloudinary = require("../utils/cloudinary.util");
+const AppError = require("../utils/AppError.util");
+const { FAILURE } = require("../utils/namespace.util").namespace;
 
 const addAttraction = async (req, res, next) => {
-  const newAttraction = await addAttract(req.body);
+  const uploader = async (path) => await cloudinary.uploads(path, "Images");
+
+  const urls = [];
+  const files = req.body.Images;
+  for (const file of files) {
+    const newPath = await uploader(file);
+    urls.push(newPath.url);
+  }
+
+  const newAttraction = await addAttract(req.body, urls);
   res.status(201).json({ newAttraction: newAttraction });
 };
+
 const getAllAttraction = async (req, res, next) => {
   const AllAttraction = await getAllAttract();
   res.status(200).json({ AllAttraction: AllAttraction });
 };
 
 const getAttraction = async (req, res, next) => {
-  const Attraction = await getAttract(req.params.id);
+  const Attraction = await getAttract(req.params.id, next);
   res.status(200).json({ Attraction: Attraction });
 };
 
@@ -38,8 +52,26 @@ const deleteAttraction = async (req, res, next) => {
 };
 
 const getAttractionByCategory = async (req, res, next) => {
-  const Attractions = await getAttractByCategory(req.params.id);
-  res.status(200).json({ Attractions: Attractions });
+  try {
+    const Attractions = await getAttractByCategory(req.params.id, next);
+    // if (!Attractions) {
+    //   return Attractions;
+    // }
+    res.status(200).json({ Attractions: Attractions });
+  } catch (err) {
+    console.log(err);
+    return next(new AppError(FAILURE, 404));
+  }
+};
+
+const getAttractionBySubcategory = async (req, res, next) => {
+  try {
+    const Attractions = await getAttractBySubcategory(req.params.id, next);
+    res.status(200).json({ Attractions: Attractions });
+  } catch (err) {
+    console.log(err);
+    return next(new AppError(FAILURE, 404));
+  }
 };
 
 module.exports = {
@@ -50,4 +82,5 @@ module.exports = {
   deleteAttraction,
   SetUrls,
   getAttractionByCategory,
+  getAttractionBySubcategory
 };

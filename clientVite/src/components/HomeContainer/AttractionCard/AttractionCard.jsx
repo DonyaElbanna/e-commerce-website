@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Style from "./AttractionCard.module.css";
 // return <div className={Style.fakh}></div>;
-const AttractionCard = () => {
+const AttractionCard = ({ attr }) => {
   const [isFilled, setIsFilled] = useState(false);
   const fill = (event) => {
     event.preventDefault();
@@ -18,7 +18,7 @@ const AttractionCard = () => {
         className={`card w-96 bg-base-100 shadow-xl border-cyan-50 ${Style.enlarge} m-2`}
       >
         <figure className="img z-20">
-          <img src="https://ican-travel.net/wp-content/uploads/2019/08/وادى_الريان_الفيوم.jpg" />
+          <img src={attr?.Images[0]} />
         </figure>
         <div className="card-body z-10">
           <div className={`btn btn-ghost btn-circle ${Style.svgIcon}`}>
@@ -38,14 +38,14 @@ const AttractionCard = () => {
               />
             </svg>
           </div>
-          <h2 className="card-title">Fayoum Oasis!</h2>
-          <p>Best place to chill and watch shooting Stars</p>
+          <h2 className="card-title">{attr?.name}</h2>
+          <p>{attr?.description}</p>
           <div className="flex flex-left">
             <span className="mx-1 text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 bg-blue-200 text-blue-700 rounded-full w-min">
-              Desert
+              Cruse
             </span>
             <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 bg-blue-200 text-blue-700 rounded-full w-min">
-              Fayoum
+              {attr.category.city}
             </span>
           </div>
           {/* <span className="text-lg text-gray-900 dark:text-white"></span> */}
@@ -106,9 +106,8 @@ const AttractionCard = () => {
               </span>
             </div>
             <span className="text-sm text-gray-500">
-              {/* from: */}
-              {/* <span className=" text-lg text-gray-400">from:</span> */}
-              <span className="text-3xl font-bold text-gray-300 dark:text-white">
+              {/* <span className="text-sm text-gray-400">from:</span> */}
+              <span className="text-3xl font-bold text-gray-900 dark:text-white">
                 $159
               </span>
               /person

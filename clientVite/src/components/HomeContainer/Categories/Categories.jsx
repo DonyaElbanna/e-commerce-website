@@ -5,30 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/virtual";
 
-const Categories = () => {
-  // const cats = [
-  //   { id: 1, name: "Monuments", image: "https://shorturl.at/rsxzL" },
-  //   { id: 2, name: "Nile Cruise", image: "https://shorturl.at/iJMSW" },
-  //   { id: 3, name: "Museums", image: "https://shorturl.at/fhBL4" },
-  //   { id: 4, name: "Safari", image: "https://shorturl.at/arJPT" },
-  //   { id: 5, name: "Diving", image: "https://shorturl.at/gtKNO" },
-  //   { id: 6, name: "Hiking", image: "https://shorturl.at/vxOX9" },
-  //   { id: 7, name: "Spas", image: "https://shorturl.at/hmJZ4" },
-  //   { id: 8, name: "Nightlife", image: "https://shorturl.at/efj79" },
-  // ];
-
-  const [subcats, setSubcats] = useState([]);
-
-  useEffect(() => {
-    const getSubcats = async () => {
-      const { data } = await axios.get("http://localhost:9999/subcat");
-      // console.log(data);
-      setSubcats(data.subcategories);
-    };
-    getSubcats();
-  }, []);
-  // console.log(subcats);
-
+const Categories = ({ subcats, handleFilter }) => {
   return (
     <>
       <div className="container px-5 mx-auto flex items-center">
@@ -60,8 +37,12 @@ const Categories = () => {
           className="cursor-pointer relative carousel-center w-100 px-4 pt-4 pb-1 bg-neutral rounded-box my-10"
         >
           <div>
-            {Object.values(subcats).map((cat, index) => (
-              <SwiperSlide key={cat._id} virtualIndex={index}>
+            {subcats.map((cat, index) => (
+              <SwiperSlide
+                key={cat._id}
+                virtualIndex={index}
+                onClick={() => handleFilter(cat._id)}
+              >
                 <div className="carousel-item h-32">
                   <div className="relative block bg-gray-900 group h-28 ">
                     <img
