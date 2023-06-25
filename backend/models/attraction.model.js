@@ -48,6 +48,14 @@ const AttractionSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Subcategory",
     },
+    included: {
+      type: [String],
+      required: true,
+    },
+    excluded: {
+      type: [String],
+      required: true,
+    },
   },
   {
     timestamps: true,
