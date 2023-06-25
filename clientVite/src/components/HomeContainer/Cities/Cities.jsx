@@ -8,18 +8,18 @@ const Categories = () => {
   useEffect(() => {
     const getCats = async () => {
       const { data } = await axios.get("http://localhost:9999/category");
-      //   console.log(data);
+      // console.log(data);
       setCats(data.categories);
     };
     getCats();
   }, []);
-  //   console.log(cats);
+  // console.log(cats);
 
   return (
     <div className="container px-5 mx-auto">
       <h2 className="text-4xl mb-10 text-center	">Cities</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {Object.values(cats).map((cat, index) => (
+        {cats.map((cat, index) => (
           <div key={cat._id} className="flex h-48 overflow-hidden">
             <Link
               className="relative block bg-gray-900 group h-28 "

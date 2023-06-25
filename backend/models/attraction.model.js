@@ -10,10 +10,6 @@ const AttractionSchema = new Schema(
       type: String,
       required: true,
     },
-    CategoryId: {
-      type: Schema.Types.ObjectId,
-      ref: "Category",
-    },
     status: {
       type: String, //boolen
       enum: ["available", "notAvailable"],

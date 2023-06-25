@@ -1,11 +1,11 @@
 const Category = require("../models/category.model");
 const AppError = require("../utils/AppError.util");
 
-const create = async (city, catImg, next) => {
+const create = async (city, url, next) => {
   try {
     let category = new Category({
       city: city,
-      image: catImg.secure_url,
+      image: url,
     });
     await category.save();
     return category;

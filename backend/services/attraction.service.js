@@ -2,13 +2,18 @@ const attractionModel = require("../models/attraction.model");
 const errorHandler = require("../lib/errorhandler.lib");
 const AppError = require("../utils/namespace.util");
 
-const addAttract = async (payload) => {
-  const NewAttract = await attractionModel.create(payload);
+const addAttract = async (payload, urls) => {
+  const NewAttract = new attractionModel(payload);
+  NewAttract.Images = urls;
+  NewAttract.save();
   if (!NewAttract) errorHandler(AppError.namespace.NOT_FOUND);
   return NewAttract;
 };
 const getAllAttract = async () => {
-  const attractions = await attractionModel.find();
+  const attractions = await attractionModel
+    .find()
+    .populate("category")
+    .populate("subcategory");
   if (!attractions) errorHandler(AppError.namespace.NOT_FOUND);
   return attractions;
 };
@@ -16,7 +21,9 @@ const getAllAttract = async () => {
 const getAttract = async (payload) => {
   const attract = await attractionModel
     .findById(payload)
-    .populate({ path: "review" });
+    .populate({ path: "review" })
+    .populate("category")
+    .populate("subcategory");
   if (!attract) errorHandler(AppError.namespace.NOT_FOUND);
   return attract;
 };

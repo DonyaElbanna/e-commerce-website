@@ -10,9 +10,10 @@ const {
 } = require("../controllers/attraction.controller");
 const { uploadToMulter, uploadPP } = require("../utils/multerConfig");
 
+const upload = require("../utils/multer.util");
 const router = express.Router();
 
-router.post("/", addAttraction);
+router.post("/", upload.array("image"), addAttraction);
 
 router.patch("/upload/:id", uploadToMulter, uploadPP, SetUrls);
 
@@ -23,6 +24,7 @@ router.get("/:id", getAttraction);
 router.put("/:id", updateAttraction);
 
 router.delete("/:id", deleteAttraction);
+
 router.get("/category/:id", getAttractionByCategory);
 
 module.exports = router;

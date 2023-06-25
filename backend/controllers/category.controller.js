@@ -10,10 +10,11 @@ const cloudinary = require("../utils/cloudinary.util");
 
 const createCategory = async (req, res, next) => {
   const { city, image } = req.body;
-  const catImg = await cloudinary.uploader.upload(image);
-
+  const uploader = async (path) => await cloudinary.uploads(path, "Images");
+  const newPath = await uploader(image);
+  
   try {
-    const category = await create(city, catImg, next);
+    const category = await create(city, newPath.url, next);
     res.status(201).json({ category: category });
   } catch (err) {
     return next(new AppError(FAILURE, 404));

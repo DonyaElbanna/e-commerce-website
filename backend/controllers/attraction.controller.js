@@ -7,11 +7,22 @@ const {
   SetImages,
   getAttractByCategory,
 } = require("../services/attraction.service");
+const cloudinary = require("../utils/cloudinary.util");
 
 const addAttraction = async (req, res, next) => {
-  const newAttraction = await addAttract(req.body);
+  const uploader = async (path) => await cloudinary.uploads(path, "Images");
+
+  const urls = [];
+  const files = req.body.Images;
+  for (const file of files) {
+    const newPath = await uploader(file);
+    urls.push(newPath.url);
+  }
+
+  const newAttraction = await addAttract(req.body, urls);
   res.status(201).json({ newAttraction: newAttraction });
 };
+
 const getAllAttraction = async (req, res, next) => {
   const AllAttraction = await getAllAttract();
   res.status(200).json({ AllAttraction: AllAttraction });
