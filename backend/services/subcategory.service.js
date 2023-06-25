@@ -1,11 +1,12 @@
 const Subcategory = require("../models/subcategory.model");
 const AppError = require("../utils/AppError.util");
+const Attraction = require("../models/attraction.model");
 
-const add = async (type, subCatImg, next) => {
+const add = async (type, url, next) => {
   try {
     let subcategory = new Subcategory({
       type: type,
-      image: subCatImg.secure_url,
+      image: url,
     });
     await subcategory.save();
     return subcategory;
@@ -22,7 +23,32 @@ const getSubcategories = async () => {
   }
 };
 
+const getSubcategory = async (id, next) => {
+  try {
+    const subcategory = await Subcategory.findById(id);
+    return subcategory;
+  } catch (err) {
+    return next(new AppError(NOT_FOUND, 404));
+  }
+};
+
+const remove = async (id, attrID, next) => {
+  try {
+    const subcategory = await Subcategory.findByIdAndDelete(id);
+    const updatedAttr = await Attraction.findOneAndUpdate(
+      { _id: attrID },
+      { $pull: { subcategories: attrID } },
+      { new: true }
+    );
+    return { subcategory, updatedAttr };
+  } catch (err) {
+    return next(new AppError(NOT_FOUND, 404));
+  }
+};
+
 module.exports = {
   add,
   getSubcategories,
+  getSubcategory,
+  remove,
 };
