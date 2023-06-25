@@ -7,6 +7,7 @@ const {
   deleteAttraction,
   SetUrls,
   getAttractionByCategory,
+  getAttractionBySubcategory
 } = require("../controllers/attraction.controller");
 const { uploadToMulter, uploadPP } = require("../utils/multerConfig");
 
@@ -26,5 +27,7 @@ router.put("/:id", updateAttraction);
 router.delete("/:id", deleteAttraction);
 
 router.get("/category/:id", getAttractionByCategory);
+
+router.get("/subcat/:id", getAttractionBySubcategory);
 
 module.exports = router;

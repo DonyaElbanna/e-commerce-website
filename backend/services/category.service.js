@@ -27,7 +27,7 @@ const getCategories = async () => {
   }
 };
 
-const getCategoryByID = async (id) => {
+const getCategory = async (id) => {
   try {
     return await Category.findById(id);
   } catch (error) {
@@ -54,7 +54,7 @@ const deleteCategory = async (id) => {
 module.exports = {
   create,
   getCategories,
-  getCategoryByID,
+  getCategory,
   editCategory,
   deleteCategory,
 };

@@ -6,8 +6,11 @@ const {
   DeleteAttract,
   SetImages,
   getAttractByCategory,
+  getAttractBySubcategory
 } = require("../services/attraction.service");
 const cloudinary = require("../utils/cloudinary.util");
+const AppError = require("../utils/AppError.util");
+const { FAILURE } = require("../utils/namespace.util").namespace;
 
 const addAttraction = async (req, res, next) => {
   const uploader = async (path) => await cloudinary.uploads(path, "Images");
@@ -29,7 +32,7 @@ const getAllAttraction = async (req, res, next) => {
 };
 
 const getAttraction = async (req, res, next) => {
-  const Attraction = await getAttract(req.params.id);
+  const Attraction = await getAttract(req.params.id, next);
   res.status(200).json({ Attraction: Attraction });
 };
 
@@ -49,8 +52,26 @@ const deleteAttraction = async (req, res, next) => {
 };
 
 const getAttractionByCategory = async (req, res, next) => {
-  const Attractions = await getAttractByCategory(req.params.id);
-  res.status(200).json({ Attractions: Attractions });
+  try {
+    const Attractions = await getAttractByCategory(req.params.id, next);
+    // if (!Attractions) {
+    //   return Attractions;
+    // }
+    res.status(200).json({ Attractions: Attractions });
+  } catch (err) {
+    console.log(err);
+    return next(new AppError(FAILURE, 404));
+  }
+};
+
+const getAttractionBySubcategory = async (req, res, next) => {
+  try {
+    const Attractions = await getAttractBySubcategory(req.params.id, next);
+    res.status(200).json({ Attractions: Attractions });
+  } catch (err) {
+    console.log(err);
+    return next(new AppError(FAILURE, 404));
+  }
 };
 
 module.exports = {
@@ -61,4 +82,5 @@ module.exports = {
   deleteAttraction,
   SetUrls,
   getAttractionByCategory,
+  getAttractionBySubcategory
 };

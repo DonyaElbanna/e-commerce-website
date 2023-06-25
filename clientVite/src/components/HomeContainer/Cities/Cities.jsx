@@ -23,7 +23,7 @@ const Categories = () => {
           <div key={cat._id} className="flex h-48 overflow-hidden">
             <Link
               className="relative block bg-gray-900 group h-28 "
-              to={`/city/${cat.city}`}
+              to={`/city/${cat._id}`}
             >
               <img
                 src={cat.image}
