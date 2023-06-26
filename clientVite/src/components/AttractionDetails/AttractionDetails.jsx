@@ -32,8 +32,8 @@ const AttractionDetails = () => {
         <div className="container px-5 mx-auto">
           <h2 className="text-4xl mb-10 text-center	">{attrDetails.name}</h2>
           <div className="w-3/4 m-auto mt-5 ">
-            <ImagesSlider attrDetails={attrDetails} />
-            {/* <Slider attrDetails={attrDetails} /> */}
+            {/* <ImagesSlider attrDetails={attrDetails} /> */}
+            <Slider attrDetails={attrDetails} />
 
             <div className="flex w-full justify-between flex-col-reverse md:flex-row  mt-3 px-3 gap-4">
               <Details attrDetails={attrDetails} />
