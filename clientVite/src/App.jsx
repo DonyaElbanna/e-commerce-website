@@ -11,12 +11,13 @@ function App() {
   return (
     <>
       <Navbar />
-      <Routes>
+      <Routes className="bg-black">
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
-        <Route path="/AttractionDetails" element={<AttractionDetails />} />
+        {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
         <Route path="/city/:id" element={<AttractionsList />} />
+        <Route path="/city/:id/details" element={<AttractionDetails />} />
       </Routes>
       <Footer />
     </>

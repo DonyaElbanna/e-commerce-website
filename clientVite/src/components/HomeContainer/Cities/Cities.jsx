@@ -14,7 +14,7 @@ const Categories = () => {
     };
     getCats();
   }, []);
-  console.log(cats);
+  // console.log(cats);
 
   return (
     <div className="container px-5 mx-auto">

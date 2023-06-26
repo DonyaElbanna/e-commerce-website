@@ -1,6 +1,7 @@
 import React, { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Joi from "joi";
+import { Link } from "react-router-dom";
 // import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 const RegisterForm = () => {
   const [open, setOpen] = useState(true);
@@ -50,7 +51,7 @@ const RegisterForm = () => {
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-10"
+        className="relative z-50"
         initialFocus={cancelButtonRef}
         onClose={setOpen}
       >
@@ -181,12 +182,12 @@ const RegisterForm = () => {
                         </div>
                         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                           Already have an account?{" "}
-                          <a
-                            href="#"
-                            className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                          <Link
+                            to="/login"
+                            className="font-semibold text-indigo-600 hover:text-indigo-500"
                           >
                             Login here
-                          </a>
+                          </Link>
                         </p>
                       </form>
                     </div>

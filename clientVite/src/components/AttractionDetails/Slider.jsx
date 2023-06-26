@@ -1,15 +1,17 @@
 import React from "react";
-import "flowbite";
-const images = [
-  new URL("../../assets/loginBackground.jpg", import.meta.url).href,
-  new URL("../../assets/try2.webp", import.meta.url).href,
-  new URL("../../assets/loginBackground.jpg", import.meta.url).href,
-  new URL("../../assets/try2.webp", import.meta.url).href,
-  new URL("../../assets/loginBackground.jpg", import.meta.url).href,
-  new URL("../../assets/try2.webp", import.meta.url).href,
-  new URL("../../assets/loginBackground.jpg", import.meta.url).href,
-];
-const Slider = () => {
+// import "flowbite";
+// const images = [
+//   new URL("../../assets/loginBackground.jpg", import.meta.url).href,
+//   new URL("../../assets/try2.webp", import.meta.url).href,
+//   new URL("../../assets/loginBackground.jpg", import.meta.url).href,
+//   new URL("../../assets/try2.webp", import.meta.url).href,
+//   new URL("../../assets/loginBackground.jpg", import.meta.url).href,
+//   new URL("../../assets/try2.webp", import.meta.url).href,
+//   new URL("../../assets/loginBackground.jpg", import.meta.url).href,
+// ];
+
+const Slider = ({ attrDetails }) => {
+  // console.log(imgs);
   return (
     <>
       <div
@@ -19,15 +21,14 @@ const Slider = () => {
       >
         {/* <!-- Carousel wrapper --> */}
         <div className="relative h-56 overflow-hidden rounded-lg md:h-96 active">
-          {/* <!-- Item 1 --> */}
-          {images.map((imgUrl, index) => (
+          {attrDetails.Images.map((img, index) => (
             <div
               key={index}
               className="hidden duration-700 ease-in-out"
               data-carousel-item
             >
               <img
-                src={imgUrl}
+                src={img}
                 className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                 alt="..."
               ></img>
@@ -36,7 +37,7 @@ const Slider = () => {
         </div>
 
         <div className="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-          {images.map((imgUrl, index) => (
+          {attrDetails.Images.map((imgUrl, index) => (
             <button
               key={index}
               type="button"
@@ -47,6 +48,7 @@ const Slider = () => {
             ></button>
           ))}
         </div>
+
         {/* <!-- Slider controls --> */}
         <button
           type="button"
