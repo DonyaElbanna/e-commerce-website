@@ -10,9 +10,6 @@ const AttractionCard = ({ attr }) => {
 
   return (
     <div className="flex justify-center flex-row">
-      {/* <div>
-        <img src="/bookmark.svg" className="mw-100" />
-      </div> */}
       <a
         href="#"
         className={`card w-96 bg-base-100 shadow-xl border-cyan-50 ${Style.enlarge} m-2`}
@@ -107,7 +104,7 @@ const AttractionCard = ({ attr }) => {
             </div>
             <span className="text-sm text-gray-500">
               {/* <span className="text-sm text-gray-400">from:</span> */}
-              <span className="text-3xl font-bold text-gray-900 dark:text-white">
+              <span className="text-3xl font-bold text-gray-200 dark:text-white">
                 $159
               </span>
               /person
