@@ -6,6 +6,8 @@ import Slider from "./Slider";
 import { useParams } from "react-router-dom";
 import gif from "../../assets/gih.gif";
 
+import ImagesSlider from "./ImagesSlider";
+
 const AttractionDetails = () => {
   let { id } = useParams();
   const [attrDetails, setAttrDetails] = useState([]);
@@ -15,13 +17,13 @@ const AttractionDetails = () => {
       const { data } = await axios.get(
         `http://localhost:9999/attraction/${id}`
       );
-      console.log(data.Attraction);
+      // console.log(data.Attraction);
       setAttrDetails(data.Attraction);
     };
 
     getAttrs();
   }, []);
-  console.log(attrDetails);
+  // console.log(attrDetails);
   return (
     <>
       {attrDetails.length == 0 ? (
@@ -30,7 +32,8 @@ const AttractionDetails = () => {
         <div className="container px-5 mx-auto">
           <h2 className="text-4xl mb-10 text-center	">{attrDetails.name}</h2>
           <div className="w-3/4 m-auto mt-5 ">
-            <Slider attrDetails={attrDetails} />
+            <ImagesSlider attrDetails={attrDetails} />
+            {/* <Slider attrDetails={attrDetails} /> */}
 
             <div className="flex w-full justify-between flex-col-reverse md:flex-row  mt-3 px-3 gap-4">
               <Details attrDetails={attrDetails} />
