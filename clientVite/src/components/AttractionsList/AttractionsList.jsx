@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Categories from "../HomeContainer/Categories/Categories";
-import Navbar from "../common/NavBar/Navbar";
 import { useParams } from "react-router-dom";
 import AttractionCard from "../HomeContainer/AttractionCard/AttractionCard";
 import axios from "axios";
@@ -81,7 +80,7 @@ const resetFilters = () => {
               <p>Nothing</p>
             ) : (
               filteredAttrs.map((attr) => (
-                <AttractionCard key={attr._id} attr={attr} />
+                  <AttractionCard key={attr._id} attr={attr} />
               ))
             )}
           </div>

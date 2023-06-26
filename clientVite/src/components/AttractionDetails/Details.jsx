@@ -1,5 +1,6 @@
 import React from "react";
-const Details = () => {
+
+const Details = ({ attrDetails }) => {
   return (
     <>
       <div className="md:w-2/3 ">
@@ -62,22 +63,20 @@ const Details = () => {
         <div>
           <p>
             <span className="font-sans text-#004794 font-bold text-2xl text-blue-700">
-              Tour to The East &amp; West Bank of the Nile
-              <span className="text-yellow-500"> Start from $99</span>
+              {attrDetails.name}
+              <span className="text-yellow-500">
+                {" "}
+                Start from ${attrDetails.AdultPrice}
+              </span>
             </span>
           </p>
-          <p className="mt-5">
-            See the most famous sites around Luxor on both sides of the river in
-            one day. Visit Karnak Temple and Luxor Temple on the East bank and
-            then see the Valley of the Kings and Hatshepsut Temple on the West
-            bank
-          </p>
-          <p className="text-yellow-500 font-bold text-2xl mt-5">Highlights:</p>
+          <p className="mt-5">{attrDetails.description}</p>
+          {/* <p className="text-yellow-500 font-bold text-2xl mt-5">Highlights:</p>
           <ul className="list-disc p-5 mx-3">
             <li>Discover the hidden treasures of Luxor’s West Bank</li>
             <li>Visit the tombs of some of Egypt’s greatest kings</li>
             <li>See the funerary temples and tombs on the Nile’s West Bank.</li>
-          </ul>
+          </ul> */}
           <p className="text-yellow-500 font-bold text-2xl mt-5">
             Tour Details:
           </p>
@@ -91,20 +90,17 @@ const Details = () => {
             What's Include:
           </p>
           <ul className="list-disc p-5 mx-3">
-            <li>All transfers by a private air-conditioned vehicle.</li>
-            <li>Pick up services from your hotel & return.</li>
-            <li>Private All Languages speaking Egyptologist guide.</li>
-            <li>Entrance fees to all the mentioned sites.</li>
-            <li>Lunch meal will be served in a local restaurant..</li>
-            <li>Bottled water during your trip.</li>
-            <li>All taxes & service charge.</li>
+            {attrDetails.included.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
           </ul>
           <p className="text-yellow-500 font-bold text-2xl mt-5">
-            What’s Excluded:
+            What's Excluded:
           </p>
           <ul className="list-disc p-5 mx-3">
-            <li>Any extras not mentioned in the itinerary.</li>
-            <li>Tipping.</li>
+            {attrDetails.excluded.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
           </ul>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Style from "./AttractionCard.module.css";
 // return <div className={Style.fakh}></div>;
+import { Link } from "react-router-dom";
+
 const AttractionCard = ({ attr }) => {
   const [isFilled, setIsFilled] = useState(false);
   const fill = (event) => {
@@ -14,8 +16,8 @@ const AttractionCard = ({ attr }) => {
         <img src="/bookmark.svg" className="mw-100" />
       </div> */}
 
-      <a
-        href="#"
+      <Link
+        to={`/city/${attr._id}/details`}
         className={`card w-96 bg-base-100 shadow-xl border-cyan-50 ${Style.enlarge} m-2`}
       >
         <figure className="img z-20">
@@ -115,7 +117,7 @@ const AttractionCard = ({ attr }) => {
             </span>
           </div>
         </div>
-      </a>
+      </Link>
     </div>
   );
 };
