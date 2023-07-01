@@ -7,12 +7,13 @@ import AttractionDetails from "./components/AttractionDetails/AttractionDetails"
 import AttractionsList from "./components/AttractionsList/AttractionsList";
 import Navbar from "./components/common/NavBar/Navbar";
 import Footer from "./components/common/Footer/Footer";
-import Navbar1 from "./components/common/NavBar/Navbar1";
 import Wishlist from "./pages/Wishlist";
+import Welcome from './components/Welome/welcome';
 function App() {
   return (
     <>
-      <Navbar1 />
+      <Navbar />
+      <Welcome />
       <Routes className="bg-black">
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginForm />} />

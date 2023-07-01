@@ -6,11 +6,11 @@ const Footer = () => {
       <footer className="mt-10">
         <div
           style={{ backgroundColor: "rgb(10 10 10 / 83%)"}}
-          className="pb-10 pt-4 px-5 gap-2 rounded-t-3xl"
+          className="pb-9 px-5 gap-2"
         >
           <article className="footer footer-center row">
-            <div className=" self-center ">
-              <p className="logoFont text-4xl pt-10 md:text-7xl lg:text-8xl text-slate-300">
+            <div className="self-center">
+              <p className="logoFont text-4xl pt-7 md:text-7xl lg:text-8xl text-slate-300">
                 EGYPT
               </p>
             </div>

@@ -5,6 +5,9 @@
   .footerLink {
     @apply text-xl hover:text-yellow-600 cursor-pointer hover:scale-110;
   }
+  body{
+    @apply bg-slate-100
+  }
 }
 
 @font-face {
@@ -13,8 +16,4 @@
 }
 .logoFont {
   font-family: "Egypt";
-}
-
-body{
-  background-color: black;
 }

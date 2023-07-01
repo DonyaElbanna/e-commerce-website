@@ -43,6 +43,7 @@
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
 }
+
 @media (max-width:768px) {
     .Logo {
         height: 80px !important;
