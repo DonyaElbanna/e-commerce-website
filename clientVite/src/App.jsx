@@ -9,7 +9,16 @@ import Navbar from "./components/common/NavBar/Navbar";
 import Footer from "./components/common/Footer/Footer";
 import Wishlist from "./pages/Wishlist";
 import Welcome from './components/Welome/welcome';
+import { useDispatch, useSelector } from "react-redux";
+import { handleIsLoggedIntoggle } from "./rtk/features/authSlice";
+
 function App() {
+  const {auth}  = useSelector((state)=>state)
+  const dispahch = useDispatch()
+  const handlerExp = ()=>{
+    dispahch(handleIsLoggedIntoggle())
+  }
+  console.log(auth)
   return (
     <>
       <Navbar />
