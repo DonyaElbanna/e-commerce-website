@@ -7,7 +7,7 @@ const {
   deleteAttraction,
   SetUrls,
   getAttractionByCategory,
-  getAttractionBySubcategory
+  getAttractionBySubcategory,
 } = require("../controllers/attraction.controller");
 const { uploadToMulter, uploadPP } = require("../utils/multerConfig");
 

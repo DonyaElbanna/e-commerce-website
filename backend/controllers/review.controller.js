@@ -5,7 +5,9 @@ const {
   UpdateReview,
   DeleteReview,
   getReviewsByAttract,
+  highestReviews,
 } = require("../services/review.service");
+const Review = require("../models/review.model");
 
 const addNewReview = async (req, res, next) => {
   const NewReview = await addReview(req.body);
@@ -31,10 +33,34 @@ const deleteReview = async (req, res, next) => {
   res.status(200).json({ deletedReview: deletedReview });
 };
 
+const getHigestReviews = async (req, res, next) => {
+  // const reviews = await highestReviews();
+  const reviews = await Review.aggregate([
+    {
+      $group: {
+        _id: "$attraction",
+        avgRating: { $avg: "$rating" },
+      },
+    },
+    {
+      $lookup: {
+        from: "attractions",
+        localField: "_id",
+        foreignField: "_id",
+        as: "attraction",
+      },
+    },
+    { $sort: { avgRating: -1 } },
+    { $limit: 6 },
+  ]);
+  res.status(200).send(reviews);
+};
+
 module.exports = {
   addNewReview,
   getReviews,
   getReviewById,
   updateReview,
   deleteReview,
+  getHigestReviews,
 };

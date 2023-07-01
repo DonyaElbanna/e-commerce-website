@@ -1,9 +1,8 @@
 const ReviewModel = require("../models/review.model");
 const errorHandler = require("../lib/errorhandler.lib");
 const AppError = require("../utils/namespace.util");
-const {
-  UpdateAttract,
-} = require("./attraction.service");
+const { UpdateAttract } = require("./attraction.service");
+
 const addReview = async (payload) => {
   const NewReview = await ReviewModel.create(payload);
   if (!NewReview) errorHandler(AppError.namespace.NOT_FOUND);
@@ -34,10 +33,17 @@ const DeleteReview = async (id) => {
   return Review;
 };
 
+const highestReviews = async () => {
+  const reviews = await ReviewModel.find({});
+  if (!reviews) errorHandler(AppError.namespace.NOT_FOUND);
+  return reviews;
+};
+
 module.exports = {
   addReview,
   getAllReviews,
   getReview,
   UpdateReview,
   DeleteReview,
+  highestReviews,
 };
