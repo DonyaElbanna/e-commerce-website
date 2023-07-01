@@ -1,5 +1,7 @@
 .AppBar{
+    
     background-color: black;
+    border-bottom: .75px solid #fde583;
 }
 .Container{
     height: 60px;
@@ -10,7 +12,7 @@
 }
 .NavLink{
     text-decoration: none;
-    color:gold;
+    color:#fde583;
     font-weight: bolder;
     height: 100%;
     padding: 5px;
@@ -25,8 +27,8 @@
     -o-border-radius: 10px;
 }
 .NavLinkActive{
-    color: gold;
-    border: 1px solid gold;
+    color: #fde583;
+    border: 1px solid #fde583;
     text-decoration: none;
     font-weight: bolder;
     height: 100%;
