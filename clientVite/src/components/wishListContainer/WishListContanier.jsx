@@ -1,14 +1,12 @@
-import { Container } from '@mui/material'
-import React from 'react'
+import { Container } from "@mui/material";
+import React from "react";
 
-const WishListContanier = () => {
+const WishListContanier = ({ attraction }) => {
   return (
     <>
-    <Container>
-        wishlist  
-    </Container>
+      <Container>wishlist</Container>
     </>
-  )
-}
+  );
+};
 
-export default WishListContanier
+export default WishListContanier;
