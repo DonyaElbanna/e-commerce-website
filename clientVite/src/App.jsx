@@ -15,11 +15,12 @@ import ForgetPassword from "./components/common/AuthModal/ForgetPassword";
 
 function App() {
   const { auth } = useSelector((state) => state);
+  // console.log(auth);
   const dispahch = useDispatch();
   const handlerExp = () => {
     dispahch(handleIsLoggedIntoggle());
   };
-  console.log(auth);
+  // handlerExp();
   return (
     <>
       <Navbar1 />
