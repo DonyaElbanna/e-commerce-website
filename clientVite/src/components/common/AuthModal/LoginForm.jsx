@@ -3,11 +3,20 @@ import { Link } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import Joi from "joi";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  handleIsLoggedIntoggle,
+  handleUserInfo,
+} from "../../../rtk/features/authSlice";
+
 const botright_vite = new URL(
   "../../../assets/loginBackground.jpg",
   import.meta.url
 ).href;
 const LoginForm = () => {
+  const { auth } = useSelector((state) => state);
+  console.log(auth);
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
   const [form, setForm] = useState({
@@ -51,7 +60,13 @@ const LoginForm = () => {
 
   const login = async () => {
     try {
-      await axios.post("http://localhost:9999/auth/signin", form);
+      const { data } = await axios.post(
+        "http://localhost:9999/auth/signin",
+        form
+      );
+      dispatch(handleUserInfo(data));
+      dispatch(handleIsLoggedIntoggle());
+
       setOpen(false);
     } catch (error) {
       const errorData = {};
@@ -165,12 +180,13 @@ const LoginForm = () => {
                               {errors.password}
                             </p>
                             <div className="flex items-center justify-end ">
-                              <a
-                                href="#"
-                                className="font-semibold text-xs mt-1  text--600 hover:text-indigo-500"
+                              <Link
+                                className="font-semibold text-xs mt-1  text-indigo-600 hover:text-indigo-500"
+                                to="/forget"
+                                state={form.email}
                               >
                                 Forgot password?
-                              </a>
+                              </Link>
                             </div>
                           </div>
                           <p className="text-red-500 text-xs italic mt-1 text-left mx-3">

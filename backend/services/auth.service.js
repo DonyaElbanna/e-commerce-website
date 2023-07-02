@@ -117,10 +117,36 @@ const generateVerificationToken = async (user) => {
   }
 };
 
+const resetPassword = async (payload) => {
+  try {
+    const user = await userModel
+      .findOne({
+        $and: [
+          { $or: [{ username: payload.username }, { email: payload.email }] },
+        ],
+      })
+      .select("+password");
+    if (!user) {
+      const err = new AppError(INVALID_CREDENTIALS, 409);
+      throw err;
+    }
+    const isPasswordMatch = await user.comparePassword(payload.password);
+    if (!isPasswordMatch) {
+      const err = new AppError(INVALID_CREDENTIALS, 409);
+      throw err;
+    }
+    user.password = "";
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   generateAccessToken,
   generateVerificationToken,
   verifyUser,
   signin,
   sendVerification,
+  resetPassword,
 };
