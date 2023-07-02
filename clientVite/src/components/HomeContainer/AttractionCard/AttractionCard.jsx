@@ -40,7 +40,12 @@ const AttractionCard = ({ attr }) => {
   }
 
   const starClassNames = [];
-  const rating = attr.reviews.length > 0 ? attr.reviews[0].avgRating : 0;
+  const rating =
+    attr.reviews && attr.reviews.length > 0
+      ? attr.reviews[0].avgRating
+      : attr.averageRating
+      ? attr.averageRating
+      : 0;
   (function () {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating - fullStars >= 0.5;

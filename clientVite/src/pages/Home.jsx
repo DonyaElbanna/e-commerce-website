@@ -1,9 +1,11 @@
-import Cities from "../components/HomeContainer/Cities/Cities";
+import HighestRated from "../components/HomeContainer/HighestRated/HighestRated";
+import Welcome from "../components/HomeContainer/Welome/welcome";
 
 const Home = () => {
   return (
     <>
-      <Cities />
+      <Welcome />
+      <HighestRated/>
     </>
   );
 };

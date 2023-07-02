@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Categories from "../HomeContainer/Categories/Categories";
+import Categories from "../Categories/Categories";
 import { useParams } from "react-router-dom";
 import AttractionCard from "../HomeContainer/AttractionCard/AttractionCard";
 import axios from "axios";
@@ -41,7 +41,7 @@ const AttractionsList = () => {
     getAttrs();
   }, []);
 
-  // console.log(attrs);
+  console.log(attrs);
 
   const handleFilter = (id) => {
     setFilterID(id);
