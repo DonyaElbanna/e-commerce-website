@@ -1,10 +1,11 @@
-import avatar from "../../../icons/avatar.avif";
-import Style from "./Navbar.module.css";
 import gif from "../../../assets/gih.gif";
+import logo from "../../../assets/logo.png";
+
 const Navbar = () => {
+  
   return (
     <>
-      <header className="navbar sticky top-0 z-50 bg-slate-100/80  rounded-b-3xl mb-5 px-4 md:px-10">
+      <header className="navbar sticky top-0 z-50 md:bg-slate-800/0 bg-slate-100/90 px-4 md:px-5">
         <aside className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost btn-circle">
@@ -40,13 +41,13 @@ const Navbar = () => {
           </div>
         </aside>
         <div className="navbar-center">
-          <img src={gif} className="w-32 hidden md:inline"></img>
-          <p className="logoFont text-yellow-600 md:text-black font-bold text-3xl md:text-4xl mr-16 ">
-            EGYPT
-          </p>
+          <img src={logo} className="w-36 md:w-52 mr-7"></img>
+          {/* <p className="logoFont text-yellow-600 md:text-black font-bold text-3xl md:text-4xl mr-16 ">
+            Egypt
+          </p> */}
         </div>
         <div className="navbar-end">
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-0 md:gap-4 items-center">
             <div className="dropdown dropdown-end -mr-3 md:mr-0">
               <label tabIndex={0} className="btn btn-ghost btn-circle ">
                 <div className="indicator">
@@ -106,10 +107,9 @@ const Navbar = () => {
             <div className="dropdown dropdown-end">
               <label
                 tabIndex={0}
-                className="w-14 btn btn-ghost btn-circle avatar"
+                className="w-10 md:w-14 btn btn-ghost btn-circle avatar"
               >
                 <div className="rounded-full">
-                  {/* <img src={avatar} /> */}
                   <img
                     src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
                     className="w-32 rounded-full"

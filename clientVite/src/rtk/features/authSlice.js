@@ -63,7 +63,7 @@ export const authSlice = createSlice({
     handleResendTokenEmail: (state, action) => {
       state.resendTokenEmail = action.payload;
     },
-    handleIsLoggedIn: (state, action) => {
+    handleIsLoggedIntoggle: (state, action) => {
       state.isLoggedIn = action.payload;
     },
     handleLoggedInInfo: (state, action) => {
@@ -95,7 +95,7 @@ export const {
   handleOpenResendTokenModal,
   handleActivationEmail,
   handleResendTokenEmail,
-  handleIsLoggedIn,
+  handleIsLoggedIntoggle,
   handleUserInfo,
   handleLoggedInInfo,
   handleResendType,
