@@ -12,7 +12,7 @@ const HighestRated = () => {
       const { data } = await axios.get(`http://localhost:9999/review/highest`);
       //   setPackages(data.map((item) => item.attraction[0]));
       //   setRating(data.map((item) => item.avgRating));
-      console.log(data);
+      // console.log(data);
       setPackages(data);
     };
 

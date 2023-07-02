@@ -13,6 +13,7 @@ import { handleIsLoggedIntoggle } from "./rtk/features/authSlice";
 import Cities from "./components/Cities/Cities";
 import ForgetPassword from "./components/common/AuthModal/ForgetPassword";
 import AuthModel from "./components/common/AuthModal/AuthModel";
+import Admin from "./pages/AdminDashboard/Admin";
 
 function App() {
   const { auth } = useSelector((state) => state);
@@ -30,6 +31,7 @@ function App() {
         <Route path="/wishlist" element={<Wishlist />} />
         {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
         <Route path="/cities" element={<Cities />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/city/:id" element={<AttractionsList />} />
         <Route path="/city/:id/details" element={<AttractionDetails />} />
       </Routes>
