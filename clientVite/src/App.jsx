@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { handleIsLoggedIntoggle } from "./rtk/features/authSlice";
 import Cities from "./components/Cities/Cities";
 import ForgetPassword from "./components/common/AuthModal/ForgetPassword";
+import AuthModel from "./components/common/AuthModal/AuthModel";
+import Admin from "./pages/AdminDashboard/Admin";
 
 function App() {
   const { auth } = useSelector((state) => state);
@@ -20,18 +22,21 @@ function App() {
   const handlerExp = () => {
     dispahch(handleIsLoggedIntoggle());
   };
+<<<<<<< HEAD
   // handlerExp();
+=======
+
+>>>>>>> ffd819f477bce1c0319cd294d8e2dd9fb3022bf8
   return (
     <>
       <Navbar1 />
+      {auth.openAuthModal && <AuthModel />}
       <Routes className="bg-black">
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/forget" element={<ForgetPassword />} />
-        <Route path="/register" element={<RegisterForm />} />
         <Route path="/wishlist" element={<Wishlist />} />
         {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
         <Route path="/cities" element={<Cities />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/city/:id" element={<AttractionsList />} />
         <Route path="/city/:id/details" element={<AttractionDetails />} />
       </Routes>

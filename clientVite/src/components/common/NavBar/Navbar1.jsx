@@ -98,8 +98,6 @@ const Navbar1 = () => {
               <NavLink
                 to="/wishlist"
                 className={({ isActive }) => isActive ? Style.NavLinkActive : Style.NavLink}
-
-                
               >
                 <FavoriteBorderOutlinedIcon />
                 <Typography
@@ -110,7 +108,7 @@ const Navbar1 = () => {
                 </Typography>
               </NavLink>
 
-              {/* {auth.loggedInInfo.position === "admin" && (
+               {/* {auth.loggedInInfo.position === "admin" && (  */}
               <NavLink
                 className={({ isActive }) => isActive ? Style.NavLinkActive : Style.NavLink}
 
@@ -126,7 +124,7 @@ const Navbar1 = () => {
                   Admin
                 </Typography>
               </NavLink>
-            )} */}
+            {/* )}  */}
               <div>
                 <IconButton
                   aria-label="account of current user"

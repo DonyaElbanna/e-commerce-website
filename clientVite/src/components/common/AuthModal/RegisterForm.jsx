@@ -1,6 +1,7 @@
 import React, { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Joi from "joi";
+import axios from "axios";
 import { Link } from "react-router-dom";
 // import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 const RegisterForm = () => {
@@ -8,6 +9,7 @@ const RegisterForm = () => {
   const cancelButtonRef = useRef(null);
 
   const [form, setForm] = useState({
+    userName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -15,12 +17,14 @@ const RegisterForm = () => {
   const [errors, setErrors] = useState({});
 
   const schema = Joi.object({
+    userName: Joi.string().required().min(3),
     email: Joi.string()
       .required()
       .pattern(/^([a-z0-9_\.\+-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/),
     password: Joi.string().required().min(8),
     confirmPassword: Joi.string().required().min(8).equal(form.password),
   });
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -42,11 +46,31 @@ const RegisterForm = () => {
       }
       setErrors(errorData);
     } else {
+      register();
       setErrors({});
-      setOpen(false);
     }
   };
+  const register = async () => {
+    const newUser = {
+      email: form.email,
+      username: form.userName,
+      role: "user",
+      password: form.password,
+    };
 
+    await axios
+      .post("http://localhost:9999/user", newUser)
+      .then((response) => {
+        setOpen(false);
+      })
+      .catch((error) => {
+        setOpen(true);
+        console.log(error);
+        const errorData = {};
+        errorData.email = error.response.data.message;
+        setErrors(errorData);
+      });
+  };
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -88,6 +112,26 @@ const RegisterForm = () => {
                       <form className="space-y-4 md:space-y-6" action="#">
                         <div>
                           <label
+                            htmlFor="userName"
+                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                          >
+                            User Name
+                          </label>
+                          <input
+                            type="userName"
+                            name="userName"
+                            id="userName"
+                            className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="name@company.com"
+                            required=""
+                            onChange={(value) => handleChange(value)}
+                          />
+                          <p className="text-red-500 text-xs italic">
+                            {errors.userName}
+                          </p>
+                        </div>
+                        <div>
+                          <label
                             htmlFor="email"
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                           >
@@ -106,6 +150,7 @@ const RegisterForm = () => {
                             {errors.email}
                           </p>
                         </div>
+
                         <div>
                           <label
                             htmlFor="password"
