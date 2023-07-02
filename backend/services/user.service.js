@@ -23,7 +23,9 @@ const add = async (payload, next) => {
 
 const getUser = async (id, next) => {
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id)
+      .populate("wishlist")
+      .populate("orders");
     if (!user) {
       return next(new AppError(NOT_FOUND, 404));
     }
@@ -78,15 +80,15 @@ const addRemoveWishlist = async (id, attractionID, next) => {
           { _id: id },
           { $pull: { wishlist: attractionID } },
           { upsert: true, new: true }
-        ).populate('wishlist');
-        console.log("was in wishlist");
+        ).populate("wishlist");
+        // console.log("was in wishlist");
       } else {
         var updatedUser = await User.findOneAndUpdate(
           { _id: id },
           { $addToSet: { wishlist: attractionID } },
           { upsert: true, new: true }
-        );
-        console.log("was NOT in wishlist");
+        ).populate("wishlist");
+        // console.log("was NOT in wishlist");
       }
     }
 
