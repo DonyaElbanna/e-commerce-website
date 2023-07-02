@@ -4,18 +4,13 @@ import Style from "./AttractionCard.module.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 // import { useSelector } from "react-redux";
-import WishlistContainer from "../../wishListContainer/WishListContanier";
-
 const baseURL = "http://localhost:9999/user/64931b6199ee6e4ef036a40f";
 
 const AttractionCard = ({ attr }) => {
   const navigate = useNavigate();
-// console.log()
   // const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const isLoggedIn = true;
-
   const [isFilled, setIsFilled] = useState(false);
-
   const [wishlistItems, setWishlistItems] = useState([]);
 
   // const [isWishlistItem, setIsWishlistItem] = useState(false);
@@ -30,34 +25,13 @@ const AttractionCard = ({ attr }) => {
     // checkWishlist();
   }, [wishlistItems]);
 
-  // const checkWishlist = async () => {
-  //   try {
-  //     const response = await axios.get(baseURL);
-  //     const wishlistItems = response.data.wishlist;
-  //     const isInWishlist = wishlistItems.some((item) => item._id === attr._id);
-  //     setIsWishlistItem(isInWishlist);
-  //     console.log(wishlistItems);
-  //   } catch (error) {
-  //     console.error("Error checking wishlist:", error);
-  //   }
-  // };
-
   const handleAddToWishlist = async (event) => {
     event.preventDefault();
+    setIsFilled(!isFilled);
     // console.log(attr._id);
     // console.log(wishlistItems.includes(attr._id));
     await axios.post(baseURL, { id: attr._id });
     // console.log(wishlistItems);
-    setIsFilled(!isFilled);
-
-    // try {
-    //   if (isWishlistItem) {
-    //     await axios.delete(baseURL, { data: { _id: attr._id } });
-    //   } else {
-    //   }
-    // } catch (error) {
-    //   console.error("Error toggling wishlist item:", error);
-    // }
   };
 
   function redirect(event) {
@@ -114,7 +88,7 @@ const AttractionCard = ({ attr }) => {
           {/* <p>{attr?.description}</p> */}
           <div className="flex">
             <span className="mx-1 text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 bg-blue-200 text-blue-700 rounded-full w-min">
-            {attr.subcategory[0].type}
+              {attr.subcategory[0].type}
             </span>
             <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 bg-blue-200 text-blue-700 rounded-full w-min">
               {attr.category[0].city}
