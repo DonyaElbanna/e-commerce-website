@@ -3,6 +3,8 @@ const userModel = require("../models/user.model");
 const { config } = require("../config/default.config");
 const mailerService = require("./mailer.service");
 const { ErrorHandler } = require("../lib/errorhandler.lib");
+const AppError = require("../utils/AppError.util");
+const { INVALID_CREDENTIALS } = require("../utils/namespace.util").namespace;
 
 const signin = async (payload) => {
   try {
@@ -14,14 +16,12 @@ const signin = async (payload) => {
       })
       .select("+password");
     if (!user) {
-      const err = new Error(INVALID_CREDENTIALS);
-      err.status = 409;
+      const err = new AppError(INVALID_CREDENTIALS, 409);
       throw err;
     }
     const isPasswordMatch = await user.comparePassword(payload.password);
     if (!isPasswordMatch) {
-      const err = new Error(INVALID_CREDENTIALS);
-      err.status = 409;
+      const err = new AppError(INVALID_CREDENTIALS, 409);
       throw err;
     }
     user.password = "";
@@ -117,10 +117,36 @@ const generateVerificationToken = async (user) => {
   }
 };
 
+const resetPassword = async (payload) => {
+  try {
+    const user = await userModel
+      .findOne({
+        $and: [
+          { $or: [{ username: payload.username }, { email: payload.email }] },
+        ],
+      })
+      .select("+password");
+    if (!user) {
+      const err = new AppError(INVALID_CREDENTIALS, 409);
+      throw err;
+    }
+    const isPasswordMatch = await user.comparePassword(payload.password);
+    if (!isPasswordMatch) {
+      const err = new AppError(INVALID_CREDENTIALS, 409);
+      throw err;
+    }
+    user.password = "";
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   generateAccessToken,
   generateVerificationToken,
   verifyUser,
   signin,
   sendVerification,
+  resetPassword,
 };

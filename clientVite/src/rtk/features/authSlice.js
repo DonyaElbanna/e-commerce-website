@@ -29,11 +29,9 @@ const initialState = {
     newPassword: "",
     confirmNewPassword: "",
   },
-  error: '',
+  error: "",
   loading: false,
 };
-
-
 
 export const authSlice = createSlice({
   name: "auth",
@@ -64,7 +62,7 @@ export const authSlice = createSlice({
       state.resendTokenEmail = action.payload;
     },
     handleIsLoggedIntoggle: (state, action) => {
-      state.isLoggedIn = action.payload;
+      state.isLoggedIn = !state.isLoggedIn;
     },
     handleLoggedInInfo: (state, action) => {
       state.loggedInInfo = action.payload;
@@ -84,7 +82,7 @@ export const authSlice = createSlice({
     handleResetPasswordInfo: (state, action) => {
       state.resetPasswordInfo = action.payload;
     },
-  }
+  },
 });
 
 export const {

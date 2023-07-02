@@ -16,21 +16,30 @@ const AttractionCard = ({ attr }) => {
   const [isWishlistItem, setIsWishlistItem] = useState(false);
 
   useEffect(() => {
-    // Perform the initial check to determine if the item is in the wishlist
-    checkWishlist();
-  }, []);
+    // <<<<<<< HEAD
+    //     // Perform the initial check to determine if the item is in the wishlist
+    //     checkWishlist();
+    //   }, []);
 
-  const checkWishlist = async () => {
-    try {
-      const response = await axios.get(baseURL);
-      const wishlistItems = response.data.wishlist;
-      const isInWishlist = wishlistItems.some((item) => item._id === attr._id);
-      setIsWishlistItem(isInWishlist);
-      console.log(wishlistItems);
-    } catch (error) {
-      console.error("Error checking wishlist:", error);
-    }
-  };
+    //   const checkWishlist = async () => {
+    //     try {
+    //       const response = await axios.get(baseURL);
+    //       const wishlistItems = response.data.wishlist;
+    //       const isInWishlist = wishlistItems.some((item) => item._id === attr._id);
+    //       setIsWishlistItem(isInWishlist);
+    //       console.log(wishlistItems);
+    //     } catch (error) {
+    //       console.error("Error checking wishlist:", error);
+    //     }
+    //   };
+
+    const getWishlistItems = async () => {
+      const { data } = await axios.get(baseURL);
+      // console.log(data)
+      setWishlistItems(data.wishlist);
+    };
+    getWishlistItems();
+  }, []);
 
   const handleAddToWishlist = async (event) => {
     event.preventDefault();

@@ -2,11 +2,21 @@ import React, { Fragment, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import Joi from "joi";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  handleIsLoggedIntoggle,
+  handleUserInfo,
+} from "../../../rtk/features/authSlice";
+
 const botright_vite = new URL(
   "../../../assets/loginBackground.jpg",
   import.meta.url
 ).href;
 const LoginForm = () => {
+  const { auth } = useSelector((state) => state);
+  console.log(auth);
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
   const [form, setForm] = useState({
@@ -23,6 +33,7 @@ const LoginForm = () => {
   });
 
   const handleChange = (e) => {
+    setErrors({});
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -42,10 +53,47 @@ const LoginForm = () => {
       }
       setErrors(errorData);
     } else {
+      login();
       setErrors({});
-      setOpen(false);
     }
   };
+
+  const login = async () => {
+    try {
+      const { data } = await axios.post(
+        "http://localhost:9999/auth/signin",
+        form
+      );
+      dispatch(handleUserInfo(data));
+      dispatch(handleIsLoggedIntoggle());
+
+      setOpen(false);
+    } catch (error) {
+      const errorData = {};
+      errorData.invalidCradintials = error.response.data.message;
+      setErrors(errorData);
+    }
+  };
+  const guestLogin = async (e) => {
+    e.preventDefault();
+    await axios.post("http://localhost:9999/guest");
+    setOpen(false);
+    setErrors({});
+  };
+
+  // const login = async () => {
+  //   axios
+  //     .post("http://localhost:9999/auth/signin", form)
+  //     .then((response) => {
+  //       this.setState(() => ({ people: response.data }));
+  //     })
+  //     .catch((error) => {
+  //       const errorData = {};
+  //       errorData.invalidCradintials = error.response.data.message;
+  //       // ("Incorrect email or password, please try again");
+  //       setErrors(errorData);
+  //     });
+  // };
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -122,7 +170,7 @@ const LoginForm = () => {
                                 name="password"
                                 id="password"
                                 placeholder="••••••••"
-                                className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="bg-yellow-50 border outline-black-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-yellow-300 focus:border-yellow-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required=""
                                 onChange={(value) => handleChange(value)}
                               />
@@ -141,12 +189,15 @@ const LoginForm = () => {
                               </Link>
                             </div>
                           </div>
+                          <p className="text-red-500 text-xs italic mt-1 text-left mx-3">
+                            {errors.invalidCradintials}
+                          </p>
                         </div>
 
                         <div>
                           <button
                             type="submit"
-                            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            className="flex w-full justify-center rounded-md bg-zinc-700 px-3 py-1.5 text-sm font-semibold leading-6 text-yellow-300 shadow-sm hover:bg-zinc-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-400"
                             onClick={handleSubmit}
                           >
                             Log in
@@ -155,8 +206,8 @@ const LoginForm = () => {
                         <div>
                           <button
                             type="submit"
-                            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                            onClick={handleSubmit}
+                            className="flex w-full justify-center rounded-md bg-zinc-700 px-3 py-1.5 text-sm font-semibold leading-6 text-yellow-300 shadow-sm hover:bg-zinc-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-400"
+                            onClick={guestLogin}
                           >
                             Log in as Guest
                           </button>
