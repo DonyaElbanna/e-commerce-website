@@ -29,13 +29,17 @@
   color: rgb(255, 255, 255);
   height: 650px;
   top: 30%;
-  left: 10%;
+  left: 5%;
   z-index: 1;
 }
 
 @media (max-width:767px){
   .video{
     margin-top: 0px;
+  }
+  .filter{
+    top:20%;
+    left: 10%;
   }
 }
 

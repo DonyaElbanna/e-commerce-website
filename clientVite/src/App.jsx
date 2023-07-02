@@ -5,14 +5,14 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import AttractionDetails from "./components/AttractionDetails/AttractionDetails";
 import AttractionsList from "./components/AttractionsList/AttractionsList";
-import Navbar from "./components/common/NavBar/Navbar";
+import Navbar1 from "./components/common/NavBar/Navbar1";
 import Footer from "./components/common/Footer/Footer";
 import Wishlist from "./pages/Wishlist";
 import Welcome from './components/Welome/welcome';
 function App() {
   return (
     <>
-      <Navbar />
+      <Navbar1 />
       <Welcome />
       <Routes className="bg-black">
         <Route path="/" element={<Home />} />

@@ -11,8 +11,8 @@ function Welcome() {
           <video src={video} type="video/mp4" autoPlay loop muted></video>
         </div>
         <div className={Style.filter}>
-          <p className="text-lg xs:text-xl sm:text-2xl md:text-3xl xl:text-4xl">Our Packages</p>
-          <h1 className="text-2xl xs:text3xl sm:text-4xl md:text-6xl xl:text-7xl"> Search your Holiday</h1>
+          <p className="text-lg xs:text-xl sm:text-xl md:text-2xl xl:text-3xl">Our Packages</p>
+          <h1 className="text-2xl xs:text2xl sm:text-3xl md:text-5xl xl:text-6xl"> Search your Holiday</h1>
             <input type="text" list="Cites" placeholder='Enter Your destination' className="w-full h-9 md:h-14 mt-4 md:mt-9  xl:mt-14 border rounded-2xl text-black" />
             <datalist id="Cites">
               <option>Cairo</option>

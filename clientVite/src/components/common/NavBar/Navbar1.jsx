@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "./logo1.png";
+import Logo from "../../../assets/logo.png";
 import Style from "./Navbar.module.css";
 import { Box, CardMedia, Container, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
@@ -25,7 +25,7 @@ const Navbar1 = () => {
     dispatch(handleErrorMessage(""));
   };
   return (
-    <div className={Style.AppBar}>
+    <div className=" navbar sticky top-0  z-50 md:bg-slate-800/0 bg-slate-100/90 px-4 md:px-5">
       <Container maxWidth="lg" className={Style.Container}>
         <Stack
           direction="row"
