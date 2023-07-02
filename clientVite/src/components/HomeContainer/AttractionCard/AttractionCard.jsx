@@ -3,30 +3,28 @@ import axios from "axios";
 import Style from "./AttractionCard.module.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-// import { useSelector } from "react-redux";
-import WishlistContainer from "../../wishListContainer/WishListContanier";
+import { useDispatch, useSelector } from "react-redux";
+import { handleIsLoggedIntoggle } from "../../../rtk/features/authSlice";
 
 const baseURL = "http://localhost:9999/user/64931b6199ee6e4ef036a40f";
 
 const AttractionCard = ({ attr }) => {
-  const navigate = useNavigate();
-
-  // const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const isLoggedIn = true;
-  // console.log(isLoggedIn);
-
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  // const isLoggedIn = true;
+  // const dispahch = useDispatch();
+  // const handlerExp = () => {
+  //   dispahch(handleIsLoggedIntoggle());
+  // };
   const [isFilled, setIsFilled] = useState(false);
-
   const [wishlistItems, setWishlistItems] = useState([]);
 
   useEffect(() => {
     const getWishlistItems = async () => {
       const { data } = await axios.get(baseURL);
-      // console.log(data)
       setWishlistItems(data.wishlist);
     };
     getWishlistItems();
-  },[]);
+  }, []);
 
   const handleAddToWishlist = async (event) => {
     event.preventDefault();
@@ -34,11 +32,11 @@ const AttractionCard = ({ attr }) => {
     setIsFilled(!isFilled);
   };
 
-  function redirect(event) {
+  const navigate = useNavigate();
+  function redirectToLogin(event) {
     event.preventDefault();
     navigate("/login");
   }
-
   const starClassNames = [];
   const rating =
     attr.reviews && attr.reviews.length > 0
@@ -60,7 +58,9 @@ const AttractionCard = ({ attr }) => {
       starClassNames.push("text-gray-300 dark:text-gray-500");
     }
   })();
-
+  function handleAddRating(event) {
+    event.preventDefault();
+  }
   return (
     <div className="flex justify-center flex-row">
       <Link
@@ -73,7 +73,7 @@ const AttractionCard = ({ attr }) => {
         <div className="card-body z-10">
           <div className={`btn btn-ghost btn-circle top-56 ${Style.svgIcon}`}>
             <svg
-              onClick={isLoggedIn ? handleAddToWishlist : redirect}
+              onClick={isLoggedIn ? handleAddToWishlist : redirectToLogin}
               xmlns="http://www.w3.org/2000/svg"
               // fill={isFilled ? "#FF0000" : "none"}
               fill={
@@ -165,6 +165,7 @@ const AttractionCard = ({ attr }) => {
               {starClassNames.map((className, index) => (
                 <svg
                   key={index}
+                  onClick={isLoggedIn ? handleAddRating : redirectToLogin}
                   aria-hidden="true"
                   className={`w-5 h-5 ${className}`}
                   fill="currentColor"
