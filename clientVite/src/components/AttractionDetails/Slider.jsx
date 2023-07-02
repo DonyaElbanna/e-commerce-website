@@ -3,7 +3,7 @@ import "flowbite";
 import { initFlowbite } from "flowbite";
 
 const Slider = ({ attrDetails }) => {
-  // console.log(imgs);
+  console.log(attrDetails.Images);
   initFlowbite();
   return (
     <div

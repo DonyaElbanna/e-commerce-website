@@ -23,7 +23,7 @@ const AttractionDetails = () => {
 
     getAttrs();
   }, []);
-  // console.log(attrDetails);
+  console.log(attrDetails);
   return (
     <>
       {attrDetails.length == 0 ? (

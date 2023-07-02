@@ -77,15 +77,15 @@ const addRemoveWishlist = async (id, attractionID, next) => {
         var updatedUser = await User.findOneAndUpdate(
           { _id: id },
           { $pull: { wishlist: attractionID } },
-          { new: true }
-        ).populate("wishlist");
+          { upsert: true, new: true }
+        ).populate('wishlist');
         console.log("was in wishlist");
       } else {
         var updatedUser = await User.findOneAndUpdate(
           { _id: id },
           { $addToSet: { wishlist: attractionID } },
-          { new: true }
-        ).populate("wishlist");
+          { upsert: true, new: true }
+        );
         console.log("was NOT in wishlist");
       }
     }

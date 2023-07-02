@@ -6,7 +6,7 @@ const {
   DeleteAttract,
   SetImages,
   getAttractByCategory,
-  getAttractBySubcategory
+  getAttractBySubcategory,
 } = require("../services/attraction.service");
 const cloudinary = require("../utils/cloudinary.util");
 const AppError = require("../utils/AppError.util");
@@ -82,5 +82,5 @@ module.exports = {
   deleteAttraction,
   SetUrls,
   getAttractionByCategory,
-  getAttractionBySubcategory
+  getAttractionBySubcategory,
 };
