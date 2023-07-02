@@ -41,15 +41,15 @@ const AttractionsList = () => {
     getAttrs();
   }, []);
 
-  console.log(attrs);
+  // console.log(attrs);
 
   const handleFilter = (id) => {
     setFilterID(id);
     const attrsCopy = [...attrs];
     const filteredattrs = attrsCopy.filter(
-      (attr) => attr.subcategory._id == id
+      (attr) => attr.subcategory[0]._id == id
     );
-    console.log(id, filteredattrs);
+    // console.log(id, filteredattrs);
     setFilteredAttrs(filteredattrs);
   };
 
