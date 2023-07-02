@@ -48,7 +48,6 @@ const RegisterForm = () => {
     } else {
       register();
       setErrors({});
-      setOpen(false);
     }
   };
   const register = async () => {
@@ -58,8 +57,19 @@ const RegisterForm = () => {
       role: "user",
       password: form.password,
     };
-    const data = await axios.post("http://localhost:9999/user", newUser);
-    console.log(data);
+
+    await axios
+      .post("http://localhost:9999/user", newUser)
+      .then((response) => {
+        setOpen(false);
+      })
+      .catch((error) => {
+        setOpen(true);
+        console.log(error);
+        const errorData = {};
+        errorData.email = error.response.data.message;
+        setErrors(errorData);
+      });
   };
   return (
     <Transition.Root show={open} as={Fragment}>

@@ -2,6 +2,7 @@ import React, { Fragment, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import Joi from "joi";
+import axios from "axios";
 const botright_vite = new URL(
   "../../../assets/loginBackground.jpg",
   import.meta.url
@@ -23,6 +24,7 @@ const LoginForm = () => {
   });
 
   const handleChange = (e) => {
+    setErrors({});
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -42,10 +44,41 @@ const LoginForm = () => {
       }
       setErrors(errorData);
     } else {
+      login();
       setErrors({});
-      setOpen(false);
     }
   };
+
+  const login = async () => {
+    try {
+      await axios.post("http://localhost:9999/auth/signin", form);
+      setOpen(false);
+    } catch (error) {
+      const errorData = {};
+      errorData.invalidCradintials = error.response.data.message;
+      setErrors(errorData);
+    }
+  };
+  const guestLogin = async (e) => {
+    e.preventDefault();
+    await axios.post("http://localhost:9999/guest");
+    setOpen(false);
+    setErrors({});
+  };
+
+  // const login = async () => {
+  //   axios
+  //     .post("http://localhost:9999/auth/signin", form)
+  //     .then((response) => {
+  //       this.setState(() => ({ people: response.data }));
+  //     })
+  //     .catch((error) => {
+  //       const errorData = {};
+  //       errorData.invalidCradintials = error.response.data.message;
+  //       // ("Incorrect email or password, please try again");
+  //       setErrors(errorData);
+  //     });
+  // };
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -140,6 +173,9 @@ const LoginForm = () => {
                               </a>
                             </div>
                           </div>
+                          <p className="text-red-500 text-xs italic mt-1 text-left mx-3">
+                            {errors.invalidCradintials}
+                          </p>
                         </div>
 
                         <div>
@@ -155,7 +191,7 @@ const LoginForm = () => {
                           <button
                             type="submit"
                             className="flex w-full justify-center rounded-md bg-zinc-700 px-3 py-1.5 text-sm font-semibold leading-6 text-yellow-300 shadow-sm hover:bg-zinc-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-400"
-                            onClick={handleSubmit}
+                            onClick={guestLogin}
                           >
                             Log in as Guest
                           </button>
