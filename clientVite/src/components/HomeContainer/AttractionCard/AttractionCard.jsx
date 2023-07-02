@@ -26,7 +26,7 @@ const AttractionCard = ({ attr }) => {
       setWishlistItems(data.wishlist);
     };
     getWishlistItems();
-  });
+  },[]);
 
   const handleAddToWishlist = async (event) => {
     event.preventDefault();

@@ -10,18 +10,18 @@ const signin = async (req, res, next) => {
       .status(200)
       .json({ user: data });
   } catch (error) {
-    next(err);
+    next(error);
   }
 };
 const sendVerification = async (req, res, next) => {
-    await authService
-      .sendVerification(req.query, req.query.type)
-      .then(() => {
-        return res.status(200).send();
-      })
-      .catch((err) => next(err));
-  };
+  await authService
+    .sendVerification(req.query, req.query.type)
+    .then(() => {
+      return res.status(200).send();
+    })
+    .catch((err) => next(err));
+};
 module.exports = {
   signin,
-  sendVerification
+  sendVerification,
 };
