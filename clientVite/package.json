@@ -30,6 +30,7 @@
     "react-tailwindcss-datepicker": "^1.6.3",
     "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.2",
     "swiper": "^9.4.1",
     "tw-elements": "^1.0.0-beta2"
   },

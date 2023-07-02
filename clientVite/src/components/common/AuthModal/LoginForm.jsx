@@ -132,12 +132,13 @@ const LoginForm = () => {
                               {errors.password}
                             </p>
                             <div className="flex items-center justify-end ">
-                              <a
-                                href="#"
+                              <Link
                                 className="font-semibold text-xs mt-1  text-indigo-600 hover:text-indigo-500"
+                                to="/forget"
+                                state={form.email}
                               >
                                 Forgot password?
-                              </a>
+                              </Link>
                             </div>
                           </div>
                         </div>

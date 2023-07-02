@@ -4,6 +4,7 @@ import Style from "./AttractionCard.module.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 // import { useSelector } from "react-redux";
+import WishlistContainer from "../../wishListContainer/WishListContanier";
 const baseURL = "http://localhost:9999/user/64931b6199ee6e4ef036a40f";
 
 const AttractionCard = ({ attr }) => {
@@ -11,27 +12,38 @@ const AttractionCard = ({ attr }) => {
   // const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const isLoggedIn = true;
   const [isFilled, setIsFilled] = useState(false);
-  const [wishlistItems, setWishlistItems] = useState([]);
 
-  // const [isWishlistItem, setIsWishlistItem] = useState(false);
+  const [isWishlistItem, setIsWishlistItem] = useState(false);
 
   useEffect(() => {
-    // getting attractions in wishlist
-    const getWishlistItems = async () => {
-      const { data } = await axios.get(baseURL);
-      setWishlistItems(data.wishlist);
-    };
-    getWishlistItems();
-    // checkWishlist();
-  }, [wishlistItems]);
+    // Perform the initial check to determine if the item is in the wishlist
+    checkWishlist();
+  }, []);
+
+  const checkWishlist = async () => {
+    try {
+      const response = await axios.get(baseURL);
+      const wishlistItems = response.data.wishlist;
+      const isInWishlist = wishlistItems.some((item) => item._id === attr._id);
+      setIsWishlistItem(isInWishlist);
+      console.log(wishlistItems);
+    } catch (error) {
+      console.error("Error checking wishlist:", error);
+    }
+  };
 
   const handleAddToWishlist = async (event) => {
     event.preventDefault();
-    setIsFilled(!isFilled);
-    // console.log(attr._id);
-    // console.log(wishlistItems.includes(attr._id));
-    await axios.post(baseURL, { id: attr._id });
-    // console.log(wishlistItems);
+    try {
+      if (isWishlistItem) {
+        await axios.delete(baseURL, { data: { _id: attr._id } });
+      } else {
+        await axios.post(baseURL, { _id: attr._id });
+      }
+      setIsFilled(!isFilled);
+    } catch (error) {
+      console.error("Error toggling wishlist item:", error);
+    }
   };
 
   function redirect(event) {
@@ -40,7 +52,7 @@ const AttractionCard = ({ attr }) => {
   }
 
   const starClassNames = [];
-  const rating = attr.reviews.length > 0 ? attr.reviews[0].avgRating : 0;
+  const rating = 3.3;
   (function () {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating - fullStars >= 0.5;
@@ -70,8 +82,7 @@ const AttractionCard = ({ attr }) => {
             <svg
               onClick={isLoggedIn ? handleAddToWishlist : redirect}
               xmlns="http://www.w3.org/2000/svg"
-              // fill={isFilled ? "#FF0000" : "none"}
-              fill={wishlistItems.includes(attr._id) ? "#FF0000" : "none"}
+              fill={isFilled ? "#FF0000" : "none"}
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="#DC143C"
@@ -86,12 +97,12 @@ const AttractionCard = ({ attr }) => {
           </div>
           <h2 className="card-title">{attr?.name}</h2>
           {/* <p>{attr?.description}</p> */}
-          <div className="flex">
+          <div className="flex justify-between">
             <span className="mx-1 text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 bg-blue-200 text-blue-700 rounded-full w-min">
-              {attr.subcategory[0].type}
+              Cruse
             </span>
             <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 bg-blue-200 text-blue-700 rounded-full w-min">
-              {attr.category[0].city}
+              {attr.category.city}
             </span>
           </div>
           <span className="text-lg text-gray-900 dark:text-white"></span>

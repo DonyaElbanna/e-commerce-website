@@ -1,6 +1,6 @@
 import React from 'react'
 import Style from "./welcome.module.css";
-import video from '../../assets/video/EgyVideo.mp4'
+import video from '../../../assets/video/EgyVideo.mp4'
 import { Link } from "react-router-dom";
 
 function Welcome() {
