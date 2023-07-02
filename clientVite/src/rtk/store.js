@@ -11,7 +11,7 @@ import {
 } from "redux-persist";
 import thunk from "redux-thunk";
 
-import storage from "../app/utils/createWebStorage";
+import storage from "../utils/createWebStorage";
 import testReducer from "./features/testSlice";
 import imeiReducer from "./features/imeiSlice";
 import commonSlice from "./features/commonSlice";

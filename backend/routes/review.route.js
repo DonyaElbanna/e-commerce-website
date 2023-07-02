@@ -5,6 +5,7 @@ const {
   getReviewById,
   updateReview,
   deleteReview,
+  getHigestReviews,
 } = require("../controllers/review.controller");
 
 const router = express.Router();
@@ -12,6 +13,8 @@ const router = express.Router();
 router.post("/", addNewReview);
 
 router.get("/", getReviews);
+
+router.get("/highest", getHigestReviews);
 
 router.get("/:id", getReviewById);
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "./logo1.png";
+import Logo from "../../../assets/logo.png";
 import Style from "./Navbar.module.css";
 import { Box, CardMedia, Container, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
@@ -16,16 +16,20 @@ import MenuItem from "@mui/material/MenuItem";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import Avatar from '@mui/material/Avatar';
+import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined';
+
 const Navbar1 = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+
   const logoutHandler = () => {
     setAnchorEl(null);
     dispatch(handleIsLoggedIn(false));
     dispatch(handleLoggedInInfo({}));
     dispatch(handleErrorMessage(""));
   };
+
   return (
-    <div className={Style.AppBar}>
+    <div className=" navbar sticky top-0  z-50 md:bg-slate-800/0 bg-slate-100/90 px-4 md:px-5">
       <Container maxWidth="lg" className={Style.Container}>
         <Stack
           direction="row"
@@ -61,6 +65,20 @@ const Navbar1 = () => {
                   display={{ xs: "none", md: "inline-flex" }}
                 >
                   Home
+                </Typography>
+              </NavLink>
+              <NavLink
+                to="/cities"
+                className={({ isActive }) => isActive ? Style.NavLinkActive : Style.NavLink}
+
+                
+              >
+                <PublicOutlinedIcon />
+                <Typography
+                  fontWeight={{ xs: 600, md: 700 }}
+                  display={{ xs: "none", md: "inline-flex" }}
+                >
+                  Cities
                 </Typography>
               </NavLink>
               <NavLink
@@ -176,8 +194,6 @@ const Navbar1 = () => {
               <NavLink
                 to="/"
                 className={({ isActive }) => isActive ? Style.NavLinkActive : Style.NavLink}
-
-                
               >
                 <HomeIcon />
 

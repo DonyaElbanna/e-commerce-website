@@ -5,6 +5,7 @@ const {
   UpdateReview,
   DeleteReview,
   getReviewsByAttract,
+  highestReviews,
 } = require("../services/review.service");
 
 const addNewReview = async (req, res, next) => {
@@ -31,10 +32,16 @@ const deleteReview = async (req, res, next) => {
   res.status(200).json({ deletedReview: deletedReview });
 };
 
+const getHigestReviews = async (req, res, next) => {
+  const highest = await highestReviews();
+  res.status(200).json(highest);
+};
+
 module.exports = {
   addNewReview,
   getReviews,
   getReviewById,
   updateReview,
   deleteReview,
+  getHigestReviews,
 };

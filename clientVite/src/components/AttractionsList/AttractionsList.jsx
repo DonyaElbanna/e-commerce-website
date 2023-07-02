@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Categories from "../HomeContainer/Categories/Categories";
+import Categories from "../Categories/Categories";
 import { useParams } from "react-router-dom";
 import AttractionCard from "../HomeContainer/AttractionCard/AttractionCard";
 import axios from "axios";
@@ -47,9 +47,9 @@ const AttractionsList = () => {
     setFilterID(id);
     const attrsCopy = [...attrs];
     const filteredattrs = attrsCopy.filter(
-      (attr) => attr.subcategory._id == id
+      (attr) => attr.subcategory[0]._id == id
     );
-    console.log(id, filteredattrs);
+    // console.log(id, filteredattrs);
     setFilteredAttrs(filteredattrs);
   };
 

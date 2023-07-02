@@ -5,11 +5,20 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import AttractionDetails from "./components/AttractionDetails/AttractionDetails";
 import AttractionsList from "./components/AttractionsList/AttractionsList";
-import Navbar from "./components/common/NavBar/Navbar";
-import Footer from "./components/common/Footer/Footer";
 import Navbar1 from "./components/common/NavBar/Navbar1";
+import Footer from "./components/common/Footer/Footer";
 import Wishlist from "./pages/Wishlist";
+import { useDispatch, useSelector } from "react-redux";
+import { handleIsLoggedIntoggle } from "./rtk/features/authSlice";
+import Cities from "./components/Cities/Cities"
+
 function App() {
+  const {auth}  = useSelector((state)=>state)
+  const dispahch = useDispatch()
+  const handlerExp = ()=>{
+    dispahch(handleIsLoggedIntoggle())
+  }
+  console.log(auth)
   return (
     <>
       <Navbar1 />
@@ -19,6 +28,7 @@ function App() {
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/wishlist" element={<Wishlist />} />
         {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
+        <Route path="/cities" element={<Cities/>} />
         <Route path="/city/:id" element={<AttractionsList />} />
         <Route path="/city/:id/details" element={<AttractionDetails />} />
       </Routes>
