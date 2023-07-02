@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { handleIsLoggedIntoggle } from "./rtk/features/authSlice";
 import Cities from "./components/Cities/Cities";
 import ForgetPassword from "./components/common/AuthModal/ForgetPassword";
+import AuthModel from "./components/common/AuthModal/AuthModel";
 
 function App() {
   const { auth } = useSelector((state) => state);
@@ -23,11 +24,9 @@ function App() {
   return (
     <>
       <Navbar1 />
+      {auth.openAuthModal && <AuthModel />}
       <Routes className="bg-black">
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/forget" element={<ForgetPassword />} />
-        <Route path="/register" element={<RegisterForm />} />
         <Route path="/wishlist" element={<Wishlist />} />
         {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
         <Route path="/cities" element={<Cities />} />
