@@ -232,12 +232,12 @@ const Navbar1 = () => {
                 </Typography>
               </NavLink>
               <NavLink
-                to="/aboutUs"
+                to="/cities"
                 className={({ isActive }) =>
                   isActive ? Style.NavLinkActive : Style.NavLink
                 }
               >
-                <InfoOutlinedIcon />
+                <PublicOutlinedIcon />
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
                   display={{ xs: "none", md: "inline-flex" }}
