@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import Joi from "joi";
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   handleAuthType,
   handleIsLoggedIntoggle,
+  handleOpenAuthModal,
   handleUserInfo,
 } from "../../../rtk/features/authSlice";
 
@@ -24,7 +25,11 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
-
+  useEffect(() => {
+    if (!open) {
+      dispatch(handleOpenAuthModal(false));
+    }
+  }, [open]);
   const [errors, setErrors] = useState({});
   const schema = Joi.object({
     email: Joi.string()
@@ -61,7 +66,9 @@ const LoginForm = () => {
   const handelForgetPassword = (e) => {
     dispatch(handleAuthType("forget"));
   };
-
+  const handleSignUp = (e) => {
+    dispatch(handleAuthType("register"));
+  };
   const login = async () => {
     try {
       const { data } = await axios.post(
@@ -69,7 +76,7 @@ const LoginForm = () => {
         form
       );
       dispatch(handleUserInfo(data));
-      dispatch(handleIsLoggedIntoggle());
+      sessionStorage.setItem("logged", true);
       setOpen(false);
     } catch (error) {
       const errorData = {};
@@ -268,12 +275,12 @@ const LoginForm = () => {
 
                       <p className="mt-5 text-center text-sm text-gray-500">
                         Not a member?{" "}
-                        <Link
-                          className="font-semibold text-indigo-600 hover:text-indigo-500"
-                          to="/register"
+                        <a
+                          className="font-semibold cursor-pointer text-indigo-600 hover:text-indigo-500"
+                          onClick={handleSignUp}
                         >
                           Sign Up
-                        </Link>
+                        </a>
                       </p>
                     </div>
                   </div>
