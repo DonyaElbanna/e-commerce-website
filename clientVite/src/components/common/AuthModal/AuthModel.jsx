@@ -8,8 +8,9 @@ const AuthModel = () => {
   return (
     <>
       {auth.authType === "login" && <LoginForm />}
-      {auth.authType === "reset" && <RegisterForm />}
+      {auth.authType === "register" && <RegisterForm />}
       {auth.authType === "forget" && <ForgetPassword />}
+      {auth.authType === "reset" && <ResetPassword />}
     </>
   );
 };

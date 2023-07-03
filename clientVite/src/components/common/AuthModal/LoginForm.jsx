@@ -5,6 +5,7 @@ import Joi from "joi";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  handleAuthType,
   handleIsLoggedIntoggle,
   handleUserInfo,
 } from "../../../rtk/features/authSlice";
@@ -57,6 +58,9 @@ const LoginForm = () => {
       setErrors({});
     }
   };
+  const handelForgetPassword = (e) => {
+    dispatch(handleAuthType("forget"));
+  };
 
   const login = async () => {
     try {
@@ -66,7 +70,6 @@ const LoginForm = () => {
       );
       dispatch(handleUserInfo(data));
       dispatch(handleIsLoggedIntoggle());
-
       setOpen(false);
     } catch (error) {
       const errorData = {};
@@ -180,13 +183,13 @@ const LoginForm = () => {
                               {errors.password}
                             </p>
                             <div className="flex items-center justify-end ">
-                              <Link
-                                className="font-semibold text-xs mt-1  text-indigo-600 hover:text-indigo-500"
-                                to="/forget"
+                              <a
+                                className="font-semibold text-xs mt-1 cursor-pointer text-indigo-600 hover:text-indigo-500"
+                                onClick={handelForgetPassword}
                                 state={form.email}
                               >
                                 Forgot password?
-                              </Link>
+                              </a>
                             </div>
                           </div>
                           <p className="text-red-500 text-xs italic mt-1 text-left mx-3">
