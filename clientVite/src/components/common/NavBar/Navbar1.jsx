@@ -242,7 +242,7 @@ const Navbar1 = () => {
                   fontWeight={{ xs: 600, md: 700 }}
                   display={{ xs: "none", md: "inline-flex" }}
                 >
-                  About Us
+                  Cities
                 </Typography>
               </NavLink>
               <span
