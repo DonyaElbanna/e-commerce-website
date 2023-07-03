@@ -11,7 +11,7 @@ exports.mailer = async (payload) => {
 };
 
 async function sendMail(payload) {
-  console.log(payload)
+  console.log(payload);
   const testAccount = await nodemailer.createTestAccount();
   const transporter = nodemailer.createTransport({
     host: config.nodemailer.host,

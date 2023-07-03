@@ -33,13 +33,13 @@ const signin = async (payload) => {
 
 const sendVerification = async (data, type) => {
   try {
-    const user = await userModel.findOne({ email: data.email });
+    const user = await userModel.findOne({ email: data.emailAddress });
     if (user && type === "verify") {
       const verificationToken = await generateVerificationToken(user);
       // Modify the template later
       const payload = {
         senderName: "Tickets",
-        senderEmail: "mahmoudalmazoon@outlook.com",
+        senderEmail: "toursguied@outlook.com",
         receiverName: `${user.username}`,
         receiverEmail: data?.emailAddress,
         subject: "Verify Account",
@@ -51,10 +51,11 @@ const sendVerification = async (data, type) => {
       // Modify the template later
       const payload = {
         senderName: " Tickets",
-        senderEmail: "mahmoudalmazoon@outlook.com",
+        senderEmail: "toursguied@outlook.com",
         receiverName: `${user.username}`,
         receiverEmail: data?.emailAddress,
         subject: "Reset Password",
+        message: `Click <a href='${config.client.uri}/reset?token=${verificationToken}'>here</a> to reset your password.`,
         message: `Click <a href='${config.client.uri}/reset?token=${verificationToken}'>here</a> to reset your password.`,
       };
       await mailerService.mailer(payload);
@@ -119,23 +120,17 @@ const generateVerificationToken = async (user) => {
 
 const resetPassword = async (payload) => {
   try {
-    const user = await userModel
-      .findOne({
-        $and: [
-          { $or: [{ username: payload.username }, { email: payload.email }] },
-        ],
-      })
-      .select("+password");
+    const user = await userModel.findOneAndUpdate(
+      { _id: payload.userId },
+      { password: payload.body.password }
+    );
+    console.log("__________user_____________");
+    console.log(user);
+    console.log("__________user_____________");
     if (!user) {
       const err = new AppError(INVALID_CREDENTIALS, 409);
       throw err;
     }
-    const isPasswordMatch = await user.comparePassword(payload.password);
-    if (!isPasswordMatch) {
-      const err = new AppError(INVALID_CREDENTIALS, 409);
-      throw err;
-    }
-    user.password = "";
     return user;
   } catch (error) {
     throw error;

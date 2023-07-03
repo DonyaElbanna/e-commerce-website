@@ -4,13 +4,11 @@ import Style from "./AttractionCard.module.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { handleIsLoggedIntoggle } from "../../../rtk/features/authSlice";
 
-const baseURL = "http://localhost:9999/user/64931b6199ee6e4ef036a40f";
+const baseURL = "http://localhost:9999/user/6493210b7b4837976bc3c29e";
 
 const AttractionCard = ({ attr }) => {
   const { isLoggedIn } = useSelector((state) => state.auth);
-  // const isLoggedIn = true;
   // const dispahch = useDispatch();
   // const handlerExp = () => {
   //   dispahch(handleIsLoggedIntoggle());
@@ -18,6 +16,7 @@ const AttractionCard = ({ attr }) => {
   const [isFilled, setIsFilled] = useState(false);
   const [wishlistItems, setWishlistItems] = useState([]);
 
+  // console.log("ffff", attr);
   useEffect(() => {
     const getWishlistItems = async () => {
       const { data } = await axios.get(baseURL);
@@ -31,7 +30,6 @@ const AttractionCard = ({ attr }) => {
     await axios.post(baseURL, { id: attr._id });
     setIsFilled(!isFilled);
   };
-
   const navigate = useNavigate();
   function redirectToLogin(event) {
     event.preventDefault();

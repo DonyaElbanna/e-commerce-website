@@ -14,6 +14,7 @@ import Cities from "./components/Cities/Cities";
 import ForgetPassword from "./components/common/AuthModal/ForgetPassword";
 import AuthModel from "./components/common/AuthModal/AuthModel";
 import Admin from "./pages/AdminDashboard/Admin";
+import ResetPassword from "./components/common/AuthModal/ResetPassword";
 
 function App() {
   const { auth } = useSelector((state) => state);
@@ -30,10 +31,12 @@ function App() {
   return (
     <>
       <Navbar1 />
-      {auth.openAuthModal && <AuthModel />}
+      {!auth.openAuthModal && <AuthModel />}
       <Routes className="bg-black">
         <Route path="/" element={<Home />} />
         <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/reset" element={<ResetPassword />} />
+
         {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
         <Route path="/cities" element={<Cities />} />
         <Route path="/admin" element={<Admin />} />
