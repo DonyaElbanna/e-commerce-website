@@ -31,7 +31,6 @@ const AttractionCard = ({ attr }) => {
     await axios.post(baseURL, { id: attr._id });
     setIsFilled(!isFilled);
   };
-
   const navigate = useNavigate();
   function redirectToLogin(event) {
     event.preventDefault();
