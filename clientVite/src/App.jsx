@@ -30,7 +30,7 @@ function App() {
   return (
     <>
       <Navbar1 />
-      {!auth.openAuthModal && <AuthModel />}
+      {auth.openAuthModal && <AuthModel />}
       <Routes className="bg-black">
         <Route path="/" element={<Home />} />
         <Route path="/wishlist" element={<Wishlist />} />
