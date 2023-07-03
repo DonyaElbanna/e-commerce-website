@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import wishlistStyle from "./WishListContanier.module.css";
 
-const baseURL = "http://localhost:9999/user/64a0892352ffbc8453b77147";
+const baseURL = "http://localhost:9999/user/64a2e90d706780e71edb32ca";
 
 const WishListContanier = ({ attr }) => {
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -12,22 +12,21 @@ const WishListContanier = ({ attr }) => {
       const { data } = await axios.get(baseURL);
       setWishlistItems(data.wishlist);
     };
-    // const removeFromWishlist = async () => {
-    //   const { data } = await axios.delete(`${baseURL}/`);
-    //   setWishlistItems(data.wishlist);
-    // };
     getWishlistItems();
   }, []);
+  console.log(wishlistItems);
 
-  // console.log(wishlistItems);
-  const handleRemoveFromWishlist = (item) => {
-    // const updatedWishlist = wishlistItems.filter(
-    //   (wishlistItem) => wishlistItem._id !== item._id
-    // );
-    // setWishlistItems(updatedWishlist);
-    // await axios.delete(`${baseURL}/wishlist/${item._id}`);
-    // await axios.delete(baseURL, { id: item._id });
-    // setIsFilled(!isFilled);
+  const handleRemoveFromWishlist = async (item) => {
+    // console.log(item._id);
+    const updatedWishlist = wishlistItems.filter(
+      (wishlistItem) => wishlistItem._id !== item._id
+    );
+    setWishlistItems(updatedWishlist);
+    try {
+      await axios.post(baseURL, { id: item._id });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // const data = wishlistItems.map((item, idx) => {
@@ -107,104 +106,56 @@ const WishListContanier = ({ attr }) => {
 
   //Buttons inside the card
 
-  // const data = wishlistItems.map((item, idx) => {
-  //   return (
-  //     <div
-  //       className="card card-side bg-base-100 shadow-xl w-4/12 ml-64 mb-10"
-  //       key={item._id}
-  //     >
-  //       <figure>
-  //         <img className={wishlistStyle.cardImage} src={item.Images[0]} />
-  //       </figure>
-  //       <div className="card-body w-52 flex justify-between">
-  //         <div>
-  //           <h2 className="card-title text-slate-50">{item.name}</h2>
-  //           <h2 className="card-title">
-  //             <span>Available:</span>
-  //             <span className="text-slate-50">
-  //               {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
-  //             </span>
-  //           </h2>
-  //           <h2 className="card-title justify-between w-32">
-  //             <span className="bold">Price:</span>
-  //             <span className="text-slate-50">{item.AdultPrice}</span>
-  //           </h2>
-  //           <div className="flex mt-5">
-  //             <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-5 py-1 bg-blue-200 text-blue-700 rounded-full w-min">
-  //               {/* {item.subcategory} */}
-  //               Cairo
-  //             </span>
-  //             <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 mx-3 bg-green-200 text-blue-700 rounded-full w-min">
-  //               {/* {item.category} */}
-  //               Cruse
-  //             </span>
-  //           </div>
-  //         </div>
-  //         <div className="flex flex-row-reverse text-center justify-start">
-  //           <button onClick={() => handleRemoveFromWishlist(item)}>
-  //             <svg
-  //               xmlns="http://www.w3.org/2000/svg"
-  //               viewBox="0 0 24 24"
-  //               fill="red"
-  //               className="w-6 h-6"
-  //             >
-  //               <path
-  //                 fillRule="evenodd"
-  //                 d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z"
-  //                 clipRule="evenodd"
-  //               />
-  //             </svg>
-  //           </button>
-  //         </div>
-  //         <div className="flex flex-row-reverse text-center justify-center">
-  //           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full flex w-44">
-  //             <svg
-  //               xmlns="http://www.w3.org/2000/svg"
-  //               fill="none"
-  //               viewBox="0 0 24 24"
-  //               strokeWidth="1.5"
-  //               stroke="currentColor"
-  //               className="w-6 h-6"
-  //             >
-  //               <path
-  //                 strokeLinecap="round"
-  //                 strokeLinejoin="round"
-  //                 d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-  //               />
-  //             </svg>
-  //             <p className="ml-3 w-32">Add To Cart</p>
-  //           </button>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // });
-
-  //Table
-  const data = wishlistItems.map((item, idx) => {
+  const data = wishlistItems.map((item) => {
     return (
-      <tr
+      <div
+        className="card card-side bg-base-100 shadow-xl w-4/12 mx-28 mb-10"
         key={item._id}
-        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-center"
       >
-        <td className="whitespace-nowrap px-6 py-4 font-medium text-center">
-          {idx + 1}
-        </td>
-        <td className="whitespace-nowrap px-6 py-4 font-medium text-center">
-          <img className={wishlistStyle.tableImage} src={item.Images[0]} />
-        </td>
-        <th
-          scope="row"
-          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-left"
-        >
-          {item.name}
-        </th>
-        <td className="px-6 py-4 text-center">Alexandria</td>
-        <td className="px-6 py-4 text-center">Cruse</td>
-        <td className="px-6 py-4 text-center">${item.AdultPrice}</td>
-        <td className="px-6 py-4  text-centert">
-          <div className="flex flex-row justify-center">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full flex">
+        <figure>
+          <img className={wishlistStyle.cardImage} src={item.Images[0]} />
+        </figure>
+        <div className="card-body w-52 flex justify-between">
+          <div>
+            <h2 className="card-title text-slate-50">{item.name}</h2>
+            <h2 className="card-title">
+              <span>Available:</span>
+              <span className="text-slate-50">
+                {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+              </span>
+            </h2>
+            <h2 className="card-title justify-between w-32">
+              <span className="bold">Price:</span>
+              <span className="text-slate-50">{item.AdultPrice}</span>
+            </h2>
+            <div className="flex mt-5">
+              <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-5 py-1 bg-blue-200 text-blue-700 rounded-full w-min">
+                {item.subcategory.type}
+              </span>
+              <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 mx-3 bg-green-200 text-blue-700 rounded-full w-min">
+                {item.category.city}
+                {/* Cruse */}
+              </span>
+            </div>
+          </div>
+          <div className="flex flex-row-reverse text-center justify-start">
+            <button onClick={() => handleRemoveFromWishlist(item)}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="red"
+                className="w-6 h-6"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+          <div className="flex flex-row-reverse text-center justify-center">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full flex w-44">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -219,29 +170,76 @@ const WishListContanier = ({ attr }) => {
                   d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
                 />
               </svg>
-              <p className="ml-3">Add To Cart</p>
+              <p className="ml-3 w-32">Add To Cart</p>
             </button>
           </div>
-        </td>
-        <td className="px-6 py-4 text-center">
-          <button onClick={() => handleRemoveFromWishlist(item)}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="red"
-              className="w-6 h-6"
-            >
-              <path
-                fillRule="evenodd"
-                d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </button>
-        </td>
-      </tr>
+        </div>
+      </div>
     );
   });
+
+  //Table
+  // const data = wishlistItems.map((item, idx) => {
+  //   return (
+  //     <tr
+  //       key={item._id}
+  //       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-center"
+  //     >
+  //       <td className="whitespace-nowrap px-6 py-4 font-medium text-center">
+  //         {idx + 1}
+  //       </td>
+  //       <td className="whitespace-nowrap px-6 py-4 font-medium text-center">
+  //         <img className={wishlistStyle.tableImage} src={item.Images[0]} />
+  //       </td>
+  //       <th
+  //         scope="row"
+  //         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-left"
+  //       >
+  //         {item.name}
+  //       </th>
+  //       <td className="px-6 py-4 text-center">Alexandria</td>
+  //       <td className="px-6 py-4 text-center">Cruse</td>
+  //       <td className="px-6 py-4 text-center">${item.AdultPrice}</td>
+  //       <td className="px-6 py-4  text-centert">
+  //         <div className="flex flex-row justify-center">
+  //           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full flex">
+  //             <svg
+  //               xmlns="http://www.w3.org/2000/svg"
+  //               fill="none"
+  //               viewBox="0 0 24 24"
+  //               strokeWidth="1.5"
+  //               stroke="currentColor"
+  //               className="w-6 h-6"
+  //             >
+  //               <path
+  //                 strokeLinecap="round"
+  //                 strokeLinejoin="round"
+  //                 d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+  //               />
+  //             </svg>
+  //             <p className="ml-3">Add To Cart</p>
+  //           </button>
+  //         </div>
+  //       </td>
+  //       <td className="px-6 py-4 text-center">
+  //         <button onClick={() => handleRemoveFromWishlist(item)}>
+  //           <svg
+  //             xmlns="http://www.w3.org/2000/svg"
+  //             viewBox="0 0 24 24"
+  //             fill="red"
+  //             className="w-6 h-6"
+  //           >
+  //             <path
+  //               fillRule="evenodd"
+  //               d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z"
+  //               clipRule="evenodd"
+  //             />
+  //           </svg>
+  //         </button>
+  //       </td>
+  //     </tr>
+  //   );
+  // });
 
   return (
     <div>
@@ -267,8 +265,8 @@ const WishListContanier = ({ attr }) => {
           </mark>
         </h1>
       </div>
-      {/* <div className="flex">{data}</div> */}
-      <div className="content-center flex justify-center items-center mb-36">
+      <div className="flex flex-wrap">{data}</div>
+      {/* <div className="content-center flex justify-center items-center mb-36">
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-10/12">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -302,7 +300,7 @@ const WishListContanier = ({ attr }) => {
             <tbody>{data}</tbody>
           </table>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

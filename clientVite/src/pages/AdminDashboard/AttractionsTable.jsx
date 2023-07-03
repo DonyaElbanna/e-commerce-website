@@ -4,34 +4,31 @@ import { DataGrid } from "@mui/x-data-grid";
 import gif from "../../assets/gih.gif";
 import { useDispatch, useSelector } from "react-redux";
 import { handleIsLoadingToggle } from "../../rtk/features/commonSlice";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Tooltip from "@mui/material/Tooltip";
 
-const columns = [
-  { field: "name", headerName: "Name", width: 150 },
-  { field: "city", headerName: "City", width: 130 },
-  { field: "category", headerName: "Category", width: 130 },
-  { field: "status", headerName: "Status", width: 120 },
-  {
-    field: "edit",
-    headerName: "Edit",
-    sortable: false,
-    width: 90,
-    renderCell: (params) => (
-      <button onClick={() => handleButtonClick(params.row)}>Edit</button>
-    ),
-  },
-  {
-    field: "delete",
-    headerName: "Delete",
-    sortable: false,
-    width: 90,
-    renderCell: (params) => (
-      <button onClick={() => handleButtonClick(params.row)}>Delete</button>
-    ),
-  },
-];
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
-const handleButtonClick = (x) => {
-  console.log(x);
+// modal styles
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+  textAlign: "center",
 };
 
 const Attractions = () => {
@@ -39,6 +36,119 @@ const Attractions = () => {
 
   const { common } = useSelector((state) => state);
   const dispatch = useDispatch();
+
+  // modal state
+  const [open, setOpen] = useState(false);
+  const [slcID, setSlcID] = useState(null);
+
+  const handleOpen = (id) => {
+    setOpen(true);
+    setSlcID(id);
+  };
+  // console.log(slcID);
+
+  const handleClose = () => setOpen(false);
+
+  const deleteAttr = (id) => {
+    // console.log(id);
+    // optimistic update
+    const newAttrs = attrs.filter((attr) => attr.id !== id);
+    setAttrs(newAttrs);
+    handleClose();
+
+    try {
+      axios.delete(`http://localhost:9999/attraction/${id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // console.log(attrs);
+
+  // table cols
+  const columns = [
+    { field: "name", headerName: "Name", width: 150 },
+    { field: "city", headerName: "City", width: 130 },
+    { field: "category", headerName: "Category", width: 130 },
+    { field: "status", headerName: "Status", width: 120 },
+    {
+      field: "edit",
+      headerName: "Edit",
+      sortable: false,
+      width: 90,
+      dataIndex: "id",
+      key: "id",
+      renderCell: (index, params) => (
+        <Button
+          variant="outlined"
+          onClick={() => handleButtonClick(params.row.id)}
+        >
+          Edit
+        </Button>
+      ),
+    },
+    {
+      field: "delete",
+      headerName: "Delete",
+      sortable: false,
+      width: 90,
+      renderCell: (params) => (
+        <>
+          <Tooltip title="Delete">
+            <IconButton onClick={() => handleOpen(params.row.id)}>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+            slots={{ backdrop: Backdrop }}
+            slotProps={{
+              backdrop: {
+                timeout: 500,
+              },
+            }}
+          >
+            <Fade in={open}>
+              <Box sx={style}>
+                <Typography
+                  id="transition-modal-title"
+                  variant="h6"
+                  color="black"
+                  component="h2"
+                  sx={{ marginBottom: "20px" }}
+                >
+                  Are you sure you want to delete this attraction item?
+                </Typography>
+                <Stack
+                  direction="row"
+                  spacing={4}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Button variant="outlined" onClick={handleClose}>
+                    No, go back
+                  </Button>
+                  <Button variant="contained" onClick={() => deleteAttr(slcID)}>
+                    Yes, delete
+                  </Button>
+                </Stack>
+              </Box>
+            </Fade>
+          </Modal>
+        </>
+      ),
+    },
+  ];
+
+  const handleButtonClick = (x) => {
+    console.log(x);
+  };
 
   useEffect(() => {
     dispatch(handleIsLoadingToggle());
@@ -65,26 +175,34 @@ const Attractions = () => {
     dispatch(handleIsLoadingToggle());
   }, []);
 
-  // console.log(attrs);
-
   return (
     <>
       {common.isLoading ? (
         <img src={gif} className="mx-auto" style={{ width: "150px" }} />
       ) : (
-        <div style={{ height: 400, width: "100%" }}>
-          <DataGrid
-            rows={attrs}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
-              },
-            }}
-            pageSizeOptions={[10, 20]}
-            checkboxSelection
-          />
-        </div>
+        <>
+          <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
+            <Button
+              variant="outlined"
+              startIcon={<AddCircleOutlineOutlinedIcon />}
+            >
+              Add a new record
+            </Button>
+          </Box>
+          <div style={{ height: 400, width: "100%" }}>
+            <DataGrid
+              rows={attrs}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 10 },
+                },
+              }}
+              pageSizeOptions={[10, 20]}
+              checkboxSelection
+            />
+          </div>
+        </>
       )}
     </>
   );

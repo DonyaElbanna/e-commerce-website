@@ -5,6 +5,7 @@ const {
   create,
   getCategories,
   getCategory,
+  deleteCat,
   default: categoryService,
 } = require("../services/category.service");
 const cloudinary = require("../utils/cloudinary.util");
@@ -38,7 +39,7 @@ const editCategory = async (req, res) => {
 };
 
 const deleteCategory = async (req, res) => {
-  const category = await categoryService.deleteCategory(req.params.id);
+  const category = await deleteCat(req.params.id);
   res.status(200).send("Category is Removed Successfully");
 };
 

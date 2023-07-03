@@ -41,7 +41,7 @@ const AttractionsList = () => {
     getAttrs();
   }, []);
 
-  console.log(attrs);
+  // console.log(attrs);
 
   const handleFilter = (id) => {
     setFilterID(id);
