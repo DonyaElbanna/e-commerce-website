@@ -61,7 +61,9 @@ const LoginForm = () => {
   const handelForgetPassword = (e) => {
     dispatch(handleAuthType("forget"));
   };
-
+  const handleSignUp = (e) => {
+    dispatch(handleAuthType("register"));
+  };
   const login = async () => {
     try {
       const { data } = await axios.post(
@@ -268,12 +270,12 @@ const LoginForm = () => {
 
                       <p className="mt-5 text-center text-sm text-gray-500">
                         Not a member?{" "}
-                        <Link
-                          className="font-semibold text-indigo-600 hover:text-indigo-500"
-                          to="/register"
+                        <a
+                          className="font-semibold cursor-pointer text-indigo-600 hover:text-indigo-500"
+                          onClick={handleSignUp}
                         >
                           Sign Up
-                        </Link>
+                        </a>
                       </p>
                     </div>
                   </div>

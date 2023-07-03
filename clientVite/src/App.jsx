@@ -9,7 +9,10 @@ import Navbar1 from "./components/common/NavBar/Navbar1";
 import Footer from "./components/common/Footer/Footer";
 import Wishlist from "./pages/Wishlist";
 import { useDispatch, useSelector } from "react-redux";
-import { handleIsLoggedIntoggle } from "./rtk/features/authSlice";
+import {
+  handleAuthType,
+  handleIsLoggedIntoggle,
+} from "./rtk/features/authSlice";
 import Cities from "./components/Cities/Cities";
 import ForgetPassword from "./components/common/AuthModal/ForgetPassword";
 import AuthModel from "./components/common/AuthModal/AuthModel";
@@ -23,7 +26,7 @@ function App() {
   const handlerExp = () => {
     dispahch(handleIsLoggedIntoggle());
   };
-
+  // dispahch(handleAuthType("login"));
   return (
     <>
       <Navbar1 />
