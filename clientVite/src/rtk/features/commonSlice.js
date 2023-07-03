@@ -15,8 +15,8 @@ export const commonSlice = createSlice({
   name: "common",
   initialState,
   reducers: {
-    handleIsLoading: (state, action) => {
-      state.isLoading = action.payload;
+    handleIsLoadingToggle: (state, action) => {
+      state.isLoading = !state.isLoading;
     },
     handleIsError: (state, action) => {
       state.isError = action.payload;
@@ -43,7 +43,7 @@ export const commonSlice = createSlice({
 });
 
 export const {
-  handleIsLoading,
+  handleIsLoadingToggle,
   handleIsError,
   handleErrorMessage,
   handleAnchorElUser,
