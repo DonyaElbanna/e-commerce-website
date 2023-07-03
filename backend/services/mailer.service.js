@@ -6,12 +6,12 @@ exports.mailer = async (payload) => {
   try {
     return await sendMail(payload);
   } catch (error) {
+    console.log(error)
     await ErrorHandler(error);
   }
 };
 
 async function sendMail(payload) {
-  console.log(payload);
   const testAccount = await nodemailer.createTestAccount();
   const transporter = nodemailer.createTransport({
     host: config.nodemailer.host,
@@ -25,7 +25,7 @@ async function sendMail(payload) {
   });
 
   const mailOptions = {
-    from: `${payload.senderName} <${payload.senderEmail}>`,
+    from: `${payload.senderName} <${config.nodemailer.user}>`,
     to: `${payload.receiverName} <${payload.receiverEmail}>`,
     subject: `${payload.subject}`,
     text: `${payload.message}`,
