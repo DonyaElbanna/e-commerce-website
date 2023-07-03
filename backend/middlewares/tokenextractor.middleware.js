@@ -1,10 +1,12 @@
 const jwt = require("jsonwebtoken");
 const { config } = require("../config/default.config");
-const { NOT_FOUND, UNAUTHORIZED_ACCESS,adminonly} = require("../utils/namespace.util");
-const paymentService = require("../services/payment.service");
-const TransactionModel = require("../models/Transaction.model");
-const axios = require("axios")
-const xml2js = require("xml2js")
+const {
+  NOT_FOUND,
+  UNAUTHORIZED_ACCESS,
+  adminonly,
+} = require("../utils/namespace.util");
+const axios = require("axios");
+const xml2js = require("xml2js");
 const headers = {
   headers: { "Content-Type": "text/xml" },
 };
@@ -45,8 +47,8 @@ exports.extractJwtAdminFromCookie = (req, res, next) => {
         err.status = 404;
         next(err);
       } else {
-        if(decoded.position !== "admin"){
-          const err = new Error(adminonly)
+        if (decoded.position !== "admin") {
+          const err = new Error(adminonly);
           err.status = 404;
           next(err);
         }
@@ -77,7 +79,7 @@ exports.extractJwtAdminFromCookie = (req, res, next) => {
 //   next()
 // };
 exports.extractTransactionTokenFromCookie = async (req, res, next) => {
-  const TransactionToken =  req.signedCookies?.TransToken || req.body.TransToken;
+  const TransactionToken = req.signedCookies?.TransToken || req.body.TransToken;
   if (TransactionToken) {
     try {
       const TransToken = await TransactionModel.findOne({
@@ -97,7 +99,6 @@ exports.extractTransactionTokenFromCookie = async (req, res, next) => {
           throw error;
         }
         if (result.API3G.Result[0] !== "000" || TransToken.bookingId) {
-          
           const error = new Error(result.API3G.Result[0]);
           error.status = 409;
           throw error;
@@ -114,10 +115,11 @@ exports.extractTransactionTokenFromCookie = async (req, res, next) => {
   }
 };
 exports.extractJwtFromHeader = (req, res, next) => {
-  const token = req.headers?.authorization?.split(" ")[1];
+  const token = req.headers?.authorization?.split(" ")[1] || req.body.token;
   if (token) {
     jwt.verify(token, config.server.token.secret, (error, decoded) => {
       if (error) {
+        console.log("heloo from medlel ware ");
         const err = new Error(error);
         err.status = 404;
         next(err);

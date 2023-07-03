@@ -1,80 +1,73 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Joi from "joi";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {
-  handleAuthType,
-  handleToggleAuthModal,
-} from "../../../rtk/features/authSlice";
+import { handleAuthType } from "../../../rtk/features/authSlice";
 import axios from "axios";
-const ForgetPassword = () => {
+const ResetPassword = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(true);
-  const [sending, setSending] = useState("beforeSending"); //sending  , after Sending
   const cancelButtonRef = useRef(null);
-  const location = useLocation();
+  let [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
   useEffect(() => {
     if (!open) {
       dispatch(handleAuthType("login"));
-      dispatch(handleToggleAuthModal());
     }
   }, [open]);
-  const [email, setEmail] = useState("");
+  const [form, setForm] = useState({
+    password: "",
+    confirmPassword: "",
+  });
   const [errors, setErrors] = useState({});
-
   const schema = Joi.object({
-    email: Joi.string()
-      .required()
-      .pattern(/^([a-z0-9_\.\+-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/),
+    password: Joi.string().required().min(8),
+    confirmPassword: Joi.string().required().min(8).equal(form.password),
   });
   const handleChange = (e) => {
     setErrors({});
-    setEmail(e.target.value);
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const err = schema.validate({ email });
+    const err = schema.validate(form);
     const { error } = err;
     if (error) {
-      console.log(error.message);
       const errorData = {};
-      let name = "email";
-      let message = error.message;
-      if (message === `"${name}" is not allowed to be empty`)
-        message = `${name} is required `;
-      else message = "Invalid email pattern";
-      errorData["email"] = message;
+      for (let item of error.details) {
+        let name = item.path[0];
+        let message = item.message;
+        if (message === `"${name}" is not allowed to be empty`)
+          message = `${name} is required `;
+        else if (name == "confirmPassword") message = "don't match password";
+        errorData[name] = message;
+      }
       setErrors(errorData);
     } else {
-      forgetPassword();
+      reset();
       setErrors({});
+      setOpen(false);
     }
   };
-  const forgetPassword = async () => {
+
+  const reset = async () => {
     try {
-      setSending("sending");
-      const { data } = await axios.post(
-        "http://localhost:9999/auth/forgetPassword",
-        null,
-        {
-          params: {
-            emailAddress: email,
-          },
-        }
-      );
-      setSending("afterSending");
-      dispatch(handleAuthType("login"));
-      dispatch(handleToggleAuthModal());
+      const { data } = await axios.post("http://localhost:9999/auth/reset", {
+        token: token,
+        password: form.password,
+      });
+      // dispatch(handleAuthType("login"));
+      // dispatch(handleToggleAuthModal());
     } catch (error) {
-      setSending("beforeSending");
       const errorData = {};
       console.log(error);
       errorData.invalidCradintials = error.response.data.message;
       setErrors(errorData);
     }
   };
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -116,31 +109,40 @@ const ForgetPassword = () => {
                       <form className="space-y-4 md:space-y-6" action="#">
                         <div>
                           <input
-                            type="email"
-                            placeholder="ayazain@gmail.com"
+                            type="password"
+                            name="password"
+                            id="password"
+                            placeholder="New Password"
                             className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            value={email}
+                            required=""
                             onChange={(value) => handleChange(value)}
                           />
+                          <p className="text-red-500 text-xs italic">
+                            {errors.password}
+                          </p>
                         </div>
-                        <p className="text-red-500 text-xs italic">
-                          {errors.email}
-                        </p>
-                        <p className="text-red-500 text-xs italic mt-1 text-left mx-3">
-                          {errors.invalidCradintials}
-                        </p>
+                        <div>
+                          <input
+                            type="password"
+                            name="confirmPassword"
+                            id="confirmPassword"
+                            placeholder="Confirm Password"
+                            className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
+                            required=""
+                            onChange={(value) => handleChange(value)}
+                          />
+                          <p className="text-red-500 text-xs italic">
+                            {errors.confirmPassword}
+                          </p>
+                        </div>
+
                         <div>
                           <button
                             type="submit"
-                            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm enabled:hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             onClick={handleSubmit}
-                            disabled={sending === "sending"}
                           >
-                            {sending === "sending"
-                              ? "Sending ......"
-                              : sending === "beforeSending"
-                              ? "Send Varification mail"
-                              : "Email sent successfuly "}
+                            Reset
                           </button>
                         </div>
                       </form>
@@ -156,4 +158,4 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword;
+export default ResetPassword;

@@ -30,7 +30,8 @@ const DB = {
 //server
 const SERVER_PORT = process.env.SERVER_PORT || 9999;
 const SERVER_CORS_ORIGIN = process.env.SERVER_CORS_ORIGIN || "*";
-const SERVER_TOKEN_SECRET =process.env.SERVER_TOKEN_SECRET || "somesupersecret";
+const SERVER_TOKEN_SECRET =
+  process.env.SERVER_TOKEN_SECRET || "somesupersecret";
 const SERVER_TOKEN_ISSUER = process.env.SERVER_TOKEN_ISSUER || "error-404";
 const SERVER_COOKIE_SECRET = process.env.SERVER_COOKIE_SECRET || "secret";
 const SERVER_COOKIE_DOMAIN = process.env.SERVER_COOKIE_DOMAIN || "localhost";
@@ -49,7 +50,7 @@ const SERVER = {
   },
 };
 //url
-const CLIENT_URI = process.env.CLIENT_URI || "http://localhost:3000";
+const CLIENT_URI = process.env.CLIENT_URI || "http://127.0.0.1:5173";
 
 const CLIENT = {
   uri: CLIENT_URI,
@@ -69,10 +70,10 @@ const NODEMAILER = {
   secure: NODEMAILER_SECURE === "true" ? true : false,
   user: NODEMAILER_AUTH_USER,
   password: NODEMAILER_AUTH_PASSWORD,
-}; 
+};
 
 //AGANCY
-const ClientId = process.env.ClientId ;
+const ClientId = process.env.ClientId;
 const ClientSecret = process.env.ClientSecret;
 const AgancyUrl = process.env.agencyUrl;
 const AgancyInfo = {
@@ -81,30 +82,30 @@ const AgancyInfo = {
   AgancyUrl: AgancyUrl,
 };
 //DPO
-const TestCompanyToken = process.env.TestCompanyToken
-const PaymentCurrency = process.env.PaymentCurrency
-const Endpoint = process.env.Endpoint
-const DPOinfo ={
-  TestCompanyToken:TestCompanyToken,
-  PaymentCurrency:PaymentCurrency,
-  Endpoint:Endpoint
-}
+const TestCompanyToken = process.env.TestCompanyToken;
+const PaymentCurrency = process.env.PaymentCurrency;
+const Endpoint = process.env.Endpoint;
+const DPOinfo = {
+  TestCompanyToken: TestCompanyToken,
+  PaymentCurrency: PaymentCurrency,
+  Endpoint: Endpoint,
+};
 //cloudinary
-const cloud_name = process.env.cloud_name
-const api_key = process.env.api_key
-const api_secret = process.env.api_secret
+const cloud_name = process.env.cloud_name;
+const api_key = process.env.api_key;
+const api_secret = process.env.api_secret;
 const clouinary = {
-  cloud_name:cloud_name,
-  api_key:api_key,
-  api_secret:api_secret
-}
+  cloud_name: cloud_name,
+  api_key: api_key,
+  api_secret: api_secret,
+};
 // EXPORT VARIABLES
 exports.config = {
   db: DB,
   server: SERVER,
   nodemailer: NODEMAILER,
   client: CLIENT,
-  DPOinfo:DPOinfo,
+  DPOinfo: DPOinfo,
   AgancyInfo: AgancyInfo,
-  clouinary:clouinary
+  clouinary: clouinary,
 };

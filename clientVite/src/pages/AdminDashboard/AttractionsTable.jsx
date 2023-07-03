@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
+import gif from "../../assets/gih.gif";
+import { useDispatch, useSelector } from "react-redux";
+import { handleIsLoadingToggle } from "../../rtk/features/commonSlice";
 
 const columns = [
   { field: "name", headerName: "Name", width: 150 },
@@ -27,34 +30,47 @@ const columns = [
   },
 ];
 
-const Users = () => {
-  const [attrs, setAttrs] = useState();
+const handleButtonClick = (x) => {
+  console.log(x);
+};
+
+const Attractions = () => {
+  const [attrs, setAttrs] = useState([]);
+
+  const { common } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(handleIsLoadingToggle());
+
     const getAttrs = async () => {
-      const { data } = await axios.get(`http://localhost:9999/attraction`);
-      console.log(data.AllAttraction);
-      setAttrs(
-        data.AllAttraction.map((attr) => ({
-          id: attr._id,
-          name: attr.name,
-          city: attr.category.city,
-          category: attr.subcategory.type,
-          status: attr.status,
-          edit: "Edit",
-          delete: "Delete",
-        }))
-      );
+      try {
+        const { data } = await axios.get(`http://localhost:9999/attraction`);
+        // console.log(data.AllAttraction);
+        setAttrs(
+          data.AllAttraction.map((attr) => ({
+            id: attr._id,
+            name: attr.name,
+            city: attr.category.city,
+            category: attr.subcategory.type,
+            status: attr.status,
+          }))
+        );
+      } catch (err) {
+        console.log(err);
+      }
     };
+
     getAttrs();
+    dispatch(handleIsLoadingToggle());
   }, []);
 
-  console.log(attrs);
+  // console.log(attrs);
 
   return (
     <>
-      {!attrs ? (
-        <div>loading</div>
+      {common.isLoading ? (
+        <img src={gif} className="mx-auto" style={{ width: "150px" }} />
       ) : (
         <div style={{ height: 400, width: "100%" }}>
           <DataGrid
@@ -65,7 +81,7 @@ const Users = () => {
                 paginationModel: { page: 0, pageSize: 10 },
               },
             }}
-            pageSizeOptions={[5, 10]}
+            pageSizeOptions={[10, 20]}
             checkboxSelection
           />
         </div>
@@ -74,4 +90,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Attractions;
