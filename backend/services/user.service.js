@@ -25,7 +25,22 @@ const getUser = async (id, next) => {
   try {
     const user = await User.findById(id)
       .populate("wishlist")
-      .populate("orders");
+      .populate({
+        path: "wishlist",
+        populate: {
+          path: "category",
+          model: "Category",
+        },
+      })
+      .populate({
+        path: "wishlist",
+        populate: {
+          path: "subcategory",
+          model: "Subcategory",
+        },
+      })
+      .populate("orders")
+      .exec();
     if (!user) {
       return next(new AppError(NOT_FOUND, 404));
     }

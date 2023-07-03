@@ -14,7 +14,7 @@ const WishListContanier = ({ attr }) => {
     };
     getWishlistItems();
   }, []);
-  console.log("gfsdgfs", wishlistItems);
+  console.log(wishlistItems);
 
   const handleRemoveFromWishlist = async (item) => {
     // console.log(item._id);
@@ -106,7 +106,7 @@ const WishListContanier = ({ attr }) => {
 
   //Buttons inside the card
 
-  const data = wishlistItems.map((item, idx) => {
+  const data = wishlistItems.map((item) => {
     return (
       <div
         className="card card-side bg-base-100 shadow-xl w-4/12 mx-28 mb-10"
@@ -130,12 +130,11 @@ const WishListContanier = ({ attr }) => {
             </h2>
             <div className="flex mt-5">
               <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-5 py-1 bg-blue-200 text-blue-700 rounded-full w-min">
-                {/* {item.subcategory} */}
-                Cairo
+                {item.subcategory.type}
               </span>
               <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 mx-3 bg-green-200 text-blue-700 rounded-full w-min">
-                {/* {item.category} */}
-                Cruse
+                {item.category.city}
+                {/* Cruse */}
               </span>
             </div>
           </div>
