@@ -15,6 +15,7 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
 // modal styles
 const style = {
@@ -168,19 +169,29 @@ const CitiesTable = () => {
       {common.isLoading ? (
         <img src={gif} className="mx-auto" style={{ width: "150px" }} />
       ) : (
-        <div style={{ height: 400, width: "100%" }}>
-          <DataGrid
-            rows={cities}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
-              },
-            }}
-            pageSizeOptions={[10, 20]}
-            checkboxSelection
-          />
-        </div>
+        <>
+          <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
+            <Button
+              variant="outlined"
+              startIcon={<AddCircleOutlineOutlinedIcon />}
+            >
+              Add a new record
+            </Button>
+          </Box>
+          <div style={{ height: 400, width: "100%" }}>
+            <DataGrid
+              rows={cities}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 10 },
+                },
+              }}
+              pageSizeOptions={[10, 20]}
+              checkboxSelection
+            />
+          </div>
+        </>
       )}
     </>
   );

@@ -22,11 +22,23 @@ import Typography from "@mui/material/Typography";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
-
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+// const { palette } = createTheme();
+// const { augmentColor } = palette;
+// const createColor = (mainColor) => augmentColor({ color: { main: mainColor } });
+// const theme = createTheme({
+//   palette: {
+//     anger: createColor('#F40B27'),
+//     apple: createColor('#5DBA40'),
+//     steelBlue: createColor('#5C76B7'),
+//     violet: createColor('#BC00A3'),
+//   },
+// });
 // table cols
 const columns = [
   { id: "username", label: "Username", minWidth: 120 },
   { id: "email", label: "Email", minWidth: 170 },
+  { id: "role", label: "Role", minWidth: 100 },
   { id: "isBlocked", label: "Blocked Status", minWidth: 100 },
   { id: "edit", label: "Edit", minWidth: 100 },
   { id: "delete", label: "Delete", minWidth: 100 },
@@ -94,126 +106,150 @@ const Users = () => {
     axios.delete(`http://localhost:9999/user/${id}`);
     handleClose();
   };
-  // console.log(users);
+  console.log(users);
 
   return (
     <>
       {common.isLoading ? (
         <img src={gif} className="mx-auto" style={{ width: "150px" }} />
       ) : (
-        <Paper sx={{ width: "100%", overflow: "hidden" }}>
-          <TableContainer sx={{ maxHeight: 440, width: "100%" }}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {users
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((user) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={user._id}
+        <>
+          <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
+            <Button
+              variant="outlined"
+              startIcon={<AddCircleOutlineOutlinedIcon />}
+            >
+              Add a new record
+            </Button>
+          </Box>
+          <Paper sx={{ width: "100%", overflow: "hidden" }}>
+            <TableContainer sx={{ maxHeight: 440, width: "100%" }}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                  <TableRow>
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
                       >
-                        <TableCell>{user.username}</TableCell>
-                        <TableCell>{user.email}</TableCell>
-                        <TableCell>
-                          {user.isBlocked ? (
-                            <Button variant="outlined">Unblock</Button>
-                          ) : (
-                            <Button variant="outlined">Block</Button>
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          <Button variant="outlined">Edit</Button>
-                        </TableCell>
-                        <TableCell>
-                          <Tooltip title="Delete">
-                            <IconButton
-                              aria-label="delete"
-                              onClick={() => handleOpen(user._id)}
+                        {column.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {users
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((user) => {
+                      return (
+                        <TableRow
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={user._id}
+                        >
+                          <TableCell>{user.username}</TableCell>
+                          <TableCell>{user.email}</TableCell>
+                          <TableCell>
+                            <Button variant="outlined" color="success">
+                              {user.role}
+                            </Button>
+                            <Button
+                              variant="outlined"
+                              style={{
+                                color: 'grey',
+                                border: '1px solid grey'
+                              }}
                             >
-                              <DeleteIcon />
-                            </IconButton>
-                          </Tooltip>
-                          <Modal
-                            aria-labelledby="transition-modal-title"
-                            aria-describedby="transition-modal-description"
-                            open={open}
-                            onClose={handleClose}
-                            closeAfterTransition
-                            slots={{ backdrop: Backdrop }}
-                            slotProps={{
-                              backdrop: {
-                                timeout: 500,
-                              },
-                            }}
-                          >
-                            <Fade in={open}>
-                              <Box sx={style}>
-                                <Typography
-                                  id="transition-modal-title"
-                                  variant="h6"
-                                  color="black"
-                                  component="h2"
-                                  sx={{ marginBottom: "20px" }}
-                                >
-                                  Are you sure you want to delete this user?
-                                </Typography>
-                                <Stack
-                                  direction="row"
-                                  spacing={4}
-                                  sx={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                  }}
-                                >
-                                  <Button
-                                    variant="outlined"
-                                    onClick={handleClose}
+                              admin
+                            </Button>
+                          </TableCell>
+                          <TableCell>
+                            {user.isBlocked ? (
+                              <Button variant="outlined">Unblock</Button>
+                            ) : (
+                              <Button variant="outlined">Block</Button>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            <Button variant="outlined">Edit</Button>
+                          </TableCell>
+                          <TableCell>
+                            <Tooltip title="Delete">
+                              <IconButton
+                                aria-label="delete"
+                                onClick={() => handleOpen(user._id)}
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            </Tooltip>
+                            <Modal
+                              aria-labelledby="transition-modal-title"
+                              aria-describedby="transition-modal-description"
+                              open={open}
+                              onClose={handleClose}
+                              closeAfterTransition
+                              slots={{ backdrop: Backdrop }}
+                              slotProps={{
+                                backdrop: {
+                                  timeout: 500,
+                                },
+                              }}
+                            >
+                              <Fade in={open}>
+                                <Box sx={style}>
+                                  <Typography
+                                    id="transition-modal-title"
+                                    variant="h6"
+                                    color="black"
+                                    component="h2"
+                                    sx={{ marginBottom: "20px" }}
                                   >
-                                    No, go back
-                                  </Button>
-                                  <Button
-                                    variant="contained"
-                                    onClick={() => deleteUser(user._id)}
+                                    Are you sure you want to delete this user?
+                                  </Typography>
+                                  <Stack
+                                    direction="row"
+                                    spacing={4}
+                                    sx={{
+                                      display: "flex",
+                                      justifyContent: "center",
+                                    }}
                                   >
-                                    Yes, delete
-                                  </Button>
-                                </Stack>
-                              </Box>
-                            </Fade>
-                          </Modal>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 20]}
-            component="div"
-            count={users.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Paper>
+                                    <Button
+                                      variant="outlined"
+                                      onClick={handleClose}
+                                    >
+                                      No, go back
+                                    </Button>
+                                    <Button
+                                      variant="contained"
+                                      onClick={() => deleteUser(user._id)}
+                                    >
+                                      Yes, delete
+                                    </Button>
+                                  </Stack>
+                                </Box>
+                              </Fade>
+                            </Modal>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 20]}
+              component="div"
+              count={users.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
+        </>
       )}
     </>
   );
