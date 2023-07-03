@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import axios from "axios";
+import gif from "../../assets/gih.gif"
 
 const columns = [
   { id: "username", label: "Username", minWidth: 120 },
@@ -68,7 +69,7 @@ const Users = () => {
   return (
     <>
       {!users ? (
-        <div>loading</div>
+        <img src={gif} className="mx-auto" style={{ width: "150px" }} />
       ) : (
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 440 }}>

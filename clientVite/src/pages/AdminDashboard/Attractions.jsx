@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
+import gif from "../../assets/gih.gif";
 
 const columns = [
   { field: "name", headerName: "Name", width: 150 },
@@ -27,6 +28,10 @@ const columns = [
   },
 ];
 
+const handleButtonClick = (x) => {
+  console.log(x)
+}
+
 const Users = () => {
   const [attrs, setAttrs] = useState();
 
@@ -41,8 +46,6 @@ const Users = () => {
           city: attr.category.city,
           category: attr.subcategory.type,
           status: attr.status,
-          edit: "Edit",
-          delete: "Delete",
         }))
       );
     };
@@ -54,7 +57,7 @@ const Users = () => {
   return (
     <>
       {!attrs ? (
-        <div>loading</div>
+        <img src={gif} className="mx-auto" style={{ width: "150px" }} />
       ) : (
         <div style={{ height: 400, width: "100%" }}>
           <DataGrid
@@ -65,7 +68,7 @@ const Users = () => {
                 paginationModel: { page: 0, pageSize: 10 },
               },
             }}
-            pageSizeOptions={[5, 10]}
+            pageSizeOptions={[10, 20]}
             checkboxSelection
           />
         </div>
