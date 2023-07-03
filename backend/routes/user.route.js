@@ -8,6 +8,8 @@ const {
   deleteUser,
   getAllUsers,
   toggleWishlist,
+  toggleBlock,
+  changeUserRole
 } = require("../controllers/user.controller");
 
 router.post("", signup);
@@ -21,5 +23,9 @@ router.patch("/:id", editUser);
 router.delete("/:id", deleteUser);
 
 router.post("/:id", toggleWishlist);
+
+router.patch("/block/:id", toggleBlock);
+
+router.patch("/role/:id", changeUserRole);
 
 module.exports = router;

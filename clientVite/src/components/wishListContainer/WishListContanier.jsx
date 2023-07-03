@@ -29,6 +29,7 @@ const WishListContanier = ({ attr }) => {
     }
   };
 
+
   // const data = wishlistItems.map((item, idx) => {
   //   return (
   //     <div className="flex flex-row align-middle">
@@ -134,7 +135,6 @@ const WishListContanier = ({ attr }) => {
               </span>
               <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 mx-3 bg-green-200 text-blue-700 rounded-full w-min">
                 {item.category.city}
-                {/* Cruse */}
               </span>
             </div>
           </div>
