@@ -23,11 +23,7 @@ function App() {
   const handlerExp = () => {
     dispahch(handleIsLoggedIntoggle());
   };
-<<<<<<< HEAD
-  // handlerExp();
-=======
 
->>>>>>> ffd819f477bce1c0319cd294d8e2dd9fb3022bf8
   return (
     <>
       <Navbar1 />
