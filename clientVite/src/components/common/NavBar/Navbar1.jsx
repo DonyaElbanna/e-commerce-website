@@ -15,17 +15,35 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import Avatar from '@mui/material/Avatar';
-import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined';
+import Avatar from "@mui/material/Avatar";
+import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
+
+import { useDispatch, useSelector } from "react-redux";
+import {
+  handleAuthType,
+  handleIsLoggedIntoggle,
+  handleOpenAuthModal,
+  handleUserInfo,
+} from "../../../rtk/features/authSlice";
 
 const Navbar1 = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const dispatch = useDispatch();
   const logoutHandler = () => {
     setAnchorEl(null);
-    dispatch(handleIsLoggedIn(false));
-    dispatch(handleLoggedInInfo({}));
-    dispatch(handleErrorMessage(""));
+    dispatch(handleAuthType("login"));
+    dispatch(handleOpenAuthModal(true));
+    dispatch(handleUserInfo({}));
+  };
+  const { auth } = useSelector((state) => state);
+
+  const HandleLogin = (e) => {
+    if (auth.userInfo.user && sessionStorage.getItem("logged")) {
+      setAnchorEl(e.currentTarget);
+    } else {
+      dispatch(handleAuthType("login"));
+      dispatch(handleOpenAuthModal(true));
+    }
   };
 
   return (
@@ -57,7 +75,9 @@ const Navbar1 = () => {
             >
               <NavLink
                 to="/"
-                className={({ isActive }) => isActive ? Style.NavLinkActive : Style.NavLink}
+                className={({ isActive }) =>
+                  isActive ? Style.NavLinkActive : Style.NavLink
+                }
               >
                 <HomeIcon />
                 <Typography
@@ -69,9 +89,9 @@ const Navbar1 = () => {
               </NavLink>
               <NavLink
                 to="/cities"
-                className={({ isActive }) => isActive ? Style.NavLinkActive : Style.NavLink}
-
-                
+                className={({ isActive }) =>
+                  isActive ? Style.NavLinkActive : Style.NavLink
+                }
               >
                 <PublicOutlinedIcon />
                 <Typography
@@ -83,9 +103,9 @@ const Navbar1 = () => {
               </NavLink>
               <NavLink
                 to="/order"
-                className={({ isActive }) => isActive ? Style.NavLinkActive : Style.NavLink}
-
-                
+                className={({ isActive }) =>
+                  isActive ? Style.NavLinkActive : Style.NavLink
+                }
               >
                 <ShoppingCartOutlinedIcon />
                 <Typography
@@ -97,7 +117,9 @@ const Navbar1 = () => {
               </NavLink>
               <NavLink
                 to="/wishlist"
-                className={({ isActive }) => isActive ? Style.NavLinkActive : Style.NavLink}
+                className={({ isActive }) =>
+                  isActive ? Style.NavLinkActive : Style.NavLink
+                }
               >
                 <FavoriteBorderOutlinedIcon />
                 <Typography
@@ -108,11 +130,11 @@ const Navbar1 = () => {
                 </Typography>
               </NavLink>
 
-               {/* {auth.loggedInInfo.position === "admin" && (  */}
+              {/* {auth.loggedInInfo.position === "admin" && (  */}
               <NavLink
-                className={({ isActive }) => isActive ? Style.NavLinkActive : Style.NavLink}
-
-                
+                className={({ isActive }) =>
+                  isActive ? Style.NavLinkActive : Style.NavLink
+                }
                 to="/admin"
               >
                 <DashboardIcon />
@@ -124,21 +146,25 @@ const Navbar1 = () => {
                   Admin
                 </Typography>
               </NavLink>
-            {/* )}  */}
+              {/* )}  */}
               <div>
                 <IconButton
                   aria-label="account of current user"
                   aria-controls="menu-appbar"
                   aria-haspopup="true"
-                  onClick={(e) => setAnchorEl(e.currentTarget)}
+                  onClick={HandleLogin}
                   sx={{
                     color: "white",
                   }}
                 >
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" sx={{
-                        border:"2px solid gold",
-                        borderRadius:"50%"
-                    }} />
+                  <Avatar
+                    alt="Remy Sharp"
+                    src="/static/images/avatar/1.jpg"
+                    sx={{
+                      border: "2px solid gold",
+                      borderRadius: "50%",
+                    }}
+                  />
                   <Typography
                     m={0.5}
                     fontWeight="700"
@@ -191,7 +217,9 @@ const Navbar1 = () => {
             >
               <NavLink
                 to="/"
-                className={({ isActive }) => isActive ? Style.NavLinkActive : Style.NavLink}
+                className={({ isActive }) =>
+                  isActive ? Style.NavLinkActive : Style.NavLink
+                }
               >
                 <HomeIcon />
 
@@ -204,9 +232,9 @@ const Navbar1 = () => {
               </NavLink>
               <NavLink
                 to="/aboutUs"
-                className={({ isActive }) => isActive ? Style.NavLinkActive : Style.NavLink}
-
-                
+                className={({ isActive }) =>
+                  isActive ? Style.NavLinkActive : Style.NavLink
+                }
               >
                 <InfoOutlinedIcon />
                 <Typography

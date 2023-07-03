@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import Joi from "joi";
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   handleAuthType,
   handleIsLoggedIntoggle,
+  handleOpenAuthModal,
   handleUserInfo,
 } from "../../../rtk/features/authSlice";
 
@@ -24,7 +25,11 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
-
+  useEffect(() => {
+    if (!open) {
+      dispatch(handleOpenAuthModal(false));
+    }
+  }, [open]);
   const [errors, setErrors] = useState({});
   const schema = Joi.object({
     email: Joi.string()
@@ -71,7 +76,7 @@ const LoginForm = () => {
         form
       );
       dispatch(handleUserInfo(data));
-      dispatch(handleIsLoggedIntoggle());
+      sessionStorage.setItem("logged", true);
       setOpen(false);
     } catch (error) {
       const errorData = {};
