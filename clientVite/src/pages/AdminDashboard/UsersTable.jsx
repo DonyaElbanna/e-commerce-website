@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import axios from "axios";
-import gif from "../../assets/gih.gif"
+import gif from "../../assets/gih.gif";
 import { useDispatch, useSelector } from "react-redux";
 import { handleIsLoadingToggle } from "../../rtk/features/commonSlice";
 
@@ -23,24 +23,28 @@ const columns = [
 const Users = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const {common} = useSelector((state)=>state)
+
   const [users, setUsers] = useState([]);
-  const dispatch = useDispatch()
+
+  const { common } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(handleIsLoadingToggle())
+    dispatch(handleIsLoadingToggle());
+
     const getUsers = async () => {
       try {
         const { data } = await axios.get(`http://localhost:9999/user`);
-        console.log(data);
+        // console.log(data);
         setUsers(data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     };
-    getUsers();
-    dispatch(handleIsLoadingToggle())
-  }, []);
 
+    getUsers();
+    dispatch(handleIsLoadingToggle());
+  }, []);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -56,8 +60,8 @@ const Users = () => {
       {common.isLoading ? (
         <img src={gif} className="mx-auto" style={{ width: "150px" }} />
       ) : (
-        <Paper sx={{ width: 1000, overflow: "hidden" }}>
-          <TableContainer sx={{ maxHeight: 440,width:"100%" }}>
+        <Paper sx={{ width: "100%", overflow: "hidden" }}>
+          <TableContainer sx={{ maxHeight: 440, width: "100%" }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>

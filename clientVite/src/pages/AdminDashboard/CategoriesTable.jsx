@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
+
+import axios from "axios";
 import gif from "../../assets/gih.gif";
+import { useDispatch, useSelector } from "react-redux";
+import { handleIsLoadingToggle } from "../../rtk/features/commonSlice";
 
 const columns = [
-  { field: "name", headerName: "Name", width: 150 },
-  { field: "city", headerName: "City", width: 130 },
-  { field: "category", headerName: "Category", width: 130 },
-  { field: "status", headerName: "Status", width: 120 },
+  { field: "name", headerName: "City", width: 150 },
   {
     field: "edit",
     headerName: "Edit",
@@ -29,39 +29,45 @@ const columns = [
 ];
 
 const handleButtonClick = (x) => {
-  console.log(x)
-}
+    console.log(x);
+  };
 
-const Users = () => {
-  const [attrs, setAttrs] = useState();
+const CategoriesTable = () => {
+  const [cats, setCats] = useState([]);
+
+  const { common } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const getAttrs = async () => {
-      const { data } = await axios.get(`http://localhost:9999/attraction`);
-      console.log(data.AllAttraction);
-      setAttrs(
-        data.AllAttraction.map((attr) => ({
-          id: attr._id,
-          name: attr.name,
-          city: attr.category.city,
-          category: attr.subcategory.type,
-          status: attr.status,
-        }))
-      );
+    dispatch(handleIsLoadingToggle());
+
+    const getCats = async () => {
+      try {
+        const { data } = await axios.get(`http://localhost:9999/subcat`);
+        // console.log(data.subcategories);
+        setCats(data.subcategories.map((cat) => ({
+            id: cat._id,
+            name: cat.type,
+          })));
+      } catch (error) {
+        console.log(error);
+      }
     };
-    getAttrs();
+
+    getCats();
+    dispatch(handleIsLoadingToggle());
   }, []);
 
-  console.log(attrs);
+// console.log(cats)
 
   return (
     <>
-      {!attrs ? (
+      {common.isLoading ? (
         <img src={gif} className="mx-auto" style={{ width: "150px" }} />
       ) : (
         <div style={{ height: 400, width: "100%" }}>
           <DataGrid
-            rows={attrs}
+            rows={cats}
             columns={columns}
             initialState={{
               pagination: {
@@ -77,4 +83,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default CategoriesTable;
