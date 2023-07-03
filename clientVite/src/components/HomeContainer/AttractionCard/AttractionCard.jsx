@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-const baseURL = "http://localhost:9999/user/64a0892352ffbc8453b77147";
+const baseURL = "http://localhost:9999/user/64a2e90d706780e71edb32ca";
 
 const AttractionCard = ({ attr }) => {
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  // const { isLoggedIn } = useSelector((state) => state.auth);
+  const isLoggedIn = true;
   // const dispahch = useDispatch();
   // const handlerExp = () => {
   //   dispahch(handleIsLoggedIntoggle());
@@ -23,7 +24,7 @@ const AttractionCard = ({ attr }) => {
       setWishlistItems(data.wishlist);
     };
     getWishlistItems();
-  }, []);
+  }, [wishlistItems]);
 
   const handleAddToWishlist = async (event) => {
     event.preventDefault();

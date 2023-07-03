@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import wishlistStyle from "./WishListContanier.module.css";
 
-const baseURL = "http://localhost:9999/user/64a0892352ffbc8453b77147";
+const baseURL = "http://localhost:9999/user/64a2e90d706780e71edb32ca";
 
 const WishListContanier = ({ attr }) => {
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -12,22 +12,21 @@ const WishListContanier = ({ attr }) => {
       const { data } = await axios.get(baseURL);
       setWishlistItems(data.wishlist);
     };
-    // const removeFromWishlist = async () => {
-    //   const { data } = await axios.delete(`${baseURL}/`);
-    //   setWishlistItems(data.wishlist);
-    // };
     getWishlistItems();
   }, []);
-
   // console.log(wishlistItems);
-  const handleRemoveFromWishlist = (item) => {
-    // const updatedWishlist = wishlistItems.filter(
-    //   (wishlistItem) => wishlistItem._id !== item._id
-    // );
-    // setWishlistItems(updatedWishlist);
-    // await axios.delete(`${baseURL}/wishlist/${item._id}`);
-    // await axios.delete(baseURL, { id: item._id });
-    // setIsFilled(!isFilled);
+
+  const handleRemoveFromWishlist = async (item) => {
+    // console.log(item._id);
+    const updatedWishlist = wishlistItems.filter(
+      (wishlistItem) => wishlistItem._id !== item._id
+    );
+    setWishlistItems(updatedWishlist);
+    try {
+      await axios.post(baseURL, { id: item._id });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // const data = wishlistItems.map((item, idx) => {
