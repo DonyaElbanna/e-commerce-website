@@ -8,8 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 const baseURL = "http://localhost:9999/user/64a2e90d706780e71edb32ca";
 
 const AttractionCard = ({ attr }) => {
-  // const { isLoggedIn } = useSelector((state) => state.auth);
-  const isLoggedIn = true;
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  // const isLoggedIn = true;
   // const dispahch = useDispatch();
   // const handlerExp = () => {
   //   dispahch(handleIsLoggedIntoggle());
@@ -17,20 +17,32 @@ const AttractionCard = ({ attr }) => {
   const [isFilled, setIsFilled] = useState(false);
   const [wishlistItems, setWishlistItems] = useState([]);
 
-  // console.log("ffff", attr);
+  // console.log("ffff", wishlistItems);
   useEffect(() => {
     const getWishlistItems = async () => {
       const { data } = await axios.get(baseURL);
       setWishlistItems(data.wishlist);
     };
     getWishlistItems();
-  }, [wishlistItems]);
+  }, []);
 
   const handleAddToWishlist = async (event) => {
     event.preventDefault();
-    await axios.post(baseURL, { id: attr._id });
-    setIsFilled(!isFilled);
+    // optimistic updates
+    if (wishlistItems.some((item) => item._id === attr._id)) {
+      setIsFilled(false);
+      const newWishlist = wishlistItems.filter((item) => item._id !== attr._id);
+      setWishlistItems(newWishlist);
+    } else {
+      setIsFilled(true);
+    }
+    try {
+      await axios.post(baseURL, { id: attr._id });
+    } catch (err) {
+      console.log(err);
+    }
   };
+
   const navigate = useNavigate();
   function redirectToLogin(event) {
     event.preventDefault();
@@ -76,7 +88,7 @@ const AttractionCard = ({ attr }) => {
               xmlns="http://www.w3.org/2000/svg"
               // fill={isFilled ? "#FF0000" : "none"}
               fill={
-                wishlistItems.some((item) => item._id === attr._id)
+                wishlistItems.some((item) => item._id === attr._id) || isFilled
                   ? "#FF0000"
                   : "none"
               }

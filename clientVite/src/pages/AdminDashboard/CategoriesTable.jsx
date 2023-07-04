@@ -16,6 +16,7 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import CitiesModal from "./CitiesModal";
 
 // modal styles
 const style = {
@@ -170,14 +171,17 @@ const CategoriesTable = () => {
       ) : (
         <>
           <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
-            <Button
+            {/* <Button
               variant="outlined"
+            <Button
+              style={{color: "#be853f", border: "1px solid #be853f", boxShadow: "2px 2px #be853f"}}
               startIcon={<AddCircleOutlineOutlinedIcon />}
             >
               Add a new record
-            </Button>
+            </Button> */}
+            <CitiesModal />
           </Box>
-          <div style={{ height: 400, width: "100%" }}>
+          <div style={{ height: 500, width: "100%" }}>
             <DataGrid
               rows={cats}
               columns={columns}
@@ -188,6 +192,7 @@ const CategoriesTable = () => {
               }}
               pageSizeOptions={[10, 20]}
               checkboxSelection
+              hideFooterSelectedRowCount
             />
           </div>
         </>

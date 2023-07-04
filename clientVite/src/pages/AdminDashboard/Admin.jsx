@@ -9,6 +9,7 @@ import Attractions from "./AttractionsTable";
 import CitiesTable from "./CitiesTable";
 import CategoriesTable from "./CategoriesTable";
 import Orders from "./OrdersTable";
+import TransactionsTable from "./TransactionsTable";
 
 // icons
 import PersonPinIcon from "@mui/icons-material/PersonPin";
@@ -17,7 +18,7 @@ import InventoryOutlinedIcon from "@mui/icons-material/InventoryOutlined";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import AttractionsOutlinedIcon from "@mui/icons-material/AttractionsOutlined";
 import PaidOutlinedIcon from "@mui/icons-material/PaidOutlined";
-import TransactionsTable from "./TransactionsTable";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -25,6 +26,7 @@ function TabPanel(props) {
   return (
     <div
       role="tabpanel"
+      className="mx-auto"
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
@@ -53,6 +55,8 @@ function a11yProps(index) {
 }
 
 export default function VerticalTabs() {
+  const smallSc = useMediaQuery("(min-width:600px)");
+
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -66,15 +70,27 @@ export default function VerticalTabs() {
         bgcolor: "background.paper",
         display: "flex",
         height: "fit-content",
+        flexDirection: smallSc ? "row" : "column",
       }}
     >
       <Tabs
-        orientation="vertical"
+        orientation={smallSc ? "vertical" : "horizontal"}
         variant="scrollable"
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: "divider" }}
+        sx={{
+          borderRight: 1,
+          borderColor: "divider",
+          overflow: "unset",
+          "& .MuiTab-root.Mui-selected": {
+            color: "#be853f",
+          },
+        }}
+        allowScrollButtonsMobile
+        TabIndicatorProps={{
+          style: { background: "orange" },
+        }}
       >
         <Tab
           icon={<PersonPinIcon />}

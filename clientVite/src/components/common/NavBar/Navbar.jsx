@@ -2,7 +2,6 @@ import gif from "../../../assets/gih.gif";
 import logo from "../../../assets/logo.png";
 
 const Navbar = () => {
-  
   return (
     <>
       <header className="navbar sticky top-0 z-50 md:bg-slate-800/0 bg-slate-100/90 px-4 md:px-5">

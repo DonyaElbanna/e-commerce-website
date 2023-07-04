@@ -48,7 +48,7 @@ const Navbar1 = () => {
   };
 
   return (
-    <div className=" navbar sticky top-0  z-50 md:bg-slate-800/0 bg-slate-100/90 px-4 md:px-5">
+    <div className=" navbar sticky top-0  z-50 md:bg-slate-800/0 bg-slate-100/90 px-4 md:px-5 bg-black">
       <Container maxWidth="lg" className={Style.Container}>
         <Stack
           direction="row"

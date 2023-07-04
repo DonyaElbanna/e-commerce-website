@@ -23,25 +23,16 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-// const { palette } = createTheme();
-// const { augmentColor } = palette;
-// const createColor = (mainColor) => augmentColor({ color: { main: mainColor } });
-// const theme = createTheme({
-//   palette: {
-//     anger: createColor('#F40B27'),
-//     apple: createColor('#5DBA40'),
-//     steelBlue: createColor('#5C76B7'),
-//     violet: createColor('#BC00A3'),
-//   },
-// });
+import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
+
 // table cols
 const columns = [
-  { id: "username", label: "Username", minWidth: 120 },
-  { id: "email", label: "Email", minWidth: 170 },
-  { id: "role", label: "Role", minWidth: 100 },
-  { id: "isBlocked", label: "Blocked Status", minWidth: 100 },
-  { id: "edit", label: "Edit", minWidth: 100 },
-  { id: "delete", label: "Delete", minWidth: 100 },
+  { id: "username", label: "Username", minWidth: 100, flex: 1 },
+  { id: "email", label: "Email", minWidth: 100, flex: 1 },
+  { id: "role", label: "Role", minWidth: 140, flex: 1 },
+  { id: "isBlocked", label: "Blocked Status", minWidth: 100, flex: 1 },
+  { id: "edit", label: "Edit", minWidth: 100, flex: 1 },
+  { id: "delete", label: "Delete", minWidth: 100, flex: 1 },
 ];
 
 // modal styles
@@ -61,7 +52,7 @@ const style = {
 const Users = () => {
   // table state
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   // modal state
   const [open, setOpen] = React.useState(false);
@@ -89,6 +80,7 @@ const Users = () => {
     getUsers();
     dispatch(handleIsLoadingToggle());
   }, []);
+  // console.log(users);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -106,8 +98,48 @@ const Users = () => {
     axios.delete(`http://localhost:9999/user/${id}`);
     handleClose();
   };
-  console.log(users);
 
+  const blockUser = async (id) => {
+    console.log(id);
+    setUsers((prevState) =>
+      prevState.map((user) => {
+        if (user._id === id) {
+          return {
+            ...user,
+            isBlocked: !user.isBlocked,
+          };
+        }
+        return user;
+      })
+    );
+    try {
+      await axios.get(`http://localhost:9999/user/block/${id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const addRemoveAdmin = async (id) => {
+    console.log(id);
+    setUsers((prevState) =>
+      prevState.map((user) => {
+        if (user._id === id) {
+          return {
+            ...user,
+            role: user.role == "admin" ? "user" : "admin",
+          };
+        }
+        return user;
+      })
+    );
+    try {
+      await axios.get(`http://localhost:9999/user/role/${id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // console.log(users);
   return (
     <>
       {common.isLoading ? (
@@ -116,13 +148,13 @@ const Users = () => {
         <>
           <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
             <Button
-              variant="outlined"
+              style={{color: "#be853f", border: "1px solid #be853f", boxShadow: "2px 2px #be853f"}}
               startIcon={<AddCircleOutlineOutlinedIcon />}
             >
               Add a new record
             </Button>
           </Box>
-          <Paper sx={{ width: "100%", overflow: "hidden" }}>
+          <Paper sx={{ width: "100%", overflow: "hidden", display: "grid" }}>
             <TableContainer sx={{ maxHeight: 440, width: "100%" }}>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
@@ -132,6 +164,7 @@ const Users = () => {
                         key={column.id}
                         align={column.align}
                         style={{ minWidth: column.minWidth }}
+                        sx={{ textAlign: "center", fontWeight: "bold" }}
                       >
                         {column.label}
                       </TableCell>
@@ -152,24 +185,40 @@ const Users = () => {
                           <TableCell>{user.username}</TableCell>
                           <TableCell>{user.email}</TableCell>
                           <TableCell>
-                            <Button variant="outlined" color="success">
-                              {user.role}
-                            </Button>
-                            <Button
-                              variant="outlined"
-                              style={{
-                                color: 'grey',
-                                border: '1px solid grey'
+                            {/* {user.role !== "admin" ? ( */}
+                            <Box
+                              sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
                               }}
                             >
-                              admin
-                            </Button>
+                              {user.role}
+                              <button
+                                type="button"
+                                className="p-2 mt-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-blue-400 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                                onClick={() => addRemoveAdmin(user._id)}
+                              >
+                                {user.role == "admin" ? "remove" : "make"} Admin
+                              </button>
+                            </Box>
                           </TableCell>
                           <TableCell>
                             {user.isBlocked ? (
-                              <Button variant="outlined">Unblock</Button>
+                              <Button
+                                variant="outlined"
+                                onClick={() => blockUser(user._id)}
+                              >
+                                Unblock
+                              </Button>
                             ) : (
-                              <Button variant="outlined">Block</Button>
+                              <Button
+                                variant="outlined"
+                                startIcon={<BlockOutlinedIcon />}
+                                onClick={() => blockUser(user._id)}
+                              >
+                                Block
+                              </Button>
                             )}
                           </TableCell>
                           <TableCell>

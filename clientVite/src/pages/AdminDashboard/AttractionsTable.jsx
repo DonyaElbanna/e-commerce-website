@@ -67,7 +67,11 @@ const Attractions = () => {
 
   // table cols
   const columns = [
-    { field: "name", headerName: "Name", width: 150 },
+    {
+      field: "name",
+      headerName: "Name",
+      width: 150,
+    },
     { field: "city", headerName: "City", width: 130 },
     { field: "category", headerName: "Category", width: 130 },
     { field: "status", headerName: "Status", width: 120 },
@@ -76,8 +80,6 @@ const Attractions = () => {
       headerName: "Edit",
       sortable: false,
       width: 90,
-      dataIndex: "id",
-      key: "id",
       renderCell: (index, params) => (
         <Button
           variant="outlined"
@@ -183,13 +185,20 @@ const Attractions = () => {
         <>
           <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
             <Button
-              variant="outlined"
+              style={{color: "#be853f", border: "1px solid #be853f", boxShadow: "2px 2px #be853f"}}
               startIcon={<AddCircleOutlineOutlinedIcon />}
             >
               Add a new record
             </Button>
           </Box>
-          <div style={{ height: 400, width: "100%" }}>
+          <div
+            style={{
+              display: "table",
+              tableLayout: "fixed",
+              width: "80%",
+              margin: "auto",
+            }}
+          >
             <DataGrid
               rows={attrs}
               columns={columns}
@@ -200,6 +209,7 @@ const Attractions = () => {
               }}
               pageSizeOptions={[10, 20]}
               checkboxSelection
+              style={{ maxHeight: 500 }}
             />
           </div>
         </>
