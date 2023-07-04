@@ -5,21 +5,24 @@ import Details from "./Details";
 import Slider from "./Slider";
 import { useParams } from "react-router-dom";
 import gif from "../../assets/gih.gif";
+import { useDispatch, useSelector } from "react-redux";
 
 import ImagesSlider from "./ImagesSlider";
+import { AttractionDetailsHandlerById } from "../../rtk/features/attrSlice";
 
 const AttractionDetails = () => {
-  let { id } = useParams();
+  const { id } = useParams();
   const [attrDetails, setAttrDetails] = useState([]);
+  const { attractions } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const getAttrs = async () => {
+    const { data } = await axios.get(`http://localhost:9999/attraction/${id}`);
+    // console.log(data.Attraction);
+    setAttrDetails(data.Attraction);
+  };
 
   useEffect(() => {
-    const getAttrs = async () => {
-      const { data } = await axios.get(
-        `http://localhost:9999/attraction/${id}`
-      );
-      // console.log(data.Attraction);
-      setAttrDetails(data.Attraction);
-    };
+    dispatch(AttractionDetailsHandlerById(id));
     getAttrs();
   }, []);
 
