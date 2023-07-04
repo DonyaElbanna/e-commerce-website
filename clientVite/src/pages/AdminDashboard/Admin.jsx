@@ -83,12 +83,14 @@ export default function VerticalTabs() {
           borderRight: 1,
           borderColor: "divider",
           overflow: "unset",
-          ".Mui-selected": {
-            color: `#be853f`,
+          "& .MuiTab-root.Mui-selected": {
+            color: "#be853f",
           },
         }}
         allowScrollButtonsMobile
-        TabIndicatorProps={{ style: { background: "orange" } }}
+        TabIndicatorProps={{
+          style: { background: "orange" },
+        }}
       >
         <Tab
           icon={<PersonPinIcon />}
