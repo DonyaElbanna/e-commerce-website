@@ -3,11 +3,13 @@ import { Dialog, Transition } from "@headlessui/react";
 import Joi from "joi";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { handleAuthType, handleIsLoggedIntoggle, handleUserInfo } from "../../../rtk/features/authSlice";
 // import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 const RegisterForm = () => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
-
+  const dispatch = useDispatch()
   const [form, setForm] = useState({
     userName: "",
     email: "",
@@ -62,6 +64,8 @@ const RegisterForm = () => {
     await axios
       .post("http://localhost:9999/user", newUser)
       .then((response) => {
+        dispatch(handleUserInfo(response.data.user))
+        dispatch(handleIsLoggedIntoggle())
         setOpen(false);
       })
       .catch((error) => {
@@ -229,7 +233,7 @@ const RegisterForm = () => {
                         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                           Already have an account?{" "}
                           <Link
-                            to="/login"
+                            onClick={()=> dispatch(handleAuthType("login"))}
                             className="font-semibold text-indigo-600 hover:text-indigo-500"
                           >
                             Login here

@@ -17,7 +17,6 @@ const botright_vite = new URL(
 ).href;
 const LoginForm = () => {
   const { auth } = useSelector((state) => state);
-  console.log(auth);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
@@ -75,8 +74,12 @@ const LoginForm = () => {
         "http://localhost:9999/auth/signin",
         form
       );
-      dispatch(handleUserInfo(data));
+      console.log(data)
+      
+      dispatch(handleUserInfo(data.user));
+      dispatch(handleIsLoggedIntoggle())
       sessionStorage.setItem("logged", true);
+      dispatch(handleIsLoggedIntoggle());
       setOpen(false);
     } catch (error) {
       const errorData = {};

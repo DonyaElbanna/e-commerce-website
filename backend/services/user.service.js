@@ -17,6 +17,7 @@ const add = async (payload, next) => {
     user.password = undefined;
     return user;
   } catch (err) {
+    console.log(err)
     return next(new AppError(FAILURE, 404));
   }
 };
