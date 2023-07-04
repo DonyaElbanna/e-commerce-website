@@ -159,7 +159,7 @@ const Users = () => {
             </Button>
           </Box>
           <Paper sx={{ width: "100%", overflow: "hidden", display: "grid" }}>
-            <TableContainer sx={{ maxHeight: 440, width: "100%" }}>
+            <TableContainer sx={{ maxHeight: 440, width: "100%", margin: "auto" }}>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                   <TableRow>
