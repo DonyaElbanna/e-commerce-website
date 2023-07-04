@@ -21,6 +21,7 @@ import AuthModel from "./components/common/AuthModal/AuthModel";
 import Admin from "./pages/AdminDashboard/Admin";
 import ResetPassword from "./components/common/AuthModal/ResetPassword";
 import { useEffect } from "react";
+import Error from "./components/Error/Error";
 
 function App() {
   const { auth } = useSelector((state) => state);
@@ -39,6 +40,7 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/city/:id" element={<AttractionsList />} />
         <Route path="/city/:id/details" element={<AttractionDetails />} />
+        <Route path="/*" element={<Error />} />
       </Routes>
       <Footer />
     </>

@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <>
-      <footer className="mt-10">
+      <footer>
         <div
-          style={{ backgroundColor: "rgb(10 10 10 / 83%)"}}
+          style={{ backgroundColor: "rgb(10 10 10 / 83%)" }}
           className="pb-9 px-5 gap-2"
         >
           <article className="footer footer-center row">
