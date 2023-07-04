@@ -27,12 +27,12 @@ import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 
 // table cols
 const columns = [
-  { id: "username", label: "Username", minWidth: 100 },
-  { id: "email", label: "Email", minWidth: 100 },
-  { id: "role", label: "Role", minWidth: 140 },
-  { id: "isBlocked", label: "Blocked Status", minWidth: 100 },
-  { id: "edit", label: "Edit", minWidth: 100 },
-  { id: "delete", label: "Delete", minWidth: 100 },
+  { id: "username", label: "Username", minWidth: 100, flex: 1 },
+  { id: "email", label: "Email", minWidth: 100, flex: 1 },
+  { id: "role", label: "Role", minWidth: 140, flex: 1 },
+  { id: "isBlocked", label: "Blocked Status", minWidth: 100, flex: 1 },
+  { id: "edit", label: "Edit", minWidth: 100, flex: 1 },
+  { id: "delete", label: "Delete", minWidth: 100, flex: 1 },
 ];
 
 // modal styles
@@ -52,7 +52,7 @@ const style = {
 const Users = () => {
   // table state
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   // modal state
   const [open, setOpen] = React.useState(false);
@@ -148,7 +148,7 @@ const Users = () => {
         <>
           <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
             <Button
-              variant="outlined"
+              style={{color: "#be853f", border: "1px solid #be853f", boxShadow: "2px 2px #be853f"}}
               startIcon={<AddCircleOutlineOutlinedIcon />}
             >
               Add a new record

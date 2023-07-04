@@ -181,7 +181,7 @@ const CitiesTable = () => {
             </Button> */}
             <CitiesModal />
           </Box>
-          <div style={{ height: 400, width: "100%" }}>
+          <div style={{ height: 500, width: "100%" }}>
             <DataGrid
               rows={cities}
               columns={columns}
@@ -192,7 +192,7 @@ const CitiesTable = () => {
               }}
               pageSizeOptions={[10, 20]}
               checkboxSelection
-              sx={{ minWidth: "550px" }}
+              hideFooterSelectedRowCount
             />
           </div>
         </>
