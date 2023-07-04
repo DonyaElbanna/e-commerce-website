@@ -50,7 +50,7 @@ const SERVER = {
   },
 };
 //url
-const CLIENT_URI = process.env.CLIENT_URI || "http://127.0.0.1:5173";
+const CLIENT_URI = process.env.CLIENT_URI || "http://localhost:5173";
 
 const CLIENT = {
   uri: CLIENT_URI,

@@ -16,10 +16,6 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import {
-  handleAuthType,
-  handleToggleAuthModal,
-} from "../../rtk/features/authSlice";
 
 // modal styles
 const style = {
@@ -187,6 +183,8 @@ const CategoriesTable = () => {
       ) : (
         <>
           <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
+            {/* <Button
+              variant="outlined"
             <Button
               style={{
                 color: "#be853f",
@@ -197,7 +195,8 @@ const CategoriesTable = () => {
               onClick={openCatModal}
             >
               Add a new record
-            </Button>
+            </Button> */}
+            <CitiesModal />
           </Box>
           <div style={{ height: 500, width: "100%" }}>
             <DataGrid

@@ -17,6 +17,7 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 // import { handleAuthType, handleToggleAuthModal } from "../../rtk/features/authSlice";
+import CitiesModal from "./CitiesModal";
 
 // modal styles
 const style = {
@@ -193,9 +194,11 @@ const CitiesTable = () => {
               }}
               startIcon={<AddCircleOutlineOutlinedIcon />}
               // onClick={openCityModal}
+              onClick={<CitiesModal />}
             >
               Add a new record
-            </Button>
+            </Button> */}
+            <CitiesModal />
           </Box>
           <div style={{ height: 500, width: "100%" }}>
             <DataGrid
