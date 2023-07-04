@@ -5,6 +5,8 @@ const {
   remove,
   getAllUser,
   addRemoveWishlist,
+  block,
+  changeRole
 } = require("../services/user.service");
 const { signin } = require("./auth.controller");
 const authService = require("../services/auth.service");
@@ -82,6 +84,28 @@ const toggleWishlist = async (req, res, next) => {
   }
 };
 
+const toggleBlock = async (req, res, next) => {
+  const { id } = req.params;
+  //! implementing only admin can block users
+  try {
+    const user = await block(id, next);
+    res.status(202).json(user);
+  } catch (err) {
+    return next(new AppError(FAILURE, 404));
+  }
+};
+
+const changeUserRole = async (req, res, next) => {
+  const { id } = req.params;
+  //! implementing only admin can block users
+  try {
+    const user = await changeRole(id, next);
+    res.status(202).json(user);
+  } catch (err) {
+    return next(new AppError(FAILURE, 404));
+  }
+};
+
 module.exports = {
   signup,
   getSingleUser,
@@ -89,4 +113,6 @@ module.exports = {
   deleteUser,
   getAllUsers,
   toggleWishlist,
+  toggleBlock,
+  changeUserRole,
 };

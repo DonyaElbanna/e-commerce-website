@@ -23,6 +23,7 @@ import {
   handleAuthType,
   handleIsLoggedIntoggle,
   handleOpenAuthModal,
+  handleToggleAuthModal,
   handleUserInfo,
 } from "../../../rtk/features/authSlice";
 
@@ -32,17 +33,16 @@ const Navbar1 = () => {
   const logoutHandler = () => {
     setAnchorEl(null);
     dispatch(handleAuthType("login"));
-    dispatch(handleOpenAuthModal(true));
     dispatch(handleUserInfo({}));
+    dispatch(handleIsLoggedIntoggle());
   };
   const { auth } = useSelector((state) => state);
-
   const HandleLogin = (e) => {
     if (auth.isLoggedIn && sessionStorage.getItem("logged")) {
       setAnchorEl(e.currentTarget);
     } else {
       dispatch(handleAuthType("login"));
-      dispatch(handleOpenAuthModal(true));
+      dispatch(handleToggleAuthModal());
     }
   };
 
@@ -66,7 +66,7 @@ const Navbar1 = () => {
               />
             </Link>
           </Box>
-          {true && (
+          {auth.isLoggedIn && (
             <Stack
               display={{ xs: "flex" }}
               direction="row"
@@ -170,7 +170,7 @@ const Navbar1 = () => {
                     fontWeight="700"
                     display={{ xs: "none", md: "flex" }}
                   >
-                    {/* {auth.loggedInInfo.userName.substring(0, 10)}.. */}
+                    {auth.userInfo.username.substring(0, 10)}..
                   </Typography>
                 </IconButton>
                 <Menu
@@ -208,7 +208,7 @@ const Navbar1 = () => {
               </div>
             </Stack>
           )}
-          {false && (
+          {!auth.isLoggedIn && (
             <Stack
               display={{ xs: "flex" }}
               direction="row"
@@ -231,22 +231,22 @@ const Navbar1 = () => {
                 </Typography>
               </NavLink>
               <NavLink
-                to="/aboutUs"
+                to="/cities"
                 className={({ isActive }) =>
                   isActive ? Style.NavLinkActive : Style.NavLink
                 }
               >
-                <InfoOutlinedIcon />
+                <PublicOutlinedIcon />
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
                   display={{ xs: "none", md: "inline-flex" }}
                 >
-                  About Us
+                  Cities
                 </Typography>
               </NavLink>
               <span
                 className={Style.NavLink}
-                //   onClick={() => dispatch(handleToggleAuthModal())}
+                onClick={() => dispatch(handleToggleAuthModal())}
               >
                 <Person2OutlinedIcon />
                 Log in
