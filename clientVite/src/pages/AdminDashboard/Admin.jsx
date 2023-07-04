@@ -79,8 +79,16 @@ export default function VerticalTabs() {
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: "divider", overflow: "unset" }}
+        sx={{
+          borderRight: 1,
+          borderColor: "divider",
+          overflow: "unset",
+          ".Mui-selected": {
+            color: `#be853f`,
+          },
+        }}
         allowScrollButtonsMobile
+        TabIndicatorProps={{ style: { background: "orange" } }}
       >
         <Tab
           icon={<PersonPinIcon />}

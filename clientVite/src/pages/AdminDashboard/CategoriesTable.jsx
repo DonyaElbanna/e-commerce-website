@@ -171,13 +171,13 @@ const CategoriesTable = () => {
         <>
           <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
             <Button
-              variant="outlined"
+              style={{color: "#be853f", border: "1px solid #be853f", boxShadow: "2px 2px #be853f"}}
               startIcon={<AddCircleOutlineOutlinedIcon />}
             >
               Add a new record
             </Button>
           </Box>
-          <div style={{ height: 400, width: "100%" }}>
+          <div style={{ height: 500, width: "100%" }}>
             <DataGrid
               rows={cats}
               columns={columns}
@@ -188,7 +188,7 @@ const CategoriesTable = () => {
               }}
               pageSizeOptions={[10, 20]}
               checkboxSelection
-              sx={{ minWidth: "500px" }}
+              hideFooterSelectedRowCount
             />
           </div>
         </>

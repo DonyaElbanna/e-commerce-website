@@ -34,7 +34,7 @@ const Categories = ({ subcats, handleFilter, resetFilters }) => {
           slidesPerView={4}
           loop={true}
           virtual
-          className="cursor-pointer relative carousel-center w-100 px-4 pt-4 pb-1 bg-neutral rounded-box my-10"
+          className="cursor-pointer relative carousel-center w-100 px-4 pt-4 pb-1 bg-yellow-500/40 rounded-box my-10"
         >
           <div>
             {subcats.map((cat, index) => (
@@ -44,11 +44,11 @@ const Categories = ({ subcats, handleFilter, resetFilters }) => {
                 onClick={() => handleFilter(cat._id)}
               >
                 <div className="carousel-item h-32">
-                  <div className="relative block bg-gray-900 group h-28 ">
+                  <div className="relative block bg-gray-900 group h-28 rounded-md">
                     <img
                       src={cat.image}
                       alt={cat.type}
-                      className="rounded w-48 h-28 group-hover:opacity-50"
+                      className="rounded-md w-48 h-28 group-hover:opacity-50"
                     />
                     <p className="absolute place-self-center top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all opacity-0 group-hover:opacity-100 group-hover:translate-y-0 text-xl text-white">
                       {cat.type}
@@ -64,8 +64,8 @@ const Categories = ({ subcats, handleFilter, resetFilters }) => {
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1}
-          stroke="currentColor"
-          className="w-8 h-8 stroke-2	ml-3 animate-ping	"
+          stroke="#be853f"
+          className="w-16 h-8 stroke-2	ml-3 animate-ping	"
         >
           <path
             strokeLinecap="round"
@@ -77,7 +77,7 @@ const Categories = ({ subcats, handleFilter, resetFilters }) => {
       <div className="text-right mr-10">
         <button
           onClick={resetFilters}
-          className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none active:ring-2 active:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:active:ring-gray-700 dark:border-gray-700"
+          className="text-white bg-yellow-500 hover:bg-yellow-600 drop-shadow-xl border-2 border-yellow-600 focus:outline-none active:ring-2 active:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:active:ring-gray-700 dark:border-gray-700"
         >
           Reset Filters
         </button>
