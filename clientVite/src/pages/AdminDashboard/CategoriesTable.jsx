@@ -188,6 +188,7 @@ const CategoriesTable = () => {
               }}
               pageSizeOptions={[10, 20]}
               checkboxSelection
+              sx={{ minWidth: "500px" }}
             />
           </div>
         </>
@@ -197,3 +198,7 @@ const CategoriesTable = () => {
 };
 
 export default CategoriesTable;
+
+
+
+

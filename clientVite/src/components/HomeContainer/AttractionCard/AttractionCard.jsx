@@ -8,8 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 const baseURL = "http://localhost:9999/user/64a2e90d706780e71edb32ca";
 
 const AttractionCard = ({ attr }) => {
-  // const { isLoggedIn } = useSelector((state) => state.auth);
-  const isLoggedIn = true;
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  // const isLoggedIn = true;
   // const dispahch = useDispatch();
   // const handlerExp = () => {
   //   dispahch(handleIsLoggedIntoggle());
@@ -17,7 +17,7 @@ const AttractionCard = ({ attr }) => {
   const [isFilled, setIsFilled] = useState(false);
   const [wishlistItems, setWishlistItems] = useState([]);
 
-  console.log("ffff", wishlistItems);
+  // console.log("ffff", wishlistItems);
   useEffect(() => {
     const getWishlistItems = async () => {
       const { data } = await axios.get(baseURL);

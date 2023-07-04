@@ -27,9 +27,9 @@ import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 
 // table cols
 const columns = [
-  { id: "username", label: "Username", minWidth: 120 },
-  { id: "email", label: "Email", minWidth: 170 },
-  { id: "role", label: "Role", minWidth: 150 },
+  { id: "username", label: "Username", minWidth: 100 },
+  { id: "email", label: "Email", minWidth: 100 },
+  { id: "role", label: "Role", minWidth: 140 },
   { id: "isBlocked", label: "Blocked Status", minWidth: 100 },
   { id: "edit", label: "Edit", minWidth: 100 },
   { id: "delete", label: "Delete", minWidth: 100 },
@@ -118,7 +118,28 @@ const Users = () => {
       console.log(err);
     }
   };
-  console.log(users);
+
+  const addRemoveAdmin = async (id) => {
+    console.log(id);
+    setUsers((prevState) =>
+      prevState.map((user) => {
+        if (user._id === id) {
+          return {
+            ...user,
+            role: user.role == "admin" ? "user" : "admin",
+          };
+        }
+        return user;
+      })
+    );
+    try {
+      await axios.get(`http://localhost:9999/user/role/${id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // console.log(users);
   return (
     <>
       {common.isLoading ? (
@@ -133,7 +154,7 @@ const Users = () => {
               Add a new record
             </Button>
           </Box>
-          <Paper sx={{ width: "100%", overflow: "hidden" }}>
+          <Paper sx={{ width: "100%", overflow: "hidden", display: "grid" }}>
             <TableContainer sx={{ maxHeight: 440, width: "100%" }}>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
@@ -143,6 +164,7 @@ const Users = () => {
                         key={column.id}
                         align={column.align}
                         style={{ minWidth: column.minWidth }}
+                        sx={{ textAlign: "center", fontWeight: "bold" }}
                       >
                         {column.label}
                       </TableCell>
@@ -163,41 +185,23 @@ const Users = () => {
                           <TableCell>{user.username}</TableCell>
                           <TableCell>{user.email}</TableCell>
                           <TableCell>
-                            {user.role !== "admin" ? (
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  alignItems: "center",
-                                }}
+                            {/* {user.role !== "admin" ? ( */}
+                            <Box
+                              sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                              }}
+                            >
+                              {user.role}
+                              <button
+                                type="button"
+                                className="p-2 mt-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-blue-400 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                                onClick={() => addRemoveAdmin(user._id)}
                               >
-                                {user.role}
-                                <button
-                                  type="button"
-                                  className="p-2 mt-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                                >
-                                  make Admin
-                                </button>
-                              </Box>
-                            ) : (
-                              <>
-                                <Box
-                                  sx={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  {user.role}
-                                  <button
-                                    type="button"
-                                    className="p-2 mt-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                                  >
-                                    remove Admin
-                                  </button>
-                                </Box>
-                              </>
-                            )}
+                                {user.role == "admin" ? "remove" : "make"} Admin
+                              </button>
+                            </Box>
                           </TableCell>
                           <TableCell>
                             {user.isBlocked ? (

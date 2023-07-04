@@ -26,6 +26,6 @@ router.post("/:id", toggleWishlist);
 
 router.get("/block/:id", toggleBlock);
 
-router.patch("/role/:id", changeUserRole);
+router.get("/role/:id", changeUserRole);
 
 module.exports = router;

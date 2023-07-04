@@ -67,7 +67,11 @@ const Attractions = () => {
 
   // table cols
   const columns = [
-    { field: "name", headerName: "Name", width: 150 },
+    {
+      field: "name",
+      headerName: "Name",
+      width: 150,
+    },
     { field: "city", headerName: "City", width: 130 },
     { field: "category", headerName: "Category", width: 130 },
     { field: "status", headerName: "Status", width: 120 },
@@ -76,8 +80,6 @@ const Attractions = () => {
       headerName: "Edit",
       sortable: false,
       width: 90,
-      dataIndex: "id",
-      key: "id",
       renderCell: (index, params) => (
         <Button
           variant="outlined"

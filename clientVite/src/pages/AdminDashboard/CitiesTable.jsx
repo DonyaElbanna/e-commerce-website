@@ -189,6 +189,7 @@ const CitiesTable = () => {
               }}
               pageSizeOptions={[10, 20]}
               checkboxSelection
+              sx={{ minWidth: "550px" }}
             />
           </div>
         </>

@@ -17,7 +17,7 @@ const Categories = () => {
   // console.log(cats);
 
   return (
-    <div className="container px-5 mx-auto">
+    <div className="container px-5 mx-auto mb-5">
       <h2 className="text-4xl mb-10 text-center	">Cities</h2>
       {cats.length == 0 ? (
         <img src={gif} className="mx-auto" style={{ width: "150px" }} />
