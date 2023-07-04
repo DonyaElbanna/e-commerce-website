@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import BookingForm from "./BookingForm";
-const BookingCard = () => {
+const BookingCard = ({ attrDetails }) => {
   const [openForm, setOpenForm] = useState(false);
 
   return (
@@ -9,7 +9,10 @@ const BookingCard = () => {
         <div className="max-w-md rounded-3xl p-px bg-gradient-to-b from-blue-300 to-pink-300 dark:from-blue-800 dark:to-purple-800 ">
           <div className="rounded-[calc(1.5rem-1px)] p-10 bg-white dark:bg-gray-900 text-center">
             <div className="flex font-bold justify-center">
-              Start From <p className="text-blue-600">&nbsp;100 Dollar&nbsp;</p>{" "}
+              Start From{" "}
+              <p className="text-blue-600">
+                &nbsp;${attrDetails.AdultPrice} Dollar&nbsp;
+              </p>{" "}
               Per Person
             </div>
 

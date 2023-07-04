@@ -20,7 +20,6 @@ const AttractionDetails = () => {
       // console.log(data.Attraction);
       setAttrDetails(data.Attraction);
     };
-
     getAttrs();
   }, []);
 
@@ -37,7 +36,7 @@ const AttractionDetails = () => {
 
             <div className="flex w-full justify-between flex-col-reverse md:flex-row  mt-3 px-3 gap-4">
               <Details attrDetails={attrDetails} />
-              <BookingCard />
+              <BookingCard attrDetails={attrDetails} />
             </div>
           </div>
         </div>
