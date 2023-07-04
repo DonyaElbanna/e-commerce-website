@@ -1,15 +1,20 @@
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Joi from "joi";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { handleAuthType, handleIsLoggedIntoggle, handleUserInfo } from "../../../rtk/features/authSlice";
+import {
+  handleAuthType,
+  handleIsLoggedIntoggle,
+  handleOpenAuthModal,
+  handleUserInfo,
+} from "../../../rtk/features/authSlice";
 // import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 const RegisterForm = () => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [form, setForm] = useState({
     userName: "",
     email: "",
@@ -17,6 +22,13 @@ const RegisterForm = () => {
     confirmPassword: "",
   });
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (!open) {
+      dispatch(handleAuthType("login"));
+      dispatch(handleOpenAuthModal(false));
+    }
+  }, [open]);
 
   const schema = Joi.object({
     userName: Joi.string().required().min(3),
@@ -60,19 +72,30 @@ const RegisterForm = () => {
       role: "user",
       password: form.password,
     };
-
+    console.log(newUser);
     await axios
       .post("http://localhost:9999/user", newUser)
       .then((response) => {
-        dispatch(handleUserInfo(response.data.user))
-        dispatch(handleIsLoggedIntoggle())
+        dispatch(handleUserInfo(response.data.user));
+        dispatch(handleIsLoggedIntoggle());
         setOpen(false);
       })
       .catch((error) => {
         setOpen(true);
-        console.log(error);
         const errorData = {};
-        errorData.email = error.response.data.message;
+        console.log(error.response);
+        if (!error.response) {
+          errorData.globalErr =
+            "something went wrong ,please check your connection";
+        } else if (
+          error.response.data.message === "This email is already registered"
+        ) {
+          errorData.email = error.response.data.message;
+        } else {
+          errorData.userName =
+            "this userName already exist , please try another one";
+        }
+
         setErrors(errorData);
       });
   };
@@ -97,7 +120,7 @@ const RegisterForm = () => {
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className=" p-5 mt-20 items-center sm:p-0">
+          <div className=" p-5 mt-5 items-center sm:p-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -221,6 +244,9 @@ const RegisterForm = () => {
                             </label>
                           </div>
                         </div>
+                        <p className="text-red-500 text-xs italic">
+                          {errors.globalErr}
+                        </p>
                         <div>
                           <button
                             type="submit"
@@ -233,7 +259,7 @@ const RegisterForm = () => {
                         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                           Already have an account?{" "}
                           <Link
-                            onClick={()=> dispatch(handleAuthType("login"))}
+                            onClick={() => dispatch(handleAuthType("login"))}
                             className="font-semibold text-indigo-600 hover:text-indigo-500"
                           >
                             Login here

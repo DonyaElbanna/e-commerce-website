@@ -62,8 +62,12 @@ const ResetPassword = () => {
       // dispatch(handleToggleAuthModal());
     } catch (error) {
       const errorData = {};
-      console.log(error);
-      errorData.invalidCradintials = error.response.data.message;
+      if (!error.response) {
+        errorData.invalidCradintials =
+          "something went wrong ,please check your connection";
+      } else {
+        errorData.invalidCradintials = error.response.data.message;
+      }
       setErrors(errorData);
     }
   };
