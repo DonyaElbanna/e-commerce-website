@@ -16,6 +16,7 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+// import { handleAuthType, handleToggleAuthModal } from "../../rtk/features/authSlice";
 
 // modal styles
 const style = {
@@ -74,6 +75,14 @@ const CitiesTable = () => {
         <Button
           variant="outlined"
           onClick={() => handleButtonClick(params.row)}
+          sx={{
+            color: "#be853f",
+            border: "1px solid orange",
+            ":hover": {
+              border: "1px solid #be853f",
+              backgroundColor: "#ffc0715c",
+            },
+          }}
         >
           Edit
         </Button>
@@ -164,6 +173,11 @@ const CitiesTable = () => {
     dispatch(handleIsLoadingToggle());
   }, []);
 
+  // const openCityModal = () => {
+  //   dispatch(handleAuthType("addCity"));
+  //   dispatch(handleToggleAuthModal());
+  // };
+
   return (
     <>
       {common.isLoading ? (
@@ -172,8 +186,13 @@ const CitiesTable = () => {
         <>
           <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
             <Button
-              style={{color: "#be853f", border: "1px solid #be853f", boxShadow: "2px 2px #be853f"}}
+              style={{
+                color: "#be853f",
+                border: "1px solid #be853f",
+                boxShadow: "2px 2px #be853f",
+              }}
               startIcon={<AddCircleOutlineOutlinedIcon />}
+              // onClick={openCityModal}
             >
               Add a new record
             </Button>

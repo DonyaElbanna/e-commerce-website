@@ -29,7 +29,7 @@ import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 const columns = [
   { id: "username", label: "Username", minWidth: 100, flex: 1 },
   { id: "email", label: "Email", minWidth: 100, flex: 1 },
-  { id: "role", label: "Role", minWidth: 140, flex: 1 },
+  { id: "role", label: "Role", minWidth: 170, flex: 1 },
   { id: "isBlocked", label: "Blocked Status", minWidth: 100, flex: 1 },
   { id: "edit", label: "Edit", minWidth: 100, flex: 1 },
   { id: "delete", label: "Delete", minWidth: 100, flex: 1 },
@@ -148,7 +148,11 @@ const Users = () => {
         <>
           <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
             <Button
-              style={{color: "#be853f", border: "1px solid #be853f", boxShadow: "2px 2px #be853f"}}
+              style={{
+                color: "#be853f",
+                border: "1px solid #be853f",
+                boxShadow: "2px 2px #be853f",
+              }}
               startIcon={<AddCircleOutlineOutlinedIcon />}
             >
               Add a new record
@@ -194,13 +198,23 @@ const Users = () => {
                               }}
                             >
                               {user.role}
-                              <button
+                              <Button
                                 type="button"
                                 className="p-2 mt-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-blue-400 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                                 onClick={() => addRemoveAdmin(user._id)}
+                                sx={{
+                                  color: "#be853f",
+                                  border: "1px solid orange",
+                                  marginTop: "5px",
+                                  ":hover": {
+                                    border: "1px solid #be853f",
+                                    backgroundColor: "#ffc0715c",
+                                    color: "#be853f"
+                                  },
+                                }}
                               >
                                 {user.role == "admin" ? "remove" : "make"} Admin
-                              </button>
+                              </Button>
                             </Box>
                           </TableCell>
                           <TableCell>
@@ -216,13 +230,33 @@ const Users = () => {
                                 variant="outlined"
                                 startIcon={<BlockOutlinedIcon />}
                                 onClick={() => blockUser(user._id)}
+                                sx={{
+                                  color: "#be853f",
+                                  border: "1px solid orange",
+                                  ":hover": {
+                                    border: "1px solid #be853f",
+                                    backgroundColor: "#ffc0715c",
+                                  },
+                                }}
                               >
                                 Block
                               </Button>
                             )}
                           </TableCell>
                           <TableCell>
-                            <Button variant="outlined">Edit</Button>
+                            <Button
+                              variant="outlined"
+                              sx={{
+                                color: "#be853f",
+                                border: "1px solid orange",
+                                ":hover": {
+                                  border: "1px solid #be853f",
+                                  backgroundColor: "#ffc0715c",
+                                },
+                              }}
+                            >
+                              Edit
+                            </Button>
                           </TableCell>
                           <TableCell>
                             <Tooltip title="Delete">
