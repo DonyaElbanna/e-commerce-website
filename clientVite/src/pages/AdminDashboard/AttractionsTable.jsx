@@ -84,6 +84,14 @@ const Attractions = () => {
         <Button
           variant="outlined"
           onClick={() => handleButtonClick(params.row.id)}
+          sx={{
+            color: "#be853f",
+            border: "1px solid orange",
+            ":hover": {
+              border: "1px solid #be853f",
+              backgroundColor: "#ffc0715c",
+            },
+          }}
         >
           Edit
         </Button>

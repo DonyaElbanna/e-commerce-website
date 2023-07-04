@@ -16,7 +16,6 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import CitiesModal from "./CitiesModal";
 
 // modal styles
 const style = {
@@ -72,6 +71,14 @@ const CategoriesTable = () => {
         <Button
           variant="outlined"
           onClick={() => handleButtonClick(params.row)}
+          sx={{
+            color: "#be853f",
+            border: "1px solid orange",
+            ":hover": {
+              border: "1px solid #be853f",
+              backgroundColor: "#ffc0715c",
+            },
+          }}
         >
           Edit
         </Button>
@@ -164,6 +171,11 @@ const CategoriesTable = () => {
 
   // console.log(cats)
 
+  const openCatModal = () => {
+    dispatch(handleAuthType("addCat"));
+    dispatch(handleToggleAuthModal());
+  };
+
   return (
     <>
       {common.isLoading ? (
@@ -174,8 +186,13 @@ const CategoriesTable = () => {
             {/* <Button
               variant="outlined"
             <Button
-              style={{color: "#be853f", border: "1px solid #be853f", boxShadow: "2px 2px #be853f"}}
+              style={{
+                color: "#be853f",
+                border: "1px solid #be853f",
+                boxShadow: "2px 2px #be853f",
+              }}
               startIcon={<AddCircleOutlineOutlinedIcon />}
+              onClick={openCatModal}
             >
               Add a new record
             </Button> */}

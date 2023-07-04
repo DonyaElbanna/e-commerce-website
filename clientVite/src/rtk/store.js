@@ -28,10 +28,11 @@ import socketSlice from "./features/socketSlice";
 import bookingSlice from "./features/bookingSlice";
 import parkSlice from "./features/parkSlice";
 import adminSlice  from "./features/adminSlice";
+import attrSlice from "./features/attrSlice";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["book", "auth","parkGroup"], // include slice name to persist
+  whitelist: ["book", "auth","attractions"], // include slice name to persist
 };
 
 const reducers = combineReducers({
@@ -50,7 +51,8 @@ const reducers = combineReducers({
   language: languageSlice,
   book: bookingSlice,
   parkGroup:parkSlice,
-  admin:adminSlice
+  admin:adminSlice,
+  attractions:attrSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
