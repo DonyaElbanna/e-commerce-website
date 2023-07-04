@@ -77,6 +77,7 @@ const LoginForm = () => {
       );
       dispatch(handleUserInfo(data));
       sessionStorage.setItem("logged", true);
+      dispatch(handleIsLoggedIntoggle());
       setOpen(false);
     } catch (error) {
       const errorData = {};

@@ -38,7 +38,7 @@ const Navbar1 = () => {
   const { auth } = useSelector((state) => state);
 
   const HandleLogin = (e) => {
-    if (auth.userInfo.user && sessionStorage.getItem("logged")) {
+    if (auth.isLoggedIn && sessionStorage.getItem("logged")) {
       setAnchorEl(e.currentTarget);
     } else {
       dispatch(handleAuthType("login"));
