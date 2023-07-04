@@ -2,6 +2,7 @@ const express = require("express");
 const {
   addAttraction,
   getAllAttraction,
+  GetAllAttractions,
   getAttraction,
   updateAttraction,
   deleteAttraction,
@@ -19,6 +20,7 @@ router.post("/", upload.array("image"), addAttraction);
 router.patch("/upload/:id", uploadToMulter, uploadPP, SetUrls);
 
 router.get("/", getAllAttraction);
+router.get("/all", GetAllAttractions);
 
 router.get("/:id", getAttraction);
 

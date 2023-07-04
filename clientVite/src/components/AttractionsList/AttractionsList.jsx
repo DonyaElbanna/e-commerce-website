@@ -11,7 +11,6 @@ const AttractionsList = () => {
   const [filteredAttrs, setFilteredAttrs] = useState([]);
   const [filterID, setFilterID] = useState("");
   const [subcats, setSubcats] = useState([]);
-
   let { id } = useParams();
   // console.log(id);
 

@@ -7,6 +7,7 @@ const {
   SetImages,
   getAttractByCategory,
   getAttractBySubcategory,
+  getAllAttractions
 } = require("../services/attraction.service");
 const cloudinary = require("../utils/cloudinary.util");
 const AppError = require("../utils/AppError.util");
@@ -73,7 +74,16 @@ const getAttractionBySubcategory = async (req, res, next) => {
     return next(new AppError(FAILURE, 404));
   }
 };
+const GetAllAttractions = async (req,res,next)=>{
+  try {
+    const Attractions = await getAllAttractions();
 
+    res.status(200).json({ Attractions: Attractions });
+
+  } catch (error) {
+    return next(new AppError(FAILURE, 404));
+  }
+}
 module.exports = {
   addAttraction,
   getAllAttraction,
@@ -83,4 +93,5 @@ module.exports = {
   SetUrls,
   getAttractionByCategory,
   getAttractionBySubcategory,
+  GetAllAttractions
 };
