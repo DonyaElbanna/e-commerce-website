@@ -17,6 +17,7 @@ const add = async (payload, next) => {
     user.password = undefined;
     return user;
   } catch (err) {
+    console.log(err)
     return next(new AppError(FAILURE, 404));
   }
 };
@@ -113,4 +114,63 @@ const addRemoveWishlist = async (id, attractionID, next) => {
   }
 };
 
-module.exports = { add, getUser, edit, remove, getAllUser, addRemoveWishlist };
+const block = async (id, next) => {
+  try {
+    const editedUser = await User.findByIdAndUpdate(
+      id,
+      [{ $set: { isBlocked: { $eq: [false, "$isBlocked"] } } }],
+      {
+        upsert: true,
+        new: true,
+      }
+    );
+    return editedUser;
+  } catch (err) {
+    return next(new AppError(NOT_FOUND, 404));
+  }
+};
+
+const changeRole = async (id, next) => {
+  const user = await User.findById(id);
+
+  if (user.role !== "admin") {
+    try {
+      const editedUser = await User.findByIdAndUpdate(
+        id,
+        [{ $set: { role: "admin" } }],
+        {
+          upsert: true,
+          new: true,
+        }
+      );
+      return editedUser;
+    } catch (err) {
+      return next(new AppError(NOT_FOUND, 404));
+    }
+  } else {
+    try {
+      const editedUser = await User.findByIdAndUpdate(
+        id,
+        [{ $set: { role: "user" } }],
+        {
+          upsert: true,
+          new: true,
+        }
+      );
+      return editedUser;
+    } catch (err) {
+      return next(new AppError(NOT_FOUND, 404));
+    }
+  }
+};
+
+module.exports = {
+  add,
+  getUser,
+  edit,
+  remove,
+  getAllUser,
+  addRemoveWishlist,
+  block,
+  changeRole,
+};
