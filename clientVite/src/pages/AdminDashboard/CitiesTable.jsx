@@ -38,7 +38,7 @@ const style = {
 };
 
 const CitiesTable = () => {
-  const [cities, setCities] = useState([]);
+  const [Cities, setCities] = useState([]);
 
   const { common } = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -55,7 +55,7 @@ const CitiesTable = () => {
 
   const deleteCity = (id) => {
     // console.log(id);
-    const newCities = cities.filter((city) => city.id !== id);
+    const newCities = Cities.filter((city) => city.id !== id);
     setCities(newCities);
     handleClose();
 
@@ -203,7 +203,7 @@ const CitiesTable = () => {
     dispatch(handleIsLoadingToggle());
     // dispatch(CityEditHandler());
     // dispatch(citiesHandler());
-  }, [cities]);
+  }, [Cities]);
   // !keeps rerendering?
 
   const openCityModal = () => {
@@ -234,7 +234,7 @@ const CitiesTable = () => {
           </Box>
           <div style={{ height: 500, width: "100%" }}>
             <DataGrid
-              rows={cities}
+              rows={Cities}
               columns={columns}
               initialState={{
                 pagination: {
