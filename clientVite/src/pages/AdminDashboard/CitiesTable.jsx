@@ -16,12 +16,15 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-// import CitiesModal from "./CitiesModal";
 import {
   handleAuthType,
   handleToggleAuthModal,
 } from "../../rtk/features/authSlice";
-import { CityEditHandler, citiesHandler } from "../../rtk/features/citiesSlice";
+import {
+  CityEditHandler,
+  citiesHandler,
+  removeCity,
+} from "../../rtk/features/citiesSlice";
 
 // modal styles
 const style = {
@@ -40,18 +43,43 @@ const style = {
 const CitiesTable = () => {
   const [Cities, setCities] = useState([]);
 
-  const { common,cities} = useSelector((state) => state);
-  const finilcities =  cities.cities.map((city) => ({
-    id: city._id,
-    name: city.city,
-    image: city.image,
-  }))
-  console.log(finilcities)
+  const { common, cities } = useSelector((state) => state);
+  // console.log(cities);
+
   const dispatch = useDispatch();
 
   // modal state
   const [open, setOpen] = React.useState(false);
   const [slcID, setSlcID] = useState(null);
+
+  useEffect(() => {
+    dispatch(handleIsLoadingToggle());
+
+    const getCities = async () => {
+      try {
+        const { data } = await axios.get(`http://localhost:9999/category`);
+        dispatch(citiesHandler(data.categories));
+        setCities(
+          data.categories.map((city) => ({
+            id: city._id,
+            name: city.city,
+            image: city.image,
+          }))
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getCities();
+    dispatch(handleIsLoadingToggle());
+  }, []);
+
+  const finalCities = cities?.cities.map((city) => ({
+    id: city._id,
+    name: city.city,
+    image: city.image,
+  }));
 
   const handleOpen = (id) => {
     setOpen(true);
@@ -61,8 +89,9 @@ const CitiesTable = () => {
 
   const deleteCity = (id) => {
     // console.log(id);
-    const newCities = Cities.filter((city) => city.id !== id);
-    setCities(newCities);
+    // const newCities = Cities.filter((city) => city.id !== id);
+    // setCities(newCities);
+    dispatch(removeCity(id));
     handleClose();
 
     try {
@@ -73,6 +102,20 @@ const CitiesTable = () => {
   };
 
   // console.log(cities);
+
+  const handleEditCity = (city) => {
+    // console.log(city);
+    dispatch(handleAuthType("addCity"));
+    dispatch(handleToggleAuthModal());
+    dispatch(CityEditHandler(city));
+    dispatch(citiesHandler(cities.cities));
+  };
+
+  const openCityModal = () => {
+    dispatch(handleAuthType("addCity"));
+    dispatch(handleToggleAuthModal());
+    dispatch(CityEditHandler());
+  };
 
   // table cols
   const columns = [
@@ -179,45 +222,6 @@ const CitiesTable = () => {
     },
   ];
 
-  const handleEditCity = (city) => {
-    // console.log(city);
-    dispatch(handleAuthType("addCity"));
-    dispatch(handleToggleAuthModal());
-    dispatch(CityEditHandler(city));
-  };
-
-  useEffect(() => {
-    dispatch(handleIsLoadingToggle());
-
-    const getCities = async () => {
-      try {
-        const { data } = await axios.get(`http://localhost:9999/category`);
-        dispatch(citiesHandler(data.categories))
-        setCities(
-          data.categories.map((city) => ({
-            id: city._id,
-            name: city.city,
-            image: city.image,
-          }))
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getCities();
-    dispatch(handleIsLoadingToggle());
-    // dispatch(CityEditHandler());
-    // dispatch(citiesHandler());
-  }, []);
-  // !keeps rerendering?
-
-  const openCityModal = () => {
-    dispatch(handleAuthType("addCity"));
-    dispatch(handleToggleAuthModal());
-    dispatch(CityEditHandler());
-  };
-
   return (
     <>
       {common.isLoading ? (
@@ -236,11 +240,10 @@ const CitiesTable = () => {
             >
               Add a new record
             </Button>
-            {/* <CitiesModal /> */}
           </Box>
           <div style={{ height: 500, width: "100%" }}>
             <DataGrid
-              rows={finilcities}
+              rows={finalCities || Cities}
               columns={columns}
               initialState={{
                 pagination: {

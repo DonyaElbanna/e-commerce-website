@@ -7,7 +7,10 @@ import {
   handleAuthType,
   handleOpenAuthModal,
 } from "../../../rtk/features/authSlice";
-import { citiesHandler, addCity } from "../../../rtk/features/citiesSlice";
+import {
+  addCity,
+  editCity,
+} from "../../../rtk/features/citiesSlice";
 
 const CityForm = () => {
   // modal
@@ -15,8 +18,8 @@ const CityForm = () => {
   const cancelButtonRef = useRef(null);
 
   const { cities } = useSelector((state) => state);
-  // console.log(cities);
-  // console.log(cities.cities);
+  // console.log("neeew", cities.cities);
+
   const dispatch = useDispatch();
   const [form, setForm] = useState({
     city: cities.cityEdit?.name || "",
@@ -28,7 +31,6 @@ const CityForm = () => {
       dispatch(handleAuthType("login"));
       dispatch(handleOpenAuthModal(false));
     }
-    // dispatch(citiesHandler());
   }, [open]);
 
   const [errors, setErrors] = useState({});
@@ -63,7 +65,6 @@ const CityForm = () => {
     } else {
       addCategory();
       setErrors({});
-      // console.log(form);
       setOpen(false);
     }
   };
@@ -79,8 +80,8 @@ const CityForm = () => {
       await axios
         .post("http://localhost:9999/category", newCity)
         .then((response) => {
-          console.log(response.data)
-          // dispatch(addCity(newCity));
+          // console.log("axios post", response.data);
+          dispatch(addCity(response.data));
           setOpen(false);
         })
         .catch((error) => {
@@ -94,6 +95,9 @@ const CityForm = () => {
         .put(`http://localhost:9999/category/${cities.cityEdit.id}`, newCity)
         .then((response) => {
           setOpen(false);
+          // console.log("edited city", newCity);
+          // console.log("axios put", response.data);
+          dispatch(editCity(response.data));
         })
         .catch((error) => {
           console.log(error);
@@ -102,7 +106,6 @@ const CityForm = () => {
           setOpen(true);
         });
     }
-    // dispatch(addCity(newCity));
   };
 
   return (
