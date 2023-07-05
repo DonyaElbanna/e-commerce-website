@@ -40,7 +40,13 @@ const style = {
 const CitiesTable = () => {
   const [Cities, setCities] = useState([]);
 
-  const { common } = useSelector((state) => state);
+  const { common,cities} = useSelector((state) => state);
+  const finilcities =  cities.cities.map((city) => ({
+    id: city._id,
+    name: city.city,
+    image: city.image,
+  }))
+  console.log(finilcities)
   const dispatch = useDispatch();
 
   // modal state
@@ -186,7 +192,7 @@ const CitiesTable = () => {
     const getCities = async () => {
       try {
         const { data } = await axios.get(`http://localhost:9999/category`);
-        // console.log(data.categories);
+        dispatch(citiesHandler(data.categories))
         setCities(
           data.categories.map((city) => ({
             id: city._id,
@@ -203,7 +209,7 @@ const CitiesTable = () => {
     dispatch(handleIsLoadingToggle());
     // dispatch(CityEditHandler());
     // dispatch(citiesHandler());
-  }, [Cities]);
+  }, []);
   // !keeps rerendering?
 
   const openCityModal = () => {
@@ -234,7 +240,7 @@ const CitiesTable = () => {
           </Box>
           <div style={{ height: 500, width: "100%" }}>
             <DataGrid
-              rows={Cities}
+              rows={finilcities}
               columns={columns}
               initialState={{
                 pagination: {

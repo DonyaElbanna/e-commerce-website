@@ -79,6 +79,7 @@ const CityForm = () => {
       await axios
         .post("http://localhost:9999/category", newCity)
         .then((response) => {
+          console.log(response.data)
           // dispatch(addCity(newCity));
           setOpen(false);
         })
@@ -101,7 +102,7 @@ const CityForm = () => {
           setOpen(true);
         });
     }
-    // dispatch(citiesHandler());
+    // dispatch(addCity(newCity));
   };
 
   return (
