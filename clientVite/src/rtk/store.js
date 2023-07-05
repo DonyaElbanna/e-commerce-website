@@ -29,10 +29,11 @@ import bookingSlice from "./features/bookingSlice";
 import parkSlice from "./features/parkSlice";
 import adminSlice  from "./features/adminSlice";
 import attrSlice from "./features/attrSlice";
+import citiesSlice from "./features/citiesSlice";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["book", "auth","attractions"], // include slice name to persist
+  whitelist: ["book", "auth","attractions","cities"], // include slice name to persist
 };
 
 const reducers = combineReducers({
@@ -52,7 +53,8 @@ const reducers = combineReducers({
   book: bookingSlice,
   parkGroup:parkSlice,
   admin:adminSlice,
-  attractions:attrSlice
+  attractions:attrSlice,
+  cities:citiesSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
