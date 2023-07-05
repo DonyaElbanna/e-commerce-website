@@ -15,7 +15,7 @@ export const citiesSlice = createSlice({
       state.cityEdit = action.payload;
     },
     addCity: (state, action) => {
-      state.cities = [...state.cities, action.payload];
+      state.cities = state.cities.push(action.payload);
     },
   },
 });

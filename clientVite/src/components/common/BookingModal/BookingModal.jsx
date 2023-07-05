@@ -29,7 +29,7 @@ const style = {
 const BookingModal = () => {
   const dispatch = useDispatch();
   const { book, parkGroup } = useSelector((state) => state);
-
+  console.log(book)
   const CheckParkAvaliable = async (dateformat,dateValue) => {
     try {
       const res = await axios.post(`attraction/TicketPriceDetails`, {
