@@ -25,6 +25,11 @@ import Tooltip from "@mui/material/Tooltip";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 
+import {
+  handleAuthType,
+  handleToggleAuthModal,
+} from "../../rtk/features/authSlice";
+
 // table cols
 const columns = [
   { id: "username", label: "Username", minWidth: 100, flex: 1 },
@@ -139,6 +144,11 @@ const Users = () => {
     }
   };
 
+  const openUserModal = () => {
+    dispatch(handleAuthType("addUser"));
+    dispatch(handleToggleAuthModal());
+  };
+
   // console.log(users);
   return (
     <>
@@ -154,12 +164,15 @@ const Users = () => {
                 boxShadow: "2px 2px #be853f",
               }}
               startIcon={<AddCircleOutlineOutlinedIcon />}
+              onClick={openUserModal}
             >
               Add a new record
             </Button>
           </Box>
           <Paper sx={{ width: "100%", overflow: "hidden", display: "grid" }}>
-            <TableContainer sx={{ maxHeight: 440, width: "100%", margin: "auto" }}>
+            <TableContainer
+              sx={{ maxHeight: 440, width: "100%", margin: "auto" }}
+            >
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                   <TableRow>
@@ -209,7 +222,7 @@ const Users = () => {
                                   ":hover": {
                                     border: "1px solid #be853f",
                                     backgroundColor: "#ffc0715c",
-                                    color: "#be853f"
+                                    color: "#be853f",
                                   },
                                 }}
                               >
@@ -222,6 +235,16 @@ const Users = () => {
                               <Button
                                 variant="outlined"
                                 onClick={() => blockUser(user._id)}
+                                sx={{
+                                  color: "#be853f",
+                                  border: "1px solid orange",
+                                  marginTop: "5px",
+                                  ":hover": {
+                                    border: "1px solid #be853f",
+                                    backgroundColor: "#ffc0715c",
+                                    color: "#be853f",
+                                  },
+                                }}
                               >
                                 Unblock
                               </Button>
@@ -302,12 +325,27 @@ const Users = () => {
                                     <Button
                                       variant="outlined"
                                       onClick={handleClose}
+                                      sx={{
+                                        color: "#be853f",
+                                        border: "1px solid #be853f",
+                                        ":hover": {
+                                          border: "1px solid #be853f",
+                                        },
+                                      }}
                                     >
                                       No, go back
                                     </Button>
                                     <Button
                                       variant="contained"
                                       onClick={() => deleteUser(user._id)}
+                                      sx={{
+                                        border: "1px solid #be853f",
+                                        backgroundColor: "#be853f",
+                                        ":hover": {
+                                          border: "1px solid #be853f",
+                                          backgroundColor: "#be853f",
+                                        },
+                                      }}
                                     >
                                       Yes, delete
                                     </Button>

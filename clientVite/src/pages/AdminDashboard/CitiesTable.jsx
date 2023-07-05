@@ -16,8 +16,12 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-// import { handleAuthType, handleToggleAuthModal } from "../../rtk/features/authSlice";
-import CitiesModal from "./CitiesModal";
+// import CitiesModal from "./CitiesModal";
+
+import {
+  handleAuthType,
+  handleToggleAuthModal,
+} from "../../rtk/features/authSlice";
 
 // modal styles
 const style = {
@@ -133,10 +137,31 @@ const CitiesTable = () => {
                     justifyContent: "center",
                   }}
                 >
-                  <Button variant="outlined" onClick={handleClose}>
+                  <Button
+                    variant="outlined"
+                    onClick={handleClose}
+                    sx={{
+                      color: "#be853f",
+                      border: "1px solid #be853f",
+                      ":hover": {
+                        border: "1px solid #be853f",
+                      },
+                    }}
+                  >
                     No, go back
                   </Button>
-                  <Button variant="contained" onClick={() => deleteCity(slcID)}>
+                  <Button
+                    variant="contained"
+                    onClick={() => deleteCity(slcID)}
+                    sx={{
+                      border: "1px solid #be853f",
+                      backgroundColor: "#be853f",
+                      ":hover": {
+                        border: "1px solid #be853f",
+                        backgroundColor: "#be853f",
+                      },
+                    }}
+                  >
                     Yes, delete
                   </Button>
                 </Stack>
@@ -174,10 +199,10 @@ const CitiesTable = () => {
     dispatch(handleIsLoadingToggle());
   }, []);
 
-  // const openCityModal = () => {
-  //   dispatch(handleAuthType("addCity"));
-  //   dispatch(handleToggleAuthModal());
-  // };
+  const openCityModal = () => {
+    dispatch(handleAuthType("addCity"));
+    dispatch(handleToggleAuthModal());
+  };
 
   return (
     <>
@@ -193,12 +218,12 @@ const CitiesTable = () => {
                 boxShadow: "2px 2px #be853f",
               }}
               startIcon={<AddCircleOutlineOutlinedIcon />}
-              // onClick={openCityModal}
-              onClick={<CitiesModal />}
+              onClick={openCityModal}
+              // onClick={<CitiesModal />}
             >
               Add a new record
-            </Button> */}
-            <CitiesModal />
+            </Button>
+            {/* <CitiesModal /> */}
           </Box>
           <div style={{ height: 500, width: "100%" }}>
             <DataGrid
