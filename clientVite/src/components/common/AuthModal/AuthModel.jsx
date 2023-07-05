@@ -5,6 +5,8 @@ import RegisterForm from "./registerForm";
 import UserForm from "../../../pages/AdminDashboard/Forms/UserForm";
 import CityForm from "../../../pages/AdminDashboard/Forms/CityForm";
 import CatForm from "../../../pages/AdminDashboard/Forms/CatForm";
+import ResetPassword from "./ResetPassword";
+import AddReview from "../../AttractionDetails/AddReview";
 
 const AuthModel = () => {
   const { auth } = useSelector((state) => state);
@@ -17,6 +19,7 @@ const AuthModel = () => {
       {auth.authType === "addUser" && <UserForm />}
       {auth.authType === "addCity" && <CityForm />}
       {auth.authType === "addCat" && <CatForm />}
+      {auth.authType === "review" && <AddReview />}
     </>
   );
 };

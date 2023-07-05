@@ -14,13 +14,26 @@ import Admin from "./pages/AdminDashboard/Admin";
 import ResetPassword from "./components/common/AuthModal/ResetPassword";
 import { useEffect, useState } from "react";
 import { handleAuthType, handleOpenAuthModal } from "./rtk/features/authSlice";
+import axios from "axios";
+import { AttractionGroupHandler } from "./rtk/features/attrSlice";
 
 function App() {
   const { auth } = useSelector((state) => state);
+
   const dispatch = useDispatch();
+  const getAllAttract = async ()=>{
+    try {
+      const {data} = await axios.get("http://localhost:9999/attraction/all")
+      dispatch(AttractionGroupHandler(data.Attractions))
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
   useEffect(() => {
     dispatch(handleAuthType("login"));
     dispatch(handleOpenAuthModal(false));
+    getAllAttract()
   }, []);
   return (
     <>
