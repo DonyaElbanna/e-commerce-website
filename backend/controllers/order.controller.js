@@ -13,14 +13,14 @@ const {
 
 const addOrder = async (req, res, next) => {
   const { id } = req.params;
-  const { attrID, adults, children } = req.body;
+  const { attrID, adults, children, expectedDate } = req.body;
   const user = await User.find({ _id: id });
   const attr = await Attraction.findById(attrID);
 
   const details = {
     id,
     attrID,
-    date: new Date(),
+    date: new Date(expectedDate),
     adults,
     childNo: attr.childAvailable ? children : 0,
     adultPrice: attr.AdultPrice * adults,
