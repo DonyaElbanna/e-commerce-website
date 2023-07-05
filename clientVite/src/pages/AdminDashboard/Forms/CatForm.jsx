@@ -2,23 +2,25 @@ import React, { Fragment, useRef, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Joi from "joi";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   handleAuthType,
   handleOpenAuthModal,
-  handleUserInfo,
 } from "../../../rtk/features/authSlice";
+import { categoriesHandler } from "../../../rtk/features/categoriesSlice";
 
 const CatForm = () => {
   // modal
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
 
+  const { categories } = useSelector((state) => state);
+  console.log(categories);
+
   const dispatch = useDispatch();
   const [form, setForm] = useState({
-    type: "",
-    image: "",
+    type: categories.categoryEdit?.name || "",
+    image: categories.categoryEdit?.image || "",
   });
 
   useEffect(() => {
@@ -26,6 +28,7 @@ const CatForm = () => {
       dispatch(handleAuthType("login"));
       dispatch(handleOpenAuthModal(false));
     }
+    // dispatch(categoriesHandler());
   }, [open]);
 
   const [errors, setErrors] = useState({});
@@ -72,18 +75,34 @@ const CatForm = () => {
     };
     console.log(newCategory);
 
-    await axios
-      .post("http://localhost:9999/subcat", newCategory)
-      .then((response) => {
-        // dispatch(handleUserInfo(response.data.user));
-        setOpen(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        const errorData = {};
-        setErrors(errorData);
-        setOpen(true);
-      });
+    if (!categories.categoryEdit) {
+      await axios
+        .post("http://localhost:9999/subcat", newCategory)
+        .then((response) => {
+          setOpen(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          const errorData = {};
+          setErrors(errorData);
+          setOpen(true);
+        });
+    } else {
+      await axios
+        .put(
+          `http://localhost:9999/subcat/${categories.categoryEdit.id}`,
+          newCategory
+        )
+        .then((response) => {
+          setOpen(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          const errorData = {};
+          setErrors(errorData);
+          setOpen(true);
+        });
+    }
   };
 
   return (
@@ -121,9 +140,9 @@ const CatForm = () => {
                 <Dialog.Title>
                   <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                      <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white">
+                      {/* <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white">
                         Add a new Category
-                      </h1>
+                      </h1> */}
                       <form className="space-y-4 md:space-y-6" action="#">
                         <div>
                           <label
@@ -139,6 +158,7 @@ const CatForm = () => {
                             className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
                             placeholder="Tour type"
                             required=""
+                            value={form.type}
                             onChange={(value) => handleChange(value)}
                           />
                           <p className="text-red-500 text-xs italic">
@@ -159,6 +179,7 @@ const CatForm = () => {
                             className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
                             placeholder="http://url.jpg"
                             required=""
+                            value={form.image}
                             onChange={(value) => handleChange(value)}
                           />
                           <p className="text-red-500 text-xs italic">

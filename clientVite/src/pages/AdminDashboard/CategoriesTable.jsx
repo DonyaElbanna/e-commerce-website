@@ -20,6 +20,7 @@ import {
   handleAuthType,
   handleToggleAuthModal,
 } from "../../rtk/features/authSlice";
+import { categoryEditHandler } from "../../rtk/features/categoriesSlice";
 
 // modal styles
 const style = {
@@ -74,7 +75,7 @@ const CategoriesTable = () => {
       renderCell: (params) => (
         <Button
           variant="outlined"
-          onClick={() => handleButtonClick(params.row)}
+          onClick={() => handleEditCat(params.row)}
           sx={{
             color: "#be853f",
             border: "1px solid orange",
@@ -168,8 +169,11 @@ const CategoriesTable = () => {
     },
   ];
 
-  const handleButtonClick = (x) => {
-    console.log(x);
+  const handleEditCat = (cat) => {
+    console.log(cat);
+    dispatch(handleAuthType("addCat"));
+    dispatch(handleToggleAuthModal());
+    dispatch(categoryEditHandler(cat));
   };
 
   useEffect(() => {
@@ -183,6 +187,7 @@ const CategoriesTable = () => {
           data.subcategories.map((cat) => ({
             id: cat._id,
             name: cat.type,
+            image: cat.image
           }))
         );
       } catch (error) {
@@ -192,13 +197,15 @@ const CategoriesTable = () => {
 
     getCats();
     dispatch(handleIsLoadingToggle());
-  }, []);
+  }, [cats]);
+  // !keeps rerendering?
 
   // console.log(cats)
 
   const openCatModal = () => {
     dispatch(handleAuthType("addCat"));
     dispatch(handleToggleAuthModal());
+    dispatch(categoryEditHandler());
   };
 
   return (

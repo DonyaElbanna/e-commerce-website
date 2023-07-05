@@ -28,6 +28,7 @@ import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
 import {
   handleAuthType,
   handleToggleAuthModal,
+  handleEditedUser,
 } from "../../rtk/features/authSlice";
 
 // table cols
@@ -84,7 +85,7 @@ const Users = () => {
 
     getUsers();
     dispatch(handleIsLoadingToggle());
-  }, []);
+  }, [users]);
   // console.log(users);
 
   const handleChangePage = (event, newPage) => {
@@ -147,6 +148,14 @@ const Users = () => {
   const openUserModal = () => {
     dispatch(handleAuthType("addUser"));
     dispatch(handleToggleAuthModal());
+    dispatch(handleEditedUser());
+  };
+
+  const handleEditUser = (user) => {
+    console.log(user);
+    dispatch(handleAuthType("addUser"));
+    dispatch(handleToggleAuthModal());
+    dispatch(handleEditedUser(user));
   };
 
   // console.log(users);
@@ -277,6 +286,7 @@ const Users = () => {
                                   backgroundColor: "#ffc0715c",
                                 },
                               }}
+                              onClick={() => handleEditUser(user)}
                             >
                               Edit
                             </Button>

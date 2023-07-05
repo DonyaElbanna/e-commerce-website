@@ -17,11 +17,11 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 // import CitiesModal from "./CitiesModal";
-
 import {
   handleAuthType,
   handleToggleAuthModal,
 } from "../../rtk/features/authSlice";
+import { CityEditHandler, citiesHandler } from "../../rtk/features/citiesSlice";
 
 // modal styles
 const style = {
@@ -79,7 +79,7 @@ const CitiesTable = () => {
       renderCell: (params) => (
         <Button
           variant="outlined"
-          onClick={() => handleButtonClick(params.row)}
+          onClick={() => handleEditCity(params.row)}
           sx={{
             color: "#be853f",
             border: "1px solid orange",
@@ -173,8 +173,11 @@ const CitiesTable = () => {
     },
   ];
 
-  const handleButtonClick = (x) => {
-    console.log(x);
+  const handleEditCity = (city) => {
+    // console.log(city);
+    dispatch(handleAuthType("addCity"));
+    dispatch(handleToggleAuthModal());
+    dispatch(CityEditHandler(city));
   };
 
   useEffect(() => {
@@ -188,6 +191,7 @@ const CitiesTable = () => {
           data.categories.map((city) => ({
             id: city._id,
             name: city.city,
+            image: city.image,
           }))
         );
       } catch (error) {
@@ -197,11 +201,15 @@ const CitiesTable = () => {
 
     getCities();
     dispatch(handleIsLoadingToggle());
-  }, []);
+    // dispatch(CityEditHandler());
+    // dispatch(citiesHandler());
+  }, [cities]);
+  // !keeps rerendering?
 
   const openCityModal = () => {
     dispatch(handleAuthType("addCity"));
     dispatch(handleToggleAuthModal());
+    dispatch(CityEditHandler());
   };
 
   return (
@@ -219,7 +227,6 @@ const CitiesTable = () => {
               }}
               startIcon={<AddCircleOutlineOutlinedIcon />}
               onClick={openCityModal}
-              // onClick={<CitiesModal />}
             >
               Add a new record
             </Button>

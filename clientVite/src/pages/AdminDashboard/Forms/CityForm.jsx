@@ -2,22 +2,25 @@ import React, { Fragment, useRef, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Joi from "joi";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   handleAuthType,
   handleOpenAuthModal,
 } from "../../../rtk/features/authSlice";
+import { citiesHandler, addCity } from "../../../rtk/features/citiesSlice";
 
 const CityForm = () => {
   // modal
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
 
+  const { cities } = useSelector((state) => state);
+  // console.log(cities);
+  // console.log(cities.cities);
   const dispatch = useDispatch();
   const [form, setForm] = useState({
-    city: "",
-    image: "",
+    city: cities.cityEdit?.name || "",
+    image: cities.cityEdit?.image || "",
   });
 
   useEffect(() => {
@@ -25,6 +28,7 @@ const CityForm = () => {
       dispatch(handleAuthType("login"));
       dispatch(handleOpenAuthModal(false));
     }
+    // dispatch(citiesHandler());
   }, [open]);
 
   const [errors, setErrors] = useState({});
@@ -71,18 +75,33 @@ const CityForm = () => {
     };
     console.log(newCity);
 
-    await axios
-      .post("http://localhost:9999/category", newCity)
-      .then((response) => {
-        // dispatch(handleUserInfo(response.data.user));
-        setOpen(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        const errorData = {};
-        setErrors(errorData);
-        setOpen(true);
-      });
+    if (!cities.cityEdit) {
+      await axios
+        .post("http://localhost:9999/category", newCity)
+        .then((response) => {
+          // dispatch(addCity(newCity));
+          setOpen(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          const errorData = {};
+          setErrors(errorData);
+          setOpen(true);
+        });
+    } else {
+      await axios
+        .put(`http://localhost:9999/category/${cities.cityEdit.id}`, newCity)
+        .then((response) => {
+          setOpen(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          const errorData = {};
+          setErrors(errorData);
+          setOpen(true);
+        });
+    }
+    // dispatch(citiesHandler());
   };
 
   return (
@@ -120,9 +139,9 @@ const CityForm = () => {
                 <Dialog.Title>
                   <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                      <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white">
+                      {/* <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white">
                         Add a new City
-                      </h1>
+                      </h1> */}
                       <form className="space-y-4 md:space-y-6" action="#">
                         <div>
                           <label
@@ -136,12 +155,13 @@ const CityForm = () => {
                             name="city"
                             id="city"
                             className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
-                            placeholder="Cairo"
+                            placeholder={cities.cityEdit?.name || "Cairo"}
                             required=""
+                            value={form.city}
                             onChange={(value) => handleChange(value)}
                           />
                           <p className="text-red-500 text-xs italic">
-                            {errors.type}
+                            {errors.city}
                           </p>
                         </div>
                         <div>
@@ -156,7 +176,10 @@ const CityForm = () => {
                             name="image"
                             id="image"
                             className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
-                            placeholder="http://url.jpg"
+                            placeholder={
+                              cities.cityEdit?.image || "http://url.jpg"
+                            }
+                            value={form.image}
                             required=""
                             onChange={(value) => handleChange(value)}
                           />

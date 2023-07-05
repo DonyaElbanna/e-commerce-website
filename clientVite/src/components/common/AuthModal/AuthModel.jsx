@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import ForgetPassword from "./ForgetPassword";
 import LoginForm from "./LoginForm";
-import RegisterForm from "./registerForm";
+import RegisterForm from "./RegisterForm";
 import UserForm from "../../../pages/AdminDashboard/Forms/UserForm";
 import CityForm from "../../../pages/AdminDashboard/Forms/CityForm";
 import CatForm from "../../../pages/AdminDashboard/Forms/CatForm";

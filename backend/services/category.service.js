@@ -35,7 +35,7 @@ const getCategory = async (id) => {
   }
 };
 
-const editCategory = async (id, edits) => {
+const editCat = async (id, edits) => {
   try {
     return await Category.findByIdAndUpdate(id, edits);
   } catch (error) {
@@ -55,6 +55,6 @@ module.exports = {
   create,
   getCategories,
   getCategory,
-  editCategory,
+  editCat,
   deleteCat,
 };

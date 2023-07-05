@@ -15,7 +15,7 @@ router.get("/", getAllCategories);
 
 router.get("/:id", getCategoryByID);
 
-router.patch("/:id", editCategory);
+router.put("/:id", editCategory);
 
 router.delete("/:id", deleteCategory);
 
