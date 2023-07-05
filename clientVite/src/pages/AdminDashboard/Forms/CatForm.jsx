@@ -7,7 +7,7 @@ import {
   handleAuthType,
   handleOpenAuthModal,
 } from "../../../rtk/features/authSlice";
-import { categoriesHandler } from "../../../rtk/features/categoriesSlice";
+import { addCat, editCat } from "../../../rtk/features/categoriesSlice";
 
 const CatForm = () => {
   // modal
@@ -15,7 +15,7 @@ const CatForm = () => {
   const cancelButtonRef = useRef(null);
 
   const { categories } = useSelector((state) => state);
-  console.log(categories);
+  // console.log("new", categories.categories);
 
   const dispatch = useDispatch();
   const [form, setForm] = useState({
@@ -28,7 +28,6 @@ const CatForm = () => {
       dispatch(handleAuthType("login"));
       dispatch(handleOpenAuthModal(false));
     }
-    // dispatch(categoriesHandler());
   }, [open]);
 
   const [errors, setErrors] = useState({});
@@ -63,7 +62,6 @@ const CatForm = () => {
     } else {
       addCategory();
       setErrors({});
-      // console.log(form);
       setOpen(false);
     }
   };
@@ -79,6 +77,8 @@ const CatForm = () => {
       await axios
         .post("http://localhost:9999/subcat", newCategory)
         .then((response) => {
+          // console.log("axios post", response.data.subcategory);
+          dispatch(addCat(response.data.subcategory));
           setOpen(false);
         })
         .catch((error) => {
@@ -94,7 +94,9 @@ const CatForm = () => {
           newCategory
         )
         .then((response) => {
-          setOpen(false);
+          console.log("edited city", newCategory);
+          console.log("axios put", response.data);
+          dispatch(editCat(response.data));
         })
         .catch((error) => {
           console.log(error);

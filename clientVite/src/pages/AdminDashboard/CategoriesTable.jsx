@@ -20,7 +20,11 @@ import {
   handleAuthType,
   handleToggleAuthModal,
 } from "../../rtk/features/authSlice";
-import { categoryEditHandler } from "../../rtk/features/categoriesSlice";
+import {
+  categoryEditHandler,
+  removeCat,
+  categoriesHandler,
+} from "../../rtk/features/categoriesSlice";
 
 // modal styles
 const style = {
@@ -39,12 +43,43 @@ const style = {
 const CategoriesTable = () => {
   const [cats, setCats] = useState([]);
 
-  const { common } = useSelector((state) => state);
+  const { common, categories } = useSelector((state) => state);
   const dispatch = useDispatch();
+  // console.log("redux slice", categories);
 
   // modal state
   const [open, setOpen] = React.useState(false);
   const [slcID, setSlcID] = useState(null);
+
+  useEffect(() => {
+    dispatch(handleIsLoadingToggle());
+
+    const getCats = async () => {
+      try {
+        const { data } = await axios.get(`http://localhost:9999/subcat`);
+        // console.log(data.subcategories);
+        dispatch(categoriesHandler(data.subcategories));
+        setCats(
+          data.subcategories.map((cat) => ({
+            id: cat._id,
+            name: cat.type,
+            image: cat.image,
+          }))
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getCats();
+    dispatch(handleIsLoadingToggle());
+  }, []);
+
+  const finalCats = categories?.categories.map((cat) => ({
+    id: cat._id,
+    name: cat.type,
+    image: cat.image,
+  }));
 
   const handleOpen = (id) => {
     setOpen(true);
@@ -54,8 +89,9 @@ const CategoriesTable = () => {
 
   const deleteCat = (id) => {
     // console.log(id);
-    const newCats = cats.filter((cat) => cat.id !== id);
-    setCats(newCats);
+    // const newCats = cats.filter((cat) => cat.id !== id);
+    // setCats(newCats);
+    dispatch(removeCat(id));
     handleClose();
 
     try {
@@ -63,6 +99,22 @@ const CategoriesTable = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleEditCat = (cat) => {
+    // console.log(cat);
+    dispatch(handleAuthType("addCat"));
+    dispatch(handleToggleAuthModal());
+    dispatch(categoryEditHandler(cat));
+    dispatch(categoriesHandler(categories.categories));
+  };
+
+  // console.log(cats)
+
+  const openCatModal = () => {
+    dispatch(handleAuthType("addCat"));
+    dispatch(handleToggleAuthModal());
+    dispatch(categoryEditHandler());
   };
 
   const columns = [
@@ -169,45 +221,6 @@ const CategoriesTable = () => {
     },
   ];
 
-  const handleEditCat = (cat) => {
-    console.log(cat);
-    dispatch(handleAuthType("addCat"));
-    dispatch(handleToggleAuthModal());
-    dispatch(categoryEditHandler(cat));
-  };
-
-  useEffect(() => {
-    dispatch(handleIsLoadingToggle());
-
-    const getCats = async () => {
-      try {
-        const { data } = await axios.get(`http://localhost:9999/subcat`);
-        // console.log(data.subcategories);
-        setCats(
-          data.subcategories.map((cat) => ({
-            id: cat._id,
-            name: cat.type,
-            image: cat.image
-          }))
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getCats();
-    dispatch(handleIsLoadingToggle());
-  }, [cats]);
-  // !keeps rerendering?
-
-  // console.log(cats)
-
-  const openCatModal = () => {
-    dispatch(handleAuthType("addCat"));
-    dispatch(handleToggleAuthModal());
-    dispatch(categoryEditHandler());
-  };
-
   return (
     <>
       {common.isLoading ? (
@@ -227,11 +240,10 @@ const CategoriesTable = () => {
             >
               Add a new record
             </Button>
-            {/* <CitiesModal /> */}
           </Box>
           <div style={{ height: 500, width: "100%" }}>
             <DataGrid
-              rows={cats}
+              rows={finalCats || cats}
               columns={columns}
               initialState={{
                 pagination: {

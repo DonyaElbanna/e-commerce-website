@@ -18,7 +18,7 @@ const createCategory = async (req, res, next) => {
 
   try {
     const category = await create(city, newPath.url, next);
-    res.status(201).json({ category: category });
+    res.status(201).json(category);
   } catch (err) {
     return next(new AppError(FAILURE, 404));
   }
@@ -36,7 +36,7 @@ const getCategoryByID = async (req, res) => {
 
 const editCategory = async (req, res) => {
   const category = await editCat(req.params.id, req.body);
-  res.status(200).json({ category: category });
+  res.status(200).json(category);
 };
 
 const deleteCategory = async (req, res) => {

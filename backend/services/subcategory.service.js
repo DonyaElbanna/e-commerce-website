@@ -34,7 +34,10 @@ const getSubcategory = async (id, next) => {
 
 const editSubcat = async (id, edits) => {
   try {
-    return await Subcategory.findByIdAndUpdate(id, edits);
+    return await Subcategory.findByIdAndUpdate(id, edits, {
+      upsert: true,
+      new: true,
+    });
   } catch (error) {
     throw new AppError("THIS CATEGORY IS NOT FOUND TO EDIT", 404);
   }
