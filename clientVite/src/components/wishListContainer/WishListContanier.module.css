@@ -6,4 +6,10 @@
 .tableImage {
   width: 120px;
   height: 100px;
+  object-fit: contain;
+  /* object-position: center; */
+}
+
+a:hover {
+  transform: scale(1.0091);
 }

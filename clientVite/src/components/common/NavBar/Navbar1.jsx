@@ -37,7 +37,7 @@ const Navbar1 = () => {
     dispatch(handleIsLoggedIntoggle());
   };
   const { auth } = useSelector((state) => state);
-  console.log(auth);
+  // console.log(auth);
   const HandleLogin = (e) => {
     if (auth.userInfo) {
       setAnchorEl(e.currentTarget);

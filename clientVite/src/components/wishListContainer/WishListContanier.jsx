@@ -2,6 +2,7 @@ import { Container } from "@mui/material";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import wishlistStyle from "./WishListContanier.module.css";
+import { Link } from "react-router-dom";
 
 const baseURL = "http://localhost:9999/user/64a2e90d706780e71edb32ca";
 
@@ -16,8 +17,8 @@ const WishListContanier = ({ attr }) => {
   }, []);
   console.log(wishlistItems);
 
-  const handleRemoveFromWishlist = async (item) => {
-    // console.log(item._id);
+  const handleRemoveFromWishlist = async (event, item) => {
+    event.preventDefault();
     const updatedWishlist = wishlistItems.filter(
       (wishlistItem) => wishlistItem._id !== item._id
     );
@@ -28,7 +29,9 @@ const WishListContanier = ({ attr }) => {
       console.log(err);
     }
   };
-
+  const ddd = (event) => {
+    event.preventDefault();
+  };
 
   // const data = wishlistItems.map((item, idx) => {
   //   return (
@@ -109,14 +112,16 @@ const WishListContanier = ({ attr }) => {
 
   const data = wishlistItems.map((item) => {
     return (
-      <div
-        className="card card-side bg-base-100 shadow-xl w-4/12 mx-28 mb-10"
+      <Link
+        className="card card-side bg-base-100 shadow-xl mx-10 mb-10"
         key={item._id}
+        onClick={() => console.log()}
+        to={`/city/${item._id}/details`}
       >
         <figure>
           <img className={wishlistStyle.cardImage} src={item.Images[0]} />
         </figure>
-        <div className="card-body w-52 flex justify-between">
+        <div className="card-body w-72 flex justify-between">
           <div>
             <h2 className="card-title text-slate-50">{item.name}</h2>
             <h2 className="card-title">
@@ -138,43 +143,48 @@ const WishListContanier = ({ attr }) => {
               </span>
             </div>
           </div>
-          <div className="flex flex-row-reverse text-center justify-start">
-            <button onClick={() => handleRemoveFromWishlist(item)}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="red"
-                className="w-6 h-6"
+          <div className="flex">
+            <div className="flex flex-row-reverse text-center justify-start">
+              <button onClick={() => handleRemoveFromWishlist(item)}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="red"
+                  className="w-6 h-6"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div className="flex flex-row-reverse text-center justify-center">
+              <button
+                onClick={ddd}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full flex w-44"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-          </div>
-          <div className="flex flex-row-reverse text-center justify-center">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full flex w-44">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                />
-              </svg>
-              <p className="ml-3 w-32">Add To Cart</p>
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                  />
+                </svg>
+                <p className="ml-3 w-32">Add To Cart</p>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </Link>
     );
   });
 
