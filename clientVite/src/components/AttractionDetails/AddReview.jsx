@@ -12,12 +12,12 @@ import {
   handleAuthType,
   handleOpenAuthModal,
 } from "../../rtk/features/authSlice";
-import { useParams, useSearchParams } from "react-router-dom";
+import axios from "axios";
 
 const AddReview = () => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
-  const { auth } = useSelector((state) => state);
+  const { auth, attractions } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const [form, setForm] = useState({
@@ -84,17 +84,28 @@ const AddReview = () => {
     } else {
       setErrors({});
       AddNewReview();
-      setOpen(false);
     }
   };
   const AddNewReview = async () => {
     const newReview = {
-      description: form.description,
-      rate: form.rate,
-      attraction: "",
+      review: form.description,
+      rating: form.rate,
+      attraction: attractions.AttractionDetails._id,
       user: auth.userInfo._id,
     };
     console.log(newReview);
+    await axios
+      .post("http://localhost:9999/review", newReview)
+      .then((response) => {
+        setOpen(false);
+      })
+      .catch((error) => {
+        const errorData = {};
+        console.log(error.response);
+        errorData.globalErr =
+          "something went wrong ,please check your connection";
+        setErrors(errorData);
+      });
   };
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -168,6 +179,9 @@ const AddReview = () => {
                         </div>
                         <p className="text-red-500 text-xs italic">
                           {errors.rate}
+                        </p>
+                        <p className="text-red-500 text-xs italic">
+                          {errors.globalErr}
                         </p>
                         <div>
                           <button
