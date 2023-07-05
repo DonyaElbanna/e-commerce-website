@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../../assets/logo.png";
 import Style from "./Navbar.module.css";
 import { Box, CardMedia, Container, Typography } from "@mui/material";
@@ -47,8 +47,30 @@ const Navbar1 = () => {
     }
   };
 
+  const [scroll, setScroll] = useState(false);
+  const changeColor = () => {
+    if (window.scrollY > 0) {
+      setScroll(true);
+    } else {
+      setScroll(false);
+    }
+  };
+  window.addEventListener("scroll", changeColor);
+
   return (
-    <div className=" navbar sticky top-0  z-50 md:bg-slate-800/0 bg-slate-100/90 px-4 md:px-5 bg-black">
+    <div
+      // className="navbar sticky top-0 z-50 md:bg-slate-800/0 bg-slate-100/90 px-4 md:px-5 bg-black"
+      className={
+        scroll
+          ? "navbar sticky top-0  z-50  px-4 md:px-5 bg-black"
+          : "navbar sticky top-0  z-50 md:bg-slate-800/0 bg-slate-100/90 px-4 md:px-5"
+      }
+      // className={
+      //   scroll
+      //     ? "navbar sticky top-0 bg-black"
+      //     : " navbar sticky top-0 bg-white"
+      // }
+    >
       <Container maxWidth="lg" className={Style.Container}>
         <Stack
           direction="row"
