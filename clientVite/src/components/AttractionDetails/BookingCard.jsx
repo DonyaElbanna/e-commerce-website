@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import BookingForm from "./BookingForm";
+import StepperModal from "../common/BookingModal/StepperModal";
 const BookingCard = ({ attrDetails }) => {
   const [openForm, setOpenForm] = useState(false);
 
@@ -26,6 +27,7 @@ const BookingCard = ({ attrDetails }) => {
           </div>
         </div>
         <div>{openForm ? <BookingForm setOpenForm={setOpenForm} /> : ""}</div>
+        {/* <div>{openForm ? <StepperModal /> : ""}</div> */}
       </div>
     </>
   );

@@ -1,66 +1,255 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import Datepicker from "react-tailwindcss-datepicker";
-import { date } from "joi";
-const options = {
-  title: "Demo Title",
-  autoHide: true,
-  todayBtn: false,
-  clearBtn: true,
-  maxDate: new Date("2030-01-01"),
-  minDate: new Date("1950-01-01"),
-  theme: {
-    background: "bg-gray-700 dark:bg-gray-800",
-    todayBtn: "",
-    clearBtn: "",
-    icons: "",
-    text: "",
-    disabledText: "bg-red-500",
-    input: "",
-    inputIcon: "",
-    selected: "",
+import * as React from "react";
+import PropTypes from "prop-types";
+import { styled } from "@mui/material/styles";
+import Stack from "@mui/material/Stack";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Check from "@mui/icons-material/Check";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import ContactMailIcon from "@mui/icons-material/ContactMail";
+import PaymentIcon from "@mui/icons-material/Payment";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import StepConnector, {
+  stepConnectorClasses,
+} from "@mui/material/StepConnector";
+import { Box, Button, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  handleStepBack,
+  handleStepNext,
+} from "../../rtk/features/bookingSlice";
+
+const QontoConnector = styled(StepConnector)(({ theme }) => ({
+  [`&.${stepConnectorClasses.alternativeLabel}`]: {
+    top: 10,
+    left: "calc(-50% + 16px)",
+    right: "calc(50% + 16px)",
   },
-  icons: {
-    // () => ReactElement | JSX.Element
-    prev: () => <span>Previous</span>,
-    next: () => <span>Next</span>,
+  [`&.${stepConnectorClasses.active}`]: {
+    [`& .${stepConnectorClasses.line}`]: {
+      borderColor: "#784af4",
+    },
   },
-  datepickerClassNames: "top-5",
-  defaultDate: new Date(),
-  language: "en",
+  [`&.${stepConnectorClasses.completed}`]: {
+    [`& .${stepConnectorClasses.line}`]: {
+      borderColor: "#784af4",
+    },
+  },
+  [`& .${stepConnectorClasses.line}`]: {
+    borderColor:
+      theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
+    borderTopWidth: 3,
+    borderRadius: 1,
+  },
+}));
+
+const QontoStepIconRoot = styled("div")(({ theme, ownerState }) => ({
+  color: theme.palette.mode === "dark" ? theme.palette.grey[700] : "#eaeaf0",
+  display: "flex",
+  height: 22,
+  alignItems: "center",
+  ...(ownerState.active && {
+    color: "#784af4",
+  }),
+  "& .QontoStepIcon-completedIcon": {
+    color: "#784af4",
+    zIndex: 1,
+    fontSize: 18,
+  },
+  "& .QontoStepIcon-circle": {
+    width: 8,
+    height: 8,
+    borderRadius: "50%",
+    backgroundColor: "currentColor",
+  },
+}));
+
+function QontoStepIcon(props) {
+  const { active, completed, className } = props;
+
+  return (
+    <QontoStepIconRoot ownerState={{ active }} className={className}>
+      {completed ? (
+        <Check className="QontoStepIcon-completedIcon" />
+      ) : (
+        <div className="QontoStepIcon-circle" />
+      )}
+    </QontoStepIconRoot>
+  );
+}
+
+QontoStepIcon.propTypes = {
+  /**
+   * Whether this step is active.
+   * @default false
+   */
+  active: PropTypes.bool,
+  className: PropTypes.string,
+  /**
+   * Mark the step as completed. Is passed to child components.
+   * @default false
+   */
+  completed: PropTypes.bool,
 };
 
-const BookingForm = (props) => {
-  const [open, setOpen] = useState(true);
-  const cancelButtonRef = useRef(null);
-  let [count, setCount] = useState(0);
-  const [show, setShow] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
+const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
+  [`&.${stepConnectorClasses.alternativeLabel}`]: {
+    top: 22,
+  },
+  [`&.${stepConnectorClasses.active}`]: {
+    [`& .${stepConnectorClasses.line}`]: {
+      backgroundImage:
+        "linear-gradient( 136deg, rgb(0,0,255) 0%, rgb(0,100,250) 50%, rgb(0,150,255) 100%)",
+    },
+  },
+  [`&.${stepConnectorClasses.completed}`]: {
+    [`& .${stepConnectorClasses.line}`]: {
+      backgroundImage:
+        "linear-gradient( 136deg, rgb(0,0,255) 0%, rgb(0,100,250) 50%, rgb(0,150,255) 100%)",
+    },
+  },
+  [`& .${stepConnectorClasses.line}`]: {
+    height: 3,
+    border: 0,
+    backgroundColor:
+      theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
+    borderRadius: 1,
+  },
+}));
 
-  useEffect(() => {
+const ColorlibStepIconRoot = styled("div")(({ theme, ownerState }) => ({
+  backgroundColor:
+    theme.palette.mode === "dark" ? theme.palette.grey[700] : "#ccc",
+  zIndex: 1,
+  color: "#fff",
+  width: 40,
+  height: 40,
+  display: "flex",
+  borderRadius: "50%",
+  justifyContent: "center",
+  alignItems: "center",
+  ...(ownerState.active && {
+    backgroundImage:
+      "linear-gradient( 136deg, rgb(0,0,255) 0%, rgb(0,100,250) 50%, rgb(0,150,255) 100%)",
+    boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
+  }),
+  ...(ownerState.completed && {
+    backgroundImage:
+      "linear-gradient( 136deg, rgb(0,0,255) 0%, rgb(0,100,250) 50%, rgb(0,150,255) 100%)",
+  }),
+}));
+
+function ColorlibStepIcon(props) {
+  const { active, completed, className } = props;
+
+  const icons = {
+    1: <CalendarMonthIcon sx={{ fontSize: { xs: 20, md: 25, lg: 28 } }} />,
+    2: <ShoppingCartIcon sx={{ fontSize: { xs: 20, md: 25, lg: 28 } }} />,
+    3: <ContactMailIcon sx={{ fontSize: { xs: 20, md: 25, lg: 28 } }} />,
+    // 4: <PaymentIcon sx={{ fontSize: { xs: 20, md: 25, lg: 28 } }} />,
+  };
+
+  return (
+    <ColorlibStepIconRoot
+      ownerState={{ completed, active }}
+      className={className}
+    >
+      {icons[String(props.icon)]}
+    </ColorlibStepIconRoot>
+  );
+}
+
+ColorlibStepIcon.propTypes = {
+  /**
+   * Whether this step is active.
+   * @default false
+   */
+  active: PropTypes.bool,
+  className: PropTypes.string,
+  /**
+   * Mark the step as completed. Is passed to child components.
+   * @default false
+   */
+  completed: PropTypes.bool,
+  /**
+   * The label displayed in the step icon.
+   */
+  icon: PropTypes.node,
+};
+
+const steps = [
+  "Date Selection",
+  "Add To Cart",
+  "Contact Information",
+  // "Payment",
+];
+
+const BookingForm = (props) => {
+  const [open, setOpen] = React.useState(true);
+  const cancelButtonRef = React.useRef(null);
+  const { book } = useSelector((state) => state);
+  const [ErrorMessage, setErrorMessage] = React.useState("");
+  const [activeStep, setActiveStep] = React.useState(book.bookingStep);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
     if (!open) {
       props.setOpenForm(false);
     }
   }, [open]);
 
-  const handleChange = (selectedDate) => {
-    setSelectedDate(selectedDate);
-    console.log(selectedDate);
+  const handleBack = () => {
+    setActiveStep((prev) => --prev);
+    dispatch(handleStepBack());
   };
-  const handleClose = (state) => {
-    setShow(state);
-  };
-
-  const handleClickPlus = () => {
-    count < 10 ? setCount(count++) : setCount(count);
-  };
-
-  const handleClickMins = () => {
-    count > 0 ? setCount(count--) : setCount(count);
+  const handleNext = () => {
+    if (book.bookingStep === 0 && book.bookingInfo.travelDate) {
+      setErrorMessage("");
+      setActiveStep((prev) => ++prev);
+      dispatch(handleStepNext());
+    }
+    if (book.bookingStep === 0 && !book.bookingInfo.travelDate) {
+      setErrorMessage("Shoud Select Date Before");
+    }
+    if (
+      book.bookingStep === 1 &&
+      (book.bookingInfo.childCount || book.bookingInfo.adultCount)
+    ) {
+      setErrorMessage("");
+      setActiveStep((prev) => ++prev);
+      dispatch(handleStepNext());
+    }
+    if (
+      book.bookingStep === 1 &&
+      !book.bookingInfo.childCount &&
+      !book.bookingInfo.adultCount
+    ) {
+      setErrorMessage("At least one ticket must be added");
+    }
+    if (
+      book.bookingStep === 2 &&
+      book.bookingInfo.contactNo.length > 8 &&
+      book.bookingInfo.email &&
+      book.bookingInfo.name
+    ) {
+      setErrorMessage("");
+      setActiveStep((prev) => ++prev);
+      dispatch(handleStepNext());
+    }
+    if (
+      book.bookingStep === 2 &&
+      (!book.bookingInfo.contactNo ||
+        !book.bookingInfo.email ||
+        !book.bookingInfo.name)
+    ) {
+      setErrorMessage("Please Fill Up Form");
+    }
   };
 
   return (
-    <Transition.Root show={open} as={Fragment}>
+    <Transition.Root show={open} as={React.Fragment}>
       <Dialog
         as="div"
         className="relative z-50"
@@ -68,7 +257,7 @@ const BookingForm = (props) => {
         onClose={setOpen}
       >
         <Transition.Child
-          as={Fragment}
+          as={React.Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
           enterTo="opacity-100"
@@ -82,7 +271,7 @@ const BookingForm = (props) => {
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className=" p-5 mt-20 items-center sm:p-0">
             <Transition.Child
-              as={Fragment}
+              as={React.Fragment}
               enter="ease-out duration-300"
               enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               enterTo="opacity-100 translate-y-0 sm:scale-100"
@@ -94,91 +283,66 @@ const BookingForm = (props) => {
                 <Dialog.Title>
                   <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                      <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white">
-                        Ticket Booking
-                      </h1>
-
-                      <form className="space-y-4 md:space-y-6 ">
-                        <div >
-                          <Datepicker
-                            options={options}
-                            onChange={handleChange}
-                            show={show}
-                            value={selectedDate}
-                            setShow={handleClose}
-                            required
-                          />
-                        </div>
-                        <div className="border-2 flex justify-between">
-                          <div className="mt-4">
-                            <span className={`p-2 m-3 bg-blue-200`}>
-                              number of people
-                            </span>
-                          </div>
-                          <div>
-                            <button
-                              className="border-2 m-2 p-2"
-                              onClick={handleClickPlus}
-                            >
-                              +
-                            </button>
-                            <span className="text-red-600 ">{count}</span>
-                            <button
-                              className="border-2 m-2 p-2"
-                              onClick={handleClickMins}
-                            >
-                              -
-                            </button>
-                          </div>
-                        </div>
-
-                        <div>
-                          <label
-                            htmlFor="email"
-                            className="block text-sm font-medium leading-6 text-gray-900"
+                      <Stack sx={{ width: "100%" }}>
+                        <Stepper
+                          alternativeLabel
+                          activeStep={activeStep}
+                          connector={<ColorlibConnector />}
+                        >
+                          {steps.map((label) => (
+                            <Step key={label}>
+                              <StepLabel
+                                sx={{}}
+                                StepIconComponent={ColorlibStepIcon}
+                              >
+                                <Typography
+                                  sx={{
+                                    fontSize: { xs: 12, sm: 14, md: 18 },
+                                    fontWeight: { xs: 500 },
+                                  }}
+                                >
+                                  {label}
+                                </Typography>
+                              </StepLabel>
+                            </Step>
+                          ))}
+                        </Stepper>
+                        <Typography
+                          variant="body2"
+                          textAlign="center"
+                          color="red"
+                          fontWeight={600}
+                        >
+                          {ErrorMessage}
+                        </Typography>
+                        <Box
+                          sx={{ display: "flex", flexDirection: "row", pt: 2 }}
+                        >
+                          <Button
+                            disabled={book.bookingStep === 0}
+                            onClick={handleBack}
+                            sx={{
+                              mr: 1,
+                              fontWeight: { xs: 600, md: 900 },
+                              fontSize: { xs: 14, md: 18 },
+                            }}
                           >
-                            contact Info
-                          </label>
-                          <div className="mt-2">
-                            <input
-                              type="email"
-                              name="email"
-                              id="email"
-                              className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                              placeholder="name@company.com"
-                              required
-                            />
-                          </div>
-                          <div className="mt-2">
-                            <input
-                              type="text"
-                              name="email"
-                              className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                              placeholder="john elraqi"
-                              required
-                            />
-                          </div>
-                          <div className="mt-2">
-                            <input
-                              type="tel"
-                              id="phone"
-                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                              placeholder="123-45-678"
-                              pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                              required
-                            />
-                          </div>
-                        </div>
-
-                        <div>
-                          <button
-                            type="submit"
-                            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                          >
-                            PAY
-                          </button>
-                        </div>
-                      </form>
+                            Back
+                          </Button>
+                          <Box sx={{ flex: "1 1 auto" }} />
+                          {activeStep !== steps.length - 1 && (
+                            <Button
+                              onClick={handleNext}
+                              sx={{
+                                fontWeight: { xs: 600, md: 900 },
+                                fontSize: { xs: 14, md: 18 },
+                              }}
+                            >
+                              Next
+                            </Button>
+                          )}
+                        </Box>
+                      </Stack>
                     </div>
                   </div>
                 </Dialog.Title>
