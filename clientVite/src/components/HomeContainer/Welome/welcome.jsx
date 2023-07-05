@@ -1,9 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import Style from "./welcome.module.css";
-import video from '../../../assets/video/EgyVideo.mp4'
-import { Link } from "react-router-dom";
+import video from "../../../assets/video/EgyVideo.mp4";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Welcome() {
+  const [cats, setCats] = useState([]);
+  const Navigate = useNavigate();
+
+  useEffect(() => {
+    const getCats = async () => {
+      const { data } = await axios.get("http://localhost:9999/category");
+      // console.log(data);
+      setCats(data.categories);
+    };
+    getCats();
+  }, []);
+
+  const handleNavigate = (tar) => {
+    console.log(`/city/${tar}`);
+  };
   return (
     <>
       <section className={Style.container}>
@@ -11,28 +27,30 @@ function Welcome() {
           <video src={video} type="video/mp4" autoPlay loop muted></video>
         </div>
         <div className={Style.filter}>
-          <p className="text-lg xs:text-xl sm:text-xl md:text-2xl xl:text-3xl">Our Packages</p>
-          <h1 className="text-2xl xs:text2xl sm:text-3xl md:text-5xl xl:text-6xl"> Search your Holiday</h1>
-            <input type="text" list="Cites" placeholder='Enter Your destination' className="w-full h-9 md:h-14 mt-4 md:mt-9  xl:mt-14 border rounded-2xl text-black" />
-            <datalist id="Cites">
-              <option>Cairo</option>
-              <option>Alx</option>
-              <option>Hurghada</option>
-              <option>Luxor</option>
-              <option>Sharm El-Sheikh</option>
-              <option>El Gona</option>
-              <option>Marsa allam</option>
-              <option>Safaga</option>
-              <option>Nuweiba</option>
-              <option>Faiyum</option>
-              <option>Siwa</option>
-              <option>Sinai</option>
-              <option>Dahab</option>
-            </datalist>
+          <p className="text-lg xs:text-xl sm:text-xl md:text-2xl xl:text-3xl">
+            Our Packages
+          </p>
+          <h1 className="text-2xl xs:text2xl sm:text-3xl md:text-5xl xl:text-6xl">
+            {" "}
+            Search your Holiday
+          </h1>
+          <input
+            type="text"
+            list="Cites"
+            placeholder="Enter Your destination"
+            className="w-full h-9 md:h-14 mt-4 md:mt-9  xl:mt-14 border rounded-2xl text-black"
+          />
+          <select id="Cites" onChange={(e) => handleNavigate(e.target.value)}>
+            {cats.map((cat) => (
+              <option key={cat._id} value={cat._id}>
+                {cat.city}
+              </option>
+            ))}
+          </select>
         </div>
       </section>
     </>
-  )
+  );
 }
 
-export default Welcome
+export default Welcome;

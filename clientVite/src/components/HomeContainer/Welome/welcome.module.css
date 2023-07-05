@@ -7,10 +7,14 @@
   opacity: 0.8;
   color: black;
   background-color: black;
-  margin-top:-110px;
+  margin-top: -110px;
   left: 0;
 }
 
+.reactDatalist_input {
+  padding: 15px;
+  border-radius: 5px;
+}
 .input {
   width: 400px;
   margin-top: 40px;
@@ -32,13 +36,12 @@
   z-index: 1;
 }
 
-@media (max-width:767px){
-  .video{
+@media (max-width: 767px) {
+  .video {
     margin-top: 0px;
   }
-  .filter{
-    top:20%;
+  .filter {
+    top: 20%;
     left: 10%;
   }
 }
-

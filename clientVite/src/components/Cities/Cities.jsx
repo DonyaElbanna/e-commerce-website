@@ -24,7 +24,10 @@ const Categories = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 m-auto">
           {cats.map((cat) => (
-            <div key={cat._id} className="w-full justify-center mx-auto flex h-42 overflow-hidden">
+            <div
+              key={cat._id}
+              className="w-full justify-center mx-auto flex h-42 overflow-hidden"
+            >
               <Link
                 className="relative block bg-gray-900 group h-42 overflow-hidden rounded"
                 to={`/city/${cat._id}`}
