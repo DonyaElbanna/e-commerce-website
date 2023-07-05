@@ -29,6 +29,8 @@ import {
 
 const Navbar1 = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [scroll, setScroll] = useState(0);
+
   const dispatch = useDispatch();
   const logoutHandler = () => {
     setAnchorEl(null);
@@ -47,29 +49,37 @@ const Navbar1 = () => {
     }
   };
 
-  const [scroll, setScroll] = useState(false);
   const changeColor = () => {
-    if (window.scrollY > 0) {
-      setScroll(true);
-    } else {
-      setScroll(false);
-    }
+    const scrollPosition = window.scrollY;
+    setScroll(scrollPosition);
   };
+  window.addEventListener("scroll", changeColor);
+  const colorValue = Math.max(255 - scroll, 0)
+    .toString(16)
+    .padStart(2, "0");
+  const fade = 1 - scroll / 600;
+
+  // const changeColor = () => {
+  //   if (window.scrollY > 0) {
+  //     setScroll(true);
+  //   } else {
+  //     setScroll(false);
+  //   }
+  // };
+  // console.log(window.scrollY);
   window.addEventListener("scroll", changeColor);
 
   return (
     <div
-      // className="navbar sticky top-0 z-50 md:bg-slate-800/0 bg-slate-100/90 px-4 md:px-5 bg-black"
-      className={
-        scroll
-          ? "navbar sticky top-0  z-50  px-4 md:px-5 bg-black"
-          : "navbar sticky top-0  z-50 md:bg-slate-800/0 bg-slate-100/90 px-4 md:px-5"
-      }
       // className={
       //   scroll
-      //     ? "navbar sticky top-0 bg-black"
-      //     : " navbar sticky top-0 bg-white"
+      //     ? "navbar sticky top-0  z-50  px-4 md:px-5 bg-black"
+      //     : "navbar sticky top-0  z-50 md:bg-slate-800/0 bg-slate-100/90 px-4 md:px-5"
       // }
+      className={`navbar sticky top-0 z-50 px-4 md:px-5`}
+      style={{
+        backgroundColor: `rgba(0, 0, 0, ${1 - fade})`,
+      }}
     >
       <Container maxWidth="lg" className={Style.Container}>
         <Stack
