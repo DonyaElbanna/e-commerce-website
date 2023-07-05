@@ -41,6 +41,49 @@ const Orders = () => {
   const [open, setOpen] = useState(false);
   const [slcID, setSlcID] = useState(null);
 
+  // function reverseDate(s) {
+  //   return s.split("").reverse().join("");
+  // }
+  // console.log(reversed = reverseDate())
+
+  useEffect(() => {
+    dispatch(handleIsLoadingToggle());
+
+    const getOrders = async () => {
+      try {
+        const { data } = await axios.get(`http://localhost:9999/order`);
+        // console.log(data);
+        setOrders(
+          data.map((order) => ({
+            id: order._id,
+            name: order.user.username,
+            attr: order.attraction.name,
+            adults: order.adultCount,
+            children: order.childCount,
+            date: new Date(order.travelDate.split("T")[0]).toDateString(),
+          }))
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getOrders();
+    dispatch(handleIsLoadingToggle());
+  }, []);
+
+  // console.log(
+  //   orders.map((order) => ({
+  //     id: order._id,
+  //     name: order.user.username,
+  //     attr: order.attraction.name,
+  //     adults: order.adultCount,
+  //     children: order.childCount,
+  //     date: order.travelDate,
+  //   }))
+  // );
+  console.log(orders);
+
   const handleOpen = (id) => {
     setOpen(true);
     setSlcID(id);
@@ -66,141 +109,126 @@ const Orders = () => {
   // console.log(attrs);
 
   // table cols
-  // const columns = [
-  //   {
-  //     field: "name",
-  //     headerName: "Name",
-  //     width: 150,
-  //   },
-  //   { field: "city", headerName: "City", width: 130 },
-  //   { field: "category", headerName: "Category", width: 130 },
-  //   { field: "status", headerName: "Status", width: 120 },
-  //   {
-  //     field: "edit",
-  //     headerName: "Edit",
-  //     sortable: false,
-  //     width: 90,
-  //     renderCell: (index, params) => (
-  //       <Button
-  //         variant="outlined"
-  //         onClick={() => handleButtonClick(params.row.id)}
-  //         sx={{
-  //           color: "#be853f",
-  //           border: "1px solid orange",
-  //           ":hover": {
-  //             border: "1px solid #be853f",
-  //             backgroundColor: "#ffc0715c",
-  //           },
-  //         }}
-  //       >
-  //         Edit
-  //       </Button>
-  //     ),
-  //   },
-  //   {
-  //     field: "delete",
-  //     headerName: "Delete",
-  //     sortable: false,
-  //     width: 90,
-  //     renderCell: (params) => (
-  //       <>
-  //         <Tooltip title="Delete">
-  //           <IconButton onClick={() => handleOpen(params.row.id)}>
-  //             <DeleteIcon />
-  //           </IconButton>
-  //         </Tooltip>
-  //         <Modal
-  //           aria-labelledby="transition-modal-title"
-  //           aria-describedby="transition-modal-description"
-  //           open={open}
-  //           onClose={handleClose}
-  //           closeAfterTransition
-  //           slots={{ backdrop: Backdrop }}
-  //           slotProps={{
-  //             backdrop: {
-  //               timeout: 500,
-  //             },
-  //           }}
-  //         >
-  //           <Fade in={open}>
-  //             <Box sx={style}>
-  //               <Typography
-  //                 id="transition-modal-title"
-  //                 variant="h6"
-  //                 color="black"
-  //                 component="h2"
-  //                 sx={{ marginBottom: "20px" }}
-  //               >
-  //                 Are you sure you want to delete this attraction item?
-  //               </Typography>
-  //               <Stack
-  //                 direction="row"
-  //                 spacing={4}
-  //                 sx={{
-  //                   display: "flex",
-  //                   justifyContent: "center",
-  //                 }}
-  //               >
-  //                 <Button
-  //                   variant="outlined"
-  //                   onClick={handleClose}
-  //                   sx={{
-  //                     color: "#be853f",
-  //                     border: "1px solid #be853f",
-  //                     ":hover": {
-  //                       border: "1px solid #be853f",
-  //                     },
-  //                   }}
-  //                 >
-  //                   No, go back
-  //                 </Button>
-  //                 <Button
-  //                   variant="contained"
-  //                   onClick={() => deleteAttr(slcID)}
-  //                   sx={{
-  //                     border: "1px solid #be853f",
-  //                     backgroundColor: "#be853f",
-  //                     ":hover": {
-  //                       border: "1px solid #be853f",
-  //                       backgroundColor: "#be853f",
-  //                     },
-  //                   }}
-  //                 >
-  //                   Yes, delete
-  //                 </Button>
-  //               </Stack>
-  //             </Box>
-  //           </Fade>
-  //         </Modal>
-  //       </>
-  //     ),
-  //   },
-  // ];
 
   const handleButtonClick = (x) => {
     console.log(x);
   };
 
-  useEffect(() => {
-    dispatch(handleIsLoadingToggle());
+  const columns = [
+    {
+      field: "name",
+      headerName: "Name",
+      width: 150,
+    },
+    { field: "attr", headerName: "Order Name", width: 130 },
+    { field: "adults", headerName: "Adults", width: 130 },
+    { field: "children", headerName: "Children", width: 130 },
+    { field: "date", headerName: "Date", width: 130 },
+    {
+      field: "edit",
+      headerName: "Edit",
+      sortable: false,
+      width: 90,
+      renderCell: (index, params) => (
+        <Button
+          variant="outlined"
+          onClick={() => handleButtonClick(params.row.id)}
+          sx={{
+            color: "#be853f",
+            border: "1px solid orange",
+            ":hover": {
+              border: "1px solid #be853f",
+              backgroundColor: "#ffc0715c",
+            },
+          }}
+        >
+          Edit
+        </Button>
+      ),
+    },
+    {
+      field: "delete",
+      headerName: "Delete",
+      sortable: false,
+      width: 90,
+      renderCell: (params) => (
+        <>
+          <Tooltip title="Delete">
+            <IconButton onClick={() => handleOpen(params.row.id)}>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+            slots={{ backdrop: Backdrop }}
+            slotProps={{
+              backdrop: {
+                timeout: 500,
+              },
+            }}
+          >
+            <Fade in={open}>
+              <Box sx={style}>
+                <Typography
+                  id="transition-modal-title"
+                  variant="h6"
+                  color="black"
+                  component="h2"
+                  sx={{ marginBottom: "20px" }}
+                >
+                  Are you sure you want to delete this attraction item?
+                </Typography>
+                <Stack
+                  direction="row"
+                  spacing={4}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Button
+                    variant="outlined"
+                    onClick={handleClose}
+                    sx={{
+                      color: "#be853f",
+                      border: "1px solid #be853f",
+                      ":hover": {
+                        border: "1px solid #be853f",
+                      },
+                    }}
+                  >
+                    No, go back
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={() => deleteAttr(slcID)}
+                    sx={{
+                      border: "1px solid #be853f",
+                      backgroundColor: "#be853f",
+                      ":hover": {
+                        border: "1px solid #be853f",
+                        backgroundColor: "#be853f",
+                      },
+                    }}
+                  >
+                    Yes, delete
+                  </Button>
+                </Stack>
+              </Box>
+            </Fade>
+          </Modal>
+        </>
+      ),
+    },
+  ];
 
-    const getOrders = async () => {
-      try {
-        const { data } = await axios.get(`http://localhost:9999/order`);
-        console.log(data);
-        setOrders(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getOrders();
-    dispatch(handleIsLoadingToggle());
-  }, []);
-  console.log(orders);
   return (
     <>
-      {/* {common.isLoading ? (
+      {common.isLoading ? (
         <img src={gif} className="mx-auto" style={{ width: "150px" }} />
       ) : (
         <>
@@ -225,7 +253,7 @@ const Orders = () => {
             }}
           >
             <DataGrid
-              rows={attrs}
+              rows={orders}
               columns={columns}
               initialState={{
                 pagination: {
@@ -238,7 +266,7 @@ const Orders = () => {
             />
           </div>
         </>
-      )} */}
+      )}
     </>
   );
 };

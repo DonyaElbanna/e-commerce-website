@@ -62,10 +62,14 @@ const Users = () => {
 
   // modal state
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = (id) => {
+    console.log(id);
+    setOpen(true);
+  };
   const handleClose = () => setOpen(false);
 
   const [users, setUsers] = useState([]);
+  console.log(users);
 
   const { common } = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -85,20 +89,19 @@ const Users = () => {
 
     getUsers();
     dispatch(handleIsLoadingToggle());
-  }, [users]);
+  }, []);
   // console.log(users);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
   const deleteUser = (id) => {
-    // console.log(id);
+    console.log(id);
     const newUsers = users.filter((user) => user._id !== id);
     setUsers(newUsers);
     axios.delete(`http://localhost:9999/user/${id}`);
