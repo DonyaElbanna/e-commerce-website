@@ -18,7 +18,7 @@ function Welcome() {
   }, []);
 
   const handleNavigate = (tar) => {
-    console.log(`/city/${tar}`);
+    Navigate(`/city/${tar}`);
   };
   return (
     <>
@@ -34,13 +34,13 @@ function Welcome() {
             {" "}
             Search your Holiday
           </h1>
-          <input
-            type="text"
-            list="Cites"
-            placeholder="Enter Your destination"
+
+          <select
+            id="Cites"
+            onChange={(e) => handleNavigate(e.target.value)}
             className="w-full h-9 md:h-14 mt-4 md:mt-9  xl:mt-14 border rounded-2xl text-black"
-          />
-          <select id="Cites" onChange={(e) => handleNavigate(e.target.value)}>
+          >
+            <option>Choose a city</option>
             {cats.map((cat) => (
               <option key={cat._id} value={cat._id}>
                 {cat.city}
