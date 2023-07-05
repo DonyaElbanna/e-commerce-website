@@ -141,10 +141,31 @@ const Attractions = () => {
                     justifyContent: "center",
                   }}
                 >
-                  <Button variant="outlined" onClick={handleClose}>
+                  <Button
+                    variant="outlined"
+                    onClick={handleClose}
+                    sx={{
+                      color: "#be853f",
+                      border: "1px solid #be853f",
+                      ":hover": {
+                        border: "1px solid #be853f",
+                      },
+                    }}
+                  >
                     No, go back
                   </Button>
-                  <Button variant="contained" onClick={() => deleteAttr(slcID)}>
+                  <Button
+                    variant="contained"
+                    onClick={() => deleteAttr(slcID)}
+                    sx={{
+                      border: "1px solid #be853f",
+                      backgroundColor: "#be853f",
+                      ":hover": {
+                        border: "1px solid #be853f",
+                        backgroundColor: "#be853f",
+                      },
+                    }}
+                  >
                     Yes, delete
                   </Button>
                 </Stack>
@@ -193,7 +214,11 @@ const Attractions = () => {
         <>
           <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
             <Button
-              style={{color: "#be853f", border: "1px solid #be853f", boxShadow: "2px 2px #be853f"}}
+              style={{
+                color: "#be853f",
+                border: "1px solid #be853f",
+                boxShadow: "2px 2px #be853f",
+              }}
               startIcon={<AddCircleOutlineOutlinedIcon />}
             >
               Add a new record

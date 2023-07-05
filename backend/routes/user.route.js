@@ -18,7 +18,7 @@ router.get("/:id", getSingleUser);
 
 router.get("", getAllUsers);
 
-router.patch("/:id", editUser);
+router.put("/:id", editUser);
 
 router.delete("/:id", deleteUser);
 

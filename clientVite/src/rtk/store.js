@@ -27,12 +27,15 @@ import languageSlice from "./features/languageSlice";
 import socketSlice from "./features/socketSlice";
 import bookingSlice from "./features/bookingSlice";
 import parkSlice from "./features/parkSlice";
-import adminSlice  from "./features/adminSlice";
+import adminSlice from "./features/adminSlice";
 import attrSlice from "./features/attrSlice";
+import citiesSlice from "./features/citiesSlice";
+import categoriesSlice from "./features/categoriesSlice";
+
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["book", "auth","attractions"], // include slice name to persist
+  whitelist: ["book", "auth", "attractions", "cities", "categories"], // include slice name to persist
 };
 
 const reducers = combineReducers({
@@ -50,9 +53,11 @@ const reducers = combineReducers({
   checkout: checkoutSlice,
   language: languageSlice,
   book: bookingSlice,
-  parkGroup:parkSlice,
-  admin:adminSlice,
-  attractions:attrSlice
+  parkGroup: parkSlice,
+  admin: adminSlice,
+  attractions: attrSlice,
+  cities: citiesSlice,
+  categories: categoriesSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

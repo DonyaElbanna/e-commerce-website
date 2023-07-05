@@ -33,12 +33,8 @@ export default function FormDialog() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { data } = await axios.post(
-      `http://localhost:9999/category`,
-      formData
-    );
-    console.log("newdata", data);
-
+    await axios.post(`http://localhost:9999/category`, formData);
+    console.log("newdata", formData);
     // console.log(formData);
     handleClose();
   };

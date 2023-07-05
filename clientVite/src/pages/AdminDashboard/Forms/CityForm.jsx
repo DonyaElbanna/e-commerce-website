@@ -7,20 +7,20 @@ import {
   handleAuthType,
   handleOpenAuthModal,
 } from "../../../rtk/features/authSlice";
-import { categoriesHandler } from "../../../rtk/features/categoriesSlice";
+import { citiesHandler, addCity } from "../../../rtk/features/citiesSlice";
 
-const CatForm = () => {
+const CityForm = () => {
   // modal
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
 
-  const { categories } = useSelector((state) => state);
-  console.log(categories);
-
+  const { cities } = useSelector((state) => state);
+  // console.log(cities);
+  // console.log(cities.cities);
   const dispatch = useDispatch();
   const [form, setForm] = useState({
-    type: categories.categoryEdit?.name || "",
-    image: categories.categoryEdit?.image || "",
+    city: cities.cityEdit?.name || "",
+    image: cities.cityEdit?.image || "",
   });
 
   useEffect(() => {
@@ -28,13 +28,13 @@ const CatForm = () => {
       dispatch(handleAuthType("login"));
       dispatch(handleOpenAuthModal(false));
     }
-    // dispatch(categoriesHandler());
+    // dispatch(citiesHandler());
   }, [open]);
 
   const [errors, setErrors] = useState({});
 
   const schema = Joi.object({
-    type: Joi.string()
+    city: Joi.string()
       .required()
       .pattern(/^[a-zA-Z]/),
     image: Joi.string()
@@ -69,16 +69,17 @@ const CatForm = () => {
   };
 
   const addCategory = async () => {
-    const newCategory = {
-      type: form.type,
+    const newCity = {
+      city: form.city,
       image: form.image,
     };
-    console.log(newCategory);
+    console.log(newCity);
 
-    if (!categories.categoryEdit) {
+    if (!cities.cityEdit) {
       await axios
-        .post("http://localhost:9999/subcat", newCategory)
+        .post("http://localhost:9999/category", newCity)
         .then((response) => {
+          // dispatch(addCity(newCity));
           setOpen(false);
         })
         .catch((error) => {
@@ -89,10 +90,7 @@ const CatForm = () => {
         });
     } else {
       await axios
-        .put(
-          `http://localhost:9999/subcat/${categories.categoryEdit.id}`,
-          newCategory
-        )
+        .put(`http://localhost:9999/category/${cities.cityEdit.id}`, newCity)
         .then((response) => {
           setOpen(false);
         })
@@ -103,6 +101,7 @@ const CatForm = () => {
           setOpen(true);
         });
     }
+    // dispatch(citiesHandler());
   };
 
   return (
@@ -141,28 +140,28 @@ const CatForm = () => {
                   <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                       {/* <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white">
-                        Add a new Category
+                        Add a new City
                       </h1> */}
                       <form className="space-y-4 md:space-y-6" action="#">
                         <div>
                           <label
-                            htmlFor="type"
+                            htmlFor="city"
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                           >
-                            Category
+                            City
                           </label>
                           <input
                             type="text"
-                            name="type"
-                            id="type"
+                            name="city"
+                            id="city"
                             className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
-                            placeholder="Tour type"
+                            placeholder={cities.cityEdit?.name || "Cairo"}
                             required=""
-                            value={form.type}
+                            value={form.city}
                             onChange={(value) => handleChange(value)}
                           />
                           <p className="text-red-500 text-xs italic">
-                            {errors.type}
+                            {errors.city}
                           </p>
                         </div>
                         <div>
@@ -177,9 +176,11 @@ const CatForm = () => {
                             name="image"
                             id="image"
                             className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
-                            placeholder="http://url.jpg"
-                            required=""
+                            placeholder={
+                              cities.cityEdit?.image || "http://url.jpg"
+                            }
                             value={form.image}
+                            required=""
                             onChange={(value) => handleChange(value)}
                           />
                           <p className="text-red-500 text-xs italic">
@@ -209,4 +210,4 @@ const CatForm = () => {
   );
 };
 
-export default CatForm;
+export default CityForm;

@@ -32,6 +32,14 @@ const getSubcategory = async (id, next) => {
   }
 };
 
+const editSubcat = async (id, edits) => {
+  try {
+    return await Subcategory.findByIdAndUpdate(id, edits);
+  } catch (error) {
+    throw new AppError("THIS CATEGORY IS NOT FOUND TO EDIT", 404);
+  }
+};
+
 const remove = async (id, attrID, next) => {
   try {
     const subcategory = await Subcategory.findByIdAndDelete(id);
@@ -50,5 +58,6 @@ module.exports = {
   add,
   getSubcategories,
   getSubcategory,
+  editSubcat,
   remove,
 };

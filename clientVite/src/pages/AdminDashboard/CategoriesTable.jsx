@@ -16,6 +16,11 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import {
+  handleAuthType,
+  handleToggleAuthModal,
+} from "../../rtk/features/authSlice";
+import { categoryEditHandler } from "../../rtk/features/categoriesSlice";
 
 // modal styles
 const style = {
@@ -70,7 +75,7 @@ const CategoriesTable = () => {
       renderCell: (params) => (
         <Button
           variant="outlined"
-          onClick={() => handleButtonClick(params.row)}
+          onClick={() => handleEditCat(params.row)}
           sx={{
             color: "#be853f",
             border: "1px solid orange",
@@ -128,10 +133,31 @@ const CategoriesTable = () => {
                     justifyContent: "center",
                   }}
                 >
-                  <Button variant="outlined" onClick={handleClose}>
+                  <Button
+                    variant="outlined"
+                    onClick={handleClose}
+                    sx={{
+                      color: "#be853f",
+                      border: "1px solid #be853f",
+                      ":hover": {
+                        border: "1px solid #be853f",
+                      },
+                    }}
+                  >
                     No, go back
                   </Button>
-                  <Button variant="contained" onClick={() => deleteCat(slcID)}>
+                  <Button
+                    variant="contained"
+                    onClick={() => deleteCat(slcID)}
+                    sx={{
+                      border: "1px solid #be853f",
+                      backgroundColor: "#be853f",
+                      ":hover": {
+                        border: "1px solid #be853f",
+                        backgroundColor: "#be853f",
+                      },
+                    }}
+                  >
                     Yes, delete
                   </Button>
                 </Stack>
@@ -143,8 +169,11 @@ const CategoriesTable = () => {
     },
   ];
 
-  const handleButtonClick = (x) => {
-    console.log(x);
+  const handleEditCat = (cat) => {
+    console.log(cat);
+    dispatch(handleAuthType("addCat"));
+    dispatch(handleToggleAuthModal());
+    dispatch(categoryEditHandler(cat));
   };
 
   useEffect(() => {
@@ -158,6 +187,7 @@ const CategoriesTable = () => {
           data.subcategories.map((cat) => ({
             id: cat._id,
             name: cat.type,
+            image: cat.image
           }))
         );
       } catch (error) {
@@ -167,13 +197,15 @@ const CategoriesTable = () => {
 
     getCats();
     dispatch(handleIsLoadingToggle());
-  }, []);
+  }, [cats]);
+  // !keeps rerendering?
 
   // console.log(cats)
 
   const openCatModal = () => {
     dispatch(handleAuthType("addCat"));
     dispatch(handleToggleAuthModal());
+    dispatch(categoryEditHandler());
   };
 
   return (
@@ -183,9 +215,8 @@ const CategoriesTable = () => {
       ) : (
         <>
           <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
-            {/* <Button
-              variant="outlined"
             <Button
+              variant="outlined"
               style={{
                 color: "#be853f",
                 border: "1px solid #be853f",
@@ -195,8 +226,8 @@ const CategoriesTable = () => {
               onClick={openCatModal}
             >
               Add a new record
-            </Button> */}
-            <CitiesModal />
+            </Button>
+            {/* <CitiesModal /> */}
           </Box>
           <div style={{ height: 500, width: "100%" }}>
             <DataGrid
