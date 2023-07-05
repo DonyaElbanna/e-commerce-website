@@ -17,6 +17,11 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
+import {
+  handleAuthType,
+  handleToggleAuthModal,
+} from "../../rtk/features/authSlice";
+
 // modal styles
 const style = {
   position: "absolute",
@@ -206,6 +211,12 @@ const Attractions = () => {
     dispatch(handleIsLoadingToggle());
   }, []);
 
+  const openAttrModal = () => {
+    dispatch(handleAuthType("addAttr"));
+    dispatch(handleToggleAuthModal());
+    // dispatch(CityEditHandler());
+  };
+
   return (
     <>
       {common.isLoading ? (
@@ -220,6 +231,7 @@ const Attractions = () => {
                 boxShadow: "2px 2px #be853f",
               }}
               startIcon={<AddCircleOutlineOutlinedIcon />}
+              onClick={openAttrModal}
             >
               Add a new record
             </Button>
