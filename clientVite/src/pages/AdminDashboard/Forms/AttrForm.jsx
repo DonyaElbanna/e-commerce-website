@@ -161,203 +161,203 @@ const AttrForm = () => {
     //         >
     //           <Dialog.Panel className="m-auto sm:my-8 sm:w-full sm:max-w-lg">
     //             <Dialog.Title>
-                  <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-                    <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                      <form className="space-y-4 md:space-y-6" action="#">
-                        {/* attraction name */}
-                        <div>
-                          <label
-                            htmlFor="name"
-                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                          >
-                            Name
-                          </label>
-                          <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
-                            placeholder="Attraction Name"
-                            required=""
-                            // value={form.userName}
-                            // onChange={(value) => handleChange(value)}
-                          />
-                          {/* <p className="text-red-500 text-xs italic">
+    <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+      <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <form className="space-y-4 md:space-y-6" action="#">
+          {/* attraction name */}
+          <div>
+            <label
+              htmlFor="name"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
+              placeholder="Attraction Name"
+              required=""
+              // value={form.userName}
+              // onChange={(value) => handleChange(value)}
+            />
+            {/* <p className="text-red-500 text-xs italic">
                             {errors.userName}
                           </p> */}
-                        </div>
-                        {/* attr desc */}
-                        <div>
-                          <label
-                            htmlFor="description"
-                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                          >
-                            Description
-                          </label>
-                          <textarea
-                            name="description"
-                            id="description"
-                            rows="3"
-                            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Description of the tour..."
-                            // onChange={(value) => handleChange(value)}
-                          ></textarea>
-                          {/* <p className="text-red-500 text-xs italic">
+          </div>
+          {/* attr desc */}
+          <div>
+            <label
+              htmlFor="description"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Description
+            </label>
+            <textarea
+              name="description"
+              id="description"
+              rows="3"
+              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Description of the tour..."
+              // onChange={(value) => handleChange(value)}
+            ></textarea>
+            {/* <p className="text-red-500 text-xs italic">
                               {errors.description}
                             </p> */}
-                        </div>
-                        {/* tour duration */}
-                        <div>
-                          <label
-                            htmlFor="duration"
-                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                          >
-                            Tour Duration
-                          </label>
-                          <input
-                            type="text"
-                            name="duration"
-                            id="duration"
-                            className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
-                            placeholder="Tour Duration"
-                            required=""
-                            // value={form.userName}
-                            // onChange={(value) => handleChange(value)}
-                          />
-                          {/* <p className="text-red-500 text-xs italic">
+          </div>
+          {/* tour duration */}
+          <div>
+            <label
+              htmlFor="duration"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Tour Duration
+            </label>
+            <input
+              type="text"
+              name="duration"
+              id="duration"
+              className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
+              placeholder="Tour Duration"
+              required=""
+              // value={form.userName}
+              // onChange={(value) => handleChange(value)}
+            />
+            {/* <p className="text-red-500 text-xs italic">
                             {errors.userName}
                           </p> */}
-                        </div>
-                        {/* status */}
-                        <div>
-                          <p className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Status
-                          </p>
-                          <div class="flex">
-                            <div class="flex items-center mr-4">
-                              <input
-                                id="available"
-                                type="radio"
-                                value=""
-                                name="availability"
-                                class="cursor-pointer  w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                              />
-                              <label
-                                for="available"
-                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                              >
-                                Available
-                              </label>
-                            </div>
-                            <div class="flex items-center mr-4">
-                              <input
-                                id="notAvailable"
-                                type="radio"
-                                value=""
-                                name="availability"
-                                class="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                              />
-                              <label
-                                for="notAvailable"
-                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                              >
-                                Not Available
-                              </label>
-                            </div>
-                          </div>
-                          {/* <p className="text-red-500 text-xs italic">
+          </div>
+          {/* status */}
+          <div>
+            <p className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Status
+            </p>
+            <div class="flex">
+              <div class="flex items-center mr-4">
+                <input
+                  id="available"
+                  type="radio"
+                  value=""
+                  name="availability"
+                  class="cursor-pointer  w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  for="available"
+                  class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  Available
+                </label>
+              </div>
+              <div class="flex items-center mr-4">
+                <input
+                  id="notAvailable"
+                  type="radio"
+                  value=""
+                  name="availability"
+                  class="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  for="notAvailable"
+                  class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  Not Available
+                </label>
+              </div>
+            </div>
+            {/* <p className="text-red-500 text-xs italic">
                             {errors.password}
                           </p> */}
-                        </div>
-                        {/* child availability */}
-                        <div>
-                          <p className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Child Availability
-                          </p>
-                          <div class="flex">
-                            <div class="flex items-center mr-4">
-                              <input
-                                id="available"
-                                type="radio"
-                                value=""
-                                name="availability"
-                                class="cursor-pointer  w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                              />
-                              <label
-                                for="available"
-                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                              >
-                                Yes
-                              </label>
-                            </div>
-                            <div class="flex items-center mr-4">
-                              <input
-                                id="notAvailable"
-                                type="radio"
-                                value=""
-                                name="availability"
-                                class="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                              />
-                              <label
-                                for="notAvailable"
-                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                              >
-                                No
-                              </label>
-                            </div>
-                          </div>
-                          {/* <p className="text-red-500 text-xs italic">
+          </div>
+          {/* child availability */}
+          <div>
+            <p className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Child Availability
+            </p>
+            <div class="flex">
+              <div class="flex items-center mr-4">
+                <input
+                  id="available"
+                  type="radio"
+                  value=""
+                  name="availability"
+                  class="cursor-pointer  w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  for="available"
+                  class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  Yes
+                </label>
+              </div>
+              <div class="flex items-center mr-4">
+                <input
+                  id="notAvailable"
+                  type="radio"
+                  value=""
+                  name="availability"
+                  class="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  for="notAvailable"
+                  class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  No
+                </label>
+              </div>
+            </div>
+            {/* <p className="text-red-500 text-xs italic">
                             {errors.password}
                           </p> */}
-                        </div>
-                        {/* adult price */}
-                        <div>
-                          <label
-                            htmlFor="adultPrice"
-                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                          >
-                            Adult Price
-                          </label>
-                          <input
-                            type="number"
-                            name="adultPrice"
-                            id="adultPrice"
-                            className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
-                            placeholder="Attraction Name"
-                            required=""
-                            min="0"
-                            // value={form.userName}
-                            // onChange={(value) => handleChange(value)}
-                          />
-                          {/* <p className="text-red-500 text-xs italic">
+          </div>
+          {/* adult price */}
+          <div>
+            <label
+              htmlFor="adultPrice"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Adult Price
+            </label>
+            <input
+              type="number"
+              name="adultPrice"
+              id="adultPrice"
+              className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
+              placeholder="Attraction Name"
+              required=""
+              min="0"
+              // value={form.userName}
+              // onChange={(value) => handleChange(value)}
+            />
+            {/* <p className="text-red-500 text-xs italic">
                             {errors.userName}
                           </p> */}
-                        </div>
-                        {/* child price */}
-                        <div>
-                          <label
-                            htmlFor="childPrice"
-                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                          >
-                            Child Price
-                          </label>
-                          <input
-                            type="number"
-                            name="childPrice"
-                            id="childPrice"
-                            className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
-                            placeholder="Attraction Name"
-                            required=""
-                            min="0"
-                            // value={form.userName}
-                            // onChange={(value) => handleChange(value)}
-                          />
-                          {/* <p className="text-red-500 text-xs italic">
+          </div>
+          {/* child price */}
+          <div>
+            <label
+              htmlFor="childPrice"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Child Price
+            </label>
+            <input
+              type="number"
+              name="childPrice"
+              id="childPrice"
+              className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
+              placeholder="Attraction Name"
+              required=""
+              min="0"
+              // value={form.userName}
+              // onChange={(value) => handleChange(value)}
+            />
+            {/* <p className="text-red-500 text-xs italic">
                             {errors.userName}
                           </p> */}
-                        </div>
-                        {/* city */}
-                        {/* <div className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          </div>
+          {/* city */}
+          {/* <div className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                           <button
                             id="dropdownDefaultButton"
                             data-dropdown-toggle="dropdown"
@@ -424,36 +424,36 @@ const AttrForm = () => {
                             </ul>
                           </div>
                         </div> */}
-                        <label
-                          for="cars"
-                          className=" mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                          City:
-                        </label>
-                        <select
-                          name="cars"
-                          id="cars"
-                          class="ml-5 cursor-pointer bg-white w-40 focus:ring-4 focus:outline-none focus:ring-yellow-500 font-medium rounded-lg text-sm px-5 inline-flex items-center"
-                        >
-                          <option value="volvo">Volvo</option>
-                          <option value="saab">Saab</option>
-                          <option value="opel">Opel</option>
-                          <option value="audi">Audi</option>
-                        </select>
-                        {/* category */}
-                        {/* images */}
-                        <div>
-                          <button
-                            type="submit"
-                            className="flex w-full justify-center rounded-md bg-yellow-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
-                            onClick={handleSubmit}
-                          >
-                            Submit
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
+          <label
+            for="cars"
+            className=" mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            City:
+          </label>
+          <select
+            name="cars"
+            id="cars"
+            class="ml-5 cursor-pointer bg-white w-40 focus:ring-4 focus:outline-none focus:ring-yellow-500 font-medium rounded-lg text-sm px-5 inline-flex items-center"
+          >
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="opel">Opel</option>
+            <option value="audi">Audi</option>
+          </select>
+          {/* category */}
+          {/* images */}
+          <div>
+            <button
+              type="submit"
+              className="flex w-full justify-center rounded-md bg-yellow-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
     //             </Dialog.Title>
     //           </Dialog.Panel>
     //         </Transition.Child>

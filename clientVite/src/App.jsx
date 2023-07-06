@@ -43,6 +43,7 @@ function App() {
       <Routes className="bg-black">
         <Route path="/" element={<Home />} />
         <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/order" element={<Orders />} />
         <Route path="/reset" element={<ResetPassword />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<ContactUs />} />
@@ -52,6 +53,7 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/city/:id" element={<AttractionsList />} />
         <Route path="/city/:id/details" element={<AttractionDetails />} />
+        <Route path="/form" element={<AttractionForm />} />
         <Route path="/*" element={<Error />} />
       </Routes>
       <Footer />

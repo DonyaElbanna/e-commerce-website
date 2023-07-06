@@ -12,7 +12,10 @@ import CloseIcon from "@mui/icons-material/Close";
 // import CreditCard from "../../checkout/CreditCard";
 import axios from "axios";
 import DateModal from "./DateModal";
-import { handleErrorMessage, handleIsError } from "../../../rtk/features/commonSlice";
+import {
+  handleErrorMessage,
+  handleIsError,
+} from "../../../rtk/features/commonSlice";
 const style = {
   position: "absolute",
   top: "50%",
@@ -29,8 +32,8 @@ const style = {
 const BookingModal = () => {
   const dispatch = useDispatch();
   const { book, parkGroup } = useSelector((state) => state);
-  console.log(book)
-  const CheckParkAvaliable = async (dateformat,dateValue) => {
+  console.log(book);
+  const CheckParkAvaliable = async (dateformat, dateValue) => {
     try {
       const res = await axios.post(`attraction/TicketPriceDetails`, {
         travelDate: dateformat,
@@ -50,10 +53,9 @@ const BookingModal = () => {
           ChildTotalGrand: res.data.TicketPriceChild,
         })
       );
-      
     } catch (error) {
-      dispatch(handleIsError(true))
-      dispatch(handleErrorMessage(error.message))
+      dispatch(handleIsError(true));
+      dispatch(handleErrorMessage(error.message));
     }
   };
   return (

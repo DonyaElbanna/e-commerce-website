@@ -8,6 +8,9 @@ export default {
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
   ],
   theme: {
+    // colors: {
+    //   "orange": "#be853f",
+    // },
     extend: {},
   },
   plugins: [require("flowbite/plugin"), require("daisyui")],
