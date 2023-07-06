@@ -18,7 +18,8 @@ import { useEffect, useState } from "react";
 import { handleAuthType, handleOpenAuthModal } from "./rtk/features/authSlice";
 import axios from "axios";
 import { AttractionGroupHandler } from "./rtk/features/attrSlice";
-
+import Orders from "./pages/AdminDashboard/OrdersTable";
+import AttractionForm from "./pages/AdminDashboard/FormAttraction/AttractionForm";
 function App() {
   const { auth } = useSelector((state) => state);
 
