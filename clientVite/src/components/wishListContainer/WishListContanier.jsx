@@ -18,7 +18,7 @@ const WishListContanier = ({ attr }) => {
   console.log(wishlistItems);
 
   const handleRemoveFromWishlist = async (event, item) => {
-    event.preventDefault();
+    event.preventDefault();////
     const updatedWishlist = wishlistItems.filter(
       (wishlistItem) => wishlistItem._id !== item._id
     );
@@ -132,7 +132,8 @@ const WishListContanier = ({ attr }) => {
             </h2>
             <h2 className="card-title justify-between w-32">
               <span className="bold">Price:</span>
-              <span className="text-slate-50">{item.AdultPrice}</span>
+              <span className="text-slate-50">${item.AdultPrice}</span>
+              <span className=" text-xs  text-gray-600">/person</span>
             </h2>
             <div className="flex mt-5">
               <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-5 py-1 bg-blue-200 text-blue-700 rounded-full w-min">
