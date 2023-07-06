@@ -15,8 +15,12 @@ const Footer = () => {
               </p>
             </div>
             <div className="grid grid-flow-col gap-4 md:gap-10 lg:gap-22">
-              <Link className="footerLink text-sm md:text-xl">About us</Link>
-              <Link className="footerLink text-sm md:text-xl">Contact</Link>
+              <Link to={`/about`} className="footerLink text-sm md:text-xl">
+                About us
+              </Link>
+              <Link to={`/contact`} className="footerLink text-sm md:text-xl">
+                Contact
+              </Link>
               <Link className="footerLink text-sm md:text-xl">Places</Link>
               <Link className="footerLink text-sm md:text-xl">Category</Link>
             </div>

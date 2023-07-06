@@ -8,6 +8,8 @@ import Footer from "./components/common/Footer/Footer";
 import Wishlist from "./pages/Wishlist";
 import { useDispatch, useSelector } from "react-redux";
 import Cities from "./components/Cities/Cities";
+import AboutUs from "./components/AboutUs/AboutUs";
+import ContactUs from "./components/ContactUs/ContactUs";
 import ForgetPassword from "./components/common/AuthModal/ForgetPassword";
 import AuthModel from "./components/common/AuthModal/AuthModel";
 import Admin from "./pages/AdminDashboard/Admin";
@@ -21,19 +23,18 @@ function App() {
   const { auth } = useSelector((state) => state);
 
   const dispatch = useDispatch();
-  const getAllAttract = async ()=>{
+  const getAllAttract = async () => {
     try {
-      const {data} = await axios.get("http://localhost:9999/attraction/all")
-      dispatch(AttractionGroupHandler(data.Attractions))
+      const { data } = await axios.get("http://localhost:9999/attraction/all");
+      dispatch(AttractionGroupHandler(data.Attractions));
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-    
-  }
+  };
   useEffect(() => {
     dispatch(handleAuthType("login"));
     dispatch(handleOpenAuthModal(false));
-    getAllAttract()
+    getAllAttract();
   }, []);
   return (
     <>
@@ -43,6 +44,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/reset" element={<ResetPassword />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/contact" element={<ContactUs />} />
 
         {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
         <Route path="/cities" element={<Cities />} />

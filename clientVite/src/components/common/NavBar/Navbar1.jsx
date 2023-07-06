@@ -57,7 +57,7 @@ const Navbar1 = () => {
   const colorValue = Math.max(255 - scroll, 0)
     .toString(16)
     .padStart(2, "0");
-  const fade = 1 - scroll / 600;
+  const fade = 1 - scroll / 500;
 
   // const changeColor = () => {
   //   if (window.scrollY > 0) {
