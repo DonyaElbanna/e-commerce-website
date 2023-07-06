@@ -16,25 +16,23 @@ import { useEffect, useState } from "react";
 import { handleAuthType, handleOpenAuthModal } from "./rtk/features/authSlice";
 import axios from "axios";
 import { AttractionGroupHandler } from "./rtk/features/attrSlice";
-import AttractionForm from './pages/AdminDashboard/FormAttraction/AttractionForm';
 
 function App() {
   const { auth } = useSelector((state) => state);
 
   const dispatch = useDispatch();
-  const getAllAttract = async ()=>{
+  const getAllAttract = async () => {
     try {
-      const {data} = await axios.get("http://localhost:9999/attraction/all")
-      dispatch(AttractionGroupHandler(data.Attractions))
+      const { data } = await axios.get("http://localhost:9999/attraction/all");
+      dispatch(AttractionGroupHandler(data.Attractions));
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-    
-  }
+  };
   useEffect(() => {
     dispatch(handleAuthType("login"));
     dispatch(handleOpenAuthModal(false));
-    getAllAttract()
+    getAllAttract();
   }, []);
   return (
     <>
@@ -43,6 +41,7 @@ function App() {
       <Routes className="bg-black">
         <Route path="/" element={<Home />} />
         <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/order" element={<Orders />} />
         <Route path="/reset" element={<ResetPassword />} />
 
         {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
