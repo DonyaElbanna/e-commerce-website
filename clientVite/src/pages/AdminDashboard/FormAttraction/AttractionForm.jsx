@@ -2,42 +2,129 @@ import React, { useEffect, useState } from "react";
 import style from "./AttractionForm.module.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Joi from "joi";
 
 const AttractionForm = () => {
-  const [cats, setCats] = useState([]);
-  // const Navigate = useNavigate();
-  const [catId, setCatId] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    duration: "",
+    description: "",
+    category: "",
+    subcategory: "",
+    status: "",
+    childAvailable: "",
+    childAge: "",
+    ChildPrice: "",
+    AdultPrice: "",
+    image: "",
+  });
 
-  useEffect(() => {
-    const getCats = async () => {
-      const { data } = await axios.get("http://localhost:9999/category");
-      // console.log(data);
-      setCats(data.categories);
-    };
-    getCats();
-  }, []);
+  const [imageInput, setImageInput] = useState([]);
+  const { cities, categories } = useSelector((state) => state);
+  // console.log(cities.cities, categories.categories);
 
-  const getCatId = (tar) => {
-    setCatId(tar);
+  const [errors, setErrors] = useState({});
+
+  const schema = Joi.object({
+    name: Joi.string().required().min(3),
+    duration: Joi.string().required(),
+    description: Joi.string().required().min(1),
+    category: Joi.string().required(),
+    subcategory: Joi.string().required(),
+    status: Joi.string().required(),
+    childAvailable: Joi.string().required(),
+    childAge: Joi.number().required().min(0),
+    ChildPrice: Joi.number().required().min(50),
+    AdultPrice: Joi.number().required().min(50),
+    image: Joi.string()
+      .required()
+      .pattern(/(http(s?):)|([/|.|\w|\s])*\.(?:jpe?g|png)/),
+  });
+
+  const handleChange = (e) => {
+    setErrors({});
+    console.log(e.target.value);
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const [subCat, setSubCat] = useState([]);
-  // const NavigateSubCat = useNavigate();
-  const [subCatId, setSubCatId] = useState("");
-  useEffect(() => {
-    const getSubCat = async () => {
-      const { data } = await axios.get("http://localhost:9999/subcat");
-      setSubCat(data.subcategories);
-    };
-    getSubCat();
-  }, []);
-  // useEffect(() => {
-  //   console.log(subCatId);
-  // }, [subCatId]);
-
-  const getSubCatId = (id) => {
-    setSubCatId(id);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const err = schema.validate(form);
+    const { error } = err;
+    if (error) {
+      const errorData = {};
+      for (let item of error.details) {
+        console.log(error.details);
+        let key = item.path[0];
+        let message = item.message;
+        if (message === `"${key}" is not allowed to be empty`)
+          message = `${key} is required `;
+        errorData[key] = message;
+      }
+      setErrors(errorData);
+    } else {
+      addAttraction();
+      setErrors({});
+    }
   };
+
+  const addAttraction = async () => {
+    const newAttr = {
+      name: form.name,
+      duration: form.duration,
+      description: form.description,
+      category: form.category,
+      subcategory: form.subcategory,
+      status: form.status,
+      childAvailable: form.childAvailable == "notAvailable" ? false : true,
+      childAge: form.childAge,
+      ChildPrice: Number(form.ChildPrice),
+      AdultPrice: Number(form.AdultPrice),
+      included: [
+        "Air-Conditioned Vehicle for transportation",
+        "Professional Tour Leader & Tour Guide",
+        "Lunch meal will be provided at a local restaurant",
+        "All Fees and Taxes",
+      ],
+      excluded: [
+        "Any personal expenses or extra food and drinks during the trip",
+        "Driver & Guide tipping - Not mandatory but highly appreciated",
+        "Any other things not mentioned in the inclusions",
+      ],
+    };
+    console.log(newAttr);
+    // if (!auth.editedUser) {
+    await axios
+      .post("http://localhost:9999/attraction", newAttr)
+      .then((response) => {
+        console.log(response.data);
+        // dispatch(handleUserInfo(response.data.user));
+        // dispatch(handleIsLoggedIntoggle());
+        // setOpen(false);
+      })
+      .catch((error) => {
+        // setOpen(true);
+        const errorData = {};
+        console.log(error.response);
+        if (!error.response) {
+          errorData.globalErr =
+            "something went wrong, please check your connection!";
+        }
+        // else if (
+        //   error.response.data.message === "This email is already registered"
+        // ) {
+        //   errorData.email = error.response.data.message;
+        // } else {
+        //   errorData.userName =
+        //     "this userName already exist , please try another one";
+        // }
+
+        setErrors(errorData);
+      });
+    // }
+  };
+
   return (
     <>
       <section className="py-16">
@@ -47,7 +134,7 @@ const AttractionForm = () => {
         >
           <article className="grid grid-rows-12 grid-flow-col gap-5 lg:gap-10 text-center py-6">
             <div>
-              <label htmlFor="name" className="text-[#be853f]">
+              <label htmlFor="name" className="text-[#be853f] font-semibold">
                 Name
               </label>
               <input
@@ -57,81 +144,115 @@ const AttractionForm = () => {
                 className="block py-1 w-full  text-black border-x-neutral-500  bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
                 placeholder=" "
                 required
+                value={form.name}
+                onChange={(value) => handleChange(value)}
               />
+              <p className="text-red-500 text-xs italic">{errors.name}</p>
             </div>
             <div>
-              <label htmlFor="duration" className="text-[#be853f]">
+              <label
+                htmlFor="duration"
+                className="text-[#be853f] font-semibold"
+              >
                 Duration
               </label>
               <input
-                type="number"
+                type="text"
                 name="duration"
                 id="duration"
                 className="block py-1 w-full  text-black border-x-neutral-500  bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
                 placeholder=" "
                 required
+                value={form.duration}
+                onChange={(value) => handleChange(value)}
               />
+              <p className="text-red-500 text-xs italic">{errors.duration}</p>
             </div>
           </article>
 
           <div className="my-5">
-            <label htmlFor="name" className="text-[#be853f]">
+            <label
+              htmlFor="description"
+              className="text-[#be853f] font-semibold"
+            >
               Description
             </label>
             <textarea
               name="description"
               id="description"
-              placeholder=""
+              placeholder="Enter the tour's description"
               className="textarea rounded-none resize-none overflow-hidden w-full  text-black border-x-neutral-500  bg-transparent border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
+              value={form.userName}
+              onChange={(value) => handleChange(value)}
             ></textarea>
+            <p className="text-red-500 text-xs italic">{errors.description}</p>
           </div>
           <article className="grid grid-rows-12 grid-flow-col gap-5 lg:gap-10 text-center py-6">
             <div>
-              <label htmlFor="cites" className="text-[#be853f]">
+              <label htmlFor="city" className="text-[#be853f] font-semibold">
                 City
               </label>
 
               <select
-                id="Cites"
-                onChange={(e) => getCatId(e.target.value)}
-                className="select rounded-none  w-full pb-4 text-[#be853f] bg-transparent border-x-neutral-500  border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
+                id="city"
+                required
+                name="category"
+                onChange={(value) => handleChange(value)}
+                className="select rounded-none  w-full pb-4 text-slate-700 bg-transparent border-x-neutral-500  border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
               >
                 <option disabled selected>
-                  ...
+                  Enter City
                 </option>
-                {cats.map((cat) => (
-                  <option key={cat._id} value={cat._id}>
+                {cities.cities.map((cat) => (
+                  <option
+                    key={cat._id}
+                    value={cat._id}
+                    className="text-[#be853f]"
+                  >
                     {cat.city}
                   </option>
                 ))}
               </select>
+              <p className="text-red-500 text-xs italic">{errors.category}</p>
             </div>
 
             <div>
-              <label htmlFor="Catogriy" className="text-[#be853f]">
-                Catogriy
+              <label
+                htmlFor="Category"
+                className="text-[#be853f] font-semibold"
+              >
+                Category
               </label>
 
               <select
-                id="Catogriy"
-                onChange={(e) => getSubCatId(e.target.value)}
-                className="select rounded-none  w-full pb-4 text-[#be853f] bg-transparent border-x-neutral-500  border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
+                id="Category"
+                required
+                name="subcategory"
+                onChange={(value) => handleChange(value)}
+                className="select rounded-none  w-full pb-4 text-slate-700 bg-transparent border-x-neutral-500  border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
               >
                 <option disabled selected>
-                  ...
+                  Enter Category
                 </option>
-                {subCat.map((subcategory) => (
-                  <option key={subcategory._id} value={subcategory._id}>
+                {categories.categories.map((subcategory) => (
+                  <option
+                    key={subcategory._id}
+                    value={subcategory._id}
+                    className="text-[#be853f]"
+                  >
                     {subcategory.type}
                   </option>
                 ))}
               </select>
+              <p className="text-red-500 text-xs italic">
+                {errors.subcategory}
+              </p>
             </div>
           </article>
-
-          <article className="grid grid-rows-12 grid-flow-col  justify-between py-6">
+          {/* status */}
+          <article className="grid grid-rows-12 grid-flow-col  justify-around py-6">
             <div>
-              <label htmlFor="status" className="text-[#be853f]">
+              <label htmlFor="status" className="text-[#be853f] font-semibold">
                 Status
               </label>
               <div className="flex flex-col gap-4 my-4">
@@ -139,53 +260,93 @@ const AttractionForm = () => {
                   <input
                     type="radio"
                     name="status"
-                    id="status"
-                    className="text-[#be853f] radio-sm border-0"
+                    id="status1"
+                    value="available"
+                    onChange={(value) => handleChange(value)}
+                    className="text-[#be853f] radio-sm border-0 cursor-pointer"
                   />
-                  <strong className="ml-2">avalibale</strong>
+                  <label
+                    className="ml-2 text-slate-700 cursor-pointer"
+                    htmlFor="status1"
+                  >
+                    Available
+                  </label>
                 </span>
                 <span>
                   <input
                     type="radio"
                     name="status"
-                    id="status"
-                    className="text-[#be853f] radio-sm border-0"
+                    id="status2"
+                    value="notAvailable"
+                    onChange={(value) => handleChange(value)}
+                    className="text-[#be853f] radio-sm border-0 cursor-pointer"
                   />
-                  <strong className="ml-2">unavalibale</strong>
+                  <label
+                    className="ml-2 text-slate-700 cursor-pointer"
+                    htmlFor="status2"
+                  >
+                    Not Available
+                  </label>
                 </span>
               </div>
+              <p className="text-red-500 text-xs italic">{errors.status}</p>
             </div>
-
             <div>
-              <label htmlFor="childAvailability" className="text-[#be853f]">
+              <label
+                htmlFor="childAvailability"
+                className="text-[#be853f] font-semibold"
+              >
                 Child Availability
               </label>
               <div className="flex flex-col gap-4 my-4">
                 <span>
                   <input
                     type="radio"
-                    name="childAvailability"
-                    id="childAvailability"
-                    className="text-[#be853f] radio-sm border-0"
+                    name="childAvailable"
+                    id="childAvailable1"
+                    value="available"
+                    onChange={(value) => handleChange(value)}
+                    className="text-[#be853f] radio-sm border-0 cursor-pointer"
                   />
-                  <strong className="ml-2">avalibale</strong>
+                  <label
+                    className="ml-2 text-slate-700 cursor-pointer"
+                    htmlFor="childAvailable1"
+                  >
+                    Available
+                  </label>
                 </span>
                 <span>
                   <input
                     type="radio"
-                    name="childAvailability"
-                    id="childAvailability"
-                    className="text-[#be853f] radio-sm border-0"
+                    name="childAvailable"
+                    id="childAvailable2"
+                    value="notAvailable"
+                    onChange={(value) => handleChange(value)}
+                    className="text-[#be853f] radio-sm border-0 cursor-pointer"
                   />
-                  <strong className="ml-2">unavalibale</strong>
+                  <label
+                    className="ml-2 text-slate-700 cursor-pointer"
+                    htmlFor="childAvailable2"
+                  >
+                    Not Available
+                  </label>
                 </span>
               </div>
+              <p className="text-red-500 text-xs italic">
+                {errors.childAvailable}
+              </p>
             </div>
           </article>
+          {/* <article>
 
+          </article> */}
+          {/* child age */}
           <article className="grid grid-rows-12 grid-flow-col gap-5 lg:gap-10 text-center py-6">
             <div>
-              <label htmlFor="childAge" className="text-[#be853f]">
+              <label
+                htmlFor="childAge"
+                className="text-[#be853f] font-semibold"
+              >
                 Child Age
               </label>
               <input
@@ -195,39 +356,76 @@ const AttractionForm = () => {
                 className="block py-1 w-full  text-black border-x-neutral-500  bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
                 placeholder=" "
                 required
+                value={form.childAge}
+                onChange={(value) => handleChange(value)}
               />
+              <p className="text-red-500 text-xs italic">{errors.childAge}</p>
             </div>
+
             <div>
-              <label htmlFor="childPrice" className="text-[#be853f]">
+              <label
+                htmlFor="ChildPrice"
+                className="text-[#be853f] font-semibold"
+              >
                 Child Price
               </label>
               <input
                 type="number"
-                name="childPrice"
-                id="childPrice"
+                name="ChildPrice"
+                id="ChildPrice"
                 className="block py-1 w-full  text-black border-x-neutral-500  bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
                 placeholder=" "
                 required
+                value={form.ChildPrice}
+                onChange={(value) => handleChange(value)}
               />
+              <p className="text-red-500 text-xs italic">{errors.ChildPrice}</p>
             </div>
             <div>
-              <label htmlFor="adultPrice" className="text-[#be853f]">
+              <label
+                htmlFor="AdultPrice"
+                className="text-[#be853f] font-semibold"
+              >
                 Adult Price
               </label>
               <input
                 type="number"
-                name="adultPrice"
-                id="adultPrice"
+                name="AdultPrice"
+                id="AdultPrice"
                 className="block py-1 w-full  text-black border-x-neutral-500  bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
                 placeholder=" "
                 required
+                value={form.AdultPrice}
+                onChange={(value) => handleChange(value)}
               />
+              <p className="text-red-500 text-xs italic">{errors.AdultPrice}</p>
             </div>
           </article>
+          <article className="grid grid-rows-12 grid-flow-col gap-5 lg:gap-10 py-6">
+
+            <div>
+              <label htmlFor="image" className="text-[#be853f] font-semibold">
+                Image
+              </label>
+              <input
+                type="text"
+                name="image"
+                id="image"
+                className="block py-1 w-2/3  text-black border-x-neutral-500 mt-3 bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
+                placeholder="http://url.jpg"
+                required
+                value={form.image}
+                onChange={(value) => handleChange(value)}
+              />
+              <p className="text-red-500 text-xs italic">{errors.image}</p>
+            </div>
+          </article>
+          <p className="text-red-500 text-xs italic">{errors.globalErr}</p>
           <div className="text-center my-16">
             <button
               type="submit"
               className="text-white bg-gray-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+              onClick={handleSubmit}
             >
               Submit
             </button>

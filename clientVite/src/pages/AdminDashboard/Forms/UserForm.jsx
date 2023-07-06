@@ -66,6 +66,7 @@ const RegisterForm = () => {
       setErrors({});
     }
   };
+
   const register = async () => {
     const newUser = {
       email: form.email,
@@ -127,6 +128,7 @@ const RegisterForm = () => {
         });
     }
   };
+  
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
