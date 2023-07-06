@@ -37,7 +37,7 @@ const UserSchema = new Schema(
     orders: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Attraction",
+        ref: "Order",
       },
     ],
     isVerified: {

@@ -6,7 +6,8 @@ const {
   getAllUser,
   addRemoveWishlist,
   block,
-  changeRole
+  changeRole,
+  getOrders
 } = require("../services/user.service");
 const { signin } = require("./auth.controller");
 const authService = require("../services/auth.service");
@@ -106,6 +107,16 @@ const changeUserRole = async (req, res, next) => {
   }
 };
 
+const getUserOrders = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const user = await getOrders(id, next);
+    res.status(200).json(user);
+  } catch (err) {
+    return next(new AppError(FAILURE, 404));
+  }
+};
+
 module.exports = {
   signup,
   getSingleUser,
@@ -115,4 +126,5 @@ module.exports = {
   toggleWishlist,
   toggleBlock,
   changeUserRole,
+  getUserOrders
 };
