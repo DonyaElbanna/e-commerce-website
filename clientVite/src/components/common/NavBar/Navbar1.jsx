@@ -53,15 +53,25 @@ const Navbar1 = () => {
     const scrollPosition = window.scrollY;
     setScroll(scrollPosition);
   };
+  // console.log(window.scrollY)
   window.addEventListener("scroll", changeColor);
-  const colorValue = Math.max(255 - scroll, 0)
-    .toString(16)
-    .padStart(2, "0");
-  const fade = 1 - scroll / 500;
+  // const colorValue = Math.max(255 - scroll, 0)
+  //   .toString(16)
+  //   .padStart(2, "0");
+  let fade = 1 - scroll / 500;
+  // if (window.scrollY == 0) {
+  //   setScroll(true);
+  // }
+  // const style = {
+  //   backgroundColor: !window.scrollY
+  //     ? `rgba(255, 255, 255)`
+  //     : `rgba(0, 0, 0, ${1 - fade})`,
+  // };
+  // const style = ;
 
   // const changeColor = () => {
-  //   if (window.scrollY > 0) {
-  //     setScroll(true);
+  // if (window.scrollY > 0) {
+  //   setScroll(true);
   //   } else {
   //     setScroll(false);
   //   }

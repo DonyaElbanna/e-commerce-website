@@ -43,6 +43,7 @@ const AttractionCard = ({ attr }) => {
     }
   };
 
+  // console.log(attr.AdultPrice);
   const navigate = useNavigate();
   function redirectToLogin(event) {
     event.preventDefault();
@@ -106,12 +107,12 @@ const AttractionCard = ({ attr }) => {
           </div>
           <h2 className="card-title">{attr?.name}</h2>
           {/* <p>{attr?.description}</p> */}
-          <div className="flex">
-            <span className="mx-1 text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 bg-blue-200 text-blue-700 rounded-full w-min">
-              {attr.subcategory[0].type}
-            </span>
-            <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 bg-blue-200 text-blue-700 rounded-full w-min">
+          <div className="flex justify-between">
+            <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 bg-green-200 text-[#be853f] rounded-full w-min">
               {attr.category[0].city}
+            </span>
+            <span className="mx-1 text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 bg-blue-200 text-[#be853f] rounded-full w-min">
+              {attr.subcategory[0].type}
             </span>
           </div>
           <span className="text-lg text-gray-900 dark:text-white"></span>
@@ -191,7 +192,7 @@ const AttractionCard = ({ attr }) => {
             <span className="text-sm text-gray-500">
               {/* <span className=" text-lg text-gray-400">from:</span> */}
               <span className="text-3xl font-bold text-gray-200 dark:text-white">
-                $159
+                {/* $159 */}${attr.AdultPrice}
               </span>
               /person
             </span>
