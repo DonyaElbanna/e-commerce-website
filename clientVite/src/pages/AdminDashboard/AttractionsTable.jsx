@@ -16,7 +16,7 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-
+import { Link } from "react-router-dom";
 import {
   handleAuthType,
   handleToggleAuthModal,
@@ -224,17 +224,19 @@ const Attractions = () => {
       ) : (
         <>
           <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
-            <Button
-              style={{
-                color: "#be853f",
-                border: "1px solid #be853f",
-                boxShadow: "2px 2px #be853f",
-              }}
-              startIcon={<AddCircleOutlineOutlinedIcon />}
-              onClick={openAttrModal}
-            >
-              Add a new record
-            </Button>
+            <Link to="/form">
+              <Button
+                style={{
+                  color: "#be853f",
+                  border: "1px solid #be853f",
+                  boxShadow: "2px 2px #be853f",
+                }}
+                startIcon={<AddCircleOutlineOutlinedIcon />}
+                // onClick={openAttrModal}
+              >
+                Add a new record
+              </Button>
+            </Link>
           </Box>
           <div
             style={{
