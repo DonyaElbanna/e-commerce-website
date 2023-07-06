@@ -10,6 +10,7 @@ const {
   toggleWishlist,
   toggleBlock,
   changeUserRole,
+  getUserOrders
 } = require("../controllers/user.controller");
 
 router.post("", signup);
@@ -27,5 +28,7 @@ router.post("/:id", toggleWishlist);
 router.get("/block/:id", toggleBlock);
 
 router.get("/role/:id", changeUserRole);
+
+router.get("/orders/:id", getUserOrders);
 
 module.exports = router;

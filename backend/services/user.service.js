@@ -17,7 +17,7 @@ const add = async (payload, next) => {
     user.password = undefined;
     return user;
   } catch (err) {
-    console.log(err)
+    console.log(err);
     return next(new AppError(FAILURE, 404));
   }
 };
@@ -164,6 +164,26 @@ const changeRole = async (id, next) => {
   }
 };
 
+const getOrders = async (id, next) => {
+  try {
+    const user = await User.findById(id)
+      .populate("orders")
+      .populate({
+        path: "orders",
+        populate: {
+          path: "attraction",
+          model: "Attraction",
+        },
+      });
+    if (!user) {
+      return next(new AppError(NOT_FOUND, 404));
+    }
+    return user;
+  } catch (err) {
+    return next(new AppError(NOT_FOUND, 404));
+  }
+};
+
 module.exports = {
   add,
   getUser,
@@ -173,4 +193,5 @@ module.exports = {
   addRemoveWishlist,
   block,
   changeRole,
+  getOrders,
 };
