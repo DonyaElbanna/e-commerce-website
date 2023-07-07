@@ -69,7 +69,7 @@ const Users = () => {
   const handleClose = () => setOpen(false);
 
   const [users, setUsers] = useState([]);
-  console.log(users);
+  // console.log(users);
 
   const { common } = useSelector((state) => state);
   const dispatch = useDispatch();
