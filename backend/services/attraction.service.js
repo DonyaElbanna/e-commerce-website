@@ -33,6 +33,7 @@ const getAttract = async (payload) => {
             $group: {
               _id: "$attraction",
               avgRating: { $avg: "$rating" },
+              count: { $sum: 1 },
             },
           },
         ],
