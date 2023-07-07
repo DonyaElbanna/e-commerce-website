@@ -61,7 +61,7 @@ const AttractionForm = () => {
     // console.log(e.target.value);
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
+console.log(imagesArr)
   const handleSubmit = (e) => {
     e.preventDefault();
     const err = schema.validate(form);
