@@ -20,7 +20,7 @@ exports.Schemas = {
       confirmPassword: Joi.string().required(),
     }),
     wishListAdd: Joi.object({
-      userId: Joi.string().required(),
+      id: Joi.string().required(),
       Attraction: Joi.string().required(),
     }),
   },

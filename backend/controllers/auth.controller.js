@@ -1,5 +1,6 @@
 const authService = require("../services/auth.service");
 const signin = async (req, res, next) => {
+  console.log(req.body)
   try {
     const data = await authService.signin(req.body);
     const accessToken = await authService.generateAccessToken(data);

@@ -7,6 +7,7 @@ const AppError = require("../utils/AppError.util");
 const { INVALID_CREDENTIALS } = require("../utils/namespace.util").namespace;
 
 const signin = async (payload) => {
+  console.log(payload)
   try {
     const user = await userModel
       .findOne({
@@ -71,8 +72,6 @@ const sendVerification = async (data, type) => {
 };
 
 const generateAccessToken = async (user) => {
-  console.log("user");
-  console.log(user);
   try {
     return jwt.sign(
       {
