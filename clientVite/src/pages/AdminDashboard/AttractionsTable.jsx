@@ -16,11 +16,12 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import { Link } from "react-router-dom";
-import {
-  handleAuthType,
-  handleToggleAuthModal,
-} from "../../rtk/features/authSlice";
+import { Link, useNavigate } from "react-router-dom";
+// import {
+//   handleAuthType,
+//   handleToggleAuthModal,
+// } from "../../rtk/features/authSlice";
+import { attractionEditHandler } from "../../rtk/features/attrSlice";
 
 // modal styles
 const style = {
@@ -46,11 +47,38 @@ const Attractions = () => {
   const [open, setOpen] = useState(false);
   const [slcID, setSlcID] = useState(null);
 
+  const navigate = useNavigate();
+
   const handleOpen = (id) => {
     setOpen(true);
     setSlcID(id);
   };
   // console.log(slcID);
+
+  useEffect(() => {
+    dispatch(handleIsLoadingToggle());
+
+    const getAttrs = async () => {
+      try {
+        const { data } = await axios.get(`http://localhost:9999/attraction`);
+        // console.log(data.AllAttraction);
+        setAttrs(
+          data.AllAttraction.map((attr) => ({
+            id: attr._id,
+            name: attr.name,
+            city: attr.category.city,
+            category: attr.subcategory.type,
+            status: attr.status,
+          }))
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getAttrs();
+    dispatch(handleIsLoadingToggle());
+  }, []);
 
   const handleClose = () => setOpen(false);
 
@@ -85,10 +113,10 @@ const Attractions = () => {
       headerName: "Edit",
       sortable: false,
       width: 90,
-      renderCell: (index, params) => (
+      renderCell: (params) => (
         <Button
           variant="outlined"
-          onClick={() => handleButtonClick(params.row.id)}
+          onClick={() => openEditAttrForm(params.row.id)}
           sx={{
             color: "#be853f",
             border: "1px solid orange",
@@ -182,39 +210,19 @@ const Attractions = () => {
     },
   ];
 
-  const handleButtonClick = (x) => {
-    console.log(x);
+  // const handleButtonClick = (x) => {
+  //   console.log(x);
+  // };
+
+  const openAddAttrForm = () => {
+    dispatch(attractionEditHandler());
+    navigate("/form");
   };
 
-  useEffect(() => {
-    dispatch(handleIsLoadingToggle());
-
-    const getAttrs = async () => {
-      try {
-        const { data } = await axios.get(`http://localhost:9999/attraction`);
-        // console.log(data.AllAttraction);
-        setAttrs(
-          data.AllAttraction.map((attr) => ({
-            id: attr._id,
-            name: attr.name,
-            city: attr.category.city,
-            category: attr.subcategory.type,
-            status: attr.status,
-          }))
-        );
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getAttrs();
-    dispatch(handleIsLoadingToggle());
-  }, []);
-
-  const openAttrModal = () => {
-    dispatch(handleAuthType("addAttr"));
-    dispatch(handleToggleAuthModal());
-    // dispatch(CityEditHandler());
+  const openEditAttrForm = (attrID) => {
+    console.log(attrID);
+    dispatch(attractionEditHandler(attrID));
+    navigate("/form");
   };
 
   return (
@@ -224,19 +232,19 @@ const Attractions = () => {
       ) : (
         <>
           <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
-            <Link to="/form">
-              <Button
-                style={{
-                  color: "#be853f",
-                  border: "1px solid #be853f",
-                  boxShadow: "2px 2px #be853f",
-                }}
-                startIcon={<AddCircleOutlineOutlinedIcon />}
-                // onClick={openAttrModal}
-              >
-                Add a new record
-              </Button>
-            </Link>
+            {/* <Link to="/form"> */}
+            <Button
+              style={{
+                color: "#be853f",
+                border: "1px solid #be853f",
+                boxShadow: "2px 2px #be853f",
+              }}
+              startIcon={<AddCircleOutlineOutlinedIcon />}
+              onClick={openAddAttrForm}
+            >
+              Add a new record
+            </Button>
+            {/* </Link> */}
           </Box>
           <div
             style={{

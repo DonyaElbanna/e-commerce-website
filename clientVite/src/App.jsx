@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import { handleAuthType, handleOpenAuthModal } from "./rtk/features/authSlice";
 import axios from "axios";
 import { AttractionGroupHandler } from "./rtk/features/attrSlice";
-import Orders from "./pages/Orders"
+import Orders from "./pages/Orders";
 import AttractionForm from "./pages/AdminDashboard/FormAttraction/AttractionForm";
 
 function App() {
@@ -49,8 +49,6 @@ function App() {
         <Route path="/reset" element={<ResetPassword />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<ContactUs />} />
-
-        {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
         <Route path="/cities" element={<Cities />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/city/:id" element={<AttractionsList />} />

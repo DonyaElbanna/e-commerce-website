@@ -6,22 +6,40 @@ import { useSelector } from "react-redux";
 import Joi from "joi";
 
 const AttractionForm = () => {
+  const { cities, categories, attractions } = useSelector((state) => state);
+  // console.log(attractions, attractions.attractionEdit);
+  const editedAttr = attractions.Attractions.filter(
+    (attr) => attr._id == attractions.attractionEdit
+  )[0];
+  // console.log(
+  //   cities.cities.filter((city) => city._id == editedAttr.category)[0].city
+  // );
+  console.log(attractions.Attractions, editedAttr);
+
   const [form, setForm] = useState({
-    name: "",
-    duration: "",
-    description: "",
-    category: "",
-    subcategory: "",
-    status: "",
-    childAvailable: "",
-    childAge: "",
-    ChildPrice: "",
-    AdultPrice: "",
+    name: editedAttr ? editedAttr.name : "",
+    duration: editedAttr ? editedAttr.duration : "",
+    description: editedAttr ? editedAttr.description : "",
+    category: editedAttr ? editedAttr.category : "",
+    subcategory: editedAttr ? editedAttr.subcategory : "",
+    status: editedAttr ? editedAttr.status : "",
+    childAvailable:
+      editedAttr && editedAttr.childAvailable == true
+        ? "available"
+        : editedAttr && editedAttr.childAvailable == false
+        ? "notAvailable"
+        : "",
+    childAge: editedAttr ? editedAttr.childAge : "",
+    ChildPrice: editedAttr ? editedAttr.ChildPrice : "",
+    AdultPrice: editedAttr ? editedAttr.AdultPrice : "",
   });
 
-  const { cities, categories } = useSelector((state) => state);
-  const [imageInputs, setImageInputs] = useState([true]);
-  const [imagesArr, setImagesArr] = useState({});
+  const [imageInputs, setImageInputs] = useState(
+    editedAttr ? editedAttr.Images : [true]
+  );
+  const [imagesArr, setImagesArr] = useState(
+    editedAttr ? editedAttr.Images : {}
+  );
   const [imgErr, setImageErr] = useState("");
   const [errors, setErrors] = useState({});
 
@@ -36,7 +54,7 @@ const AttractionForm = () => {
     status: Joi.string().required(),
     childAvailable: Joi.string().required(),
     childAge: Joi.number().required().min(0),
-    ChildPrice: Joi.number().required().min(50),
+    ChildPrice: Joi.number().required().min(0),
     AdultPrice: Joi.number().required().min(50),
   });
 
@@ -69,7 +87,6 @@ const AttractionForm = () => {
       setErrors({});
     }
   };
-  console.log(errors);
 
   const addAttraction = async () => {
     // const errorData = {};
@@ -78,8 +95,7 @@ const AttractionForm = () => {
       // setErrors(errorData);
       setImageErr("at least 1 image is required");
       // console.log("empty images");
-    } 
-    else {
+    } else {
       const newAttr = {
         name: form.name,
         duration: form.duration,
@@ -215,7 +231,7 @@ const AttractionForm = () => {
               id="description"
               placeholder="Enter tour's description"
               className="textarea rounded-none resize-none overflow-hidden w-full  text-black border-x-neutral-500  bg-transparent border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
-              value={form.userName}
+              value={form.description}
               onChange={(value) => handleChange(value)}
             ></textarea>
             <p className="text-red-500 text-xs italic">{errors.description}</p>
@@ -241,6 +257,7 @@ const AttractionForm = () => {
                     key={cat._id}
                     value={cat._id}
                     className="text-[#be853f]"
+                    selected={form.category === cat._id}
                   >
                     {cat.city}
                   </option>
@@ -272,6 +289,7 @@ const AttractionForm = () => {
                     key={subcategory._id}
                     value={subcategory._id}
                     className="text-[#be853f]"
+                    selected={form.subcategory === subcategory._id}
                   >
                     {subcategory.type}
                   </option>
@@ -297,6 +315,7 @@ const AttractionForm = () => {
                     value="available"
                     onChange={(value) => handleChange(value)}
                     className="text-[#be853f] radio-sm border-0 cursor-pointer"
+                    checked={form.status === "available"}
                   />
                   <label
                     className="ml-2 text-slate-700 cursor-pointer"
@@ -313,6 +332,7 @@ const AttractionForm = () => {
                     value="notAvailable"
                     onChange={(value) => handleChange(value)}
                     className="text-[#be853f] radio-sm border-0 cursor-pointer"
+                    checked={form.status === "notAvailable"}
                   />
                   <label
                     className="ml-2 text-slate-700 cursor-pointer"
@@ -340,6 +360,7 @@ const AttractionForm = () => {
                     value="available"
                     onChange={(value) => handleChange(value)}
                     className="text-[#be853f] radio-sm border-0 cursor-pointer"
+                    checked={form.childAvailable === "available"}
                   />
                   <label
                     className="ml-2 text-slate-700 cursor-pointer"
@@ -356,6 +377,7 @@ const AttractionForm = () => {
                     value="notAvailable"
                     onChange={(value) => handleChange(value)}
                     className="text-[#be853f] radio-sm border-0 cursor-pointer"
+                    checked={form.childAvailable === "notAvailable"}
                   />
                   <label
                     className="ml-2 text-slate-700 cursor-pointer"
@@ -431,6 +453,7 @@ const AttractionForm = () => {
               <p className="text-red-500 text-xs italic">{errors.AdultPrice}</p>
             </div>
           </article>
+          {/* images */}
           <article className="grid grid-rows-12 grid-flow-col gap-5 lg:gap-10 py-6">
             <div>
               <label htmlFor="image" className="text-[#be853f] font-semibold">
@@ -445,6 +468,7 @@ const AttractionForm = () => {
                   className="block py-1 w-2/3  text-black border-x-neutral-500 mt-3 bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
                   placeholder="http://url.jpg"
                   required
+                  value={imagesArr[i]}
                   onChange={(e) => handleChangeImgs(e)}
                 />
               ))}
@@ -463,7 +487,7 @@ const AttractionForm = () => {
             </div>
           </article>
           <p className="text-red-500 text-xs italic">{errors.globalErr}</p>
-
+          {/* submit */}
           <div className="text-center my-16">
             <button
               type="submit"
@@ -474,16 +498,6 @@ const AttractionForm = () => {
             </button>
           </div>
         </form>
-        {/* <div>
-          {imagesArr.length !== 0
-            ? imagesArr.map((img, i) => {
-                // <img src={img} key={i} className="w-50" />;
-                <p key={i} className="text-slate-800">
-                  {img}
-                </p>;
-              })
-            : ""}
-        </div> */}
       </section>
     </>
   );
