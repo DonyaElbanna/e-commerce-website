@@ -57,7 +57,7 @@ const Attractions = () => {
     const getAttrs = async () => {
       try {
         const { data } = await axios.get(`http://localhost:9999/attraction`);
-        console.log(data.AllAttraction);
+        // console.log(data.AllAttraction);
         setAttrs(
           data.AllAttraction.map((attr) => ({
             id: attr._id,
@@ -80,7 +80,7 @@ const Attractions = () => {
     getAttrs();
     dispatch(handleIsLoadingToggle());
   }, []);
-  console.log("final", attrs);
+  // console.log("final", attrs);
 
   const handleClose = () => setOpen(false);
 

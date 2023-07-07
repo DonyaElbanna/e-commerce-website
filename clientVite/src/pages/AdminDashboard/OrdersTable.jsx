@@ -51,6 +51,7 @@ const Orders = () => {
     const getOrders = async () => {
       try {
         const { data } = await axios.get(`http://localhost:9999/order`);
+        // console.log(data);
         dispatch(ordersHandler(data));
         setOrdersArr(
           data.map((order) => ({
@@ -83,10 +84,8 @@ const Orders = () => {
 
   const deleteOrder = (id) => {
     console.log(id);
-    // optimistic update
-    // const newOrders = orders.filter((order) => order.id !== id);
-    // setOrdersArr(newOrder);
-    handleClose();
+    // dispatch(removeOrder(id));
+    // handleClose();
 
     // try {
     //   axios.delete(`http://localhost:9999/order/${id}`);
@@ -122,29 +121,7 @@ const Orders = () => {
     { field: "adults", headerName: "Adults", width: 110 },
     { field: "children", headerName: "Children", width: 125 },
     { field: "price", headerName: "Price", width: 110 },
-    { field: "date", headerName: "Date", width: 130 },
-    {
-      field: "edit",
-      headerName: "Edit",
-      sortable: false,
-      width: 80,
-      renderCell: (params) => (
-        <Button
-          variant="outlined"
-          onClick={() => handleButtonClick(params.row.id)}
-          sx={{
-            color: "#be853f",
-            border: "1px solid orange",
-            ":hover": {
-              border: "1px solid #be853f",
-              backgroundColor: "#ffc0715c",
-            },
-          }}
-        >
-          Edit
-        </Button>
-      ),
-    },
+    { field: "date", headerName: "Date", width: 140 },
     {
       field: "delete",
       headerName: "Delete",
