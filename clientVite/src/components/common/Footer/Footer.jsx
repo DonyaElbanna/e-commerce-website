@@ -29,6 +29,7 @@ const Footer = () => {
               <div className="grid grid-flow-col gap-4 md:gap-6">
                 <Link to="" className=" hover:text-blue-500 cursor-pointer">
                   <svg
+                    id="footerSvg"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
@@ -40,6 +41,7 @@ const Footer = () => {
                 </Link>
                 <Link to="" className=" hover:text-red-600 cursor-pointer">
                   <svg
+                    id="footerSvg"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
@@ -51,6 +53,7 @@ const Footer = () => {
                 </Link>
                 <Link to="" className=" hover:text-blue-600 cursor-pointer">
                   <svg
+                    id="footerSvg"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"

@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Cities from "./components/Cities/Cities";
 import AboutUs from "./components/AboutUs/AboutUs";
 import ContactUs from "./components/ContactUs/ContactUs";
-import ForgetPassword from "./components/common/AuthModal/ForgetPassword";
 import AuthModel from "./components/common/AuthModal/AuthModel";
 import Admin from "./pages/AdminDashboard/Admin";
 import ResetPassword from "./components/common/AuthModal/ResetPassword";
@@ -20,6 +19,7 @@ import axios from "axios";
 import { AttractionGroupHandler } from "./rtk/features/attrSlice";
 import Orders from "./pages/AdminDashboard/OrdersTable";
 import AttractionForm from "./pages/AdminDashboard/FormAttraction/AttractionForm";
+import IconMap from "./components/Map/IconMap";
 function App() {
   const { auth } = useSelector((state) => state);
 
@@ -48,6 +48,7 @@ function App() {
         <Route path="/reset" element={<ResetPassword />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<ContactUs />} />
+        <Route path="/map" element={<IconMap />} />
 
         {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
         <Route path="/cities" element={<Cities />} />

@@ -15,10 +15,10 @@ const WishListContanier = ({ attr }) => {
     };
     getWishlistItems();
   }, []);
-  console.log(wishlistItems);
+  // console.log(wishlistItems);
 
   const handleRemoveFromWishlist = async (event, item) => {
-    event.preventDefault();////
+    event.preventDefault(); ////
     const updatedWishlist = wishlistItems.filter(
       (wishlistItem) => wishlistItem._id !== item._id
     );
@@ -135,12 +135,12 @@ const WishListContanier = ({ attr }) => {
               <span className="text-slate-50">${item.AdultPrice}</span>
               <span className=" text-xs  text-gray-600">/person</span>
             </h2>
-            <div className="flex mt-5">
-              <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-5 py-1 bg-blue-200 text-blue-700 rounded-full w-min">
-                {item.subcategory.type}
-              </span>
-              <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 mx-3 bg-green-200 text-blue-700 rounded-full w-min">
+            <div className="flex justify-between mt-5">
+              <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-2 py-1 mx-3 bg-green-200 text-[#be853f] rounded-full w-min">
                 {item.category.city}
+              </span>
+              <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-blue-200 text-[#be853f] rounded-full w-min">
+                {item.subcategory.type}
               </span>
             </div>
           </div>
