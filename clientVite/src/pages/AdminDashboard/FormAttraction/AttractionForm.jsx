@@ -90,12 +90,15 @@ const AttractionForm = () => {
 
   const addAttraction = async () => {
     // const errorData = {};
+
     if (Object.values(imagesArr) == 0) {
       // errorData.imageError = "at least 1 image is required";
       // setErrors(errorData);
       setImageErr("at least 1 image is required");
       // console.log("empty images");
+      console.log("1");
     } else {
+      console.log("2");
       const newAttr = {
         name: form.name,
         duration: form.duration,
@@ -120,24 +123,46 @@ const AttractionForm = () => {
         ],
         Images: Object.values(imagesArr),
       };
-      console.log(newAttr);
-      await axios
-        .post("http://localhost:9999/attraction", newAttr)
-        .then((response) => {
-          console.log(response.data);
-          navigate("/admin");
-        })
-        .catch((error) => {
-          // setOpen(true);
-          const errorData = {};
-          console.log(error.response);
-          if (!error.response) {
-            errorData.globalErr =
-              "something went wrong, please check your connection!";
-          }
+      // console.log(newAttr);
+      if (!editedAttr) {
+        console.log("3");
+        await axios
+          .post("http://localhost:9999/attraction", newAttr)
+          .then((response) => {
+            navigate("/admin");
+            console.log(response.data);
+          })
+          .catch((error) => {
+            // setOpen(true);
+            const errorData = {};
+            console.log(error.response);
+            if (!error.response) {
+              errorData.globalErr =
+                "something went wrong, please check your connection!";
+            }
 
-          setErrors(errorData);
-        });
+            setErrors(errorData);
+          });
+      } else {
+        console.log("4");
+        await axios
+          .put(`http://localhost:9999/attraction/${editedAttr._id}`, newAttr)
+          .then((response) => {
+            console.log(response.data);
+            navigate("/admin");
+          })
+          .catch((error) => {
+            // setOpen(true);
+            const errorData = {};
+            console.log(error.response);
+            if (!error.response) {
+              errorData.globalErr =
+                "something went wrong, please check your connection!";
+            }
+
+            setErrors(errorData);
+          });
+      }
     }
   };
 
@@ -408,6 +433,7 @@ const AttractionForm = () => {
                 className="block py-1 w-full  text-black border-x-neutral-500  bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
                 placeholder=" "
                 required
+                min="0"
                 value={form.childAge}
                 onChange={(value) => handleChange(value)}
               />
@@ -428,6 +454,7 @@ const AttractionForm = () => {
                 className="block py-1 w-full  text-black border-x-neutral-500  bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
                 placeholder=" "
                 required
+                min="0"
                 value={form.ChildPrice}
                 onChange={(value) => handleChange(value)}
               />
@@ -447,6 +474,7 @@ const AttractionForm = () => {
                 className="block py-1 w-full  text-black border-x-neutral-500  bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
                 placeholder=" "
                 required
+                min="0"
                 value={form.AdultPrice}
                 onChange={(value) => handleChange(value)}
               />

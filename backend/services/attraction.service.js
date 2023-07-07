@@ -69,7 +69,14 @@ const getAttract = async (payload) => {
 };
 
 const UpdateAttract = async (payload, id) => {
-  const attract = await attractionModel.findByIdAndUpdate({ _id: id }, payload);
+  const attract = await attractionModel.findByIdAndUpdate(
+    { _id: id },
+    payload,
+    {
+      upsert: true,
+      new: true,
+    }
+  );
   if (!attract) errorHandler(AppError.namespace.NOT_FOUND);
   const newAttract = await attractionModel.findById({ _id: id });
   return attract;
@@ -146,11 +153,10 @@ const getAttractBySubcategory = async (id) => {
   // return empty array if not found to not cause get errors in front-end
   return attract;
 };
-const getAllAttractions = async ()=>{
-  const attractions = await attractionModel.find()
+const getAllAttractions = async () => {
+  const attractions = await attractionModel.find();
   return attractions;
-
-}
+};
 module.exports = {
   addAttract,
   getAllAttract,
@@ -160,6 +166,6 @@ module.exports = {
   SetImages,
   getAttractByCategory,
   getAttractBySubcategory,
-  getAllAttractions
+  getAllAttractions,
   // getHighestAttractions,
 };
