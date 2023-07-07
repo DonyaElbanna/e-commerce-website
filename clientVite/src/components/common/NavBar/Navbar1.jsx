@@ -202,7 +202,7 @@ const Navbar1 = () => {
                 >
                   <Avatar
                     alt="Remy Sharp"
-                    src="/static/images/avatar/1.jpg"
+                    src={auth.userInfo && auth.userInfo.avatar}
                     sx={{
                       border: "2px solid gold",
                       borderRadius: "50%",

@@ -7,10 +7,7 @@ import {
   handleAuthType,
   handleOpenAuthModal,
 } from "../../../rtk/features/authSlice";
-import {
-  addCity,
-  editCity,
-} from "../../../rtk/features/citiesSlice";
+import { addCity, editCity } from "../../../rtk/features/citiesSlice";
 
 const CityForm = () => {
   // modal
@@ -65,16 +62,16 @@ const CityForm = () => {
     } else {
       addCategory();
       setErrors({});
-      setOpen(false);
     }
   };
 
+  // sendinf data to server
   const addCategory = async () => {
     const newCity = {
       city: form.city,
       image: form.image,
     };
-    console.log(newCity);
+    // console.log(newCity);
 
     if (!cities.cityEdit) {
       await axios
@@ -87,8 +84,11 @@ const CityForm = () => {
         .catch((error) => {
           console.log(error);
           const errorData = {};
+          if (!error.response) {
+            errorData.globalErr =
+              "something went wrong, please check your connection!";
+          }
           setErrors(errorData);
-          setOpen(true);
         });
     } else {
       await axios
@@ -102,8 +102,11 @@ const CityForm = () => {
         .catch((error) => {
           console.log(error);
           const errorData = {};
+          if (!error.response) {
+            errorData.globalErr =
+              "something went wrong, please check your connection!";
+          }
           setErrors(errorData);
-          setOpen(true);
         });
     }
   };
@@ -191,6 +194,9 @@ const CityForm = () => {
                             {errors.image}
                           </p>
                         </div>
+                        <p className="text-red-500 text-xs italic">
+                          {errors.globalErr}
+                        </p>
 
                         <div>
                           <button

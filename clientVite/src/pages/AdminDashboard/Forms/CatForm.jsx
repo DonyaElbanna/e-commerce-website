@@ -62,10 +62,10 @@ const CatForm = () => {
     } else {
       addCategory();
       setErrors({});
-      setOpen(false);
     }
   };
 
+  // sending data to server
   const addCategory = async () => {
     const newCategory = {
       type: form.type,
@@ -84,8 +84,11 @@ const CatForm = () => {
         .catch((error) => {
           console.log(error);
           const errorData = {};
+          if (!error.response) {
+            errorData.globalErr =
+              "something went wrong, please check your connection!";
+          }
           setErrors(errorData);
-          setOpen(true);
         });
     } else {
       await axios
@@ -94,15 +97,19 @@ const CatForm = () => {
           newCategory
         )
         .then((response) => {
-          console.log("edited city", newCategory);
-          console.log("axios put", response.data);
+          // console.log("edited city", newCategory);
+          // console.log("axios put", response.data);
           dispatch(editCat(response.data));
+          setOpen(false);
         })
         .catch((error) => {
           console.log(error);
           const errorData = {};
+          if (!error.response) {
+            errorData.globalErr =
+              "something went wrong, please check your connection!";
+          }
           setErrors(errorData);
-          setOpen(true);
         });
     }
   };
@@ -188,6 +195,9 @@ const CatForm = () => {
                             {errors.image}
                           </p>
                         </div>
+                        <p className="text-red-500 text-xs italic">
+                          {errors.globalErr}
+                        </p>
 
                         <div>
                           <button

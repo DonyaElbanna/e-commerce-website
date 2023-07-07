@@ -17,6 +17,8 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
+import { ordersHandler, removeOrder } from "../../rtk/features/ordersSlice";
+
 // modal styles
 const style = {
   position: "absolute",
@@ -32,19 +34,16 @@ const style = {
 };
 
 const Orders = () => {
-  const [orders, setOrders] = useState([]);
+  const [ordersArr, setOrdersArr] = useState([]);
 
-  const { common } = useSelector((state) => state);
+  const { common, orders } = useSelector((state) => state);
+  // console.log("redux orders", orders);
+
   const dispatch = useDispatch();
 
   // modal state
   const [open, setOpen] = useState(false);
   const [slcID, setSlcID] = useState(null);
-
-  // function reverseDate(s) {
-  //   return s.split("").reverse().join("");
-  // }
-  // console.log(reversed = reverseDate())
 
   useEffect(() => {
     dispatch(handleIsLoadingToggle());
@@ -52,14 +51,15 @@ const Orders = () => {
     const getOrders = async () => {
       try {
         const { data } = await axios.get(`http://localhost:9999/order`);
-        // console.log(data);
-        setOrders(
+        dispatch(ordersHandler(data));
+        setOrdersArr(
           data.map((order) => ({
             id: order._id,
             name: order.user.username,
             attr: order.attraction.name,
             adults: order.adultCount,
             children: order.childCount,
+            price: order.AdultTotalPrice + order.ChildTotalPrice + " $",
             date: new Date(order.travelDate.split("T")[0]).toDateString(),
           }))
         );
@@ -72,64 +72,63 @@ const Orders = () => {
     dispatch(handleIsLoadingToggle());
   }, []);
 
-  // console.log(
-  //   orders.map((order) => ({
-  //     id: order._id,
-  //     name: order.user.username,
-  //     attr: order.attraction.name,
-  //     adults: order.adultCount,
-  //     children: order.childCount,
-  //     date: order.travelDate,
-  //   }))
-  // );
-  console.log(orders);
+  // console.log(ordersArr);
 
   const handleOpen = (id) => {
     setOpen(true);
     setSlcID(id);
   };
-  // console.log(slcID);
 
   const handleClose = () => setOpen(false);
 
   const deleteOrder = (id) => {
-    // console.log(id);
+    console.log(id);
     // optimistic update
-    const newOrder = orders.filter((order) => order.id !== id);
-    setOrders(newOrder);
+    // const newOrders = orders.filter((order) => order.id !== id);
+    // setOrdersArr(newOrder);
     handleClose();
 
-    try {
-      axios.delete(`http://localhost:9999/order/${id}`);
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   axios.delete(`http://localhost:9999/order/${id}`);
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
-
-  // console.log(attrs);
-
-  // table cols
 
   const handleButtonClick = (x) => {
     console.log(x);
   };
 
+  // rows
+  const finalOrders = orders?.orders.map((order) => ({
+    id: order._id,
+    name: order.user.username,
+    attr: order.attraction.name,
+    adults: order.adultCount,
+    children: order.childCount,
+    price: order.AdultTotalPrice + order.ChildTotalPrice + " $",
+    date: new Date(order.travelDate.split("T")[0]).toDateString(),
+  }));
+  // console.log(finalOrders)
+
+  // columns
   const columns = [
     {
       field: "name",
       headerName: "Name",
       width: 150,
     },
-    { field: "attr", headerName: "Order Name", width: 130 },
-    { field: "adults", headerName: "Adults", width: 130 },
-    { field: "children", headerName: "Children", width: 130 },
+    { field: "attr", headerName: "Booked Tour", width: 150 },
+    { field: "adults", headerName: "Adults", width: 110 },
+    { field: "children", headerName: "Children", width: 125 },
+    { field: "price", headerName: "Price", width: 110 },
     { field: "date", headerName: "Date", width: 130 },
     {
       field: "edit",
       headerName: "Edit",
       sortable: false,
-      width: 90,
-      renderCell: (index, params) => (
+      width: 80,
+      renderCell: (params) => (
         <Button
           variant="outlined"
           onClick={() => handleButtonClick(params.row.id)}
@@ -150,7 +149,7 @@ const Orders = () => {
       field: "delete",
       headerName: "Delete",
       sortable: false,
-      width: 90,
+      width: 60,
       renderCell: (params) => (
         <>
           <Tooltip title="Delete">
@@ -205,7 +204,7 @@ const Orders = () => {
                   </Button>
                   <Button
                     variant="contained"
-                    onClick={() => deleteAttr(slcID)}
+                    onClick={() => deleteOrder(slcID)}
                     sx={{
                       border: "1px solid #be853f",
                       backgroundColor: "#be853f",
@@ -248,12 +247,12 @@ const Orders = () => {
             style={{
               display: "table",
               tableLayout: "fixed",
-              width: "80%",
+              width: "95%",
               margin: "auto",
             }}
           >
             <DataGrid
-              rows={orders}
+              rows={finalOrders}
               columns={columns}
               initialState={{
                 pagination: {

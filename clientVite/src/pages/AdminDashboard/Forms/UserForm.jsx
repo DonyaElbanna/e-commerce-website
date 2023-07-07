@@ -66,6 +66,7 @@ const RegisterForm = () => {
       setErrors({});
     }
   };
+
   const register = async () => {
     const newUser = {
       email: form.email,
@@ -127,6 +128,7 @@ const RegisterForm = () => {
         });
     }
   };
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -253,34 +255,10 @@ const RegisterForm = () => {
                             {errors.confirmPassword}
                           </p>
                         </div>
-                        {/* <div className="flex items-start">
-                          <div className="flex items-center h-5">
-                            <input
-                              id="terms"
-                              aria-describedby="terms"
-                              type="checkbox"
-                              className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                              required=""
-                            />
-                          </div>
-                          <div className="ml-3 text-sm">
-                            <label
-                              htmlFor="terms"
-                              className="font-light text-gray-500 dark:text-gray-300"
-                            >
-                              I accept the{" "}
-                              <a
-                                className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                                href="#"
-                              >
-                                Terms and Conditions
-                              </a>
-                            </label>
-                          </div>
-                        </div>
                         <p className="text-red-500 text-xs italic">
                           {errors.globalErr}
-                        </p> */}
+                        </p>
+
                         <div>
                           <button
                             type="submit"
@@ -290,15 +268,6 @@ const RegisterForm = () => {
                             Submit
                           </button>
                         </div>
-                        {/* <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                          Already have an account?{" "}
-                          <Link
-                            onClick={() => dispatch(handleAuthType("login"))}
-                            className="font-semibold text-indigo-600 hover:text-indigo-500"
-                          >
-                            Login here
-                          </Link>
-                        </p> */}
                       </form>
                     </div>
                   </div>

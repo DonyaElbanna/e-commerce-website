@@ -17,9 +17,10 @@ import { useEffect, useState } from "react";
 import { handleAuthType, handleOpenAuthModal } from "./rtk/features/authSlice";
 import axios from "axios";
 import { AttractionGroupHandler } from "./rtk/features/attrSlice";
-import Orders from "./pages/AdminDashboard/OrdersTable";
+import Orders from "./pages/Orders";
 import AttractionForm from "./pages/AdminDashboard/FormAttraction/AttractionForm";
 import IconMap from "./components/Map/IconMap";
+
 function App() {
   const { auth } = useSelector((state) => state);
 
@@ -51,6 +52,7 @@ function App() {
         <Route path="/map" element={<IconMap />} />
 
         {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
+
         <Route path="/cities" element={<Cities />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/city/:id" element={<AttractionsList />} />

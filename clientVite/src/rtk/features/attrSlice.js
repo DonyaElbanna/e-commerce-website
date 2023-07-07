@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   Attractions: [],
   AttractionDetails: {},
+  attractionEdit: {},
 };
 
 export const attrSlice = createSlice({
@@ -17,9 +18,17 @@ export const attrSlice = createSlice({
         (a) => a._id === action.payload
       );
     },
+    attractionEditHandler: (state, action) => {
+      // console.log("attr edit action", action.payload);
+      state.attractionEdit = action.payload;
+    },
   },
 });
 
-export const { AttractionGroupHandler,AttractionDetailsHandlerById } = attrSlice.actions;
+export const {
+  AttractionGroupHandler,
+  AttractionDetailsHandlerById,
+  attractionEditHandler,
+} = attrSlice.actions;
 
 export default attrSlice.reducer;
