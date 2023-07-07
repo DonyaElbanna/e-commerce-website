@@ -2,12 +2,40 @@ import React, { useEffect, useRef, useState } from "react";
 import svgPanZoom from "svg-pan-zoom";
 import iconMapStyle from "./IconMap.module.css";
 
+// const containerElement = containerRef.current;
+// containerElement.style.userSelect = "none"; // Disable moving the SVG
 const IconMap = () => {
   const svgRef = useRef(null);
   const [country, setCountry] = useState("");
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const [zoom, setZoom] = useState(1);
 
-  // const containerElement = containerRef.current;
-  // containerElement.style.userSelect = "none"; // Disable moving the SVG
+  useEffect(() => {
+    const handleResize = () => {
+      setInnerWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  useEffect(() => {
+    const calculateZoom = () => {
+      const innerWidthMin = 570;
+      const innerWidthMax = 1824;
+      const zoomMin = 0.001;
+      const zoomMax = 1;
+      const normalizedInnerWidth =
+        (innerWidth - innerWidthMin) / (innerWidthMax - innerWidthMin);
+      const interpolatedZoom =
+        zoomMin + normalizedInnerWidth * (zoomMax - zoomMin);
+      setZoom(interpolatedZoom);
+    };
+    calculateZoom();
+  }, [innerWidth]);
+  console.log(zoom);
+
+  // console.log(zoom);
   useEffect(() => {
     const mapSvg = svgPanZoom(svgRef.current, {
       zoomEnabled: false,
@@ -15,11 +43,12 @@ const IconMap = () => {
       controlIconsEnabled: false,
       fit: true,
       center: true,
-      minZoom: 0.9,
       // controlIconsEnabled: false,
     });
 
-    mapSvg.zoom(0.25);
+    mapSvg.zoom(zoom);
+    // mapSvg.resize();
+
     const handleEnter = (event) => {
       const selectedPath = event.target;
       const paths = document.querySelectorAll("#available");
@@ -33,10 +62,8 @@ const IconMap = () => {
         }
       });
     };
-
     const handleLeave = (event) => {
       const paths = document.querySelectorAll("#available");
-
       paths.forEach((path) => {
         path.style.fill = "cornflowerblue";
         path.removeAttribute("filter");
@@ -53,9 +80,8 @@ const IconMap = () => {
         path.addEventListener("mouseleave", handleLeave);
       });
     };
-  }, []);
+  }, [innerWidth]);
   function handleEnter(event) {
-    // console.log(event.target.attributes[2].nodeValue);
     if (event.target.attributes[2].nodeValue != "gray") {
       setCountry(event.target.attributes[3].nodeValue);
     } else {
@@ -63,15 +89,15 @@ const IconMap = () => {
     }
   }
   return (
-    <div className="flex h-screen flex-col border-4 m-auto border-gray-950 w-7/12 mb-8">
+    <div
+      className="flex flex-col border-4 m-auto border-gray-950 mb-8"
+      style={{ position: "relative" }}
+    >
       <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
         {country}
       </h1>
-      {/* <div className=""></div> */}
-
       <svg
         className="mb-3"
-        // onMouseMove={handleMouseMove}
         id="svg-id"
         ref={svgRef}
         baseProfile="tiny"
