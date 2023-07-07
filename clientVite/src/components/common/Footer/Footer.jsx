@@ -21,7 +21,9 @@ const Footer = () => {
               <Link to={`/contact`} className="footerLink text-sm md:text-xl">
                 Contact
               </Link>
-              <Link className="footerLink text-sm md:text-xl">Places</Link>
+              <Link to={`/map`} className="footerLink text-sm md:text-xl">
+                Places
+              </Link>
               <Link className="footerLink text-sm md:text-xl">Category</Link>
             </div>
 
