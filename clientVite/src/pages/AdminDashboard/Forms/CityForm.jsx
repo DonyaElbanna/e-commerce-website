@@ -62,16 +62,16 @@ const CityForm = () => {
     } else {
       addCategory();
       setErrors({});
-      setOpen(false);
     }
   };
 
+  // sendinf data to server
   const addCategory = async () => {
     const newCity = {
       city: form.city,
       image: form.image,
     };
-    console.log(newCity);
+    // console.log(newCity);
 
     if (!cities.cityEdit) {
       await axios
@@ -89,7 +89,6 @@ const CityForm = () => {
               "something went wrong, please check your connection!";
           }
           setErrors(errorData);
-          setOpen(true);
         });
     } else {
       await axios
@@ -108,7 +107,6 @@ const CityForm = () => {
               "something went wrong, please check your connection!";
           }
           setErrors(errorData);
-          setOpen(true);
         });
     }
   };

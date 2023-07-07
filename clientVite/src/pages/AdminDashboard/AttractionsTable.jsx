@@ -16,11 +16,7 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import { Link, useNavigate } from "react-router-dom";
-// import {
-//   handleAuthType,
-//   handleToggleAuthModal,
-// } from "../../rtk/features/authSlice";
+import { useNavigate } from "react-router-dom";
 import { attractionEditHandler } from "../../rtk/features/attrSlice";
 
 // modal styles
@@ -210,10 +206,6 @@ const Attractions = () => {
     },
   ];
 
-  // const handleButtonClick = (x) => {
-  //   console.log(x);
-  // };
-
   const openAddAttrForm = () => {
     dispatch(attractionEditHandler());
     navigate("/form");
@@ -232,7 +224,6 @@ const Attractions = () => {
       ) : (
         <>
           <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
-            {/* <Link to="/form"> */}
             <Button
               style={{
                 color: "#be853f",
@@ -244,7 +235,6 @@ const Attractions = () => {
             >
               Add a new record
             </Button>
-            {/* </Link> */}
           </Box>
           <div
             style={{

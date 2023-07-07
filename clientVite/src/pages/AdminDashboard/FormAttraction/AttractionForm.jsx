@@ -7,14 +7,11 @@ import Joi from "joi";
 
 const AttractionForm = () => {
   const { cities, categories, attractions } = useSelector((state) => state);
-  // console.log(attractions, attractions.attractionEdit);
+
+  // edited attr obj
   const editedAttr = attractions.Attractions.filter(
     (attr) => attr._id == attractions.attractionEdit
   )[0];
-  // console.log(
-  //   cities.cities.filter((city) => city._id == editedAttr.category)[0].city
-  // );
-  console.log(attractions.Attractions, editedAttr);
 
   const [form, setForm] = useState({
     name: editedAttr ? editedAttr.name : "",
@@ -45,6 +42,7 @@ const AttractionForm = () => {
 
   const navigate = useNavigate();
 
+  // validating inputs
   const schema = Joi.object({
     name: Joi.string().required().min(3),
     duration: Joi.string().required(),
@@ -88,6 +86,7 @@ const AttractionForm = () => {
     }
   };
 
+  // sending data to server
   const addAttraction = async () => {
     // const errorData = {};
 
@@ -95,10 +94,7 @@ const AttractionForm = () => {
       // errorData.imageError = "at least 1 image is required";
       // setErrors(errorData);
       setImageErr("at least 1 image is required");
-      // console.log("empty images");
-      console.log("1");
     } else {
-      console.log("2");
       const newAttr = {
         name: form.name,
         duration: form.duration,
@@ -123,7 +119,6 @@ const AttractionForm = () => {
         ],
         Images: Object.values(imagesArr),
       };
-      // console.log(newAttr);
       if (!editedAttr) {
         console.log("3");
         await axios
@@ -152,20 +147,19 @@ const AttractionForm = () => {
             navigate("/admin");
           })
           .catch((error) => {
-            // setOpen(true);
             const errorData = {};
             console.log(error.response);
             if (!error.response) {
               errorData.globalErr =
                 "something went wrong, please check your connection!";
             }
-
             setErrors(errorData);
           });
       }
     }
   };
 
+  // adding img inputs
   const addInput = (e) => {
     const inputArr = [...imageInputs];
 
@@ -183,6 +177,7 @@ const AttractionForm = () => {
     }
   };
 
+  // validating img inputs and pushing them into an array
   const handleChangeImgs = (e) => {
     setErrors({});
     // console.log(e.target.getAttribute("id"));
@@ -207,6 +202,7 @@ const AttractionForm = () => {
           id="form"
         >
           <article className="grid grid-rows-12 grid-flow-col gap-5 lg:gap-10 text-center py-6">
+            {/* name */}
             <div>
               <label htmlFor="name" className="text-[#be853f] font-semibold">
                 Name
@@ -223,6 +219,7 @@ const AttractionForm = () => {
               />
               <p className="text-red-500 text-xs italic">{errors.name}</p>
             </div>
+            {/* duration */}
             <div>
               <label
                 htmlFor="duration"
@@ -243,7 +240,7 @@ const AttractionForm = () => {
               <p className="text-red-500 text-xs italic">{errors.duration}</p>
             </div>
           </article>
-
+          {/* desc */}
           <div className="my-5">
             <label
               htmlFor="description"
