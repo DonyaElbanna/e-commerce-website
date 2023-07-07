@@ -17,14 +17,15 @@ const AttractionForm = () => {
     childAge: "",
     ChildPrice: "",
     AdultPrice: "",
-    image: "",
   });
 
-  const [imageInput, setImageInput] = useState([]);
   const { cities, categories } = useSelector((state) => state);
-  // console.log(cities.cities, categories.categories);
-
+  const [imageInputs, setImageInputs] = useState([true]);
+  const [imagesArr, setImagesArr] = useState({});
+  const [imgErr, setImageErr] = useState("");
   const [errors, setErrors] = useState({});
+
+  const navigate = useNavigate();
 
   const schema = Joi.object({
     name: Joi.string().required().min(3),
@@ -37,14 +38,11 @@ const AttractionForm = () => {
     childAge: Joi.number().required().min(0),
     ChildPrice: Joi.number().required().min(50),
     AdultPrice: Joi.number().required().min(50),
-    image: Joi.string()
-      .required()
-      .pattern(/(http(s?):)|([/|.|\w|\s])*\.(?:jpe?g|png)/),
   });
 
   const handleChange = (e) => {
     setErrors({});
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -60,6 +58,9 @@ const AttractionForm = () => {
         let message = item.message;
         if (message === `"${key}" is not allowed to be empty`)
           message = `${key} is required `;
+        else if (key == "image") {
+          message = `${key}'s pattern is invalid `;
+        }
         errorData[key] = message;
       }
       setErrors(errorData);
@@ -68,61 +69,93 @@ const AttractionForm = () => {
       setErrors({});
     }
   };
+  console.log(errors);
 
   const addAttraction = async () => {
-    const newAttr = {
-      name: form.name,
-      duration: form.duration,
-      description: form.description,
-      category: form.category,
-      subcategory: form.subcategory,
-      status: form.status,
-      childAvailable: form.childAvailable == "notAvailable" ? false : true,
-      childAge: form.childAge,
-      ChildPrice: Number(form.ChildPrice),
-      AdultPrice: Number(form.AdultPrice),
-      included: [
-        "Air-Conditioned Vehicle for transportation",
-        "Professional Tour Leader & Tour Guide",
-        "Lunch meal will be provided at a local restaurant",
-        "All Fees and Taxes",
-      ],
-      excluded: [
-        "Any personal expenses or extra food and drinks during the trip",
-        "Driver & Guide tipping - Not mandatory but highly appreciated",
-        "Any other things not mentioned in the inclusions",
-      ],
-    };
-    console.log(newAttr);
-    // if (!auth.editedUser) {
-    await axios
-      .post("http://localhost:9999/attraction", newAttr)
-      .then((response) => {
-        console.log(response.data);
-        // dispatch(handleUserInfo(response.data.user));
-        // dispatch(handleIsLoggedIntoggle());
-        // setOpen(false);
-      })
-      .catch((error) => {
-        // setOpen(true);
-        const errorData = {};
-        console.log(error.response);
-        if (!error.response) {
-          errorData.globalErr =
-            "something went wrong, please check your connection!";
-        }
-        // else if (
-        //   error.response.data.message === "This email is already registered"
-        // ) {
-        //   errorData.email = error.response.data.message;
-        // } else {
-        //   errorData.userName =
-        //     "this userName already exist , please try another one";
-        // }
+    // const errorData = {};
+    if (Object.values(imagesArr) == 0) {
+      // errorData.imageError = "at least 1 image is required";
+      // setErrors(errorData);
+      setImageErr("at least 1 image is required");
+      // console.log("empty images");
+    } 
+    else {
+      const newAttr = {
+        name: form.name,
+        duration: form.duration,
+        description: form.description,
+        category: form.category,
+        subcategory: form.subcategory,
+        status: form.status,
+        childAvailable: form.childAvailable == "notAvailable" ? false : true,
+        childAge: form.childAge,
+        ChildPrice: Number(form.ChildPrice),
+        AdultPrice: Number(form.AdultPrice),
+        included: [
+          "Air-Conditioned Vehicle for transportation",
+          "Professional Tour Leader & Tour Guide",
+          "Lunch meal will be provided at a local restaurant",
+          "All Fees and Taxes",
+        ],
+        excluded: [
+          "Any personal expenses or extra food and drinks during the trip",
+          "Driver & Guide tipping - Not mandatory but highly appreciated",
+          "Any other things not mentioned in the inclusions",
+        ],
+        Images: Object.values(imagesArr),
+      };
+      console.log(newAttr);
+      await axios
+        .post("http://localhost:9999/attraction", newAttr)
+        .then((response) => {
+          console.log(response.data);
+          navigate("/admin");
+        })
+        .catch((error) => {
+          // setOpen(true);
+          const errorData = {};
+          console.log(error.response);
+          if (!error.response) {
+            errorData.globalErr =
+              "something went wrong, please check your connection!";
+          }
 
-        setErrors(errorData);
-      });
-    // }
+          setErrors(errorData);
+        });
+    }
+  };
+
+  const addInput = (e) => {
+    const inputArr = [...imageInputs];
+
+    let regex = /(http(s?):)|([/|.|w|s])*.(?:jpe?g|png)/;
+    const imgValue =
+      e.target.parentElement.previousElementSibling.lastChild.value;
+    const errorData = {};
+
+    if (imgValue.match(regex)) {
+      inputArr.push(true);
+      setImageInputs(inputArr);
+    } else {
+      errorData.imageError = "pattern not match";
+      setErrors(errorData);
+    }
+  };
+
+  const handleChangeImgs = (e) => {
+    setErrors({});
+    // console.log(e.target.getAttribute("id"));
+    let regex = /(http(s?):)|([/|.|w|s])*.(?:jpe?g|png)/;
+    if (e.target.value.match(regex)) {
+      const obj = { ...imagesArr };
+
+      setImagesArr({ ...obj, [e.target.getAttribute("id")]: e.target.value });
+      setImageErr("");
+    } else {
+      const errorData = {};
+      errorData.imageError = "pattern doesn't match";
+      setErrors(errorData);
+    }
   };
 
   return (
@@ -142,7 +175,7 @@ const AttractionForm = () => {
                 name="name"
                 id="name"
                 className="block py-1 w-full  text-black border-x-neutral-500  bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
-                placeholder=" "
+                placeholder="Tour name"
                 required
                 value={form.name}
                 onChange={(value) => handleChange(value)}
@@ -161,7 +194,7 @@ const AttractionForm = () => {
                 name="duration"
                 id="duration"
                 className="block py-1 w-full  text-black border-x-neutral-500  bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
-                placeholder=" "
+                placeholder="Tour duration in days or hours"
                 required
                 value={form.duration}
                 onChange={(value) => handleChange(value)}
@@ -180,7 +213,7 @@ const AttractionForm = () => {
             <textarea
               name="description"
               id="description"
-              placeholder="Enter the tour's description"
+              placeholder="Enter tour's description"
               className="textarea rounded-none resize-none overflow-hidden w-full  text-black border-x-neutral-500  bg-transparent border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
               value={form.userName}
               onChange={(value) => handleChange(value)}
@@ -337,9 +370,6 @@ const AttractionForm = () => {
               </p>
             </div>
           </article>
-          {/* <article>
-
-          </article> */}
           {/* child age */}
           <article className="grid grid-rows-12 grid-flow-col gap-5 lg:gap-10 text-center py-6">
             <div>
@@ -402,25 +432,38 @@ const AttractionForm = () => {
             </div>
           </article>
           <article className="grid grid-rows-12 grid-flow-col gap-5 lg:gap-10 py-6">
-
             <div>
               <label htmlFor="image" className="text-[#be853f] font-semibold">
                 Image
               </label>
-              <input
-                type="text"
-                name="image"
-                id="image"
-                className="block py-1 w-2/3  text-black border-x-neutral-500 mt-3 bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
-                placeholder="http://url.jpg"
-                required
-                value={form.image}
-                onChange={(value) => handleChange(value)}
-              />
-              <p className="text-red-500 text-xs italic">{errors.image}</p>
+              {imageInputs.map((img, i) => (
+                <input
+                  key={i}
+                  type="text"
+                  name="image"
+                  id={`image${i}`}
+                  className="block py-1 w-2/3  text-black border-x-neutral-500 mt-3 bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
+                  placeholder="http://url.jpg"
+                  required
+                  onChange={(e) => handleChangeImgs(e)}
+                />
+              ))}
+            </div>
+            <div>
+              <button
+                type="button"
+                className="text-white bg-gray-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+                onClick={(e) => addInput(e)}
+              >
+                +
+              </button>
+              <p className="text-red-500 text-xs italic">
+                {errors.imageError || imgErr}
+              </p>
             </div>
           </article>
           <p className="text-red-500 text-xs italic">{errors.globalErr}</p>
+
           <div className="text-center my-16">
             <button
               type="submit"
@@ -431,6 +474,16 @@ const AttractionForm = () => {
             </button>
           </div>
         </form>
+        {/* <div>
+          {imagesArr.length !== 0
+            ? imagesArr.map((img, i) => {
+                // <img src={img} key={i} className="w-50" />;
+                <p key={i} className="text-slate-800">
+                  {img}
+                </p>;
+              })
+            : ""}
+        </div> */}
       </section>
     </>
   );

@@ -84,6 +84,10 @@ const CatForm = () => {
         .catch((error) => {
           console.log(error);
           const errorData = {};
+          if (!error.response) {
+            errorData.globalErr =
+              "something went wrong, please check your connection!";
+          }
           setErrors(errorData);
           setOpen(true);
         });
@@ -101,6 +105,10 @@ const CatForm = () => {
         .catch((error) => {
           console.log(error);
           const errorData = {};
+          if (!error.response) {
+            errorData.globalErr =
+              "something went wrong, please check your connection!";
+          }
           setErrors(errorData);
           setOpen(true);
         });
@@ -188,6 +196,9 @@ const CatForm = () => {
                             {errors.image}
                           </p>
                         </div>
+                        <p className="text-red-500 text-xs italic">
+                          {errors.globalErr}
+                        </p>
 
                         <div>
                           <button

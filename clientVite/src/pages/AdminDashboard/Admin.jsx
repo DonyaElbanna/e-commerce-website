@@ -93,15 +93,15 @@ export default function VerticalTabs() {
         }}
       >
         <Tab
-          icon={<PersonPinIcon />}
-          iconPosition="start"
-          label="Users"
-          {...a11yProps(0)}
-        />
-        <Tab
           icon={<AttractionsOutlinedIcon />}
           iconPosition="start"
           label="Attractions"
+          {...a11yProps(0)}
+        />
+        <Tab
+          icon={<PersonPinIcon />}
+          iconPosition="start"
+          label="Users"
           {...a11yProps(1)}
         />
         <Tab
@@ -130,10 +130,10 @@ export default function VerticalTabs() {
         />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <Users />
+        <Attractions />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Attractions />
+        <Users />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <CitiesTable />

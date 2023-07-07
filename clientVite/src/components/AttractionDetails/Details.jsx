@@ -76,7 +76,7 @@ const Details = ({ attrDetails }) => {
             Tour Details:
           </p>
           <ul className="list-disc p-5 mx-3">
-            <li>Duration: About 8 Hours</li>
+            <li>Duration: About {attrDetails.duration}</li>
             <li>Type: Private Tours</li>
             <li>Run: Everyday</li>
             <li>Pick-up Time: From 07:30 to 08:00 am</li>
