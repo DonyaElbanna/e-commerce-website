@@ -8,28 +8,32 @@ import {
   handleToggleAuthModal,
 } from "../../../rtk/features/authSlice";
 
-
 const AttractionCard = ({ attr }) => {
-  const { isLoggedIn} = useSelector((state) => state.auth);
-  const { auth} = useSelector((state) => state);
-  const baseURL = `http://localhost:9999/user/${auth.userInfo._id}`;
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { auth } = useSelector((state) => state);
+  console.log(auth.userInfo);
+  // const baseURL = `http://localhost:9999/user/${auth.userInfo._id}`;
   const dispatch = useDispatch();
 
   const [isFilled, setIsFilled] = useState(false);
   const [wishlistItems, setWishlistItems] = useState([]);
 
   useEffect(() => {
-    const getWishlistItems = async () => {
-      const { data } = await axios.get(baseURL);
-      setWishlistItems(data.wishlist);
-    };
-    getWishlistItems();
+    if (auth.userInfo._id) {
+      const getWishlistItems = async () => {
+        const { data } = await axios.get(
+          `http://localhost:9999/user/${auth.userInfo._id}`
+        );
+        setWishlistItems(data.wishlist);
+      };
+      getWishlistItems();
+    }
   }, []);
 
   const handleAddToWishlist = async (event) => {
     event.preventDefault();
     // optimistic updates
-    console.log("wish");
+    // console.log("wish");
     if (wishlistItems.some((item) => item._id === attr._id)) {
       setIsFilled(false);
       const newWishlist = wishlistItems.filter((item) => item._id !== attr._id);
@@ -38,7 +42,13 @@ const AttractionCard = ({ attr }) => {
       setIsFilled(true);
     }
     try {
-      await axios.post(baseURL, { id: attr._id });
+      console.log(auth.userInfo._id, attr._id);
+      await axios
+        .post(`http://localhost:9999/user/${auth.userInfo._id}`, {
+          id: auth.userInfo._id,
+          Attraction: attr._id,
+        })
+        .then((response) => console.log(response));
     } catch (err) {
       console.log(err);
     }

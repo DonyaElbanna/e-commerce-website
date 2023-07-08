@@ -34,7 +34,6 @@ export const ordersSlice = createSlice({
   },
 });
 
-export const { ordersHandler, addOrder, removeOrder} =
-  ordersSlice.actions;
+export const { ordersHandler, addOrder, removeOrder } = ordersSlice.actions;
 
 export default ordersSlice.reducer;

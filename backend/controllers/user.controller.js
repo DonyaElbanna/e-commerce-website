@@ -7,7 +7,7 @@ const {
   addRemoveWishlist,
   block,
   changeRole,
-  getOrders
+  getOrders,
 } = require("../services/user.service");
 const { signin } = require("./auth.controller");
 const authService = require("../services/auth.service");
@@ -72,10 +72,12 @@ const getAllUsers = async (req, res, next) => {
 };
 
 const toggleWishlist = async (req, res, next) => {
-  const { id } = req.params;
-  const attractionID = req.body.id;
+  // const { id } = req.params;
+  const id = res.locals.decodedToken._id;
+  // console.log(req.body)
+  const Attraction = req.body.Attraction;
   try {
-    const updatedUser = await addRemoveWishlist(id, attractionID, next);
+    const updatedUser = await addRemoveWishlist(id, Attraction, next);
     if (!updatedUser) {
       return next(new AppError(FAILURE, 404));
     }
@@ -108,7 +110,9 @@ const changeUserRole = async (req, res, next) => {
 };
 
 const getUserOrders = async (req, res, next) => {
-  const { id } = req.params;
+  // const { id } = req.params;
+  const id = res.locals.decodedToken._id;
+  console.log(id);
   try {
     const user = await getOrders(id, next);
     res.status(200).json(user);
@@ -126,5 +130,5 @@ module.exports = {
   toggleWishlist,
   toggleBlock,
   changeUserRole,
-  getUserOrders
+  getUserOrders,
 };

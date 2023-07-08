@@ -14,8 +14,11 @@ exports.extractJwtFromCookie = (req, res, next) => {
   const path = req.path.split("/").at(-1);
   const token =
     path === "refresh" || path === "signout"
-      ? req.signedCookies?.persist
-      : req.signedCookies?.auth;
+      // ? req.signedCookies?.persist
+      // : req.signedCookies?.auth;
+      ? req.cookies?.persist
+      : req.cookies?.auth;
+  // console.log('path', req.cookies.auth);
   if (token) {
     jwt.verify(token, config.server.token.secret, (error, decoded) => {
       if (error) {
@@ -25,12 +28,14 @@ exports.extractJwtFromCookie = (req, res, next) => {
       } else {
         res.locals.encodedToken = token;
         res.locals.decodedToken = decoded;
+        // console.log("decoded", decoded._id);
         next();
       }
     });
   } else {
     const err = new Error(UNAUTHORIZED_ACCESS);
     err.status = 401;
+    console.log("token err", err);
     next(err);
   }
 };

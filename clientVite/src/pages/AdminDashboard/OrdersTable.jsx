@@ -84,18 +84,14 @@ const Orders = () => {
 
   const deleteOrder = (id) => {
     console.log(id);
-    // dispatch(removeOrder(id));
-    // handleClose();
+    dispatch(removeOrder(id));
+    handleClose();
 
-    // try {
-    //   axios.delete(`http://localhost:9999/order/${id}`);
-    // } catch (err) {
-    //   console.log(err);
-    // }
-  };
-
-  const handleButtonClick = (x) => {
-    console.log(x);
+    try {
+      axios.delete(`http://localhost:9999/order/${id}`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // rows
