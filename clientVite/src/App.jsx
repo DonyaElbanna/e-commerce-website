@@ -22,7 +22,7 @@ function App() {
   return (
     <>
       <Navbar1 />
-      <Welcome />
+      
       <Routes className="bg-black">
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginForm />} />
