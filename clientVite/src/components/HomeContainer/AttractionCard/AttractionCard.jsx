@@ -11,8 +11,7 @@ import {
 const AttractionCard = ({ attr }) => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { auth } = useSelector((state) => state);
-  // console.log(auth.userInfo);
-  // const baseURL = `http://localhost:9999/user/${auth.userInfo._id}`;
+
   const dispatch = useDispatch();
 
   const [isFilled, setIsFilled] = useState(false);
@@ -32,8 +31,7 @@ const AttractionCard = ({ attr }) => {
 
   const handleAddToWishlist = async (event) => {
     event.preventDefault();
-    // optimistic updates
-    // console.log("wish");
+
     if (wishlistItems.some((item) => item._id === attr._id)) {
       setIsFilled(false);
       const newWishlist = wishlistItems.filter((item) => item._id !== attr._id);
@@ -42,13 +40,11 @@ const AttractionCard = ({ attr }) => {
       setIsFilled(true);
     }
     try {
-      console.log(auth.userInfo._id, attr._id);
       await axios
         .post(`http://localhost:9999/user/${auth.userInfo._id}`, {
           id: auth.userInfo._id,
           Attraction: attr._id,
         })
-        .then((response) => console.log(response));
     } catch (err) {
       console.log(err);
     }
@@ -116,10 +112,10 @@ const AttractionCard = ({ attr }) => {
           <h2 className="card-title">{attr?.name}</h2>
           <div className="flex justify-between">
             <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 bg-green-200 text-[#be853f] rounded-full w-min">
-              {attr.category[0].city}
+              {attr.category.city}
             </span>
             <span className="mx-1 text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 bg-blue-200 text-[#be853f] rounded-full w-min">
-              {attr.subcategory[0].type}
+              {attr.subcategory.type}
             </span>
           </div>
           <span className="text-lg text-gray-900 dark:text-white"></span>

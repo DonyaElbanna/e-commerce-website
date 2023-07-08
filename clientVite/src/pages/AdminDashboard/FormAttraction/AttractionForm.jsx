@@ -7,7 +7,7 @@ import Joi from "joi";
 
 const AttractionForm = () => {
   const { cities, categories, attractions } = useSelector((state) => state);
-  console.log(cities.cities)
+  // console.log(cities.cities)
   // edited attr obj
   const editedAttr = attractions.Attractions.filter(
     (attr) => attr._id == attractions.attractionEdit
@@ -61,7 +61,7 @@ const AttractionForm = () => {
     // console.log(e.target.value);
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-console.log(imagesArr)
+// console.log(imagesArr)
   const handleSubmit = (e) => {
     e.preventDefault();
     const err = schema.validate(form);

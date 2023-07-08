@@ -1,29 +1,30 @@
 import React, { useState } from "react";
-import Categories from "../Categories/Categories";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import Categories from "../Categories/Categories";
 import AttractionCard from "../HomeContainer/AttractionCard/AttractionCard";
 import gif from "../../assets/gih.gif";
-import { useSelector } from "react-redux";
 
 const AttractionsList = () => {
   let { id } = useParams();
 
   const { cities, categories, attractions } = useSelector((state) => state);
+  // console.log(cities.cities, categories.categories, attractions.Attractions);
 
   const [filteredAttrs, setFilteredAttrs] = useState([]);
 
   const city = cities.cities.find((city) => city._id == id);
 
   const cityAttrs = attractions.Attractions.filter(
-    (attr) => attr.category == city._id
+    (attr) => attr.category._id == city._id
   );
 
   const cityCats = categories.categories.filter((category) =>
-    cityAttrs.some((attraction) => attraction.subcategory === category._id)
+    cityAttrs.some((attraction) => attraction.subcategory._id === category._id)
   );
 
   const handleFilter = (catID) => {
-    const filteredattrs = cityAttrs.filter((attr) => attr.subcategory == catID);
+    const filteredattrs = cityAttrs.filter((attr) => attr.subcategory._id == catID);
     setFilteredAttrs(filteredattrs);
   };
 

@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, useNavigate,Navigate} from "react-router-dom";
+import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import AttractionDetails from "./components/AttractionDetails/AttractionDetails";
 import AttractionsList from "./components/AttractionsList/AttractionsList";
@@ -20,6 +20,8 @@ import { AttractionGroupHandler } from "./rtk/features/attrSlice";
 import Orders from "./pages/Orders";
 import AttractionForm from "./pages/AdminDashboard/FormAttraction/AttractionForm";
 import IconMap from "./components/Map/IconMap";
+import { citiesHandler } from "./rtk/features/citiesSlice";
+import { categoriesHandler } from "./rtk/features/categoriesSlice";
 
 function App() {
   const { auth } = useSelector((state) => state);
@@ -27,16 +29,35 @@ function App() {
   const dispatch = useDispatch();
   const getAllAttract = async () => {
     try {
-      const { data } = await axios.get("http://localhost:9999/attraction/all");
-      dispatch(AttractionGroupHandler(data.Attractions));
+      const { data } = await axios.get("http://localhost:9999/attraction");
+      dispatch(AttractionGroupHandler(data.AllAttraction));
     } catch (error) {
       console.log(error);
     }
   };
+  const getAllCities = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:9999/category");
+      dispatch(citiesHandler(data.categories));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getAllCats = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:9999/subcat");
+      dispatch(categoriesHandler(data.subcategories));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
   useEffect(() => {
     dispatch(handleAuthType("login"));
     dispatch(handleOpenAuthModal(false));
     getAllAttract();
+    getAllCities();
+    getAllCats();
   }, []);
   return (
     <>
@@ -54,8 +75,26 @@ function App() {
         {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
 
         <Route path="/cities" element={<Cities />} />
-        <Route path="/admin" element={auth.userInfo.role === "admin" ? <Admin /> : <Navigate to="/" replace />} />
-        <Route path="/form" element={auth.userInfo.role === "admin" ? <AttractionForm /> : <Navigate to="/" replace />} />
+        <Route
+          path="/admin"
+          element={
+            auth.userInfo.role === "admin" ? (
+              <Admin />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        />
+        <Route
+          path="/form"
+          element={
+            auth.userInfo.role === "admin" ? (
+              <AttractionForm />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        />
         <Route path="/city/:id" element={<AttractionsList />} />
         <Route path="/city/:id/details" element={<AttractionDetails />} />
         <Route path="/*" element={<Error />} />
