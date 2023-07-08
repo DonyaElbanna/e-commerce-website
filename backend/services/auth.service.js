@@ -71,12 +71,11 @@ const sendVerification = async (data, type) => {
 };
 
 const generateAccessToken = async (user) => {
-  console.log("user");
-  console.log(user);
   try {
     return jwt.sign(
       {
         _id: user._id,
+        role:user.role
       },
       config.server.token.secret,
       {
@@ -124,9 +123,6 @@ const resetPassword = async (payload) => {
       { _id: payload.userId },
       { password: payload.body.password }
     );
-    console.log("__________user_____________");
-    console.log(user);
-    console.log("__________user_____________");
     if (!user) {
       const err = new AppError(INVALID_CREDENTIALS, 409);
       throw err;
@@ -136,7 +132,34 @@ const resetPassword = async (payload) => {
     throw error;
   }
 };
-
+const generateRefreshToken = async (user) => {
+  try {
+    const token = jwt.sign(
+      {
+        _id: user._id,
+        role:user.role
+      },
+      config.server.token.secret,
+      {
+        issuer: config.server.token.issuer,
+        algorithm: "HS256",
+        expiresIn: "1y",
+      }
+    );
+    const isRefreshTokenExist = await Token.exists({
+      userId: user._id,
+    });
+    if (!isRefreshTokenExist) {
+      const refreshToken = new Token();
+      refreshToken.userId = user._id;
+      refreshToken.token = token;
+      await refreshToken.save();
+    }
+    return token;
+  } catch (error) {
+    await ErrorHandler (error);
+  }
+};
 module.exports = {
   generateAccessToken,
   generateVerificationToken,
@@ -144,4 +167,5 @@ module.exports = {
   signin,
   sendVerification,
   resetPassword,
+  generateRefreshToken
 };

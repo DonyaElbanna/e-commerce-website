@@ -9,7 +9,7 @@ footer {
   background-color: rgb(65 65 65 / 92%);
 }
 
-svg:hover {
+#footerSvg:hover {
   animation: dance 1s infinite linear;
 }
 

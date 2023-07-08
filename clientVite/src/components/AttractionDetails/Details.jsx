@@ -11,8 +11,10 @@ const Details = ({ attrDetails }) => {
   const rating =
     attrDetails.reviews && attrDetails.reviews.length > 0
       ? attrDetails.reviews[0].avgRating
-      : attrDetails.averageRating
-      ? attrDetails.averageRating
+      : 0;
+  const reviewCount =
+    attrDetails.reviews && attrDetails.reviews.length > 0
+      ? attrDetails.reviews[0].count
       : 0;
   const starClassNames = [];
   (function () {
@@ -59,6 +61,9 @@ const Details = ({ attrDetails }) => {
               </svg>
             </button>
           ))}
+          <p className="text-gray-600 ml-5">{Number(rating).toFixed(2)}</p>
+          <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
+          <p className="text-gray-600">{reviewCount} reviews</p>
         </div>
         <div>
           <p>
@@ -76,7 +81,7 @@ const Details = ({ attrDetails }) => {
             Tour Details:
           </p>
           <ul className="list-disc p-5 mx-3">
-            <li>Duration: About 8 Hours</li>
+            <li>Duration: About {attrDetails.duration}</li>
             <li>Type: Private Tours</li>
             <li>Run: Everyday</li>
             <li>Pick-up Time: From 07:30 to 08:00 am</li>

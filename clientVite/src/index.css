@@ -30,11 +30,3 @@
     margin: 0;
   }
 }
-@layer utilities {
-  .scrollbar::-webkit-scrollbar-track {
-    border-radius: 100vh;
-  }
-  .scrollbar::-webkit-scrollbar-thumb {
-    border-radius: 100vh;
-  }
-}

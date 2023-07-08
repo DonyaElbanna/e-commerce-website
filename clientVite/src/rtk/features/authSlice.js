@@ -31,7 +31,6 @@ const initialState = {
   },
   error: "",
   loading: false,
-  editedUser: {},
 };
 
 export const authSlice = createSlice({
@@ -82,10 +81,7 @@ export const authSlice = createSlice({
     },
     handleResetPasswordInfo: (state, action) => {
       state.resetPasswordInfo = action.payload;
-    },
-    handleEditedUser: (state, action) => {
-      state.editedUser = action.payload;
-    },
+    }
   },
 });
 
@@ -105,7 +101,6 @@ export const {
   handleForgotPasswordEmail,
   handleResetPasswordInfo,
   handleToggleAuthModal,
-  handleEditedUser
 } = authSlice.actions;
 
 export default authSlice.reducer;

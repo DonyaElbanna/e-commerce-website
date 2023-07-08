@@ -7,18 +7,18 @@ import {
   handleAuthType,
   handleOpenAuthModal,
 } from "../../../rtk/features/authSlice";
+import { addUser, editUser } from "../../../rtk/features/usersSlice";
 
 const RegisterForm = () => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
 
-  const { auth } = useSelector((state) => state);
-  // console.log(auth.editedUser);
-
+  const { users } = useSelector((state) => state);
   const dispatch = useDispatch();
+
   const [form, setForm] = useState({
-    userName: auth.editedUser?.username || "",
-    email: auth.editedUser?.email || "",
+    userName: users.userEdit?.username || "",
+    email: users.userEdit?.email || "",
     password: "",
     confirmPassword: "",
   });
@@ -66,23 +66,21 @@ const RegisterForm = () => {
       setErrors({});
     }
   };
+
   const register = async () => {
     const newUser = {
       email: form.email,
       username: form.userName,
       password: form.password,
     };
-    console.log(newUser);
-    if (!auth.editedUser) {
+    if (!users.userEdit) {
       await axios
         .post("http://localhost:9999/user", newUser)
         .then((response) => {
-          // dispatch(handleUserInfo(response.data.user));
-          // dispatch(handleIsLoggedIntoggle());
+          dispatch(addUser(response.data.user));
           setOpen(false);
         })
         .catch((error) => {
-          setOpen(true);
           const errorData = {};
           console.log(error.response);
           if (!error.response) {
@@ -94,21 +92,18 @@ const RegisterForm = () => {
             errorData.email = error.response.data.message;
           } else {
             errorData.userName =
-              "this userName already exist , please try another one";
+              "this username already exist, please try another one";
           }
-
           setErrors(errorData);
         });
     } else {
       await axios
-        .put(`http://localhost:9999/user/${auth.editedUser._id}`, newUser)
+        .put(`http://localhost:9999/user/${users.userEdit._id}`, newUser)
         .then((response) => {
-          // dispatch(handleUserInfo(response.data.user));
-          // dispatch(handleIsLoggedIntoggle());
+          dispatch(editUser(response.data.user));
           setOpen(false);
         })
         .catch((error) => {
-          setOpen(true);
           const errorData = {};
           console.log(error.response);
           if (!error.response) {
@@ -127,6 +122,7 @@ const RegisterForm = () => {
         });
     }
   };
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -179,7 +175,7 @@ const RegisterForm = () => {
                             id="userName"
                             className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
                             placeholder={
-                              auth.editedUser?.username || "John Elraqi"
+                              users.userEdit?.username || "John Elraqi"
                             }
                             required=""
                             value={form.userName}
@@ -202,7 +198,7 @@ const RegisterForm = () => {
                             id="email"
                             className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
                             placeholder={
-                              auth.editedUser?.email || "name@email.com"
+                              users.userEdit?.email || "name@email.com"
                             }
                             required=""
                             value={form.email}
@@ -253,34 +249,10 @@ const RegisterForm = () => {
                             {errors.confirmPassword}
                           </p>
                         </div>
-                        {/* <div className="flex items-start">
-                          <div className="flex items-center h-5">
-                            <input
-                              id="terms"
-                              aria-describedby="terms"
-                              type="checkbox"
-                              className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                              required=""
-                            />
-                          </div>
-                          <div className="ml-3 text-sm">
-                            <label
-                              htmlFor="terms"
-                              className="font-light text-gray-500 dark:text-gray-300"
-                            >
-                              I accept the{" "}
-                              <a
-                                className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                                href="#"
-                              >
-                                Terms and Conditions
-                              </a>
-                            </label>
-                          </div>
-                        </div>
                         <p className="text-red-500 text-xs italic">
                           {errors.globalErr}
-                        </p> */}
+                        </p>
+
                         <div>
                           <button
                             type="submit"
@@ -290,15 +262,6 @@ const RegisterForm = () => {
                             Submit
                           </button>
                         </div>
-                        {/* <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                          Already have an account?{" "}
-                          <Link
-                            onClick={() => dispatch(handleAuthType("login"))}
-                            className="font-semibold text-indigo-600 hover:text-indigo-500"
-                          >
-                            Login here
-                          </Link>
-                        </p> */}
                       </form>
                     </div>
                   </div>

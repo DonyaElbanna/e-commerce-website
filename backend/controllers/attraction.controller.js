@@ -7,7 +7,7 @@ const {
   SetImages,
   getAttractByCategory,
   getAttractBySubcategory,
-  getAllAttractions
+  getAllAttractions,
 } = require("../services/attraction.service");
 const cloudinary = require("../utils/cloudinary.util");
 const AppError = require("../utils/AppError.util");
@@ -18,9 +18,11 @@ const addAttraction = async (req, res, next) => {
 
   const urls = [];
   const files = req.body.Images;
-  for (const file of files) {
-    const newPath = await uploader(file);
-    urls.push(newPath.url);
+  if (files) {
+    for (const file of files) {
+      const newPath = await uploader(file);
+      urls.push(newPath.url);
+    }
   }
 
   const newAttraction = await addAttract(req.body, urls);
@@ -74,16 +76,15 @@ const getAttractionBySubcategory = async (req, res, next) => {
     return next(new AppError(FAILURE, 404));
   }
 };
-const GetAllAttractions = async (req,res,next)=>{
+const GetAllAttractions = async (req, res, next) => {
   try {
     const Attractions = await getAllAttractions();
 
     res.status(200).json({ Attractions: Attractions });
-
   } catch (error) {
     return next(new AppError(FAILURE, 404));
   }
-}
+};
 module.exports = {
   addAttraction,
   getAllAttraction,
@@ -93,5 +94,5 @@ module.exports = {
   SetUrls,
   getAttractionByCategory,
   getAttractionBySubcategory,
-  GetAllAttractions
+  GetAllAttractions,
 };

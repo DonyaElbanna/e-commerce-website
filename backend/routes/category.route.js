@@ -8,15 +8,15 @@ const {
   deleteCategory,
 } = require("../controllers/category.controller");
 const upload = require("../utils/multer.util");
+const { extractJwtAdminFromCookie } = require("../middlewares/tokenextractor.middleware");
 
-router.post("/", upload.single("image"), createCategory);
 
 router.get("/", getAllCategories);
-
 router.get("/:id", getCategoryByID);
 
-router.put("/:id", editCategory);
-
-router.delete("/:id", deleteCategory);
+//admin route
+router.post("/", extractJwtAdminFromCookie, upload.single("image"), createCategory);
+router.put("/:id", extractJwtAdminFromCookie,editCategory);
+router.delete("/:id", extractJwtAdminFromCookie, deleteCategory);
 
 module.exports = router;

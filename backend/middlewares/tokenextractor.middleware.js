@@ -3,7 +3,7 @@ const { config } = require("../config/default.config");
 const {
   NOT_FOUND,
   UNAUTHORIZED_ACCESS,
-  adminonly,
+  Adminonly,
 } = require("../utils/namespace.util");
 const axios = require("axios");
 const xml2js = require("xml2js");
@@ -14,8 +14,11 @@ exports.extractJwtFromCookie = (req, res, next) => {
   const path = req.path.split("/").at(-1);
   const token =
     path === "refresh" || path === "signout"
-      ? req.signedCookies?.persist
-      : req.signedCookies?.auth;
+      // ? req.signedCookies?.persist
+      // : req.signedCookies?.auth;
+      ? req.cookies?.persist
+      : req.cookies?.auth;
+  // console.log('path', req.cookies.auth);
   if (token) {
     jwt.verify(token, config.server.token.secret, (error, decoded) => {
       if (error) {
@@ -25,12 +28,14 @@ exports.extractJwtFromCookie = (req, res, next) => {
       } else {
         res.locals.encodedToken = token;
         res.locals.decodedToken = decoded;
+        // console.log("decoded", decoded._id);
         next();
       }
     });
   } else {
     const err = new Error(UNAUTHORIZED_ACCESS);
     err.status = 401;
+    console.log("token err", err);
     next(err);
   }
 };
@@ -38,8 +43,8 @@ exports.extractJwtAdminFromCookie = (req, res, next) => {
   const path = req.path.split("/").at(-1);
   const token =
     path === "refresh" || path === "signout"
-      ? req.signedCookies?.persist
-      : req.signedCookies?.auth;
+      ? req.cookies?.persist
+      : req.cookies?.auth;
   if (token) {
     jwt.verify(token, config.server.token.secret, (error, decoded) => {
       if (error) {
@@ -47,8 +52,8 @@ exports.extractJwtAdminFromCookie = (req, res, next) => {
         err.status = 404;
         next(err);
       } else {
-        if (decoded.position !== "admin") {
-          const err = new Error(adminonly);
+        if (decoded.role !== "admin") {
+          const err = new Error("Unauthorized access admin only allow ");
           err.status = 404;
           next(err);
         }

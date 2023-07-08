@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import gif from "../../assets/gih.gif";
 import { useDispatch, useSelector } from "react-redux";
+<<<<<<< HEAD
 import { handleIsLoadingToggle } from "../../rtk/features/commonSlice";
 import scroll from "tailwind-scrollbar";
 import { Dialog, Transition } from "@headlessui/react";
+=======
+>>>>>>> c0592e2e583694d85603a5aa2b759fae3b1f0e2d
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -18,11 +21,8 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import { Link } from "react-router-dom";
-import {
-  handleAuthType,
-  handleToggleAuthModal,
-} from "../../rtk/features/authSlice";
+import { useNavigate } from "react-router-dom";
+import { attractionEditHandler } from "../../rtk/features/attrSlice";
 
 // modal styles
 // const style = {
@@ -39,20 +39,19 @@ import {
 // };
 
 const Attractions = () => {
-  const [attrs, setAttrs] = useState([]);
-
-  const { common } = useSelector((state) => state);
+  const { common, attractions } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   // modal state
   const [open, setOpen] = useState(false);
   const [slcID, setSlcID] = useState(null);
 
+  const navigate = useNavigate();
+
   const handleOpen = (id) => {
     setOpen(true);
     setSlcID(id);
   };
-  // console.log(slcID);
 
   const handleClose = () => setOpen(false);
 
@@ -70,7 +69,17 @@ const Attractions = () => {
     }
   };
 
-  // console.log(attrs);
+  // table rows
+  const finalAttrs = attractions.Attractions.map((attr) => ({
+    id: attr._id,
+    name: attr.name,
+    city: attr.category.city,
+    category: attr.subcategory.type,
+    status: attr.status ? "Available" : "Not Available",
+    childAvailability: attr.childAvailable ? "Available" : "Not available",
+    adultPrice: "$ " + attr.AdultPrice,
+    childPrice: "$ " + attr.ChildPrice,
+  }));
 
   // table cols
   // const columns = [
@@ -188,13 +197,27 @@ const Attractions = () => {
       field: "name",
       headerName: "Name",
     },
+<<<<<<< HEAD
     { field: "city", headerName: "City" },
     { field: "category", headerName: "Category" },
     { field: "status", headerName: "Status" },
+=======
+    { field: "city", headerName: "City", width: 125 },
+    { field: "category", headerName: "Category", width: 130 },
+    { field: "status", headerName: "Status", width: 105 },
+    {
+      field: "childAvailability",
+      headerName: "Children Available",
+      width: 130,
+    },
+    { field: "adultPrice", headerName: "Adult Price", width: 105 },
+    { field: "childPrice", headerName: "Child Price", width: 105 },
+>>>>>>> c0592e2e583694d85603a5aa2b759fae3b1f0e2d
     {
       field: "edit",
       headerName: "Edit",
       sortable: false,
+<<<<<<< HEAD
       renderCell: (index, params) => (
         // <Button
         //   variant="outlined"
@@ -216,6 +239,21 @@ const Attractions = () => {
           fill="blue"
           className="w-6 h-6"
           onClick={() => handleButtonClick(params.row.id)}
+=======
+      width: 80,
+      renderCell: (params) => (
+        <Button
+          variant="outlined"
+          onClick={() => openEditAttrForm(params.row.id)}
+          sx={{
+            color: "#be853f",
+            border: "1px solid orange",
+            ":hover": {
+              border: "1px solid #be853f",
+              backgroundColor: "#ffc0715c",
+            },
+          }}
+>>>>>>> c0592e2e583694d85603a5aa2b759fae3b1f0e2d
         >
           <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
           <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
@@ -226,6 +264,10 @@ const Attractions = () => {
       field: "delete",
       headerName: "Delete",
       sortable: false,
+<<<<<<< HEAD
+=======
+      width: 60,
+>>>>>>> c0592e2e583694d85603a5aa2b759fae3b1f0e2d
       renderCell: (params) => (
         <>
           {/* <Tooltip title="Delete">
@@ -344,39 +386,14 @@ const Attractions = () => {
     },
   ];
 
-  const handleButtonClick = (x) => {
-    console.log(x);
+  const openAddAttrForm = () => {
+    dispatch(attractionEditHandler());
+    navigate("/form");
   };
 
-  useEffect(() => {
-    dispatch(handleIsLoadingToggle());
-
-    const getAttrs = async () => {
-      try {
-        const { data } = await axios.get(`http://localhost:9999/attraction`);
-        // console.log(data.AllAttraction);
-        setAttrs(
-          data.AllAttraction.map((attr) => ({
-            id: attr._id,
-            name: attr.name,
-            city: attr.category.city,
-            category: attr.subcategory.type,
-            status: attr.status,
-          }))
-        );
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getAttrs();
-    dispatch(handleIsLoadingToggle());
-  }, []);
-
-  const openAttrModal = () => {
-    dispatch(handleAuthType("addAttr"));
-    dispatch(handleToggleAuthModal());
-    // dispatch(CityEditHandler());
+  const openEditAttrForm = (attrID) => {
+    dispatch(attractionEditHandler(attrID));
+    navigate("/form");
   };
 
   return (
@@ -385,6 +402,7 @@ const Attractions = () => {
         <img src={gif} className="mx-auto" style={{ width: "150px" }} />
       ) : (
         <>
+<<<<<<< HEAD
           {/* <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
             <Link to="/form">
               <Button
@@ -401,15 +419,31 @@ const Attractions = () => {
             </Link>
           </Box> */}
           {/* <div
+=======
+          <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
+            <Button
+              style={{
+                color: "#be853f",
+                border: "1px solid #be853f",
+                boxShadow: "2px 2px #be853f",
+              }}
+              startIcon={<AddCircleOutlineOutlinedIcon />}
+              onClick={openAddAttrForm}
+            >
+              Add a new record
+            </Button>
+          </Box>
+          <div
+>>>>>>> c0592e2e583694d85603a5aa2b759fae3b1f0e2d
             style={{
               display: "table",
               tableLayout: "fixed",
-              width: "80%",
+              width: "100%",
               margin: "auto",
             }}
           >
             <DataGrid
-              rows={attrs}
+              rows={finalAttrs}
               columns={columns}
               initialState={{
                 pagination: {

@@ -1,43 +1,198 @@
-import React, { useEffect, useState } from "react";
-import style from "./AttractionForm.module.css";
+import React, { useState } from "react";
+import "./AttractionForm.module.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Joi from "joi";
 
 const AttractionForm = () => {
-  const [cats, setCats] = useState([]);
-  // const Navigate = useNavigate();
-  const [catId, setCatId] = useState("");
+  const { cities, categories, attractions } = useSelector((state) => state);
 
-  useEffect(() => {
-    const getCats = async () => {
-      const { data } = await axios.get("http://localhost:9999/category");
-      // console.log(data);
-      setCats(data.categories);
-    };
-    getCats();
-  }, []);
+  const editedAttr = attractions.Attractions.filter(
+    (attr) => attr._id == attractions.attractionEdit
+  )[0];
 
-  const getCatId = (tar) => {
-    setCatId(tar);
+  const [form, setForm] = useState({
+    name: editedAttr ? editedAttr.name : "",
+    duration: editedAttr ? editedAttr.duration : "",
+    description: editedAttr ? editedAttr.description : "",
+    category: editedAttr ? editedAttr.category._id : "",
+    subcategory: editedAttr ? editedAttr.subcategory._id : "",
+    status: editedAttr ? editedAttr.status : "",
+    childAvailable:
+      editedAttr && editedAttr.childAvailable == true
+        ? "available"
+        : editedAttr && editedAttr.childAvailable == false
+        ? "notAvailable"
+        : "",
+    childAge: editedAttr ? editedAttr.childAge : "",
+    ChildPrice: editedAttr ? editedAttr.ChildPrice : "",
+    AdultPrice: editedAttr ? editedAttr.AdultPrice : "",
+  });
+
+  const [imageInputs, setImageInputs] = useState(
+    editedAttr ? editedAttr.Images : [true]
+  );
+  const [imagesArr, setImagesArr] = useState(
+    editedAttr ? editedAttr.Images : {}
+  );
+  const [imgErr, setImageErr] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const navigate = useNavigate();
+
+  // validating inputs
+  const schema = Joi.object({
+    name: Joi.string().required().min(3),
+    duration: Joi.string().required(),
+    description: Joi.string().required().min(1),
+    category: Joi.string().required(),
+    subcategory: Joi.string().required(),
+    status: Joi.string().required(),
+    childAvailable: Joi.string().required(),
+    childAge: Joi.number().required().min(0),
+    ChildPrice: Joi.number().required().min(0),
+    AdultPrice: Joi.number().required().min(50),
+  });
+
+  const handleChange = (e) => {
+    setErrors({});
+    console.log(e.target.value);
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+  // console.log(imagesArr)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const err = schema.validate(form);
+    const { error } = err;
+    if (error) {
+      const errorData = {};
+      for (let item of error.details) {
+        console.log(error.details);
+        let key = item.path[0];
+        let message = item.message;
+        if (message === `"${key}" is not allowed to be empty`)
+          message = `${key} is required `;
+        else if (key == "image") {
+          message = `${key}'s pattern is invalid `;
+        }
+        errorData[key] = message;
+      }
+      setErrors(errorData);
+    } else {
+      addAttraction();
+      setErrors({});
+    }
   };
 
-  const [subCat, setSubCat] = useState([]);
-  // const NavigateSubCat = useNavigate();
-  const [subCatId, setSubCatId] = useState("");
-  useEffect(() => {
-    const getSubCat = async () => {
-      const { data } = await axios.get("http://localhost:9999/subcat");
-      setSubCat(data.subcategories);
-    };
-    getSubCat();
-  }, []);
-  // useEffect(() => {
-  //   console.log(subCatId);
-  // }, [subCatId]);
+  // sending data to server
+  const addAttraction = async () => {
+    // const errorData = {};
 
-  const getSubCatId = (id) => {
-    setSubCatId(id);
+    if (Object.values(imagesArr) == 0) {
+      // errorData.imageError = "at least 1 image is required";
+      // setErrors(errorData);
+      setImageErr("at least 1 image is required");
+    } else {
+      const newAttr = {
+        name: form.name,
+        duration: form.duration,
+        description: form.description,
+        category: form.category,
+        subcategory: form.subcategory,
+        status: form.status,
+        childAvailable: form.childAvailable == "notAvailable" ? false : true,
+        childAge: form.childAge,
+        ChildPrice: Number(form.ChildPrice),
+        AdultPrice: Number(form.AdultPrice),
+        included: [
+          "Air-Conditioned Vehicle for transportation",
+          "Professional Tour Leader & Tour Guide",
+          "Lunch meal will be provided at a local restaurant",
+          "All Fees and Taxes",
+        ],
+        excluded: [
+          "Any personal expenses or extra food and drinks during the trip",
+          "Driver & Guide tipping - Not mandatory but highly appreciated",
+          "Any other things not mentioned in the inclusions",
+        ],
+        Images: Object.values(imagesArr),
+      };
+      if (!editedAttr) {
+        console.log("3");
+        await axios
+          .post("http://localhost:9999/attraction", newAttr)
+          .then((response) => {
+            navigate("/admin");
+            console.log(response.data);
+          })
+          .catch((error) => {
+            // setOpen(true);
+            const errorData = {};
+            console.log(error.response);
+            if (!error.response) {
+              errorData.globalErr =
+                "something went wrong, please check your connection!";
+            }
+
+            setErrors(errorData);
+          });
+      } else {
+        console.log("4");
+        await axios
+          .put(`http://localhost:9999/attraction/${editedAttr._id}`, newAttr)
+          .then((response) => {
+            console.log(response.data);
+            navigate("/admin");
+          })
+          .catch((error) => {
+            const errorData = {};
+            console.log(error.response);
+            if (!error.response) {
+              errorData.globalErr =
+                "something went wrong, please check your connection!";
+            }
+            setErrors(errorData);
+          });
+      }
+    }
   };
+
+  // adding img inputs
+  const addInput = (e) => {
+    const inputArr = [...imageInputs];
+
+    let regex = /(http(s?):)|([/|.|w|s])*.(?:jpe?g|png)/;
+    const imgValue =
+      e.target.parentElement.previousElementSibling.lastChild.value;
+    const errorData = {};
+
+    if (imgValue.match(regex)) {
+      inputArr.push(true);
+      setImageInputs(inputArr);
+    } else {
+      errorData.imageError = "pattern not match";
+      setErrors(errorData);
+    }
+  };
+
+  // validating img inputs and pushing them into an array
+  const handleChangeImgs = (e) => {
+    setErrors({});
+    // console.log(e.target.getAttribute("id"));
+    let regex = /(http(s?):)|([/|.|w|s])*.(?:jpe?g|png)/;
+    if (e.target.value.match(regex)) {
+      const obj = { ...imagesArr };
+
+      setImagesArr({ ...obj, [e.target.getAttribute("id")]: e.target.value });
+      setImageErr("");
+    } else {
+      const errorData = {};
+      errorData.imageError = "pattern doesn't match";
+      setErrors(errorData);
+    }
+  };
+
   return (
     <>
       <section className="py-16">
@@ -46,8 +201,9 @@ const AttractionForm = () => {
           id="form"
         >
           <article className="grid grid-rows-12 grid-flow-col gap-5 lg:gap-10 text-center py-6">
+            {/* name */}
             <div>
-              <label htmlFor="name" className="text-[#be853f]">
+              <label htmlFor="name" className="text-[#be853f] font-semibold">
                 Name
               </label>
               <input
@@ -55,83 +211,119 @@ const AttractionForm = () => {
                 name="name"
                 id="name"
                 className="block py-1 w-full  text-black border-x-neutral-500  bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
-                placeholder=" "
+                placeholder="Tour name"
                 required
+                value={form.name}
+                onChange={(value) => handleChange(value)}
               />
+              <p className="text-red-500 text-xs italic">{errors.name}</p>
             </div>
+            {/* duration */}
             <div>
-              <label htmlFor="duration" className="text-[#be853f]">
+              <label
+                htmlFor="duration"
+                className="text-[#be853f] font-semibold"
+              >
                 Duration
               </label>
               <input
-                type="number"
+                type="text"
                 name="duration"
                 id="duration"
                 className="block py-1 w-full  text-black border-x-neutral-500  bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
-                placeholder=" "
+                placeholder="Tour duration in days or hours"
                 required
+                value={form.duration}
+                onChange={(value) => handleChange(value)}
               />
+              <p className="text-red-500 text-xs italic">{errors.duration}</p>
             </div>
           </article>
-
+          {/* desc */}
           <div className="my-5">
-            <label htmlFor="name" className="text-[#be853f]">
+            <label
+              htmlFor="description"
+              className="text-[#be853f] font-semibold"
+            >
               Description
             </label>
             <textarea
               name="description"
               id="description"
-              placeholder=""
+              placeholder="Enter tour's description"
               className="textarea rounded-none resize-none overflow-hidden w-full  text-black border-x-neutral-500  bg-transparent border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
+              value={form.description}
+              onChange={(value) => handleChange(value)}
             ></textarea>
+            <p className="text-red-500 text-xs italic">{errors.description}</p>
           </div>
           <article className="grid grid-rows-12 grid-flow-col gap-5 lg:gap-10 text-center py-6">
             <div>
-              <label htmlFor="cites" className="text-[#be853f]">
+              <label htmlFor="city" className="text-[#be853f] font-semibold">
                 City
               </label>
 
               <select
-                id="Cites"
-                onChange={(e) => getCatId(e.target.value)}
-                className="select rounded-none  w-full pb-4 text-[#be853f] bg-transparent border-x-neutral-500  border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
+                id="city"
+                required
+                name="category"
+                onChange={(value) => handleChange(value)}
+                className="select rounded-none  w-full pb-4 text-slate-700 bg-transparent border-x-neutral-500  border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
               >
                 <option disabled selected>
-                  ...
+                  Enter City
                 </option>
-                {cats.map((cat) => (
-                  <option key={cat._id} value={cat._id}>
+                {cities.cities?.map((cat) => (
+                  <option
+                    key={cat._id}
+                    value={cat._id}
+                    className="text-[#be853f]"
+                    selected={form.category === cat._id}
+                  >
                     {cat.city}
                   </option>
                 ))}
               </select>
+              <p className="text-red-500 text-xs italic">{errors.category}</p>
             </div>
 
             <div>
-              <label htmlFor="Catogriy" className="text-[#be853f]">
-                Catogriy
+              <label
+                htmlFor="Category"
+                className="text-[#be853f] font-semibold"
+              >
+                Category
               </label>
-
               <select
-                id="Catogriy"
-                onChange={(e) => getSubCatId(e.target.value)}
-                className="select rounded-none  w-full pb-4 text-[#be853f] bg-transparent border-x-neutral-500  border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
+                id="Category"
+                required
+                name="subcategory"
+                onChange={(value) => handleChange(value)}
+                className="select rounded-none  w-full pb-4 text-slate-700 bg-transparent border-x-neutral-500  border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
               >
                 <option disabled selected>
-                  ...
+                  Enter Category
                 </option>
-                {subCat.map((subcategory) => (
-                  <option key={subcategory._id} value={subcategory._id}>
+                {categories.categories.map((subcategory) => (
+                  <option
+                    key={subcategory._id}
+                    value={subcategory._id}
+                    className="text-[#be853f]"
+                    selected={form.subcategory === subcategory._id}
+                  >
                     {subcategory.type}
                   </option>
                 ))}
               </select>
+              <p className="text-red-500 text-xs italic">
+                {errors.subcategory}
+              </p>
             </div>
           </article>
-
-          <article className="grid grid-rows-12 grid-flow-col  justify-between py-6">
+          {/* status */}
+          <article className="grid grid-rows-12 grid-flow-col  justify-around py-6">
             <div>
-              <label htmlFor="status" className="text-[#be853f]">
+              <label htmlFor="status" className="text-[#be853f] font-semibold">
                 Status
               </label>
               <div className="flex flex-col gap-4 my-4">
@@ -139,53 +331,94 @@ const AttractionForm = () => {
                   <input
                     type="radio"
                     name="status"
-                    id="status"
-                    className="text-[#be853f] radio-sm border-0"
+                    id="status1"
+                    value="available"
+                    onChange={(value) => handleChange(value)}
+                    className="text-[#be853f] radio-sm border-0 cursor-pointer"
+                    checked={form.status === "available"}
                   />
-                  <strong className="ml-2">avalibale</strong>
+                  <label
+                    className="ml-2 text-slate-700 cursor-pointer"
+                    htmlFor="status1"
+                  >
+                    Available
+                  </label>
                 </span>
                 <span>
                   <input
                     type="radio"
                     name="status"
-                    id="status"
-                    className="text-[#be853f] radio-sm border-0"
+                    id="status2"
+                    value="notAvailable"
+                    onChange={(value) => handleChange(value)}
+                    className="text-[#be853f] radio-sm border-0 cursor-pointer"
+                    checked={form.status === "notAvailable"}
                   />
-                  <strong className="ml-2">unavalibale</strong>
+                  <label
+                    className="ml-2 text-slate-700 cursor-pointer"
+                    htmlFor="status2"
+                  >
+                    Not Available
+                  </label>
                 </span>
               </div>
+              <p className="text-red-500 text-xs italic">{errors.status}</p>
             </div>
-
             <div>
-              <label htmlFor="childAvailability" className="text-[#be853f]">
+              <label
+                htmlFor="childAvailability"
+                className="text-[#be853f] font-semibold"
+              >
                 Child Availability
               </label>
               <div className="flex flex-col gap-4 my-4">
                 <span>
                   <input
                     type="radio"
-                    name="childAvailability"
-                    id="childAvailability"
-                    className="text-[#be853f] radio-sm border-0"
+                    name="childAvailable"
+                    id="childAvailable1"
+                    value="available"
+                    onChange={(value) => handleChange(value)}
+                    className="text-[#be853f] radio-sm border-0 cursor-pointer"
+                    checked={form.childAvailable === "available"}
                   />
-                  <strong className="ml-2">avalibale</strong>
+                  <label
+                    className="ml-2 text-slate-700 cursor-pointer"
+                    htmlFor="childAvailable1"
+                  >
+                    Available
+                  </label>
                 </span>
                 <span>
                   <input
                     type="radio"
-                    name="childAvailability"
-                    id="childAvailability"
-                    className="text-[#be853f] radio-sm border-0"
+                    name="childAvailable"
+                    id="childAvailable2"
+                    value="notAvailable"
+                    onChange={(value) => handleChange(value)}
+                    className="text-[#be853f] radio-sm border-0 cursor-pointer"
+                    checked={form.childAvailable === "notAvailable"}
                   />
-                  <strong className="ml-2">unavalibale</strong>
+                  <label
+                    className="ml-2 text-slate-700 cursor-pointer"
+                    htmlFor="childAvailable2"
+                  >
+                    Not Available
+                  </label>
                 </span>
               </div>
+              <p className="text-red-500 text-xs italic">
+                {errors.childAvailable}
+              </p>
             </div>
           </article>
-
+          {/* child age */}
           <article className="grid grid-rows-12 grid-flow-col gap-5 lg:gap-10 text-center py-6">
             <div>
-              <label htmlFor="childAge" className="text-[#be853f]">
+              <label
+                htmlFor="childAge"
+                className="text-[#be853f] font-semibold"
+              >
                 Child Age
               </label>
               <input
@@ -195,39 +428,94 @@ const AttractionForm = () => {
                 className="block py-1 w-full  text-black border-x-neutral-500  bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
                 placeholder=" "
                 required
+                min="0"
+                value={form.childAge}
+                onChange={(value) => handleChange(value)}
               />
+              <p className="text-red-500 text-xs italic">{errors.childAge}</p>
             </div>
+
             <div>
-              <label htmlFor="childPrice" className="text-[#be853f]">
+              <label
+                htmlFor="ChildPrice"
+                className="text-[#be853f] font-semibold"
+              >
                 Child Price
               </label>
               <input
                 type="number"
-                name="childPrice"
-                id="childPrice"
+                name="ChildPrice"
+                id="ChildPrice"
                 className="block py-1 w-full  text-black border-x-neutral-500  bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
                 placeholder=" "
                 required
+                min="0"
+                value={form.ChildPrice}
+                onChange={(value) => handleChange(value)}
               />
+              <p className="text-red-500 text-xs italic">{errors.ChildPrice}</p>
             </div>
             <div>
-              <label htmlFor="adultPrice" className="text-[#be853f]">
+              <label
+                htmlFor="AdultPrice"
+                className="text-[#be853f] font-semibold"
+              >
                 Adult Price
               </label>
               <input
                 type="number"
-                name="adultPrice"
-                id="adultPrice"
+                name="AdultPrice"
+                id="AdultPrice"
                 className="block py-1 w-full  text-black border-x-neutral-500  bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
                 placeholder=" "
                 required
+                min="0"
+                value={form.AdultPrice}
+                onChange={(value) => handleChange(value)}
               />
+              <p className="text-red-500 text-xs italic">{errors.AdultPrice}</p>
             </div>
           </article>
+          {/* images */}
+          <article className="grid grid-rows-12 grid-flow-col gap-5 lg:gap-10 py-6">
+            <div>
+              <label htmlFor="image" className="text-[#be853f] font-semibold">
+                Image
+              </label>
+              {imageInputs.map((img, i) => (
+                <input
+                  key={i}
+                  type="text"
+                  name="image"
+                  id={`image${i}`}
+                  className="block py-1 w-2/3  text-black border-x-neutral-500 mt-3 bg-transparent  border-0 border-b-2  appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
+                  placeholder="http://url.jpg"
+                  required
+                  value={imagesArr[i]}
+                  onChange={(e) => handleChangeImgs(e)}
+                />
+              ))}
+            </div>
+            <div>
+              <button
+                type="button"
+                className="text-white bg-gray-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+                onClick={(e) => addInput(e)}
+              >
+                +
+              </button>
+              <p className="text-red-500 text-xs italic">
+                {errors.imageError || imgErr}
+              </p>
+            </div>
+          </article>
+          <p className="text-red-500 text-xs italic">{errors.globalErr}</p>
+          {/* submit */}
           <div className="text-center my-16">
             <button
               type="submit"
               className="text-white bg-gray-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+              onClick={handleSubmit}
             >
               Submit
             </button>

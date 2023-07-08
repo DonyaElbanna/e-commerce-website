@@ -173,7 +173,7 @@ const Navbar1 = () => {
                 </Typography>
               </NavLink>
 
-              {/* {auth.loggedInInfo.position === "admin" && (  */}
+              {auth.userInfo.role === "admin" && ( 
               <NavLink
                 className={({ isActive }) =>
                   isActive ? Style.NavLinkActive : Style.NavLink
@@ -189,7 +189,7 @@ const Navbar1 = () => {
                   Admin
                 </Typography>
               </NavLink>
-              {/* )}  */}
+              )} 
               <div>
                 <IconButton
                   aria-label="account of current user"
@@ -202,7 +202,7 @@ const Navbar1 = () => {
                 >
                   <Avatar
                     alt="Remy Sharp"
-                    src="/static/images/avatar/1.jpg"
+                    src={auth.userInfo && auth.userInfo.avatar}
                     sx={{
                       border: "2px solid gold",
                       borderRadius: "50%",

@@ -20,18 +20,21 @@ exports.Schemas = {
       confirmPassword: Joi.string().required(),
     }),
     wishListAdd: Joi.object({
-      userId: Joi.string().required(),
+      id: Joi.string().required(),
       Attraction: Joi.string().required(),
     }),
   },
   auth: {
     signin: Joi.object({
-      usermail: Joi.string().required(),
+      email: Joi.string().required(),
       password: Joi.string().required(),
     }),
     sendVerification: Joi.object({
       emailAddress: Joi.string().required(),
       type: Joi.string().valid("verify", "reset").required(),
+    }),
+    forgetpassword: Joi.object({
+      emailAddress: Joi.string().required(),
     }),
     confirmAndModifyPassword: Joi.object({
       password: Joi.string().required(),
