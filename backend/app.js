@@ -14,6 +14,7 @@ const authRoute = require("./routes/auth.route");
 const reviewRoute = require("./routes/review.route");
 const orderRoute = require("./routes/order.route");
 const subCategoryRoute = require("./routes/subcategory.route");
+const cors = require("cors")
 
 const {
   NOT_FOUND,

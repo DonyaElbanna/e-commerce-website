@@ -1,5 +1,5 @@
-import HighestRated from "../components/HomeContainer/HighestRated/HighestRated";
-import Welcome from "../components/HomeContainer/Welome/welcome";
+import Cities from "../components/HomeContainer/Cities/Cities";
+import Welcome from '../components/Welome/welcome';
 
 const Home = () => {
   return (
