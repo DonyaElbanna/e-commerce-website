@@ -11,7 +11,7 @@ const add = async (type, url, next) => {
     await subcategory.save();
     return subcategory;
   } catch (err) {
-    return next(new AppError("Error", 404));
+    return next(new AppError(FAILURE, 404));
   }
 };
 

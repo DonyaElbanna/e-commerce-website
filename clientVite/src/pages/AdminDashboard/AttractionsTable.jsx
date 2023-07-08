@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import gif from "../../assets/gih.gif";
 import { useDispatch, useSelector } from "react-redux";
-import { handleIsLoadingToggle } from "../../rtk/features/commonSlice";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -34,9 +33,7 @@ const style = {
 };
 
 const Attractions = () => {
-  const [attrs, setAttrs] = useState([]);
-
-  const { common } = useSelector((state) => state);
+  const { common, attractions } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   // modal state
@@ -49,38 +46,6 @@ const Attractions = () => {
     setOpen(true);
     setSlcID(id);
   };
-  // console.log(slcID);
-
-  useEffect(() => {
-    dispatch(handleIsLoadingToggle());
-
-    const getAttrs = async () => {
-      try {
-        const { data } = await axios.get(`http://localhost:9999/attraction`);
-        // console.log(data.AllAttraction);
-        setAttrs(
-          data.AllAttraction.map((attr) => ({
-            id: attr._id,
-            name: attr.name,
-            city: attr.category.city,
-            category: attr.subcategory.type,
-            status: attr.status ? "Available" : "Not Available",
-            childAvailability: attr.childAvailable
-              ? "Available"
-              : "Not available",
-            adultPrice: "$ " + attr.AdultPrice,
-            childPrice: "$ " + attr.ChildPrice,
-          }))
-        );
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getAttrs();
-    dispatch(handleIsLoadingToggle());
-  }, []);
-  // console.log("final", attrs);
 
   const handleClose = () => setOpen(false);
 
@@ -98,7 +63,17 @@ const Attractions = () => {
     }
   };
 
-  // console.log(attrs);
+  // table rows
+  const finalAttrs = attractions.Attractions.map((attr) => ({
+    id: attr._id,
+    name: attr.name,
+    city: attr.category.city,
+    category: attr.subcategory.type,
+    status: attr.status ? "Available" : "Not Available",
+    childAvailability: attr.childAvailable ? "Available" : "Not available",
+    adultPrice: "$ " + attr.AdultPrice,
+    childPrice: "$ " + attr.ChildPrice,
+  }));
 
   // table cols
   const columns = [
@@ -225,7 +200,6 @@ const Attractions = () => {
   };
 
   const openEditAttrForm = (attrID) => {
-    console.log(attrID);
     dispatch(attractionEditHandler(attrID));
     navigate("/form");
   };
@@ -258,7 +232,7 @@ const Attractions = () => {
             }}
           >
             <DataGrid
-              rows={attrs}
+              rows={finalAttrs}
               columns={columns}
               initialState={{
                 pagination: {

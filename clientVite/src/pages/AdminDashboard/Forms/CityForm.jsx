@@ -15,7 +15,6 @@ const CityForm = () => {
   const cancelButtonRef = useRef(null);
 
   const { cities } = useSelector((state) => state);
-  // console.log("neeew", cities.cities);
 
   const dispatch = useDispatch();
   const [form, setForm] = useState({
@@ -65,28 +64,28 @@ const CityForm = () => {
     }
   };
 
-  // sendinf data to server
+  // send data to server
   const addCategory = async () => {
     const newCity = {
       city: form.city,
       image: form.image,
     };
-    // console.log(newCity);
 
     if (!cities.cityEdit) {
       await axios
         .post("http://localhost:9999/category", newCity)
         .then((response) => {
-          // console.log("axios post", response.data);
           dispatch(addCity(response.data));
           setOpen(false);
         })
         .catch((error) => {
-          console.log(error);
           const errorData = {};
           if (!error.response) {
             errorData.globalErr =
               "something went wrong, please check your connection!";
+          } else {
+            errorData.globalErr =
+              "Request wasn't sent, please check your data!";
           }
           setErrors(errorData);
         });
@@ -94,10 +93,8 @@ const CityForm = () => {
       await axios
         .put(`http://localhost:9999/category/${cities.cityEdit.id}`, newCity)
         .then((response) => {
-          setOpen(false);
-          // console.log("edited city", newCity);
-          // console.log("axios put", response.data);
           dispatch(editCity(response.data));
+          setOpen(false);
         })
         .catch((error) => {
           console.log(error);

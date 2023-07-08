@@ -10,14 +10,11 @@ import {
 import { addCat, editCat } from "../../../rtk/features/categoriesSlice";
 
 const CatForm = () => {
-  // modal
+  const { categories } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
-
-  const { categories } = useSelector((state) => state);
-  // console.log("new", categories.categories);
-
-  const dispatch = useDispatch();
   const [form, setForm] = useState({
     type: categories.categoryEdit?.name || "",
     image: categories.categoryEdit?.image || "",
@@ -71,13 +68,11 @@ const CatForm = () => {
       type: form.type,
       image: form.image,
     };
-    console.log(newCategory);
 
     if (!categories.categoryEdit) {
       await axios
         .post("http://localhost:9999/subcat", newCategory)
         .then((response) => {
-          // console.log("axios post", response.data.subcategory);
           dispatch(addCat(response.data.subcategory));
           setOpen(false);
         })
@@ -87,6 +82,9 @@ const CatForm = () => {
           if (!error.response) {
             errorData.globalErr =
               "something went wrong, please check your connection!";
+          } else {
+            errorData.globalErr =
+              "Request wasn't sent, please check your data!";
           }
           setErrors(errorData);
         });
@@ -97,8 +95,6 @@ const CatForm = () => {
           newCategory
         )
         .then((response) => {
-          // console.log("edited city", newCategory);
-          // console.log("axios put", response.data);
           dispatch(editCat(response.data));
           setOpen(false);
         })
@@ -108,6 +104,9 @@ const CatForm = () => {
           if (!error.response) {
             errorData.globalErr =
               "something went wrong, please check your connection!";
+          } else {
+            errorData.globalErr =
+              "Request wasn't sent, please check your data!";
           }
           setErrors(errorData);
         });

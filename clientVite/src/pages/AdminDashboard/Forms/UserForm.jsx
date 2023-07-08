@@ -7,18 +7,18 @@ import {
   handleAuthType,
   handleOpenAuthModal,
 } from "../../../rtk/features/authSlice";
+import { addUser, editUser } from "../../../rtk/features/usersSlice";
 
 const RegisterForm = () => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
 
-  const { auth } = useSelector((state) => state);
-  // console.log(auth.editedUser);
-
+  const { users } = useSelector((state) => state);
   const dispatch = useDispatch();
+
   const [form, setForm] = useState({
-    userName: auth.editedUser?.username || "",
-    email: auth.editedUser?.email || "",
+    userName: users.userEdit?.username || "",
+    email: users.userEdit?.email || "",
     password: "",
     confirmPassword: "",
   });
@@ -73,17 +73,14 @@ const RegisterForm = () => {
       username: form.userName,
       password: form.password,
     };
-    console.log(newUser);
-    if (!auth.editedUser) {
+    if (!users.userEdit) {
       await axios
         .post("http://localhost:9999/user", newUser)
         .then((response) => {
-          // dispatch(handleUserInfo(response.data.user));
-          // dispatch(handleIsLoggedIntoggle());
+          dispatch(addUser(response.data.user));
           setOpen(false);
         })
         .catch((error) => {
-          setOpen(true);
           const errorData = {};
           console.log(error.response);
           if (!error.response) {
@@ -95,21 +92,18 @@ const RegisterForm = () => {
             errorData.email = error.response.data.message;
           } else {
             errorData.userName =
-              "this userName already exist , please try another one";
+              "this username already exist, please try another one";
           }
-
           setErrors(errorData);
         });
     } else {
       await axios
-        .put(`http://localhost:9999/user/${auth.editedUser._id}`, newUser)
+        .put(`http://localhost:9999/user/${users.userEdit._id}`, newUser)
         .then((response) => {
-          // dispatch(handleUserInfo(response.data.user));
-          // dispatch(handleIsLoggedIntoggle());
+          dispatch(editUser(response.data.user));
           setOpen(false);
         })
         .catch((error) => {
-          setOpen(true);
           const errorData = {};
           console.log(error.response);
           if (!error.response) {
@@ -181,7 +175,7 @@ const RegisterForm = () => {
                             id="userName"
                             className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
                             placeholder={
-                              auth.editedUser?.username || "John Elraqi"
+                              users.userEdit?.username || "John Elraqi"
                             }
                             required=""
                             value={form.userName}
@@ -204,7 +198,7 @@ const RegisterForm = () => {
                             id="email"
                             className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
                             placeholder={
-                              auth.editedUser?.email || "name@email.com"
+                              users.userEdit?.email || "name@email.com"
                             }
                             required=""
                             value={form.email}

@@ -12,11 +12,6 @@ const create = async (city, url, next) => {
   } catch (err) {
     return next(new AppError("Error", 404));
   }
-  // try {
-  //   return await Category.create(data);
-  // } catch (error) {
-  //   throw new AppError(err);
-  // }
 };
 
 const getCategories = async () => {

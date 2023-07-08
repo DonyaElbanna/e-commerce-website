@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import axios from "axios";
-import gif from "../../assets/gih.gif";
 import { useDispatch, useSelector } from "react-redux";
-import { handleIsLoadingToggle } from "../../rtk/features/commonSlice";
-
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Tooltip from "@mui/material/Tooltip";
@@ -41,40 +38,13 @@ const style = {
 };
 
 const CitiesTable = () => {
-  const [Cities, setCities] = useState([]);
-
-  const { common, cities } = useSelector((state) => state);
-  // console.log(cities);
+  const { cities } = useSelector((state) => state);
 
   const dispatch = useDispatch();
 
   // modal state
   const [open, setOpen] = React.useState(false);
   const [slcID, setSlcID] = useState(null);
-
-  useEffect(() => {
-    dispatch(handleIsLoadingToggle());
-
-    const getCities = async () => {
-      try {
-        const { data } = await axios.get(`http://localhost:9999/category`);
-        console.log(data)
-        dispatch(citiesHandler(data.categories));
-        setCities(
-          data.categories.map((city) => ({
-            id: city._id,
-            name: city.city,
-            image: city.image,
-          }))
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getCities();
-    dispatch(handleIsLoadingToggle());
-  }, []);
 
   const finalCities = cities?.cities.map((city) => ({
     id: city._id,
@@ -89,9 +59,6 @@ const CitiesTable = () => {
   const handleClose = () => setOpen(false);
 
   const deleteCity = (id) => {
-    // console.log(id);
-    // const newCities = Cities.filter((city) => city.id !== id);
-    // setCities(newCities);
     dispatch(removeCity(id));
     handleClose();
 
@@ -102,10 +69,7 @@ const CitiesTable = () => {
     }
   };
 
-  // console.log(cities);
-
   const handleEditCity = (city) => {
-    // console.log(city);
     dispatch(handleAuthType("addCity"));
     dispatch(handleToggleAuthModal());
     dispatch(CityEditHandler(city));
@@ -225,39 +189,33 @@ const CitiesTable = () => {
 
   return (
     <>
-      {common.isLoading ? (
-        <img src={gif} className="mx-auto" style={{ width: "150px" }} />
-      ) : (
-        <>
-          <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
-            <Button
-              style={{
-                color: "#be853f",
-                border: "1px solid #be853f",
-                boxShadow: "2px 2px #be853f",
-              }}
-              startIcon={<AddCircleOutlineOutlinedIcon />}
-              onClick={openCityModal}
-            >
-              Add a new record
-            </Button>
-          </Box>
-          <div style={{ height: 500, width: "100%" }}>
-            <DataGrid
-              rows={finalCities || Cities}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 10 },
-                },
-              }}
-              pageSizeOptions={[10, 20]}
-              checkboxSelection
-              hideFooterSelectedRowCount
-            />
-          </div>
-        </>
-      )}
+      <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
+        <Button
+          style={{
+            color: "#be853f",
+            border: "1px solid #be853f",
+            boxShadow: "2px 2px #be853f",
+          }}
+          startIcon={<AddCircleOutlineOutlinedIcon />}
+          onClick={openCityModal}
+        >
+          Add a new record
+        </Button>
+      </Box>
+      <div style={{ height: 500, width: "100%" }}>
+        <DataGrid
+          rows={finalCities}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          pageSizeOptions={[10, 20]}
+          checkboxSelection
+          hideFooterSelectedRowCount
+        />
+      </div>
     </>
   );
 };

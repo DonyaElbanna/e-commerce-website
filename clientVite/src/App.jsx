@@ -51,7 +51,7 @@ function App() {
       console.log(error);
     }
   };
-  
+
   useEffect(() => {
     dispatch(handleAuthType("login"));
     dispatch(handleOpenAuthModal(false));
