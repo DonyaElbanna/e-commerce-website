@@ -21,11 +21,12 @@ const Categories = () => {
 
   return (
     <div className="container px-5 mx-auto mb-5">
-      <h3 className="text-4xl mb-10 text-center	">Cities</h3>
+      <h3 className="text-7xl mt-10 mb-4 text-center text-zinc-700 headerFont">Cities</h3>
+      <h1 className="text-4xl mb-10 text-center text-zinc-700	headerFont">Take a look for amazing Egypt Cities</h1>
       {cats.length == 0 ? (
-        <img src={gif} className="mx-auto" style={{ width: "150px" }} />
+        <img src={gif} className="mx-auto" style={{ width: "250px", marginTop:'180px' }} />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 m-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 m-auto" style={{gridTemplateColumns:"repeat(5, minmax(0, 1fr))"}}>
           {cats.map((cat) => (
             <div
               key={cat._id}

@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../../assets/logo.png";
+import cities from "../../../assets/planet-earth.png"
+import order from "../../../assets/plane-ticket.png"
+import wishlist from "../../../assets/add-to-favorites.png"
+import home from "../../../assets/home-page.png"
+import dashboard from "../../../assets/dashboard.png"
+import login from "../../../assets/traveller.png"
+
+
 import Style from "./Navbar.module.css";
 import { Box, CardMedia, Container, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
@@ -18,6 +26,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import Avatar from "@mui/material/Avatar";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleAuthType,
@@ -26,6 +35,7 @@ import {
   handleToggleAuthModal,
   handleUserInfo,
 } from "../../../rtk/features/authSlice";
+import Home from '../../../pages/Home';
 
 const Navbar1 = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -53,30 +63,10 @@ const Navbar1 = () => {
     const scrollPosition = window.scrollY;
     setScroll(scrollPosition);
   };
-  // console.log(window.scrollY)
   window.addEventListener("scroll", changeColor);
-  // const colorValue = Math.max(255 - scroll, 0)
-  //   .toString(16)
-  //   .padStart(2, "0");
   let fade = 1 - scroll / 500;
-  // if (window.scrollY == 0) {
-  //   setScroll(true);
-  // }
-  // const style = {
-  //   backgroundColor: !window.scrollY
-  //     ? `rgba(255, 255, 255)`
-  //     : `rgba(0, 0, 0, ${1 - fade})`,
-  // };
-  // const style = ;
 
-  // const changeColor = () => {
-  // if (window.scrollY > 0) {
-  //   setScroll(true);
-  //   } else {
-  //     setScroll(false);
-  //   }
-  // };
-  // console.log(window.scrollY);
+
   window.addEventListener("scroll", changeColor);
 
   return (
@@ -122,7 +112,7 @@ const Navbar1 = () => {
                   isActive ? Style.NavLinkActive : Style.NavLink
                 }
               >
-                <HomeIcon />
+                <img className={Style.navbarImg} src={home}></img>
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
                   display={{ xs: "none", md: "inline-flex" }}
@@ -136,7 +126,7 @@ const Navbar1 = () => {
                   isActive ? Style.NavLinkActive : Style.NavLink
                 }
               >
-                <PublicOutlinedIcon />
+                <img className={Style.navbarImg} src={cities}></img>
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
                   display={{ xs: "none", md: "inline-flex" }}
@@ -150,7 +140,7 @@ const Navbar1 = () => {
                   isActive ? Style.NavLinkActive : Style.NavLink
                 }
               >
-                <ShoppingCartOutlinedIcon />
+                <img className={Style.navbarImg} src={order}></img>
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
                   display={{ xs: "none", md: "inline-flex" }}
@@ -164,7 +154,8 @@ const Navbar1 = () => {
                   isActive ? Style.NavLinkActive : Style.NavLink
                 }
               >
-                <FavoriteBorderOutlinedIcon />
+                {/* <FavoriteBorderOutlinedIcon style={{fill:"#be853f"}}/> */}
+                <img className={Style.navbarImg} src={wishlist}></img>
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
                   display={{ xs: "none", md: "inline-flex" }}
@@ -180,7 +171,8 @@ const Navbar1 = () => {
                 }
                 to="/admin"
               >
-                <DashboardIcon />
+                {/* <DashboardIcon /> */}
+                <img className={Style.navbarImg} src={dashboard}></img>
 
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
@@ -198,6 +190,10 @@ const Navbar1 = () => {
                   onClick={HandleLogin}
                   sx={{
                     color: "white",
+                    textShadow: "1px 1px 5px black",
+                    ":hover": {
+                      backgroundColor: "rgba(255, 255, 255, 0)"
+                    }
                   }}
                 >
                   <Avatar
@@ -264,7 +260,8 @@ const Navbar1 = () => {
                   isActive ? Style.NavLinkActive : Style.NavLink
                 }
               >
-                <HomeIcon />
+                {/* <HomeIcon /> */}
+                <img className={Style.navbarImg} src={home}></img>
 
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
@@ -279,7 +276,9 @@ const Navbar1 = () => {
                   isActive ? Style.NavLinkActive : Style.NavLink
                 }
               >
-                <PublicOutlinedIcon />
+                {/* <PublicOutlinedIcon /> */}
+                <img className={Style.navbarImg} src={cities}></img>
+
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
                   display={{ xs: "none", md: "inline-flex" }}
@@ -291,7 +290,8 @@ const Navbar1 = () => {
                 className={Style.NavLink}
                 onClick={() => dispatch(handleToggleAuthModal())}
               >
-                <Person2OutlinedIcon />
+                {/* <Person2OutlinedIcon /> */}
+                <img className={Style.navbarImg} src={login}></img>
                 Log in
               </span>
             </Stack>

@@ -8,6 +8,15 @@ import "swiper/css/virtual";
 const Categories = ({ subcats, handleFilter, resetFilters }) => {
   return (
     <>
+      <div className="flex justify-between">
+        <p className="text-3xl text-zinc-700 headerFont ms-8 mb-8">Filter Your category</p>
+        <button
+          onClick={resetFilters}
+          className="btn btn-outline btn-accent  headerFont font-medium rounded-full text-md px-4 mr-2 me-16 mb-2"
+        >
+          Reset Filters
+        </button>
+      </div>
       <div className="container px-5 mx-auto flex items-center">
         <Swiper
           autoplay
@@ -30,11 +39,11 @@ const Categories = ({ subcats, handleFilter, resetFilters }) => {
               slidesPerView: 4,
             },
           }}
-          spaceBetween={20}
+          spaceBetween={0}
           slidesPerView={4}
           loop={true}
           virtual
-          className="cursor-pointer relative carousel-center w-100 px-4 pt-4 pb-1 bg-yellow-500/40 rounded-box my-10"
+          className="cursor-grab relative carousel-center w-100 px-4 py-8 bg-stone-600/20 rounded-box"
         >
           <div>
             {subcats.map((cat, index) => (
@@ -74,14 +83,7 @@ const Categories = ({ subcats, handleFilter, resetFilters }) => {
           />
         </svg>
       </div>
-      <div className="text-right mr-10">
-        <button
-          onClick={resetFilters}
-          className="text-white bg-yellow-500 hover:bg-yellow-600 drop-shadow-xl border-2 border-yellow-600 focus:outline-none active:ring-2 active:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:active:ring-gray-700 dark:border-gray-700"
-        >
-          Reset Filters
-        </button>
-      </div>
+      
     </>
   );
 };

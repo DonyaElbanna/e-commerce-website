@@ -29,7 +29,7 @@ const AttractionDetails = () => {
   return (
     <>
       {attrDetails.length == 0 ? (
-        <img src={gif} className=" mx-auto" style={{ width: "150px" }} />
+        <img src={gif} className=" mx-auto" style={{ width: "250px", marginTop:'180px' }} />
       ) : (
         <div className="container px-5 mx-auto">
           <h2 className="text-4xl mb-10 text-center	">{attrDetails.name}</h2>

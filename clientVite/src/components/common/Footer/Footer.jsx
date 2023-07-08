@@ -5,12 +5,12 @@ const Footer = () => {
     <>
       <footer>
         <div
-          style={{ backgroundColor: "rgb(10 10 10 / 83%)" }}
-          className="pb-9 px-5 gap-2"
+          style={{ backgroundColor: "rgb(10 10 10 / 80%)",marginTop:"50px"}}
+          className="flex flex-column items-center pb-7 px-5"
         >
-          <article className="footer footer-center row">
+          <article className="footer footer-center row" style={{rowGap:"1.5rem",lineHeight:"0rem"}}>
             <div className="self-center">
-              <p className="logoFont text-4xl pt-7 md:text-7xl lg:text-8xl text-slate-300">
+              <p className="logoFont text-2xl pt-10 md:text-5xl lg:text-6xl text-slate-300">
                 EGYPT
               </p>
             </div>
@@ -66,7 +66,7 @@ const Footer = () => {
                   </svg>
                 </Link>
               </div>
-              <div className="mt-4 opacity-50">
+              <div className="opacity-50 pt-4">
                 <p>Copyright © 2023 - All right reserved</p>
               </div>
             </div>

@@ -226,7 +226,7 @@ const CitiesTable = () => {
   return (
     <>
       {common.isLoading ? (
-        <img src={gif} className="mx-auto" style={{ width: "150px" }} />
+        <img src={gif} className="mx-auto" style={{ width: "250px", marginTop:'180px' }} />
       ) : (
         <>
           <Box sx={{ marginBottom: "15px", textAlign: "center" }}>

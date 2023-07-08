@@ -1,4 +1,3 @@
-import gif from "../../../assets/gih.gif";
 import logo from "../../../assets/logo.png";
 
 const Navbar = () => {
