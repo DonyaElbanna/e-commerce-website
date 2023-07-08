@@ -12,13 +12,13 @@ const {
 } = require("../services/order.service");
 
 const addOrder = async (req, res, next) => {
-  const { id } = req.params;
-  const { attrID, adults, children, expectedDate } = req.body;
-  const user = await User.find({ _id: id });
+  // const { id } = req.params;
+  const { userID, attrID, adults, children, expectedDate } = req.body;
+  const user = await User.find({ _id: userID });
   const attr = await Attraction.findById(attrID);
 
   const details = {
-    id,
+    userID,
     attrID,
     date: new Date(expectedDate),
     adults,
@@ -88,8 +88,9 @@ const editOrder = async (req, res, next) => {
 };
 
 const deleteOrder = async (req, res, next) => {
-  const { id } = req.params;
-  const orderID = req.body.orderID;
+  const { id, orderID } = req.params;
+  // const id = res.locals.decodedToken._id;
+  // const orderID = req.params;
 
   try {
     const deletedOrder = await remove(id, orderID, next);

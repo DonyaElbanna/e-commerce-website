@@ -16,7 +16,10 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-
+import {
+  handleAuthType,
+  handleToggleAuthModal,
+} from "../../rtk/features/authSlice";
 import { ordersHandler, removeOrder } from "../../rtk/features/ordersSlice";
 
 // modal styles
@@ -34,65 +37,30 @@ const style = {
 };
 
 const Orders = () => {
-  const [ordersArr, setOrdersArr] = useState([]);
-
   const { common, orders } = useSelector((state) => state);
-  // console.log("redux orders", orders);
+  console.log("redux orders", orders.orders);
 
   const dispatch = useDispatch();
 
   // modal state
   const [open, setOpen] = useState(false);
-  const [slcID, setSlcID] = useState(null);
+  const [slcOrderID, setSlcOrderID] = useState(null);
+  const [slcOrderUserID, setSlcOrderUserID] = useState(null);
+  // const [finalOrdersArr, setFinalOrdersArr] = useState([]);
 
   useEffect(() => {
     dispatch(handleIsLoadingToggle());
-
     const getOrders = async () => {
       try {
         const { data } = await axios.get(`http://localhost:9999/order`);
-        // console.log(data);
         dispatch(ordersHandler(data));
-        setOrdersArr(
-          data.map((order) => ({
-            id: order._id,
-            name: order.user.username,
-            attr: order.attraction.name,
-            adults: order.adultCount,
-            children: order.childCount,
-            price: order.AdultTotalPrice + order.ChildTotalPrice + " $",
-            date: new Date(order.travelDate.split("T")[0]).toDateString(),
-          }))
-        );
       } catch (err) {
         console.log(err);
       }
     };
-
     getOrders();
     dispatch(handleIsLoadingToggle());
   }, []);
-
-  // console.log(ordersArr);
-
-  const handleOpen = (id) => {
-    setOpen(true);
-    setSlcID(id);
-  };
-
-  const handleClose = () => setOpen(false);
-
-  const deleteOrder = (id) => {
-    console.log(id);
-    dispatch(removeOrder(id));
-    handleClose();
-
-    try {
-      axios.delete(`http://localhost:9999/order/${id}`);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   // rows
   const finalOrders = orders?.orders.map((order) => ({
@@ -104,7 +72,35 @@ const Orders = () => {
     price: order.AdultTotalPrice + order.ChildTotalPrice + " $",
     date: new Date(order.travelDate.split("T")[0]).toDateString(),
   }));
-  // console.log(finalOrders)
+
+  const openOrderModal = () => {
+    dispatch(handleAuthType("addOrder"));
+    dispatch(handleToggleAuthModal());
+  };
+
+  const handleOpen = (orderID) => {
+    const orderUserID = orders.orders.filter((order) => order._id == orderID)[0]
+      .user._id;
+    setOpen(true);
+    setSlcOrderID(orderID);
+    setSlcOrderUserID(orderUserID);
+  };
+
+  const handleClose = () => setOpen(false);
+
+  const deleteOrder = () => {
+    dispatch(removeOrder(slcOrderID));
+    handleClose();
+    try {
+      axios.delete(
+        `http://localhost:9999/order/${slcOrderUserID}/${slcOrderID}`
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // console.log(finalOrders);
 
   // columns
   const columns = [
@@ -177,7 +173,7 @@ const Orders = () => {
                   </Button>
                   <Button
                     variant="contained"
-                    onClick={() => deleteOrder(slcID)}
+                    onClick={() => deleteOrder(slcOrderID)}
                     sx={{
                       border: "1px solid #be853f",
                       backgroundColor: "#be853f",
@@ -212,6 +208,7 @@ const Orders = () => {
                 boxShadow: "2px 2px #be853f",
               }}
               startIcon={<AddCircleOutlineOutlinedIcon />}
+              onClick={openOrderModal}
             >
               Add a new record
             </Button>
