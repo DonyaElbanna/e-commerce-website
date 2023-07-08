@@ -8,15 +8,13 @@ const {
   editOrder,
   deleteOrder,
 } = require("../controllers/order.controller");
-
+const { extractJwtAdminFromCookie } = require("../middlewares/tokenextractor.middleware");
 router.post("/:id", addOrder);
-
-router.get("", getAllOrders);
-
 router.get("/:id", getSingleOrder);
 
-router.patch("/:id", editOrder);
-
-router.delete("/:id", deleteOrder);
+//admin route
+router.get("",extractJwtAdminFromCookie,getAllOrders);
+router.patch("/:id",extractJwtAdminFromCookie, editOrder);
+router.delete("/:id", extractJwtAdminFromCookie ,deleteOrder);
 
 module.exports = router;

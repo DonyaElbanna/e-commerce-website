@@ -58,6 +58,7 @@ const CitiesTable = () => {
     const getCities = async () => {
       try {
         const { data } = await axios.get(`http://localhost:9999/category`);
+        console.log(data)
         dispatch(citiesHandler(data.categories));
         setCities(
           data.categories.map((city) => ({

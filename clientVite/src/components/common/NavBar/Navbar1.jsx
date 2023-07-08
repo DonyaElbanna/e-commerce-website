@@ -173,7 +173,7 @@ const Navbar1 = () => {
                 </Typography>
               </NavLink>
 
-              {/* {auth.loggedInInfo.position === "admin" && (  */}
+              {auth.userInfo.role === "admin" && ( 
               <NavLink
                 className={({ isActive }) =>
                   isActive ? Style.NavLinkActive : Style.NavLink
@@ -189,7 +189,7 @@ const Navbar1 = () => {
                   Admin
                 </Typography>
               </NavLink>
-              {/* )}  */}
+              )} 
               <div>
                 <IconButton
                   aria-label="account of current user"

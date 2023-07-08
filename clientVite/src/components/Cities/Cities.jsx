@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import gif from "../../assets/gih.gif";
+import { useDispatch } from "react-redux";
+import { citiesHandler } from "../../rtk/features/citiesSlice";
 
 const Categories = () => {
   const [cats, setCats] = useState([]);
-
+  const dispatch = useDispatch()
   useEffect(() => {
     const getCats = async () => {
       const { data } = await axios.get("http://localhost:9999/category");
+      dispatch(citiesHandler(data.categories))
       // console.log(data);
       setCats(data.categories);
     };

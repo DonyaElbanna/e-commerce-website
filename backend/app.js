@@ -39,11 +39,7 @@ app.use((req, res, next) => {
 });
 
 // EXPRESS FEATURES AND SETTINGS
-app.use(
-  cookieParser(config.server.cookie.secret, {
-    SameSite: "none",
-  })
-);
+app.use(cookieParser(config.server.cookie.secret));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.xml());

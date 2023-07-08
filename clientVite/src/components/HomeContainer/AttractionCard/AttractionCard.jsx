@@ -8,10 +8,11 @@ import {
   handleToggleAuthModal,
 } from "../../../rtk/features/authSlice";
 
-const baseURL = "http://localhost:9999/user/64a8519bd3da2479266c9eba";
 
 const AttractionCard = ({ attr }) => {
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn} = useSelector((state) => state.auth);
+  const { auth} = useSelector((state) => state);
+  const baseURL = `http://localhost:9999/user/${auth.userInfo._id}`;
   const dispatch = useDispatch();
 
   const [isFilled, setIsFilled] = useState(false);

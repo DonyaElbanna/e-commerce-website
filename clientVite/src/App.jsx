@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate,Navigate} from "react-router-dom";
 import Home from "./pages/Home";
 import AttractionDetails from "./components/AttractionDetails/AttractionDetails";
 import AttractionsList from "./components/AttractionsList/AttractionsList";
@@ -54,10 +54,10 @@ function App() {
         {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
 
         <Route path="/cities" element={<Cities />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={auth.userInfo.role === "admin" ? <Admin /> : <Navigate to="/" replace />} />
+        <Route path="/form" element={auth.userInfo.role === "admin" ? <AttractionForm /> : <Navigate to="/" replace />} />
         <Route path="/city/:id" element={<AttractionsList />} />
         <Route path="/city/:id/details" element={<AttractionDetails />} />
-        <Route path="/form" element={<AttractionForm />} />
         <Route path="/*" element={<Error />} />
       </Routes>
       <Footer />

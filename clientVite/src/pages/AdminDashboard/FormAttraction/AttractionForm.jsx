@@ -7,7 +7,7 @@ import Joi from "joi";
 
 const AttractionForm = () => {
   const { cities, categories, attractions } = useSelector((state) => state);
-
+  console.log(cities.cities)
   // edited attr obj
   const editedAttr = attractions.Attractions.filter(
     (attr) => attr._id == attractions.attractionEdit
@@ -274,7 +274,7 @@ console.log(imagesArr)
                 <option disabled selected>
                   Enter City
                 </option>
-                {cities.cities.map((cat) => (
+                {cities.cities?.map((cat) => (
                   <option
                     key={cat._id}
                     value={cat._id}

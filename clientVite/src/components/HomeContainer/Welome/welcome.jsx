@@ -3,6 +3,7 @@ import Style from "./welcome.module.css";
 import video from "../../../assets/video/EgyVideo.mp4";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import SearchGroup from "./SearchComponent";
 
 function Welcome() {
   const [cats, setCats] = useState([]);
@@ -34,8 +35,8 @@ function Welcome() {
             {" "}
             Search your Holiday
           </h1>
-
-          <select
+          <SearchGroup />
+          {/* <select
             id="Cites"
             onChange={(e) => handleNavigate(e.target.value)}
             className="w-full h-9 md:h-14 mt-4 md:mt-9  xl:mt-14 border rounded-2xl text-black"
@@ -46,7 +47,7 @@ function Welcome() {
                 {cat.city}
               </option>
             ))}
-          </select>
+          </select> */}
         </div>
       </section>
     </>
