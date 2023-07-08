@@ -6,6 +6,7 @@ export default {
     "./node_modules/flowbite/**/*.{js,ts,jsx,tsx}",
     "./node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
+    "./node_modules/daisyui/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     // colors: {
@@ -13,5 +14,9 @@ export default {
     // },
     extend: {},
   },
-  plugins: [require("flowbite/plugin"), require("daisyui")],
+  plugins: [
+    require("flowbite/plugin"),
+    require("daisyui"),
+    require("tailwind-scrollbar"),
+  ],
 };

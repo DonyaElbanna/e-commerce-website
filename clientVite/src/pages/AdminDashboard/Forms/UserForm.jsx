@@ -144,11 +144,11 @@ const RegisterForm = () => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-gray-300 bg-opacity-75 transition-opacity" />
+          <div className="fixed inset-0 bg-black/50 transition-opacity" />
         </Transition.Child>
 
-        <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className=" p-5 mt-5 items-center sm:p-0">
+        <div className="fixed inset-0 z-10 overflow-y-auto bg-black/50">
+          <div className=" p-5 my-16 sm:p-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -160,7 +160,7 @@ const RegisterForm = () => {
             >
               <Dialog.Panel className="m-auto sm:my-8 sm:w-full sm:max-w-lg">
                 <Dialog.Title>
-                  <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                  <div className="shadow-lg shadow-white/30  w-full m-auto bg-white rounded-lg md:mt-0 sm:max-w-md xl:p-0 ">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                       {/* <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white">
                         Add a new User

@@ -26,14 +26,14 @@ function TabPanel(props) {
   return (
     <div
       role="tabpanel"
-      className="mx-auto"
+      className="mx-auto w-5/6 sm:w-4/6 lg:w-9/12"
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ py:4 , px:1 }}>
           <Typography component={"div"}>{children}</Typography>
         </Box>
       )}
@@ -55,7 +55,7 @@ function a11yProps(index) {
 }
 
 export default function VerticalTabs() {
-  const smallSc = useMediaQuery("(min-width:600px)");
+  const smallSc = useMediaQuery("(min-width:640px)");
 
   const [value, setValue] = React.useState(0);
 
@@ -85,11 +85,13 @@ export default function VerticalTabs() {
           overflow: "unset",
           "& .MuiTab-root.Mui-selected": {
             color: "#be853f",
+            
           },
         }}
         allowScrollButtonsMobile
         TabIndicatorProps={{
-          style: { background: "orange" },
+          style: { backgroundColor: "transparent",
+        },
         }}
       >
         <Tab
