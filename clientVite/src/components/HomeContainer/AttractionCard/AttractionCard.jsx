@@ -11,7 +11,7 @@ import {
 const AttractionCard = ({ attr }) => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { auth } = useSelector((state) => state);
-  console.log(auth.userInfo);
+  // console.log(auth.userInfo);
   // const baseURL = `http://localhost:9999/user/${auth.userInfo._id}`;
   const dispatch = useDispatch();
 
