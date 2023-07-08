@@ -5,8 +5,8 @@
   .footerLink {
     @apply text-xl hover:text-yellow-600 cursor-pointer hover:scale-110;
   }
-  body{
-    @apply bg-slate-100
+  body {
+    @apply bg-slate-100;
   }
 }
 
@@ -16,4 +16,17 @@
 }
 .logoFont {
   font-family: "Egypt";
+}
+
+/* .rotate-none {
+  transform: none !important;
+} */
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    margin: 0;
+  }
 }

@@ -29,7 +29,7 @@ const add = async (payload, next) => {
 
 const getOrders = async (next) => {
   try {
-    const orders = await Order.find();
+    const orders = await Order.find().populate("user").populate("attraction");
     return orders;
   } catch (err) {
     return next(new AppError(NOT_FOUND, 404));

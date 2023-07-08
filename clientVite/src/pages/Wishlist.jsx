@@ -1,12 +1,12 @@
-import React from 'react'
-import WishListContanier from '../components/wishListContainer/WishListContanier'
+import React from "react";
+import WishListContanier from "../components/wishListContainer/WishListContanier";
 
 const Wishlist = () => {
   return (
     <>
-        <WishListContanier />
+      <WishListContanier />
     </>
-  )
-}
+  );
+};
 
-export default Wishlist
+export default Wishlist;

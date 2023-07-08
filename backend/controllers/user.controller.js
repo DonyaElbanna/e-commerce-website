@@ -5,7 +5,11 @@ const {
   remove,
   getAllUser,
   addRemoveWishlist,
+  block,
+  changeRole,
+  getOrders,
 } = require("../services/user.service");
+const { signin } = require("./auth.controller");
 const authService = require("../services/auth.service");
 
 const AppError = require("../utils/AppError.util");
@@ -14,8 +18,8 @@ const { FAILURE } = require("../utils/namespace.util").namespace;
 const signup = async (req, res, next) => {
   try {
     const newUser = await add(req.body, next);
+    return signin(req, res, next);
     // await authService.sendVerification(newUser, "verify");
-    return res.status(201).json({ message: "create done" });
   } catch (err) {
     return next(new AppError(FAILURE, 404));
   }
@@ -68,14 +72,50 @@ const getAllUsers = async (req, res, next) => {
 };
 
 const toggleWishlist = async (req, res, next) => {
-  const { id } = req.params;
-  const attractionID = req.body.id;
+  // const { id } = req.params;
+  const id = res.locals.decodedToken._id;
+  // console.log(req.body)
+  const Attraction = req.body.Attraction;
   try {
-    const updatedUser = await addRemoveWishlist(id, attractionID, next);
+    const updatedUser = await addRemoveWishlist(id, Attraction, next);
     if (!updatedUser) {
       return next(new AppError(FAILURE, 404));
     }
     res.status(201).json(updatedUser);
+  } catch (err) {
+    return next(new AppError(FAILURE, 404));
+  }
+};
+
+const toggleBlock = async (req, res, next) => {
+  const { id } = req.params;
+  //! implementing only admin can block users
+  try {
+    const user = await block(id, next);
+    res.status(202).json(user);
+  } catch (err) {
+    return next(new AppError(FAILURE, 404));
+  }
+};
+
+const changeUserRole = async (req, res, next) => {
+  const { id } = req.params;
+  //! implementing only admin can block users
+  try {
+    const user = await changeRole(id, next);
+    res.status(202).json(user);
+  } catch (err) {
+    return next(new AppError(FAILURE, 404));
+  }
+};
+
+const getUserOrders = async (req, res, next) => {
+  // const { id } = req.params;
+  const id = res.locals.decodedToken._id;
+  console.log(id);
+  try {
+    const user = await getOrders(id, next);
+    res.status(200).json(user);
   } catch (err) {
     return next(new AppError(FAILURE, 404));
   }
@@ -88,4 +128,7 @@ module.exports = {
   deleteUser,
   getAllUsers,
   toggleWishlist,
+  toggleBlock,
+  changeUserRole,
+  getUserOrders,
 };

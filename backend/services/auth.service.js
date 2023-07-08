@@ -3,6 +3,8 @@ const userModel = require("../models/user.model");
 const { config } = require("../config/default.config");
 const mailerService = require("./mailer.service");
 const { ErrorHandler } = require("../lib/errorhandler.lib");
+const AppError = require("../utils/AppError.util");
+const { INVALID_CREDENTIALS } = require("../utils/namespace.util").namespace;
 
 const signin = async (payload) => {
   try {
@@ -14,14 +16,12 @@ const signin = async (payload) => {
       })
       .select("+password");
     if (!user) {
-      const err = new Error(INVALID_CREDENTIALS);
-      err.status = 409;
+      const err = new AppError(INVALID_CREDENTIALS, 409);
       throw err;
     }
     const isPasswordMatch = await user.comparePassword(payload.password);
     if (!isPasswordMatch) {
-      const err = new Error(INVALID_CREDENTIALS);
-      err.status = 409;
+      const err = new AppError(INVALID_CREDENTIALS, 409);
       throw err;
     }
     user.password = "";
@@ -33,13 +33,13 @@ const signin = async (payload) => {
 
 const sendVerification = async (data, type) => {
   try {
-    const user = await userModel.findOne({ email: data.email });
+    const user = await userModel.findOne({ email: data.emailAddress });
     if (user && type === "verify") {
       const verificationToken = await generateVerificationToken(user);
       // Modify the template later
       const payload = {
         senderName: "Tickets",
-        senderEmail: "mahmoudalmazoon@outlook.com",
+        senderEmail: "toursguied@outlook.com",
         receiverName: `${user.username}`,
         receiverEmail: data?.emailAddress,
         subject: "Verify Account",
@@ -51,10 +51,11 @@ const sendVerification = async (data, type) => {
       // Modify the template later
       const payload = {
         senderName: " Tickets",
-        senderEmail: "mahmoudalmazoon@outlook.com",
+        senderEmail: "toursguied@outlook.com",
         receiverName: `${user.username}`,
         receiverEmail: data?.emailAddress,
         subject: "Reset Password",
+        message: `Click <a href='${config.client.uri}/reset?token=${verificationToken}'>here</a> to reset your password.`,
         message: `Click <a href='${config.client.uri}/reset?token=${verificationToken}'>here</a> to reset your password.`,
       };
       await mailerService.mailer(payload);
@@ -70,12 +71,11 @@ const sendVerification = async (data, type) => {
 };
 
 const generateAccessToken = async (user) => {
-  console.log("user");
-  console.log(user);
   try {
     return jwt.sign(
       {
         _id: user._id,
+        role:user.role
       },
       config.server.token.secret,
       {
@@ -117,10 +117,55 @@ const generateVerificationToken = async (user) => {
   }
 };
 
+const resetPassword = async (payload) => {
+  try {
+    const user = await userModel.findOneAndUpdate(
+      { _id: payload.userId },
+      { password: payload.body.password }
+    );
+    if (!user) {
+      const err = new AppError(INVALID_CREDENTIALS, 409);
+      throw err;
+    }
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+const generateRefreshToken = async (user) => {
+  try {
+    const token = jwt.sign(
+      {
+        _id: user._id,
+        role:user.role
+      },
+      config.server.token.secret,
+      {
+        issuer: config.server.token.issuer,
+        algorithm: "HS256",
+        expiresIn: "1y",
+      }
+    );
+    const isRefreshTokenExist = await Token.exists({
+      userId: user._id,
+    });
+    if (!isRefreshTokenExist) {
+      const refreshToken = new Token();
+      refreshToken.userId = user._id;
+      refreshToken.token = token;
+      await refreshToken.save();
+    }
+    return token;
+  } catch (error) {
+    await ErrorHandler (error);
+  }
+};
 module.exports = {
   generateAccessToken,
   generateVerificationToken,
   verifyUser,
   signin,
   sendVerification,
+  resetPassword,
+  generateRefreshToken
 };

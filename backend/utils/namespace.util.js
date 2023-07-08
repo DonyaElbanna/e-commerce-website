@@ -7,9 +7,8 @@ const UNAUTHORIZED_ACCESS = "Unauthorized access.";
 const FORBIDDEN_ACCESS = "Forbidden.";
 const INVALID_CREDENTIALS = "Incorrect email or password, please try again.";
 const CompanyUndefined = "Company Not found.";
-const employerNotAllowed =
-  "employer not allow check company employers or employer companies in database";
-const adminonly = "Unauthorized access admin only allow ";
+const employerNotAllowed ="employer not allow check company employers or employer companies in database";
+const Adminonly = "Unauthorized access admin only allow ";
 const DUPLICATE_EMAIL = "This email is already registered";
 const FAILURE = "Something went wrong";
 
@@ -23,7 +22,7 @@ exports.namespace = {
   FORBIDDEN_ACCESS,
   CompanyUndefined,
   employerNotAllowed,
-  adminonly,
+  Adminonly,
   NOT_FOUNDUSER,
   DUPLICATE_EMAIL,
   FAILURE,

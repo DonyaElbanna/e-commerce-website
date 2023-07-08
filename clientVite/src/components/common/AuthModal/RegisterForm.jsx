@@ -1,27 +1,46 @@
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Joi from "joi";
+import axios from "axios";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  handleAuthType,
+  handleIsLoggedIntoggle,
+  handleOpenAuthModal,
+  handleUserInfo,
+} from "../../../rtk/features/authSlice";
 // import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 const RegisterForm = () => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
-
+  const dispatch = useDispatch();
   const [form, setForm] = useState({
+    userName: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
   const [errors, setErrors] = useState({});
 
+  useEffect(() => {
+    if (!open) {
+      dispatch(handleAuthType("login"));
+      dispatch(handleOpenAuthModal(false));
+    }
+  }, [open]);
+
   const schema = Joi.object({
+    userName: Joi.string().required().min(3),
     email: Joi.string()
       .required()
       .pattern(/^([a-z0-9_\.\+-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/),
     password: Joi.string().required().min(8),
     confirmPassword: Joi.string().required().min(8).equal(form.password),
   });
+
   const handleChange = (e) => {
+    setErrors({});
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -42,11 +61,44 @@ const RegisterForm = () => {
       }
       setErrors(errorData);
     } else {
+      register();
       setErrors({});
-      setOpen(false);
     }
   };
+  const register = async () => {
+    const newUser = {
+      email: form.email,
+      username: form.userName,
+      role: "user",
+      password: form.password,
+    };
+    console.log(newUser);
+    await axios
+      .post("http://localhost:9999/user", newUser)
+      .then((response) => {
+        dispatch(handleUserInfo(response.data.user));
+        dispatch(handleIsLoggedIntoggle());
+        setOpen(false);
+      })
+      .catch((error) => {
+        setOpen(true);
+        const errorData = {};
+        console.log(error.response);
+        if (!error.response) {
+          errorData.globalErr =
+            "something went wrong ,please check your connection";
+        } else if (
+          error.response.data.message === "This email is already registered"
+        ) {
+          errorData.email = error.response.data.message;
+        } else {
+          errorData.userName =
+            "this userName already exist , please try another one";
+        }
 
+        setErrors(errorData);
+      });
+  };
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -68,7 +120,7 @@ const RegisterForm = () => {
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className=" p-5 mt-20 items-center sm:p-0">
+          <div className=" p-5 mt-5 items-center sm:p-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -86,6 +138,26 @@ const RegisterForm = () => {
                         Create New account
                       </h1>
                       <form className="space-y-4 md:space-y-6" action="#">
+                        <div>
+                          <label
+                            htmlFor="userName"
+                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                          >
+                            User Name
+                          </label>
+                          <input
+                            type="userName"
+                            name="userName"
+                            id="userName"
+                            className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="John Elraqi"
+                            required=""
+                            onChange={(value) => handleChange(value)}
+                          />
+                          <p className="text-red-500 text-xs italic">
+                            {errors.userName}
+                          </p>
+                        </div>
                         <div>
                           <label
                             htmlFor="email"
@@ -106,6 +178,7 @@ const RegisterForm = () => {
                             {errors.email}
                           </p>
                         </div>
+
                         <div>
                           <label
                             htmlFor="password"
@@ -171,6 +244,9 @@ const RegisterForm = () => {
                             </label>
                           </div>
                         </div>
+                        <p className="text-red-500 text-xs italic">
+                          {errors.globalErr}
+                        </p>
                         <div>
                           <button
                             type="submit"
@@ -183,7 +259,7 @@ const RegisterForm = () => {
                         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                           Already have an account?{" "}
                           <Link
-                            to="/login"
+                            onClick={() => dispatch(handleAuthType("login"))}
                             className="font-semibold text-indigo-600 hover:text-indigo-500"
                           >
                             Login here

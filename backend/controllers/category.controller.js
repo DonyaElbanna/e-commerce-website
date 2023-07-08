@@ -5,6 +5,8 @@ const {
   create,
   getCategories,
   getCategory,
+  deleteCat,
+  editCat,
   default: categoryService,
 } = require("../services/category.service");
 const cloudinary = require("../utils/cloudinary.util");
@@ -16,7 +18,7 @@ const createCategory = async (req, res, next) => {
 
   try {
     const category = await create(city, newPath.url, next);
-    res.status(201).json({ category: category });
+    res.status(201).json(category);
   } catch (err) {
     return next(new AppError(FAILURE, 404));
   }
@@ -33,12 +35,12 @@ const getCategoryByID = async (req, res) => {
 };
 
 const editCategory = async (req, res) => {
-  const category = await categoryService.editCategory(req.params.id, req.body);
-  res.status(200).json({ category: category });
+  const category = await editCat(req.params.id, req.body);
+  res.status(200).json(category);
 };
 
 const deleteCategory = async (req, res) => {
-  const category = await categoryService.deleteCategory(req.params.id);
+  const category = await deleteCat(req.params.id);
   res.status(200).send("Category is Removed Successfully");
 };
 

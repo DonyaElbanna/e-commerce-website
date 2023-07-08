@@ -35,15 +35,18 @@ const getCategory = async (id) => {
   }
 };
 
-const editCategory = async (id, edits) => {
+const editCat = async (id, edits) => {
   try {
-    return await Category.findByIdAndUpdate(id, edits);
+    return await Category.findByIdAndUpdate(id, edits, {
+      upsert: true,
+      new: true,
+    });
   } catch (error) {
     throw new AppError("THIS CATEGORY IS NOT FOUND TO EDIT", 404);
   }
 };
 
-const deleteCategory = async (id) => {
+const deleteCat = async (id) => {
   try {
     return await Category.findByIdAndDelete(id);
   } catch (error) {
@@ -55,6 +58,6 @@ module.exports = {
   create,
   getCategories,
   getCategory,
-  editCategory,
-  deleteCategory,
+  editCat,
+  deleteCat,
 };

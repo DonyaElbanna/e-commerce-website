@@ -17,13 +17,31 @@ const add = async (payload, next) => {
     user.password = undefined;
     return user;
   } catch (err) {
+    console.log(err);
     return next(new AppError(FAILURE, 404));
   }
 };
 
 const getUser = async (id, next) => {
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id)
+      .populate("wishlist")
+      .populate({
+        path: "wishlist",
+        populate: {
+          path: "category",
+          model: "Category",
+        },
+      })
+      .populate({
+        path: "wishlist",
+        populate: {
+          path: "subcategory",
+          model: "Subcategory",
+        },
+      })
+      .populate("orders")
+      .exec();
     if (!user) {
       return next(new AppError(NOT_FOUND, 404));
     }
@@ -78,15 +96,15 @@ const addRemoveWishlist = async (id, attractionID, next) => {
           { _id: id },
           { $pull: { wishlist: attractionID } },
           { upsert: true, new: true }
-        ).populate('wishlist');
-        console.log("was in wishlist");
+        ).populate("wishlist");
+        // console.log("was in wishlist");
       } else {
         var updatedUser = await User.findOneAndUpdate(
           { _id: id },
           { $addToSet: { wishlist: attractionID } },
           { upsert: true, new: true }
         );
-        console.log("was NOT in wishlist");
+        // console.log("was NOT in wishlist");
       }
     }
 
@@ -96,4 +114,84 @@ const addRemoveWishlist = async (id, attractionID, next) => {
   }
 };
 
-module.exports = { add, getUser, edit, remove, getAllUser, addRemoveWishlist };
+const block = async (id, next) => {
+  try {
+    const editedUser = await User.findByIdAndUpdate(
+      id,
+      [{ $set: { isBlocked: { $eq: [false, "$isBlocked"] } } }],
+      {
+        upsert: true,
+        new: true,
+      }
+    );
+    return editedUser;
+  } catch (err) {
+    return next(new AppError(NOT_FOUND, 404));
+  }
+};
+
+const changeRole = async (id, next) => {
+  const user = await User.findById(id);
+
+  if (user.role !== "admin") {
+    try {
+      const editedUser = await User.findByIdAndUpdate(
+        id,
+        [{ $set: { role: "admin" } }],
+        {
+          upsert: true,
+          new: true,
+        }
+      );
+      return editedUser;
+    } catch (err) {
+      return next(new AppError(NOT_FOUND, 404));
+    }
+  } else {
+    try {
+      const editedUser = await User.findByIdAndUpdate(
+        id,
+        [{ $set: { role: "user" } }],
+        {
+          upsert: true,
+          new: true,
+        }
+      );
+      return editedUser;
+    } catch (err) {
+      return next(new AppError(NOT_FOUND, 404));
+    }
+  }
+};
+
+const getOrders = async (id, next) => {
+  try {
+    const user = await User.findById(id)
+      .populate("orders")
+      .populate({
+        path: "orders",
+        populate: {
+          path: "attraction",
+          model: "Attraction",
+        },
+      });
+    if (!user) {
+      return next(new AppError(NOT_FOUND, 404));
+    }
+    return user;
+  } catch (err) {
+    return next(new AppError(NOT_FOUND, 404));
+  }
+};
+
+module.exports = {
+  add,
+  getUser,
+  edit,
+  remove,
+  getAllUser,
+  addRemoveWishlist,
+  block,
+  changeRole,
+  getOrders,
+};

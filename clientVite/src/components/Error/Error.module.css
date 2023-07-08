@@ -1,0 +1,21 @@
+section {
+  background-color: rgba(0, 0, 0);
+}
+/* main {
+  background-image: url("../../assets/catBackgroundObject.png");
+  background-repeat: repeat;
+  background-position: center center;
+} */
+main {
+  background-image: url("../../assets/eagleBackgroundObject.png");
+  background-repeat: repeat;
+  background-position: center center;
+}
+/* main {
+  background-image: url("../../assets/eyeBackgroundObject.png");
+  background-repeat: repeat;
+  background-position: center center;
+} */
+h1 ,h3{
+  color: #be853f;
+}
