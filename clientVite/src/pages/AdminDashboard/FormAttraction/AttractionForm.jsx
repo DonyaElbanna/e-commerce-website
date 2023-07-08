@@ -262,15 +262,15 @@ const AttractionForm = () => {
               <label htmlFor="city" className="text-[#be853f] font-semibold">
                 City
               </label>
-
               <select
+                defaultValue={"DEFAULT"}
                 id="city"
                 required
                 name="category"
                 onChange={(value) => handleChange(value)}
-                className="select rounded-none  w-full pb-4 text-slate-700 bg-transparent border-x-neutral-500  border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
+                className="select text-slate-500 rounded-none  w-full pb-4  bg-transparent border-x-neutral-500  border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
               >
-                <option disabled selected>
+                <option value="DEFAULT" disabled>
                   Enter City
                 </option>
                 {cities.cities?.map((cat) => (
@@ -278,12 +278,12 @@ const AttractionForm = () => {
                     key={cat._id}
                     value={cat._id}
                     className="text-[#be853f]"
-                    selected={form.category === cat._id}
                   >
                     {cat.city}
                   </option>
                 ))}
               </select>
+
               <p className="text-red-500 text-xs italic">{errors.category}</p>
             </div>
 
@@ -295,13 +295,14 @@ const AttractionForm = () => {
                 Category
               </label>
               <select
+                defaultValue={"DEFAULT"}
                 id="Category"
                 required
                 name="subcategory"
                 onChange={(value) => handleChange(value)}
-                className="select rounded-none  w-full pb-4 text-slate-700 bg-transparent border-x-neutral-500  border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
+                className="select rounded-none  w-full pb-4 text-slate-500 bg-transparent border-x-neutral-500  border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
               >
-                <option disabled selected>
+                <option value="DEFAULT" disabled>
                   Enter Category
                 </option>
                 {categories.categories.map((subcategory) => (
@@ -309,12 +310,12 @@ const AttractionForm = () => {
                     key={subcategory._id}
                     value={subcategory._id}
                     className="text-[#be853f]"
-                    selected={form.subcategory === subcategory._id}
                   >
                     {subcategory.type}
                   </option>
                 ))}
               </select>
+
               <p className="text-red-500 text-xs italic">
                 {errors.subcategory}
               </p>
