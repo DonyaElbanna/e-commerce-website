@@ -39,7 +39,7 @@ const WishListContanier = ({ attr }) => {
   console.log(wishlistItems[0]);
   return (
     <div className="container px-5 mx-auto mb-5">
-      <h3 className="text-4xl mb-10 text-center	">Cities</h3>
+      <h3 className="text-4xl mb-10 text-center">Cities</h3>
       {wishlistItems.length == 0 ? (
         <img
           src="https://www.egypttoursportal.com/images/2022/08/5-Days-Cairo-Aswan-Abu-Simbel-Tour-Package-Egypt-Tours-Portal.jpg"
@@ -50,11 +50,11 @@ const WishListContanier = ({ attr }) => {
         <div className="p-10 grid sm:grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-5">
           {wishlistItems.map((cat) => (
             <Link
-              className="m-10 group w-fit h-fit"
+              className="ml-5 mr-9 group w-11/12 h-fit"
               key={cat._id}
               to={`/city/${cat._id}/details`}
             >
-              <div className="md:mr-8 group-hover:scale-105 sm: w-max md:w-80 lg:flex">
+              <div className="md:mr-8 group-hover:scale-105  md:w-80 lg:flex">
                 {/* w-full */}
                 <div
                   className="h-48 rounded-t-xl lg:rounded-r-none lg:rounded-l-xl lg:h-auto lg:w-48 flex-none bg-cover text-center overflow-hidden"
