@@ -14,9 +14,9 @@ exports.extractJwtFromCookie = (req, res, next) => {
   const path = req.path.split("/").at(-1);
   const token =
     path === "refresh" || path === "signout"
-      // ? req.signedCookies?.persist
-      // : req.signedCookies?.auth;
-      ? req.cookies?.persist
+      ? // ? req.signedCookies?.persist
+        // : req.signedCookies?.auth;
+        req.cookies?.persist
       : req.cookies?.auth;
   // console.log('path', req.cookies.auth);
   if (token) {
@@ -121,6 +121,7 @@ exports.extractTransactionTokenFromCookie = async (req, res, next) => {
 };
 exports.extractJwtFromHeader = (req, res, next) => {
   const token = req.headers?.authorization?.split(" ")[1] || req.body.token;
+  console.log(token);
   if (token) {
     jwt.verify(token, config.server.token.secret, (error, decoded) => {
       if (error) {

@@ -37,21 +37,22 @@ exports.Schemas = {
       emailAddress: Joi.string().required(),
     }),
     confirmAndModifyPassword: Joi.object({
+      token: Joi.string().required(),
       password: Joi.string().required(),
     }),
   },
-  category:{
+  category: {
     create: Joi.object({
-        name: Joi.string().required(),
-        image: Joi.string().required(),
-        image_key: Joi.string().optional()
+      name: Joi.string().required(),
+      image: Joi.string().required(),
+      image_key: Joi.string().optional(),
     }),
     edit: Joi.object({
-        name: Joi.string().required(),
-        image: Joi.string().optional(),
-        image_key: Joi.string().optional()
+      name: Joi.string().required(),
+      image: Joi.string().optional(),
+      image_key: Joi.string().optional(),
     }),
-},
+  },
 };
 exports.QueryValidator = (schema) => {
   return async (req, res, next) => {

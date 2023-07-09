@@ -34,6 +34,7 @@ const signin = async (payload) => {
 const sendVerification = async (data, type) => {
   try {
     const user = await userModel.findOne({ email: data.emailAddress });
+    console.log("asmaa", user);
     if (user && type === "verify") {
       const verificationToken = await generateVerificationToken(user);
       // Modify the template later
@@ -75,7 +76,7 @@ const generateAccessToken = async (user) => {
     return jwt.sign(
       {
         _id: user._id,
-        role:user.role
+        role: user.role,
       },
       config.server.token.secret,
       {
@@ -93,7 +94,7 @@ const generateAccessTokenGuest = async (user) => {
     return jwt.sign(
       {
         _id: user._id,
-        role:user.role
+        role: user.role,
       },
       config.server.token.secret,
       {
@@ -155,7 +156,7 @@ const generateRefreshToken = async (user) => {
     const token = jwt.sign(
       {
         _id: user._id,
-        role:user.role
+        role: user.role,
       },
       config.server.token.secret,
       {
@@ -175,7 +176,7 @@ const generateRefreshToken = async (user) => {
     }
     return token;
   } catch (error) {
-    await ErrorHandler (error);
+    await ErrorHandler(error);
   }
 };
 module.exports = {
@@ -186,5 +187,5 @@ module.exports = {
   sendVerification,
   resetPassword,
   generateRefreshToken,
-  generateAccessTokenGuest
+  generateAccessTokenGuest,
 };

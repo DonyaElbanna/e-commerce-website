@@ -5,20 +5,20 @@ const signin = async (req, res, next) => {
     const accessToken = await authService.generateAccessToken(data);
     const refreshToken = await authService.generateAccessToken(data);
     return res
-    .cookie('auth', accessToken, {
-      // secure: true,
-      // signed: true,
-      // httpOnly: true,
-      maxAge:  24 * 60 * 60 * 1000,
-      // domain: config.server.cookie.domain
-  })
-  .cookie('persist', refreshToken, {
-      // secure: true,
-      // signed: true,
-      // httpOnly: true,
-      maxAge: 365 * 24 * 60 * 60 * 1000,
-      // domain: config.server.cookie.domain
-  })
+      .cookie("auth", accessToken, {
+        // secure: true,
+        // signed: true,
+        // httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+        // domain: config.server.cookie.domain
+      })
+      .cookie("persist", refreshToken, {
+        // secure: true,
+        // signed: true,
+        // httpOnly: true,
+        maxAge: 365 * 24 * 60 * 60 * 1000,
+        // domain: config.server.cookie.domain
+      })
       .status(200)
       .json({ user: data });
   } catch (error) {
@@ -36,6 +36,7 @@ const sendVerification = async (req, res, next) => {
 const resetPassword = async (req, res, next) => {
   try {
     req.userId = res.locals.verificationToken._id;
+
     const data = await authService.resetPassword(req);
     const accessToken = await authService.generateAccessToken(data);
     return res
@@ -50,11 +51,13 @@ const resetPassword = async (req, res, next) => {
 };
 const forgetPassword = async (req, res, next) => {
   await authService
-    .sendVerification(req.query, "reset")
+    .sendVerification(req.body, "reset")
     .then(() => {
       return res.status(200).send();
     })
-    .catch((err) => next(err));
+    .catch((err) => {
+      next(err);
+    });
 };
 module.exports = {
   signin,
