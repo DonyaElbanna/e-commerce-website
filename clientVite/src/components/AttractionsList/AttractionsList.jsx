@@ -24,7 +24,9 @@ const AttractionsList = () => {
   );
 
   const handleFilter = (catID) => {
-    const filteredattrs = cityAttrs.filter((attr) => attr.subcategory._id == catID);
+    const filteredattrs = cityAttrs.filter(
+      (attr) => attr.subcategory._id == catID
+    );
     setFilteredAttrs(filteredattrs);
   };
 
@@ -34,21 +36,6 @@ const AttractionsList = () => {
 
   return (
     <>
-<<<<<<< HEAD
-      {attrs.length == 0 || subcats.length == 0 ? (
-        <img src={gif} className=" mx-auto" style={{ width: "250px", marginTop:'180px' }} />
-      ) : (
-        <div className="container p-5 mx-auto">
-          <h3 className="text-6xl my-10 text-center headerFont text-zinc-700">{cityName}</h3>
-          <Categories subcats={subcats} handleFilter={handleFilter} resetFilters={resetFilters} />
-          <h3 className="text-6xl my-10 text-center headerFont text-zinc-700">Tours</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4" style={{ gridTemplateColumns:"repeat(4, minmax(0, 1fr))"}}>
-            {!filterID ? (
-              attrs.length == 0 ? (
-                <p>Nothing</p>
-              ) : (
-                attrs.map((attr) => (
-=======
       {cityAttrs.length == 0 || cityCats.length == 0 ? (
         <img src={gif} className=" mx-auto" style={{ width: "150px" }} />
       ) : (
@@ -63,7 +50,6 @@ const AttractionsList = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {filteredAttrs.length == 0
               ? cityAttrs.map((attr) => (
->>>>>>> c0592e2e583694d85603a5aa2b759fae3b1f0e2d
                   <AttractionCard key={attr._id} attr={attr} />
                 ))
               : filteredAttrs.map((attr) => (

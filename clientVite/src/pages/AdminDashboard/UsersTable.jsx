@@ -137,40 +137,6 @@ const Users = () => {
 
   return (
     <>
-<<<<<<< HEAD
-      {common.isLoading ? (
-        <img src={gif} className="mx-auto" style={{ width: "250px", marginTop:'180px' }} />
-      ) : (
-        <>
-          <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
-            <Button
-              style={{
-                color: "#be853f",
-                border: "1px solid #be853f",
-                boxShadow: "2px 2px #be853f",
-              }}
-              startIcon={<AddCircleOutlineOutlinedIcon />}
-              onClick={openUserModal}
-            >
-              Add a new record
-            </Button>
-          </Box>
-          <Paper sx={{ width: "100%", overflow: "hidden", display: "grid" }}>
-            <TableContainer
-              sx={{ maxHeight: 440, width: "100%", margin: "auto" }}
-            >
-              <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                  <TableRow>
-                    {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        align={column.align}
-                        style={{ minWidth: column.minWidth }}
-                        sx={{ textAlign: "center", fontWeight: "bold" }}
-                      >
-                        {column.label}
-=======
       <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
         <Button
           style={{
@@ -241,7 +207,6 @@ const Users = () => {
                             {user.role == "admin" ? "remove" : "make"} Admin
                           </Button>
                         </Box>
->>>>>>> c0592e2e583694d85603a5aa2b759fae3b1f0e2d
                       </TableCell>
                       <TableCell>
                         {user.isBlocked ? (
