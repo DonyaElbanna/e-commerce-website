@@ -97,7 +97,7 @@ const IconMap = () => {
         {country}
       </h1>
       <svg
-        className="mb-3"
+        className={`mb-3 ${iconMapStyle.citiesMap}`}
         id="svg-id"
         ref={svgRef}
         baseProfile="tiny"

@@ -79,3 +79,7 @@ h1 {
   transform: scale(1.02);
   -webkit-transform: scale(1.02);
 } */
+
+.citiesMap:hover {
+  animation: none;
+}

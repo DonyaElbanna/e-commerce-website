@@ -1,3 +1,4 @@
+const Guest = require("../models/guest.model");
 const User = require("../models/user.model");
 const AppError = require("../utils/AppError.util");
 const { DUPLICATE_EMAIL, NOT_FOUND } =
@@ -13,7 +14,7 @@ const add = async (payload, next) => {
     // const user = await User.create(payload);
     const user = new User(payload);
     await user.save();
-    console.log(user);
+    // console.log(user);
     user.password = undefined;
     return user;
   } catch (err) {
@@ -86,25 +87,23 @@ const getAllUser = async (next) => {
 
 const addRemoveWishlist = async (id, attractionID, next) => {
   try {
-    var user = await User.findById(id);
-
+    const user = (await User.findById(id)) || (await Guest.findById(id));
+    let updatedUser;
     if (!user) {
       return next(new AppError(NOT_FOUND, 404));
     } else {
       if (user.wishlist.includes(attractionID)) {
-        var updatedUser = await User.findOneAndUpdate(
-          { _id: id },
+        updatedUser = await User.findOneAndUpdate(
+          id,
           { $pull: { wishlist: attractionID } },
           { upsert: true, new: true }
         ).populate("wishlist");
-        // console.log("was in wishlist");
       } else {
-        var updatedUser = await User.findOneAndUpdate(
-          { _id: id },
+        updatedUser = await User.findOneAndUpdate(
+          id,
           { $addToSet: { wishlist: attractionID } },
           { upsert: true, new: true }
-        );
-        // console.log("was NOT in wishlist");
+        ).populate("wishlist");
       }
     }
 
@@ -184,6 +183,22 @@ const getOrders = async (id, next) => {
   }
 };
 
+const adminAdd = async (payload, next) => {
+  try {
+    const userExists = await User.find({ email: payload.email });
+    if (userExists.length !== 0) {
+      return next(new AppError(DUPLICATE_EMAIL, 409));
+    }
+    const user = await User.create(payload);
+    // await user.save();
+    user.password = undefined;
+    return user;
+  } catch (err) {
+    console.log(err);
+    return next(new AppError(FAILURE, 404));
+  }
+};
+
 module.exports = {
   add,
   getUser,
@@ -194,4 +209,5 @@ module.exports = {
   block,
   changeRole,
   getOrders,
+  adminAdd,
 };

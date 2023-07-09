@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../../assets/logo.png";
+import cities from "../../../assets/planet-earth.png";
+import order from "../../../assets/plane-ticket.png";
+import wishlist from "../../../assets/add-to-favorites.png";
+import home from "../../../assets/home-page.png";
+import dashboard from "../../../assets/dashboard.png";
+import login from "../../../assets/traveller.png";
+
 import Style from "./Navbar.module.css";
 import { Box, CardMedia, Container, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
@@ -26,6 +33,7 @@ import {
   handleToggleAuthModal,
   handleUserInfo,
 } from "../../../rtk/features/authSlice";
+import Home from "../../../pages/Home";
 
 const Navbar1 = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -39,7 +47,6 @@ const Navbar1 = () => {
     dispatch(handleIsLoggedIntoggle());
   };
   const { auth } = useSelector((state) => state);
-  // console.log(auth);
   const HandleLogin = (e) => {
     if (auth.userInfo) {
       setAnchorEl(e.currentTarget);
@@ -53,30 +60,9 @@ const Navbar1 = () => {
     const scrollPosition = window.scrollY;
     setScroll(scrollPosition);
   };
-  // console.log(window.scrollY)
   window.addEventListener("scroll", changeColor);
-  // const colorValue = Math.max(255 - scroll, 0)
-  //   .toString(16)
-  //   .padStart(2, "0");
   let fade = 1 - scroll / 500;
-  // if (window.scrollY == 0) {
-  //   setScroll(true);
-  // }
-  // const style = {
-  //   backgroundColor: !window.scrollY
-  //     ? `rgba(255, 255, 255)`
-  //     : `rgba(0, 0, 0, ${1 - fade})`,
-  // };
-  // const style = ;
 
-  // const changeColor = () => {
-  // if (window.scrollY > 0) {
-  //   setScroll(true);
-  //   } else {
-  //     setScroll(false);
-  //   }
-  // };
-  // console.log(window.scrollY);
   window.addEventListener("scroll", changeColor);
 
   return (
@@ -119,10 +105,14 @@ const Navbar1 = () => {
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  isActive ? Style.NavLinkActive : Style.NavLink
+                  isActive
+                    ? Style.NavLinkActive
+                    : !window.scrollY
+                    ? Style.NavLinkTop
+                    : Style.NavLink
                 }
               >
-                <HomeIcon />
+                <img className={Style.navbarImg} src={home}></img>
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
                   display={{ xs: "none", md: "inline-flex" }}
@@ -133,10 +123,14 @@ const Navbar1 = () => {
               <NavLink
                 to="/cities"
                 className={({ isActive }) =>
-                  isActive ? Style.NavLinkActive : Style.NavLink
+                  isActive
+                    ? Style.NavLinkActive
+                    : !window.scrollY
+                    ? Style.NavLinkTop
+                    : Style.NavLink
                 }
               >
-                <PublicOutlinedIcon />
+                <img className={Style.navbarImg} src={cities}></img>
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
                   display={{ xs: "none", md: "inline-flex" }}
@@ -147,10 +141,14 @@ const Navbar1 = () => {
               <NavLink
                 to="/order"
                 className={({ isActive }) =>
-                  isActive ? Style.NavLinkActive : Style.NavLink
+                  isActive
+                    ? Style.NavLinkActive
+                    : !window.scrollY
+                    ? Style.NavLinkTop
+                    : Style.NavLink
                 }
               >
-                <ShoppingCartOutlinedIcon />
+                <img className={Style.navbarImg} src={order}></img>
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
                   display={{ xs: "none", md: "inline-flex" }}
@@ -161,10 +159,15 @@ const Navbar1 = () => {
               <NavLink
                 to="/wishlist"
                 className={({ isActive }) =>
-                  isActive ? Style.NavLinkActive : Style.NavLink
+                  isActive
+                    ? Style.NavLinkActive
+                    : !window.scrollY
+                    ? Style.NavLinkTop
+                    : Style.NavLink
                 }
               >
-                <FavoriteBorderOutlinedIcon />
+                {/* <FavoriteBorderOutlinedIcon style={{fill:"#be853f"}}/> */}
+                <img className={Style.navbarImg} src={wishlist}></img>
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
                   display={{ xs: "none", md: "inline-flex" }}
@@ -173,23 +176,27 @@ const Navbar1 = () => {
                 </Typography>
               </NavLink>
 
-              {auth.userInfo.role === "admin" && ( 
-              <NavLink
-                className={({ isActive }) =>
-                  isActive ? Style.NavLinkActive : Style.NavLink
-                }
-                to="/admin"
-              >
-                <DashboardIcon />
-
-                <Typography
-                  fontWeight={{ xs: 600, md: 700 }}
-                  display={{ xs: "none", md: "inline-flex" }}
+              {auth.userInfo.role === "admin" && (
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? Style.NavLinkActive
+                      : !window.scrollY
+                      ? Style.NavLinkTop
+                      : Style.NavLink
+                  }
+                  to="/admin"
                 >
-                  Admin
-                </Typography>
-              </NavLink>
-              )} 
+                  <DashboardIcon />
+
+                  <Typography
+                    fontWeight={{ xs: 600, md: 700 }}
+                    display={{ xs: "none", md: "inline-flex" }}
+                  >
+                    Admin
+                  </Typography>
+                </NavLink>
+              )}
               <div>
                 <IconButton
                   aria-label="account of current user"
@@ -198,6 +205,10 @@ const Navbar1 = () => {
                   onClick={HandleLogin}
                   sx={{
                     color: "white",
+                    textShadow: "1px 1px 5px black",
+                    ":hover": {
+                      backgroundColor: "rgba(255, 255, 255, 0)",
+                    },
                   }}
                 >
                   <Avatar
@@ -261,10 +272,15 @@ const Navbar1 = () => {
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  isActive ? Style.NavLinkActive : Style.NavLink
+                  isActive
+                    ? Style.NavLinkActive
+                    : !window.scrollY
+                    ? Style.NavLinkTop
+                    : Style.NavLink
                 }
               >
-                <HomeIcon />
+                {/* <HomeIcon /> */}
+                <img className={Style.navbarImg} src={home}></img>
 
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
@@ -276,10 +292,16 @@ const Navbar1 = () => {
               <NavLink
                 to="/cities"
                 className={({ isActive }) =>
-                  isActive ? Style.NavLinkActive : Style.NavLink
+                  isActive
+                    ? Style.NavLinkActive
+                    : !window.scrollY
+                    ? Style.NavLinkTop
+                    : Style.NavLink
                 }
               >
-                <PublicOutlinedIcon />
+                {/* <PublicOutlinedIcon /> */}
+                <img className={Style.navbarImg} src={cities}></img>
+
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
                   display={{ xs: "none", md: "inline-flex" }}
@@ -288,10 +310,12 @@ const Navbar1 = () => {
                 </Typography>
               </NavLink>
               <span
-                className={Style.NavLink}
+                className={!window.scrollY ? Style.NavLinkTop : Style.NavLink}
+                // className={Style.NavLink}
                 onClick={() => dispatch(handleToggleAuthModal())}
               >
-                <Person2OutlinedIcon />
+                {/* <Person2OutlinedIcon /> */}
+                <img className={Style.navbarImg} src={login}></img>
                 Log in
               </span>
             </Stack>

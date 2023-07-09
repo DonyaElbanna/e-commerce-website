@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Tooltip from "@mui/material/Tooltip";
-
+import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -28,7 +28,7 @@ const style = {
   width: 400,
   bgcolor: "background.paper",
   border: "2px solid #000",
-  boxShadow: 24,
+  borderRadius: "10px",
   p: 4,
   textAlign: "center",
 };
@@ -107,48 +107,65 @@ const Attractions = () => {
       headerName: "Name",
       width: 150,
     },
-    { field: "city", headerName: "City", width: 125 },
-    { field: "category", headerName: "Category", width: 130 },
-    { field: "status", headerName: "Status", width: 105 },
     {
-      field: "childAvailability",
-      headerName: "Children Available",
+      field: "city",
+      headerName: "City",
+      width: 125,
+    },
+    {
+      field: "category",
+      headerName: "Category",
       width: 130,
     },
-    { field: "adultPrice", headerName: "Adult Price", width: 105 },
-    { field: "childPrice", headerName: "Child Price", width: 105 },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 105,
+      disableColumnMenu: true,
+    },
+    {
+      field: "childAvailability",
+      headerName: "Children",
+      width: 110,
+      disableColumnMenu: true,
+    },
+    {
+      field: "adultPrice",
+      headerName: "Adult Price",
+      width: 105,
+      disableColumnMenu: true,
+    },
+    {
+      field: "childPrice",
+      headerName: "Child Price",
+      width: 105,
+      disableColumnMenu: true,
+    },
     {
       field: "edit",
       headerName: "Edit",
       sortable: false,
       width: 80,
+      disableColumnMenu: true,
       renderCell: (params) => (
-        <Button
-          variant="outlined"
-          onClick={() => openEditAttrForm(params.row.id)}
-          sx={{
-            color: "#be853f",
-            border: "1px solid orange",
-            ":hover": {
-              border: "1px solid #be853f",
-              backgroundColor: "#ffc0715c",
-            },
-          }}
-        >
-          Edit
-        </Button>
+        <Tooltip title="Edit">
+          <IconButton onClick={() => openEditAttrForm(params.row.id)}>
+            <BorderColorOutlinedIcon sx={{ color: "#5151ac" }} />
+          </IconButton>
+        </Tooltip>
       ),
     },
     {
       field: "delete",
       headerName: "Delete",
       sortable: false,
-      width: 60,
+      width: 70,
+      disableColumnMenu: true,
       renderCell: (params) => (
         <>
           <Tooltip title="Delete">
             <IconButton onClick={() => handleOpen(params.row.id)}>
-              <DeleteIcon />
+              <DeleteIcon sx={{ color: "#ca4a4a" }} />
             </IconButton>
           </Tooltip>
           <Modal
@@ -160,7 +177,8 @@ const Attractions = () => {
             slots={{ backdrop: Backdrop }}
             slotProps={{
               backdrop: {
-                timeout: 500,
+                timeout: 400,
+                style: { backgroundColor: "rgba(0,0,0,0.2)" },
               },
             }}
           >
@@ -233,7 +251,7 @@ const Attractions = () => {
   return (
     <>
       {common.isLoading ? (
-        <img src={gif} className="mx-auto" style={{ width: "150px" }} />
+        <img src={gif} className="mx-auto" style={{ width: "250px", marginTop:'180px' }} />
       ) : (
         <>
           <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
@@ -242,6 +260,7 @@ const Attractions = () => {
                 color: "#be853f",
                 border: "1px solid #be853f",
                 boxShadow: "2px 2px #be853f",
+                fontWeight: "bold",
               }}
               startIcon={<AddCircleOutlineOutlinedIcon />}
               onClick={openAddAttrForm}
@@ -253,7 +272,7 @@ const Attractions = () => {
             style={{
               display: "table",
               tableLayout: "fixed",
-              width: "100%",
+              width: "fit-content",
               margin: "auto",
             }}
           >
@@ -266,8 +285,16 @@ const Attractions = () => {
                 },
               }}
               pageSizeOptions={[10, 20]}
-              checkboxSelection
               style={{ maxHeight: 500 }}
+              sx={{
+                ".MuiDataGrid-columnHeaderTitle": {
+                  fontWeight: "bold !important",
+                  fontSize: "15px",
+                  textAlign: "center",
+                },
+                paddingLeft: "20px",
+
+              }}
             />
           </div>
         </>

@@ -13,6 +13,7 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import {
   handleAuthType,
   handleToggleAuthModal,
@@ -32,7 +33,7 @@ const style = {
   width: 400,
   bgcolor: "background.paper",
   border: "2px solid #000",
-  boxShadow: 24,
+  borderRadius: "10px",
   p: 4,
   textAlign: "center",
 };
@@ -84,27 +85,23 @@ const CitiesTable = () => {
 
   // table cols
   const columns = [
-    { field: "name", headerName: "City", width: 120 },
+    {
+      field: "name",
+      headerName: "City",
+      width: 140,
+    },
     {
       field: "edit",
       headerName: "Edit",
       sortable: false,
       width: 90,
+      disableColumnMenu: true,
       renderCell: (params) => (
-        <Button
-          variant="outlined"
-          onClick={() => handleEditCity(params.row)}
-          sx={{
-            color: "#be853f",
-            border: "1px solid orange",
-            ":hover": {
-              border: "1px solid #be853f",
-              backgroundColor: "#ffc0715c",
-            },
-          }}
-        >
-          Edit
-        </Button>
+        <Tooltip title="Edit">
+          <IconButton onClick={() => handleEditCity(params.row)}>
+            <BorderColorOutlinedIcon sx={{ color: "#5151ac" }} />
+          </IconButton>
+        </Tooltip>
       ),
     },
     {
@@ -112,11 +109,12 @@ const CitiesTable = () => {
       headerName: "Delete",
       sortable: false,
       width: 90,
+      disableColumnMenu: true,
       renderCell: (params) => (
         <>
           <Tooltip title="Delete">
             <IconButton onClick={() => handleOpen(params.row.id)}>
-              <DeleteIcon />
+              <DeleteIcon sx={{ color: "#ca4a4a" }} />
             </IconButton>
           </Tooltip>
           <Modal
@@ -128,7 +126,8 @@ const CitiesTable = () => {
             slots={{ backdrop: Backdrop }}
             slotProps={{
               backdrop: {
-                timeout: 500,
+                timeout: 400,
+                style: { backgroundColor: "rgba(0,0,0,0.2)" },
               },
             }}
           >
@@ -195,6 +194,7 @@ const CitiesTable = () => {
             color: "#be853f",
             border: "1px solid #be853f",
             boxShadow: "2px 2px #be853f",
+            fontWeight: "bold",
           }}
           startIcon={<AddCircleOutlineOutlinedIcon />}
           onClick={openCityModal}
@@ -202,7 +202,7 @@ const CitiesTable = () => {
           Add a new record
         </Button>
       </Box>
-      <div style={{ height: 500, width: "100%" }}>
+      <div style={{ height: 500, width: "fit-content", margin: "auto" }}>
         <DataGrid
           rows={finalCities}
           columns={columns}
@@ -212,8 +212,15 @@ const CitiesTable = () => {
             },
           }}
           pageSizeOptions={[10, 20]}
-          checkboxSelection
           hideFooterSelectedRowCount
+          sx={{
+            ".MuiDataGrid-columnHeaderTitle": {
+              fontWeight: "bold !important",
+              fontSize: "15px",
+              textAlign: "center",
+            },
+            paddingLeft: "20px",
+          }}
         />
       </div>
     </>

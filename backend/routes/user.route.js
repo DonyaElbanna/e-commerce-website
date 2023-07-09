@@ -14,6 +14,7 @@ const {
   toggleBlock,
   changeUserRole,
   getUserOrders,
+  adminAddUser,
 } = require("../controllers/user.controller");
 const {
   extractJwtFromCookie,
@@ -24,6 +25,10 @@ router.post("", signup);
 
 router.get("/:id", extractJwtFromCookie, getSingleUser);
 router.get("/orders/:id", extractJwtFromCookie, getUserOrders);
+// admin route
+router.post("/add", extractJwtAdminFromCookie, adminAddUser);
+
+// user route
 router.post(
   "/:id",
   RequestValidator(Schemas.user.wishListAdd),

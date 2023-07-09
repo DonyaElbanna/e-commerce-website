@@ -74,6 +74,7 @@ const OrderForm = () => {
       ...form,
       [e.target.name]: e.target.value,
     });
+
   };
 
   const handleAddOrder = async () => {
@@ -84,11 +85,17 @@ const OrderForm = () => {
       children: form.children,
       expectedDate: "2023-10-20",
     };
-    console.log(newOrder);
+    const attr = attractions.Attractions.filter(
+      (attr) => attr._id == form.attrID
+    )[0];
+    const user = users.users.filter((user) => user._id == userId)[0];
+    // console.log(users.users.filter((user) => user._id == userId)[0]);
+    // console.log(newOrder);
     await axios
       .post("http://localhost:9999/order", newOrder)
       .then((response) => {
-        dispatch(addOrder(response.data));
+        const order = { ...response.data, attraction: attr, user: user };
+        dispatch(addOrder(order));
         setOpen(false);
       })
       .catch((error) => {
@@ -141,7 +148,7 @@ const OrderForm = () => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-gray-300 bg-opacity-75 transition-opacity" />
+          <div className="fixed inset-0 bg-black/50  transition-opacity" />
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -227,14 +234,15 @@ const OrderForm = () => {
                               Tour
                             </label>
                             <select
+                              defaultValue="Pick a tour"
                               id="tour"
                               required
                               name="attrID"
-                              value={form.attrID}
+                              // value={form.attrID}
                               onChange={(e) => handleChangeForm(e)}
                               className="select rounded-none  w-full pb-4 text-slate-700 bg-transparent border-x-neutral-500  border-0 border-b-2 appearance-none  focus:outline-none focus:ring-0 focus:border-[#be853f] peer"
                             >
-                              <option disabled selected>
+                              <option disabled value="Pick a tour">
                                 Pick a tour
                               </option>
                               {attrsOpts.map((attr) => (

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const guestSchema = new Schema({
-  userName: {
+  username: {
     type: String,
     default: "guest",
   },
@@ -16,10 +16,14 @@ const guestSchema = new Schema({
   orders: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Attraction",
+      ref: "Order",
     },
   ],
-  position: {
+  avatar: {
+    type: String,
+    default: "https://shorturl.at/lorFV",
+  },
+  role: {
     type: String,
     default: "guest",
   },
