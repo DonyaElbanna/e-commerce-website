@@ -11,6 +11,7 @@ const AppError = require("../utils/AppError.util");
 
 const addGuest = async (req, res) => {
   const guest = await addNewGuest();
+  console.log(guest)
   const accessToken = await generateAccessTokenGuest(guest);
   res
     .cookie("auth", accessToken, {

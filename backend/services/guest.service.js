@@ -1,12 +1,11 @@
 const Guest = require("../models/guest.model");
 const AppError = require("../utils/AppError.util");
 
-const addNewGuest = async (payload) => {
+const addNewGuest = async () => {
   try {
-    return await Guest.create();
-    
+    return await Guest.create({});
   } catch (error) {
-      throw error     
+    throw error;
   }
 };
 
