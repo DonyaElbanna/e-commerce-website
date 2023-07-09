@@ -163,6 +163,7 @@ const AttractionForm = () => {
     const inputArr = [...imageInputs];
 
     let regex = /(http(s?):)|([/|.|w|s])*.(?:jpe?g|png)/;
+    // console.log(e.target.parentElement.previousElementSibling.lastChild);
     const imgValue =
       e.target.parentElement.previousElementSibling.lastChild.value;
     const errorData = {};
@@ -335,7 +336,7 @@ const AttractionForm = () => {
                     id="status1"
                     value="available"
                     onChange={(value) => handleChange(value)}
-                    className="text-[#be853f] radio-sm border-0 cursor-pointer"
+                    className="text-[#be853f] radio-sm cursor-pointer border-2 border-solid bg-neutral-300 border-neutral-400/25"
                     checked={form.status === "available"}
                   />
                   <label
@@ -352,7 +353,7 @@ const AttractionForm = () => {
                     id="status2"
                     value="notAvailable"
                     onChange={(value) => handleChange(value)}
-                    className="text-[#be853f] radio-sm border-0 cursor-pointer"
+                    className="text-[#be853f] radio-sm cursor-pointer border-2 border-solid bg-neutral-300 border-neutral-400/25"
                     checked={form.status === "notAvailable"}
                   />
                   <label
@@ -380,7 +381,7 @@ const AttractionForm = () => {
                     id="childAvailable1"
                     value="available"
                     onChange={(value) => handleChange(value)}
-                    className="text-[#be853f] radio-sm border-0 cursor-pointer"
+                    className="text-[#be853f] radio-sm cursor-pointer border-2 border-solid bg-neutral-300 border-neutral-400/25"
                     checked={form.childAvailable === "available"}
                   />
                   <label
@@ -397,7 +398,7 @@ const AttractionForm = () => {
                     id="childAvailable2"
                     value="notAvailable"
                     onChange={(value) => handleChange(value)}
-                    className="text-[#be853f] radio-sm border-0 cursor-pointer"
+                    className="text-[#be853f] radio-sm cursor-pointer border-2 border-solid bg-neutral-300 border-neutral-400/25"
                     checked={form.childAvailable === "notAvailable"}
                   />
                   <label
@@ -478,7 +479,7 @@ const AttractionForm = () => {
             </div>
           </article>
           {/* images */}
-          <article className="grid grid-rows-12 grid-flow-col gap-5 lg:gap-10 py-6">
+          <article className="grid grid-rows-12 grid-flow-col gap-5 lg:gap-10 py-6 items-center">
             <div>
               <label htmlFor="image" className="text-[#be853f] font-semibold">
                 Image
