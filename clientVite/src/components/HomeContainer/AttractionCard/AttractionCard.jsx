@@ -83,7 +83,7 @@ const AttractionCard = ({ attr }) => {
     <div className="flex justify-center flex-row">
       <Link
         to={`/city/${attr._id}/details`}
-        className={`card w-96 bg-base-100 shadow-xl border-cyan-50 ${Style.enlarge} m-2`}
+        className={`card w-96 bg-gray-700 shadow-xl border-cyan-50 ${Style.enlarge} m-2 hover:bg-base-100 cursor-pointer`}
       >
         <img src={attr?.Images[0]} className="h-52 rounded-t-xl" />
         <div className="card-body z-10">
