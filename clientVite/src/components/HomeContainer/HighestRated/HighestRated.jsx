@@ -32,7 +32,7 @@ const HighestRated = () => {
           </h3>
           <div
             className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
-            style={{ gridTemplateColumns: "repeat(4, minmax(0, 1fr))" }}
+            // style={{ gridTemplateColumns: "repeat(4, minmax(0, 1fr))" }}
           >
             {packages.map((pkg, i) => (
               <AttractionCard key={i} attr={pkg} />
