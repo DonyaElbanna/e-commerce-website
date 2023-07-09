@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <>
       <Welcome />
-      <HighestRated/>
+      <HighestRated />
     </>
   );
 };

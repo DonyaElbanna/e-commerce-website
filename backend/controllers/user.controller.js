@@ -18,7 +18,11 @@ const { FAILURE } = require("../utils/namespace.util").namespace;
 const signup = async (req, res, next) => {
   try {
     const newUser = await add(req.body, next);
-    return signin(req, res, next);
+    if (newUser) {
+      return signin(req, res, next);
+    } else {
+      return next(new AppError(FAILURE, 404));
+    }
     // await authService.sendVerification(newUser, "verify");
   } catch (err) {
     return next(new AppError(FAILURE, 404));

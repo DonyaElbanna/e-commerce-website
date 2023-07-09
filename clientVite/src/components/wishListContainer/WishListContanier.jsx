@@ -45,7 +45,7 @@ const WishListContanier = ({ attr }) => {
       ) : (
         <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-5">
           {wishlistItems.map((cat) => (
-            <div class="p-10" key={cat._id}>
+            <div className="p-10" key={cat._id}>
               <div className=" w-full lg:max-w-full lg:flex">
                 <div
                   className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"

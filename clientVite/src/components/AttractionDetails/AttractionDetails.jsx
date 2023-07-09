@@ -12,6 +12,7 @@ import { AttractionDetailsHandlerById } from "../../rtk/features/attrSlice";
 
 const AttractionDetails = () => {
   const { id } = useParams();
+  // console.log(id)
   const [attrDetails, setAttrDetails] = useState([]);
   const { attractions } = useSelector((state) => state);
   const dispatch = useDispatch();

@@ -20,6 +20,8 @@ import { AttractionGroupHandler } from "./rtk/features/attrSlice";
 import Orders from "./pages/Orders";
 import AttractionForm from "./pages/AdminDashboard/FormAttraction/AttractionForm";
 import IconMap from "./components/Map/IconMap";
+import { citiesHandler } from "./rtk/features/citiesSlice";
+import { categoriesHandler } from "./rtk/features/categoriesSlice";
 
 function App() {
   const { auth } = useSelector((state) => state);
@@ -27,16 +29,35 @@ function App() {
   const dispatch = useDispatch();
   const getAllAttract = async () => {
     try {
-      const { data } = await axios.get("http://localhost:9999/attraction/all");
-      dispatch(AttractionGroupHandler(data.Attractions));
+      const { data } = await axios.get("http://localhost:9999/attraction");
+      dispatch(AttractionGroupHandler(data.AllAttraction));
     } catch (error) {
       console.log(error);
     }
   };
+  const getAllCities = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:9999/category");
+      dispatch(citiesHandler(data.categories));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getAllCats = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:9999/subcat");
+      dispatch(categoriesHandler(data.subcategories));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     dispatch(handleAuthType("login"));
     dispatch(handleOpenAuthModal(false));
     getAllAttract();
+    getAllCities();
+    getAllCats();
   }, []);
   return (
     <>

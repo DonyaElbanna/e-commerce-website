@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import style from "./AttractionForm.module.css";
+import React, { useState } from "react";
+import "./AttractionForm.module.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -7,8 +7,7 @@ import Joi from "joi";
 
 const AttractionForm = () => {
   const { cities, categories, attractions } = useSelector((state) => state);
-  console.log(cities.cities)
-  // edited attr obj
+
   const editedAttr = attractions.Attractions.filter(
     (attr) => attr._id == attractions.attractionEdit
   )[0];
@@ -17,8 +16,8 @@ const AttractionForm = () => {
     name: editedAttr ? editedAttr.name : "",
     duration: editedAttr ? editedAttr.duration : "",
     description: editedAttr ? editedAttr.description : "",
-    category: editedAttr ? editedAttr.category : "",
-    subcategory: editedAttr ? editedAttr.subcategory : "",
+    category: editedAttr ? editedAttr.category._id : "",
+    subcategory: editedAttr ? editedAttr.subcategory._id : "",
     status: editedAttr ? editedAttr.status : "",
     childAvailable:
       editedAttr && editedAttr.childAvailable == true
@@ -58,10 +57,10 @@ const AttractionForm = () => {
 
   const handleChange = (e) => {
     setErrors({});
-    // console.log(e.target.value);
+    console.log(e.target.value);
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-console.log(imagesArr)
+  // console.log(imagesArr)
   const handleSubmit = (e) => {
     e.preventDefault();
     const err = schema.validate(form);
@@ -295,7 +294,6 @@ console.log(imagesArr)
               >
                 Category
               </label>
-
               <select
                 id="Category"
                 required

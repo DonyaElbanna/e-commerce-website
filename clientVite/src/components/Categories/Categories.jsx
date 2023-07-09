@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { Virtual } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/virtual";
 
-const Categories = ({ subcats, handleFilter, resetFilters }) => {
+const Categories = ({ cityCats, handleFilter, resetFilters }) => {
   return (
     <>
       <div className="flex justify-between">
@@ -46,7 +45,7 @@ const Categories = ({ subcats, handleFilter, resetFilters }) => {
           className="cursor-grab relative carousel-center w-100 px-4 py-8 bg-stone-600/20 rounded-box"
         >
           <div>
-            {subcats.map((cat, index) => (
+            {cityCats.map((cat, index) => (
               <SwiperSlide
                 key={cat._id}
                 virtualIndex={index}

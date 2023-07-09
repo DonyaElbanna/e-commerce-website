@@ -15,7 +15,7 @@ const HighestRated = () => {
 
     getPackages();
   }, []);
-  //   console.log(packages);
+    // console.log(packages);
 
   return (
     <>

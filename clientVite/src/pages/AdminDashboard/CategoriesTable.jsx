@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import axios from "axios";
-import gif from "../../assets/gih.gif";
-import { useDispatch, useSelector } from "react-redux";
-import { handleIsLoadingToggle } from "../../rtk/features/commonSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -41,39 +39,13 @@ const style = {
 };
 
 const CategoriesTable = () => {
-  const [cats, setCats] = useState([]);
+  const { categories } = useSelector((state) => state);
 
-  const { common, categories } = useSelector((state) => state);
   const dispatch = useDispatch();
-  // console.log("redux slice", categories);
 
   // modal state
   const [open, setOpen] = React.useState(false);
   const [slcID, setSlcID] = useState(null);
-
-  useEffect(() => {
-    dispatch(handleIsLoadingToggle());
-
-    const getCats = async () => {
-      try {
-        const { data } = await axios.get(`http://localhost:9999/subcat`);
-        // console.log(data.subcategories);
-        dispatch(categoriesHandler(data.subcategories));
-        setCats(
-          data.subcategories.map((cat) => ({
-            id: cat._id,
-            name: cat.type,
-            image: cat.image,
-          }))
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getCats();
-    dispatch(handleIsLoadingToggle());
-  }, []);
 
   const finalCats = categories?.categories.map((cat) => ({
     id: cat._id,
@@ -102,14 +74,11 @@ const CategoriesTable = () => {
   };
 
   const handleEditCat = (cat) => {
-    // console.log(cat);
     dispatch(handleAuthType("addCat"));
     dispatch(handleToggleAuthModal());
     dispatch(categoryEditHandler(cat));
     dispatch(categoriesHandler(categories.categories));
   };
-
-  // console.log(cats)
 
   const openCatModal = () => {
     dispatch(handleAuthType("addCat"));
@@ -223,6 +192,7 @@ const CategoriesTable = () => {
 
   return (
     <>
+<<<<<<< HEAD
       {common.isLoading ? (
         <img src={gif} className="mx-auto" style={{ width: "250px", marginTop:'180px' }} />
       ) : (
@@ -257,6 +227,36 @@ const CategoriesTable = () => {
           </div>
         </>
       )}
+=======
+      <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
+        <Button
+          variant="outlined"
+          style={{
+            color: "#be853f",
+            border: "1px solid #be853f",
+            boxShadow: "2px 2px #be853f",
+          }}
+          startIcon={<AddCircleOutlineOutlinedIcon />}
+          onClick={openCatModal}
+        >
+          Add a new record
+        </Button>
+      </Box>
+      <div style={{ height: 500, width: "100%" }}>
+        <DataGrid
+          rows={finalCats}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          pageSizeOptions={[10, 20]}
+          checkboxSelection
+          hideFooterSelectedRowCount
+        />
+      </div>
+>>>>>>> c0592e2e583694d85603a5aa2b759fae3b1f0e2d
     </>
   );
 };
