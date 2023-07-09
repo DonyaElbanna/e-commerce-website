@@ -13,7 +13,7 @@ const add = async (payload, next) => {
     // const user = await User.create(payload);
     const user = new User(payload);
     await user.save();
-    console.log(user);
+    // console.log(user);
     user.password = undefined;
     return user;
   } catch (err) {
@@ -184,6 +184,22 @@ const getOrders = async (id, next) => {
   }
 };
 
+const adminAdd = async (payload, next) => {
+  try {
+    const userExists = await User.find({ email: payload.email });
+    if (userExists.length !== 0) {
+      return next(new AppError(DUPLICATE_EMAIL, 409));
+    }
+    const user = await User.create(payload);
+    // await user.save();
+    user.password = undefined;
+    return user;
+  } catch (err) {
+    console.log(err);
+    return next(new AppError(FAILURE, 404));
+  }
+};
+
 module.exports = {
   add,
   getUser,
@@ -194,4 +210,5 @@ module.exports = {
   block,
   changeRole,
   getOrders,
+  adminAdd,
 };

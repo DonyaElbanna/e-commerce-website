@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -22,6 +21,11 @@ import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined";
+import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
+import PersonOffOutlinedIcon from "@mui/icons-material/PersonOffOutlined";
+import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 
 import {
   handleAuthType,
@@ -37,12 +41,12 @@ import {
 
 // table cols
 const columns = [
-  { id: "username", label: "Username", minWidth: 100, flex: 1 },
-  { id: "email", label: "Email", minWidth: 100, flex: 1 },
-  { id: "role", label: "Role", minWidth: 170, flex: 1 },
-  { id: "isBlocked", label: "Blocked Status", minWidth: 100, flex: 1 },
-  { id: "edit", label: "Edit", minWidth: 100, flex: 1 },
-  { id: "delete", label: "Delete", minWidth: 100, flex: 1 },
+  { id: "username", label: "Username", width: 100, flex: 1 },
+  { id: "email", label: "Email", width: 100, flex: 1 },
+  { id: "role", label: "Role", width: 100, flex: 1 },
+  { id: "isBlocked", label: "Status", width: 100, flex: 1 },
+  { id: "edit", label: "Edit", width: 100, flex: 1 },
+  { id: "delete", label: "Delete", width: 100, flex: 1 },
 ];
 
 // modal styles
@@ -54,7 +58,7 @@ const style = {
   width: 400,
   bgcolor: "background.paper",
   border: "2px solid #000",
-  boxShadow: 24,
+  borderRadius: "10px",
   p: 4,
   textAlign: "center",
 };
@@ -69,8 +73,7 @@ const Users = () => {
   const handleOpen = (id) => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { users } = useSelector((state) => state);
-  // console.log(users);
+  const { users, auth } = useSelector((state) => state);
 
   const dispatch = useDispatch();
 
@@ -143,6 +146,7 @@ const Users = () => {
             color: "#be853f",
             border: "1px solid #be853f",
             boxShadow: "2px 2px #be853f",
+            fontWeight: "bold",
           }}
           startIcon={<AddCircleOutlineOutlinedIcon />}
           onClick={openUserModal}
@@ -178,9 +182,13 @@ const Users = () => {
                       tabIndex={-1}
                       key={user._id}
                     >
-                      <TableCell>{user.username}</TableCell>
-                      <TableCell>{user.email}</TableCell>
-                      <TableCell>
+                      <TableCell sx={{ padding: "5px 15px" }}>
+                        {user.username}
+                      </TableCell>
+                      <TableCell sx={{ padding: "5px 15px" }}>
+                        {user.email}
+                      </TableCell>
+                      <TableCell sx={{ padding: "5px 15px" }}>
                         <Box
                           sx={{
                             display: "flex",
@@ -188,85 +196,62 @@ const Users = () => {
                             alignItems: "center",
                           }}
                         >
-                          {user.role}
-                          <Button
-                            type="button"
-                            className="p-2 mt-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-blue-400 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                            onClick={() => handleMakeAdmin(user._id)}
-                            sx={{
-                              color: "#be853f",
-                              border: "1px solid orange",
-                              marginTop: "5px",
-                              ":hover": {
-                                border: "1px solid #be853f",
-                                backgroundColor: "#ffc0715c",
-                                color: "#be853f",
-                              },
-                            }}
-                          >
-                            {user.role == "admin" ? "remove" : "make"} Admin
-                          </Button>
+                          <IconButton onClick={() => handleMakeAdmin(user._id)}>
+                            {user.role == "admin" ? (
+                              <Tooltip title="remove Admin">
+                                <VerifiedUserOutlinedIcon
+                                  sx={{ fontSize: "28px", color: "#48b748" }}
+                                />
+                              </Tooltip>
+                            ) : (
+                              <Tooltip title="make Admin">
+                                <AccountCircleOutlinedIcon
+                                  sx={{ fontSize: "28px", color: "#ca4a4a" }}
+                                />
+                              </Tooltip>
+                            )}
+                          </IconButton>
                         </Box>
                       </TableCell>
-                      <TableCell>
+                      <TableCell sx={{ padding: "5px 15px" }}>
                         {user.isBlocked ? (
-                          <Button
-                            variant="outlined"
-                            onClick={() => handleBlockUser(user._id)}
-                            sx={{
-                              color: "#be853f",
-                              border: "1px solid orange",
-                              marginTop: "5px",
-                              ":hover": {
-                                border: "1px solid #be853f",
-                                backgroundColor: "#ffc0715c",
-                                color: "#be853f",
-                              },
-                            }}
-                          >
-                            Unblock
-                          </Button>
+                          <Tooltip title="Unblock">
+                            <IconButton
+                              onClick={() => handleBlockUser(user._id)}
+                            >
+                              <PermIdentityOutlinedIcon
+                                sx={{ color: "#48b748", fontSize: "30px" }}
+                              />
+                            </IconButton>
+                          </Tooltip>
                         ) : (
-                          <Button
-                            variant="outlined"
-                            startIcon={<BlockOutlinedIcon />}
-                            onClick={() => handleBlockUser(user._id)}
-                            sx={{
-                              color: "#be853f",
-                              border: "1px solid orange",
-                              ":hover": {
-                                border: "1px solid #be853f",
-                                backgroundColor: "#ffc0715c",
-                              },
-                            }}
-                          >
-                            Block
-                          </Button>
+                          <Tooltip title="Block">
+                            <IconButton
+                              onClick={() => handleBlockUser(user._id)}
+                            >
+                              <PersonOffOutlinedIcon
+                                sx={{ color: "#ca4a4a", fontSize: "30px" }}
+                              />
+                            </IconButton>
+                          </Tooltip>
                         )}
                       </TableCell>
-                      <TableCell>
-                        <Button
-                          variant="outlined"
-                          sx={{
-                            color: "#be853f",
-                            border: "1px solid orange",
-                            ":hover": {
-                              border: "1px solid #be853f",
-                              backgroundColor: "#ffc0715c",
-                            },
-                          }}
-                          onClick={() => handleEditUser(user)}
-                        >
-                          Edit
-                        </Button>
+                      <TableCell sx={{ padding: "5px 15px" }}>
+                        <Tooltip title="Edit">
+                          <IconButton onClick={() => handleEditUser(user)}>
+                            <BorderColorOutlinedIcon
+                              sx={{ color: "#5151ac" }}
+                            />
+                          </IconButton>
+                        </Tooltip>
                       </TableCell>
-                      <TableCell>
+                      <TableCell sx={{ padding: "5px 15px" }}>
                         <Tooltip title="Delete">
                           <IconButton
                             aria-label="delete"
                             onClick={() => handleOpen(user._id)}
                           >
-                            <DeleteIcon />
+                            <DeleteIcon sx={{ color: "#ca4a4a" }} />
                           </IconButton>
                         </Tooltip>
                         <Modal
@@ -278,7 +263,8 @@ const Users = () => {
                           slots={{ backdrop: Backdrop }}
                           slotProps={{
                             backdrop: {
-                              timeout: 500,
+                              timeout: 400,
+                              style: { backgroundColor: "rgba(0,0,0,0.3)" },
                             },
                           }}
                         >

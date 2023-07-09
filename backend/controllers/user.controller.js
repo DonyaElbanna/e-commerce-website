@@ -8,6 +8,7 @@ const {
   block,
   changeRole,
   getOrders,
+  adminAdd
 } = require("../services/user.service");
 const { signin } = require("./auth.controller");
 const authService = require("../services/auth.service");
@@ -24,6 +25,19 @@ const signup = async (req, res, next) => {
       return next(new AppError(FAILURE, 404));
     }
     // await authService.sendVerification(newUser, "verify");
+  } catch (err) {
+    return next(new AppError(FAILURE, 404));
+  }
+};
+
+const adminAddUser = async (req, res, next) => {
+  try {
+    const newUser = await adminAdd(req.body, next);
+    if (newUser) {
+      return newUser;
+    } else {
+      return next(new AppError(FAILURE, 404));
+    }
   } catch (err) {
     return next(new AppError(FAILURE, 404));
   }
@@ -116,7 +130,7 @@ const changeUserRole = async (req, res, next) => {
 const getUserOrders = async (req, res, next) => {
   // const { id } = req.params;
   const id = res.locals.decodedToken._id;
-  console.log(id);
+  // console.log(id);
   try {
     const user = await getOrders(id, next);
     res.status(200).json(user);
@@ -135,4 +149,5 @@ module.exports = {
   toggleBlock,
   changeUserRole,
   getUserOrders,
+  adminAddUser,
 };

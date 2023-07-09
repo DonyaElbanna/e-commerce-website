@@ -22,6 +22,10 @@
   transform: none !important;
 } */
 
+input {
+  --tw-ring-color: "transparent" !important;
+}
+
 @layer base {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
