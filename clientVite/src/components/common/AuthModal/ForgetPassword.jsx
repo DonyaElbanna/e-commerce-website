@@ -38,7 +38,6 @@ const ForgetPassword = () => {
     const err = schema.validate({ email });
     const { error } = err;
     if (error) {
-      console.log(error.message);
       const errorData = {};
       let name = "email";
       let message = error.message;
@@ -55,15 +54,14 @@ const ForgetPassword = () => {
   const forgetPassword = async () => {
     try {
       setSending("sending");
+      console.log(email);
       const { data } = await axios.post(
         "http://localhost:9999/auth/forgetPassword",
-        null,
         {
-          params: {
-            emailAddress: email,
-          },
+          emailAddress: email,
         }
       );
+      console.log("ok");
       setSending("afterSending");
       dispatch(handleAuthType("login"));
       dispatch(handleToggleAuthModal());
@@ -74,6 +72,7 @@ const ForgetPassword = () => {
         errorData.invalidCradintials =
           "something went wrong ,please check your connection";
       } else {
+        console.log("eeeeeeeeeeeeeeeeee");
         errorData.invalidCradintials = error.response.data.message;
       }
       setErrors(errorData);
