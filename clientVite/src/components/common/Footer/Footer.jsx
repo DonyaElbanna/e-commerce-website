@@ -11,8 +11,8 @@ const Footer = () => {
         >
           <article className="footer footer-center row" style={{rowGap:"1.5rem",lineHeight:"0rem"}}>
             <div className="self-center">
-              <p className="logoFont text-2xl pt-10 md:text-5xl lg:text-6xl text-slate-300">
-                EGYPT
+              <p className="font-serif text-2xl pt-10 md:text-5xl lg:text-5xl text-slate-300">
+                EGYPTION TICKETS
               </p>
             </div>
             <div className="grid grid-flow-col gap-4 md:gap-10 lg:gap-22">

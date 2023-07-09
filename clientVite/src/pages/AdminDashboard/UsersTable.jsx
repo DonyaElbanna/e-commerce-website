@@ -164,7 +164,7 @@ const Users = () => {
                     key={column.id}
                     align={column.align}
                     style={{ minWidth: column.minWidth }}
-                    sx={{ textAlign: "center", fontWeight: "bold" }}
+                    sx={{ textAlign: "left", fontWeight: "bold" }}
                   >
                     {column.label}
                   </TableCell>
