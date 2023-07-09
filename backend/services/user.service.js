@@ -25,27 +25,29 @@ const add = async (payload, next) => {
 
 const getUser = async (id, next) => {
   try {
-    const user = await User.findById(id)
-      .populate("wishlist")
-      .populate({
-        path: "wishlist",
-        populate: {
-          path: "category",
-          model: "Category",
-        },
-      })
-      .populate({
-        path: "wishlist",
-        populate: {
-          path: "subcategory",
-          model: "Subcategory",
-        },
-      })
-      .populate("orders")
-      .exec();
+    const user = await User.findById(id).populate("wishlist")
+    console.log(user)
+      // .populate("wishlist")
+      // .populate({
+      //   path: "wishlist",
+      //   populate: {
+      //     path: "category",
+      //     model: "Category",
+      //   },
+      // })
+      // .populate({
+      //   path: "wishlist",
+      //   populate: {
+      //     path: "subcategory",
+      //     model: "Subcategory",
+      //   },
+      // })
+      // .populate("orders")
+      // .exec();
     if (!user) {
       return next(new AppError(NOT_FOUND, 404));
     }
+    console.log(user)
     return user;
   } catch (err) {
     return next(new AppError(NOT_FOUND, 404));
@@ -94,19 +96,18 @@ const addRemoveWishlist = async (id, attractionID, next) => {
     } else {
       if (user.wishlist.includes(attractionID)) {
         updatedUser = await User.findOneAndUpdate(
-          id,
+          {_id:id},
           { $pull: { wishlist: attractionID } },
           { upsert: true, new: true }
         ).populate("wishlist");
       } else {
         updatedUser = await User.findOneAndUpdate(
-          id,
+          {_id:id},
           { $addToSet: { wishlist: attractionID } },
           { upsert: true, new: true }
         ).populate("wishlist");
       }
     }
-
     return updatedUser;
   } catch (err) {
     return next(new AppError(NOT_FOUND, 404));
@@ -185,8 +186,8 @@ const getOrders = async (id, next) => {
 
 const adminAdd = async (payload, next) => {
   try {
-    const userExists = await User.find({ email: payload.email });
-    if (userExists.length !== 0) {
+    const userExists = await User.findOne({ email: payload.email });
+    if (userExists) {
       return next(new AppError(DUPLICATE_EMAIL, 409));
     }
     const user = await User.create(payload);
@@ -194,7 +195,6 @@ const adminAdd = async (payload, next) => {
     user.password = undefined;
     return user;
   } catch (err) {
-    console.log(err);
     return next(new AppError(FAILURE, 404));
   }
 };

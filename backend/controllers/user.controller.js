@@ -34,7 +34,7 @@ const adminAddUser = async (req, res, next) => {
   try {
     const newUser = await adminAdd(req.body, next);
     if (newUser) {
-      return newUser;
+      return res.status(201).json({newUser});
     } else {
       return next(new AppError(FAILURE, 404));
     }
@@ -47,6 +47,7 @@ const getSingleUser = async (req, res, next) => {
   const { id } = req.params;
   try {
     const user = await getUser(id, next);
+    console.log(user)
     res.status(200).json(user);
   } catch (err) {
     return next(new AppError(FAILURE, 404));
