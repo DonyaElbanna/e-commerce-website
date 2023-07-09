@@ -6,7 +6,7 @@
     @apply text-xl hover:text-yellow-600 cursor-pointer hover:scale-110;
   }
   body {
-    @apply bg-slate-100;
+    @apply bg-slate-100 scrollbar scrollbar-thumb-[#be853f] scrollbar-track-transparent;
   }
 }
 
@@ -37,8 +37,4 @@
     -moz-appearance: textfield;
     margin: 0;
   }
-}
-
-input {
-  --tw-ring-shadow: 0 0 #000 !important;
 }

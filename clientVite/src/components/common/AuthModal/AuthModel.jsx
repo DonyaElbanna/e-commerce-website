@@ -7,6 +7,7 @@ import CityForm from "../../../pages/AdminDashboard/Forms/CityForm";
 import CatForm from "../../../pages/AdminDashboard/Forms/CatForm";
 import ResetPassword from "./ResetPassword";
 import AddReview from "../../AttractionDetails/AddReview";
+import OrderForm from "../../../pages/AdminDashboard/Forms/OrderForm";
 
 const AuthModel = () => {
   const { auth } = useSelector((state) => state);
@@ -20,6 +21,7 @@ const AuthModel = () => {
       {auth.authType === "addCity" && <CityForm />}
       {auth.authType === "addCat" && <CatForm />}
       {auth.authType === "review" && <AddReview />}
+      {auth.authType === "addOrder" && <OrderForm />}
     </>
   );
 };

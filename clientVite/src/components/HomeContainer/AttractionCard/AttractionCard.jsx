@@ -40,11 +40,10 @@ const AttractionCard = ({ attr }) => {
       setIsFilled(true);
     }
     try {
-      await axios
-        .post(`http://localhost:9999/user/${auth.userInfo._id}`, {
-          id: auth.userInfo._id,
-          Attraction: attr._id,
-        })
+      await axios.post(`http://localhost:9999/user/${auth.userInfo._id}`, {
+        id: auth.userInfo._id,
+        Attraction: attr._id,
+      });
     } catch (err) {
       console.log(err);
     }
@@ -84,7 +83,7 @@ const AttractionCard = ({ attr }) => {
     <div className="flex justify-center flex-row">
       <Link
         to={`/city/${attr._id}/details`}
-        className={`card w-96 bg-base-100 shadow-xl border-cyan-50 ${Style.enlarge} m-2`}
+        className={`card w-96 bg-gray-700 shadow-xl border-cyan-50 ${Style.enlarge} m-2 hover:bg-base-100 cursor-pointer`}
       >
         <img src={attr?.Images[0]} className="h-52 rounded-t-xl" />
         <div className="card-body z-10">
@@ -112,10 +111,10 @@ const AttractionCard = ({ attr }) => {
           <h2 className="card-title">{attr?.name}</h2>
           <div className="flex justify-between">
             <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 bg-green-200 text-[#be853f] rounded-full w-min">
-              {attr.category.city}
+              {attr.category.city || attr.category[0].city}
             </span>
             <span className="mx-1 text-xs inline-flex items-center font-bold leading-sm uppercase px-4 py-1 bg-blue-200 text-[#be853f] rounded-full w-min">
-              {attr.subcategory.type}
+              {attr.subcategory.type || attr.subcategory[0].type}
             </span>
           </div>
           <span className="text-lg text-gray-900 dark:text-white"></span>

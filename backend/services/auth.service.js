@@ -88,6 +88,24 @@ const generateAccessToken = async (user) => {
     throw error;
   }
 };
+const generateAccessTokenGuest = async (user) => {
+  try {
+    return jwt.sign(
+      {
+        _id: user._id,
+        role:user.role
+      },
+      config.server.token.secret,
+      {
+        issuer: config.server.token.issuer,
+        algorithm: "HS256",
+        expiresIn: "365d",
+      }
+    );
+  } catch (error) {
+    throw error;
+  }
+};
 
 const verifyUser = async (_id) => {
   try {
@@ -167,5 +185,6 @@ module.exports = {
   signin,
   sendVerification,
   resetPassword,
-  generateRefreshToken
+  generateRefreshToken,
+  generateAccessTokenGuest
 };

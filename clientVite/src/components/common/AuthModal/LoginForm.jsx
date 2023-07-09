@@ -92,7 +92,9 @@ const LoginForm = () => {
   };
   const guestLogin = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:9999/guest");
+    const {data} =  await axios.post("http://localhost:9999/guest");
+    dispatch(handleIsLoggedIntoggle())
+    dispatch(handleUserInfo(data.guest))
     setOpen(false);
     setErrors({});
   };

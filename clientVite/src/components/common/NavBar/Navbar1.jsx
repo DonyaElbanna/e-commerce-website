@@ -49,7 +49,6 @@ const Navbar1 = () => {
     dispatch(handleIsLoggedIntoggle());
   };
   const { auth } = useSelector((state) => state);
-  // console.log(auth);
   const HandleLogin = (e) => {
     if (auth.userInfo) {
       setAnchorEl(e.currentTarget);
@@ -109,7 +108,11 @@ const Navbar1 = () => {
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  isActive ? Style.NavLinkActive : Style.NavLink
+                  isActive
+                    ? Style.NavLinkActive
+                    : !window.scrollY
+                    ? Style.NavLinkTop
+                    : Style.NavLink
                 }
               >
                 <img className={Style.navbarImg} src={home}></img>
@@ -123,7 +126,11 @@ const Navbar1 = () => {
               <NavLink
                 to="/cities"
                 className={({ isActive }) =>
-                  isActive ? Style.NavLinkActive : Style.NavLink
+                  isActive
+                    ? Style.NavLinkActive
+                    : !window.scrollY
+                    ? Style.NavLinkTop
+                    : Style.NavLink
                 }
               >
                 <img className={Style.navbarImg} src={cities}></img>
@@ -137,7 +144,11 @@ const Navbar1 = () => {
               <NavLink
                 to="/order"
                 className={({ isActive }) =>
-                  isActive ? Style.NavLinkActive : Style.NavLink
+                  isActive
+                    ? Style.NavLinkActive
+                    : !window.scrollY
+                    ? Style.NavLinkTop
+                    : Style.NavLink
                 }
               >
                 <img className={Style.navbarImg} src={order}></img>
@@ -151,7 +162,11 @@ const Navbar1 = () => {
               <NavLink
                 to="/wishlist"
                 className={({ isActive }) =>
-                  isActive ? Style.NavLinkActive : Style.NavLink
+                  isActive
+                    ? Style.NavLinkActive
+                    : !window.scrollY
+                    ? Style.NavLinkTop
+                    : Style.NavLink
                 }
               >
                 {/* <FavoriteBorderOutlinedIcon style={{fill:"#be853f"}}/> */}
@@ -164,24 +179,27 @@ const Navbar1 = () => {
                 </Typography>
               </NavLink>
 
-              {auth.userInfo.role === "admin" && ( 
-              <NavLink
-                className={({ isActive }) =>
-                  isActive ? Style.NavLinkActive : Style.NavLink
-                }
-                to="/admin"
-              >
-                {/* <DashboardIcon /> */}
-                <img className={Style.navbarImg} src={dashboard}></img>
-
-                <Typography
-                  fontWeight={{ xs: 600, md: 700 }}
-                  display={{ xs: "none", md: "inline-flex" }}
+              {auth.userInfo.role === "admin" && (
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? Style.NavLinkActive
+                      : !window.scrollY
+                      ? Style.NavLinkTop
+                      : Style.NavLink
+                  }
+                  to="/admin"
                 >
-                  Admin
-                </Typography>
-              </NavLink>
-              )} 
+                  <DashboardIcon />
+
+                  <Typography
+                    fontWeight={{ xs: 600, md: 700 }}
+                    display={{ xs: "none", md: "inline-flex" }}
+                  >
+                    Admin
+                  </Typography>
+                </NavLink>
+              )}
               <div>
                 <IconButton
                   aria-label="account of current user"
@@ -257,7 +275,11 @@ const Navbar1 = () => {
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  isActive ? Style.NavLinkActive : Style.NavLink
+                  isActive
+                    ? Style.NavLinkActive
+                    : !window.scrollY
+                    ? Style.NavLinkTop
+                    : Style.NavLink
                 }
               >
                 {/* <HomeIcon /> */}
@@ -273,7 +295,11 @@ const Navbar1 = () => {
               <NavLink
                 to="/cities"
                 className={({ isActive }) =>
-                  isActive ? Style.NavLinkActive : Style.NavLink
+                  isActive
+                    ? Style.NavLinkActive
+                    : !window.scrollY
+                    ? Style.NavLinkTop
+                    : Style.NavLink
                 }
               >
                 {/* <PublicOutlinedIcon /> */}
@@ -287,7 +313,8 @@ const Navbar1 = () => {
                 </Typography>
               </NavLink>
               <span
-                className={Style.NavLink}
+                className={!window.scrollY ? Style.NavLinkTop : Style.NavLink}
+                // className={Style.NavLink}
                 onClick={() => dispatch(handleToggleAuthModal())}
               >
                 {/* <Person2OutlinedIcon /> */}

@@ -6,7 +6,7 @@ const { NOT_FOUND } = require("../utils/namespace.util").namespace;
 const add = async (payload, next) => {
   try {
     const newOrder = await Order.create({
-      user: payload.id,
+      user: payload.userID,
       attraction: payload.attrID,
       travelDate: payload.date,
       adultCount: payload.adults,
@@ -20,7 +20,7 @@ const add = async (payload, next) => {
       { $addToSet: { orders: newOrder._id } },
       { new: true }
     );
-    return { newOrder, updatedUser };
+    return newOrder;
   } catch (err) {
     console.log(err);
     return next(new AppError(NOT_FOUND, 404));
@@ -75,7 +75,10 @@ const remove = async (id, orderID, next) => {
     const updatedUser = await User.findOneAndUpdate(
       { _id: id },
       { $pull: { orders: orderID } },
-      { new: true }
+      {
+        upsert: true,
+        new: true,
+      }
     );
     return { order, updatedUser };
   } catch (err) {
