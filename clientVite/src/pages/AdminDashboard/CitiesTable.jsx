@@ -189,41 +189,6 @@ const CitiesTable = () => {
 
   return (
     <>
-<<<<<<< HEAD
-      {common.isLoading ? (
-        <img src={gif} className="mx-auto" style={{ width: "250px", marginTop:'180px' }} />
-      ) : (
-        <>
-          <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
-            <Button
-              style={{
-                color: "#be853f",
-                border: "1px solid #be853f",
-                boxShadow: "2px 2px #be853f",
-              }}
-              startIcon={<AddCircleOutlineOutlinedIcon />}
-              onClick={openCityModal}
-            >
-              Add a new record
-            </Button>
-          </Box>
-          <div style={{ height: 500, width: "100%" }}>
-            <DataGrid
-              rows={finalCities || Cities}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 10 },
-                },
-              }}
-              pageSizeOptions={[10, 20]}
-              checkboxSelection
-              hideFooterSelectedRowCount
-            />
-          </div>
-        </>
-      )}
-=======
       <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
         <Button
           style={{
@@ -251,7 +216,6 @@ const CitiesTable = () => {
           hideFooterSelectedRowCount
         />
       </div>
->>>>>>> c0592e2e583694d85603a5aa2b759fae3b1f0e2d
     </>
   );
 };
