@@ -8,8 +8,8 @@ footer {
 #cover {
   background-color: rgb(65 65 65 / 92%);
 }
-
-#footerSvg:hover {
+svg:hover {
+  /* .footerSvg:hover { */
   animation: dance 1s infinite linear;
 }
 

@@ -1,3 +1,4 @@
+const Guest = require("../models/guest.model");
 const User = require("../models/user.model");
 const AppError = require("../utils/AppError.util");
 const { DUPLICATE_EMAIL, NOT_FOUND } =
@@ -86,25 +87,23 @@ const getAllUser = async (next) => {
 
 const addRemoveWishlist = async (id, attractionID, next) => {
   try {
-    var user = await User.findById(id);
-
+    const user = (await User.findById(id)) || (await Guest.findById(id));
+    let updatedUser;
     if (!user) {
       return next(new AppError(NOT_FOUND, 404));
     } else {
       if (user.wishlist.includes(attractionID)) {
-        var updatedUser = await User.findOneAndUpdate(
-          { _id: id },
+        updatedUser = await User.findOneAndUpdate(
+          id,
           { $pull: { wishlist: attractionID } },
           { upsert: true, new: true }
         ).populate("wishlist");
-        // console.log("was in wishlist");
       } else {
-        var updatedUser = await User.findOneAndUpdate(
-          { _id: id },
+        updatedUser = await User.findOneAndUpdate(
+          id,
           { $addToSet: { wishlist: attractionID } },
           { upsert: true, new: true }
-        );
-        // console.log("was NOT in wishlist");
+        ).populate("wishlist");
       }
     }
 

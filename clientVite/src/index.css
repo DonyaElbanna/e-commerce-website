@@ -14,9 +14,17 @@
   font-family: Egypt;
   src: url(../../../../public/fonts/Comforter-Regular.ttf);
 }
+@font-face {
+  font-family: Header;
+  src: url(../../../../public/fonts/Belanosima-SemiBold.ttf);
+}
+.headerFont{
+  font-family:"Header"
+}
 .logoFont {
   font-family: "Egypt";
 }
+
 
 /* .rotate-none {
   transform: none !important;

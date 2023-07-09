@@ -63,42 +63,26 @@ function App() {
     <>
       <Navbar1 />
       {auth.openAuthModal ? <AuthModel /> : ""}
-      <Routes className="bg-black">
-        <Route path="/" element={<Home />} />
-        <Route path="/wishlist" element={<Wishlist />} />
-        <Route path="/order" element={<Orders />} />
-        <Route path="/reset" element={<ResetPassword />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/contact" element={<ContactUs />} />
-        <Route path="/map" element={<IconMap />} />
+      <div style={{ minHeight:"385px"}}>
+        <Routes className="bg-black" >
+          <Route path="/" element={<Home />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/order" element={<Orders />} />
+          <Route path="/reset" element={<ResetPassword />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/map" element={<IconMap />} />
 
-        {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
+          {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
 
-        <Route path="/cities" element={<Cities />} />
-        <Route
-          path="/admin"
-          element={
-            auth.userInfo.role === "admin" ? (
-              <Admin />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
-        <Route
-          path="/form"
-          element={
-            auth.userInfo.role === "admin" ? (
-              <AttractionForm />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
-        <Route path="/city/:id" element={<AttractionsList />} />
-        <Route path="/city/:id/details" element={<AttractionDetails />} />
-        <Route path="/*" element={<Error />} />
-      </Routes>
+          <Route path="/cities" element={<Cities />} />
+          <Route path="/admin" element={auth.userInfo.role === "admin" ? <Admin /> : <Navigate to="/" replace />} />
+          <Route path="/form" element={auth.userInfo.role === "admin" ? <AttractionForm /> : <Navigate to="/" replace />} />
+          <Route path="/city/:id" element={<AttractionsList />} />
+          <Route path="/city/:id/details" element={<AttractionDetails />} />
+          <Route path="/*" element={<Error />} />
+        </Routes>
+      </div>
       <Footer />
     </>
   );

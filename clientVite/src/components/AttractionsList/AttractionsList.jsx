@@ -24,7 +24,9 @@ const AttractionsList = () => {
   );
 
   const handleFilter = (catID) => {
-    const filteredattrs = cityAttrs.filter((attr) => attr.subcategory._id == catID);
+    const filteredattrs = cityAttrs.filter(
+      (attr) => attr.subcategory._id == catID
+    );
     setFilteredAttrs(filteredattrs);
   };
 

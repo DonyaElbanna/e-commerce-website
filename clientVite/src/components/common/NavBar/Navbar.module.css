@@ -13,7 +13,31 @@
 }
 .NavLink {
   text-decoration: none;
-  color: white;
+  color: #be853f;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.422);
+  font-weight: bolder;
+  height: 100%;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+IconButton:hover{
+  background-color: rgba(255, 255, 255, 0) !important;
+  color:black
+}
+.NavLink:hover {
+  scale:1.1
+}
+.NavLinkTop {
+  text-decoration: none;
+  color: grey;
   text-shadow: 1px 1px 3px rgb(0, 0, 0);
   font-weight: bolder;
   height: 100%;
@@ -28,14 +52,9 @@
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
 }
-
-.NavLink:hover {
-  color: #be853f;
-}
-
 .NavLinkActive {
   color: #be853f;
-  text-shadow: 1px 1px 3px rgb(0, 0, 0);
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.252);
   text-decoration: none;
   font-weight: bolder;
   height: 100%;
@@ -49,6 +68,13 @@
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
+  scale:1.1
+}
+
+.navbarImg{
+  width: 20px;
+  height: 20px;
+  margin:2px
 }
 
 @media (max-width: 768px) {

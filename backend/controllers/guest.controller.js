@@ -6,11 +6,19 @@ const {
   getNewGuest,
   deletingGuest,
 } = require("../services/guest.service");
+const { generateAccessTokenGuest } = require("../services/auth.service");
 const AppError = require("../utils/AppError.util");
 
 const addGuest = async (req, res) => {
-  const guest = await addNewGuest(req.body);
-  res.status(201).json({ guest: guest });
+  const guest = await addNewGuest();
+  console.log(guest)
+  const accessToken = await generateAccessTokenGuest(guest);
+  res
+    .cookie("auth", accessToken, {
+      maxAge: 60 * 1000 * 60 * 24 * 365,
+    })
+    .status(201)
+    .json({ guest: guest });
 };
 
 const getGuest = async (req, res, next) => {
