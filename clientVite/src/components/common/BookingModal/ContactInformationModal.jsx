@@ -23,7 +23,7 @@ import {
 import {
   handleErrorMessage,
   handleIsError,
-  handleIsLoading,
+  handleIsLoadingToggle,
 } from "../../../rtk/features/commonSlice";
 
 const ContactInformationModal = () => {
@@ -40,7 +40,7 @@ const ContactInformationModal = () => {
       book.bookingInfo.name &&
       book.bookingInfo.contactNo
     ) {
-      dispatch(handleIsLoading(true));
+      dispatch(handleIsLoadingToggle());
       dispatch(handleToggleBookModal());
       try {
         const response = await axios.post("/payment/transToken", {
@@ -62,7 +62,7 @@ const ContactInformationModal = () => {
         handleIsError(true);
         handleErrorMessage(error.message || "");
       }
-      dispatch(handleIsLoading(false));
+      dispatch(handleIsLoadingToggle());
     } else {
       seterror("Place Fill Up Form");
     }

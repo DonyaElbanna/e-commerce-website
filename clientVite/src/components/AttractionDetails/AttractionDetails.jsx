@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import ImagesSlider from "./ImagesSlider";
 import { AttractionDetailsHandlerById } from "../../rtk/features/attrSlice";
+import BookingModal from "../common/BookingModal/BookingModal";
 
 const AttractionDetails = () => {
   const { id } = useParams();
@@ -20,6 +21,7 @@ const AttractionDetails = () => {
     const { data } = await axios.get(`http://localhost:9999/attraction/${id}`);
     // console.log(data.Attraction);
     setAttrDetails(data.Attraction);
+  
   };
 
   useEffect(() => {
@@ -48,6 +50,7 @@ const AttractionDetails = () => {
               
               <Details attrDetails={attrDetails} />
               <BookingCard attrDetails={attrDetails} />
+              <BookingModal />
             </div>
           </div>
         </div>

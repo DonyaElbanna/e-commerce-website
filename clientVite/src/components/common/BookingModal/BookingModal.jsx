@@ -1,21 +1,21 @@
 import { Backdrop, Box, Fade, Modal, Typography } from "@mui/material";
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import CustomizedSteppers from "./StepperModal";
 import CartModal from "./CartModal";
+import CloseIcon from "@mui/icons-material/Close";
+import DateModal from "./DateModal";
 import ContactInformationModal from "./ContactInformationModal";
-import { useDispatch, useSelector } from "react-redux";
 import {
   handleBookInfo,
   handleToggleBookModal,
 } from "../../../rtk/features/bookingSlice";
-import CloseIcon from "@mui/icons-material/Close";
-// import CreditCard from "../../checkout/CreditCard";
-import axios from "axios";
-import DateModal from "./DateModal";
-import {
-  handleErrorMessage,
-  handleIsError,
-} from "../../../rtk/features/commonSlice";
+// // import CreditCard from "../../checkout/CreditCard";
+// import axios from "axios";
+// import {
+//   handleErrorMessage,
+//   handleIsError,
+// } from "../../../rtk/features/commonSlice";
 const style = {
   position: "absolute",
   top: "50%",
@@ -31,33 +31,8 @@ const style = {
 };
 const BookingModal = () => {
   const dispatch = useDispatch();
-  const { book, parkGroup } = useSelector((state) => state);
-  console.log(book);
-  const CheckParkAvaliable = async (dateformat, dateValue) => {
-    try {
-      const res = await axios.post(`attraction/TicketPriceDetails`, {
-        travelDate: dateformat,
-        // parkId: parkGroup.parkDetails.parkId,
-        // inventoryTypeId: parkGroup.parkDetails.inventoryTypeId,
-        // ticketTypeId:book.bookingInfo.ticketTypeId,
-        parkId: 79,
-        inventoryTypeId: 611,
-        ticketTypeId: 526,
-      });
-      dispatch(
-        handleBookInfo({
-          ...book.bookingInfo,
-          travelDate: dateformat,
-          dateValue: dateValue,
-          AdultTotalGrand: res.data.TicketPriceAdult,
-          ChildTotalGrand: res.data.TicketPriceChild,
-        })
-      );
-    } catch (error) {
-      dispatch(handleIsError(true));
-      dispatch(handleErrorMessage(error.message));
-    }
-  };
+  const { book,attractions } = useSelector((state) => state);
+  console.log(attractions)
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -85,7 +60,7 @@ const BookingModal = () => {
               p={1}
               width="100%"
             >
-              {parkGroup.parkDetails.name} - Tickets - Booking
+              {attractions.AttractionDetails?.name} - Tickets - Booking
             </Typography>
             <Box
               sx={{
@@ -104,12 +79,10 @@ const BookingModal = () => {
             </Box>
           </Box>
           <CustomizedSteppers />
-          {book.bookingStep === 0 && (
-            <DateModal CheckParkAvaliable={CheckParkAvaliable} />
-          )}
+          {book.bookingStep === 0 && <DateModal />}
           {book.bookingStep === 1 && <CartModal />}
           {book.bookingStep === 2 && <ContactInformationModal />}
-          {/* {book.bookingStep === 3 && < CreditCard/>} */}
+          {book.bookingStep === 3 && <CreditCard />}
         </Box>
       </Fade>
     </Modal>
