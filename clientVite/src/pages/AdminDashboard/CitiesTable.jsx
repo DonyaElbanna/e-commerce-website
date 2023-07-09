@@ -208,10 +208,10 @@ const CitiesTable = () => {
           columns={columns}
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
+              paginationModel: { page: 0, pageSize: 7 },
             },
           }}
-          pageSizeOptions={[10, 20]}
+          pageSizeOptions={[7,15, 25]}
           hideFooterSelectedRowCount
           sx={{
             ".MuiDataGrid-columnHeaderTitle": {

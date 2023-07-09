@@ -3,10 +3,10 @@
 @tailwind utilities;
 @layer components {
   .footerLink {
-    @apply text-xl hover:text-yellow-600 cursor-pointer hover:scale-110;
+    @apply text-xl hover:text-[#be853f] cursor-pointer hover:scale-110;
   }
   body {
-    @apply bg-slate-100 scrollbar scrollbar-thumb-[#be853f] scrollbar-track-transparent;
+    @apply bg-slate-100 scrollbar scrollbar-thumb-[#be853f] scrollbar-track-white;
   }
 }
 
@@ -18,13 +18,12 @@
   font-family: Header;
   src: url(../../../../public/fonts/Belanosima-SemiBold.ttf);
 }
-.headerFont{
-  font-family:"Header"
+.headerFont {
+  font-family: "Header";
 }
 .logoFont {
   font-family: "Egypt";
 }
-
 
 /* .rotate-none {
   transform: none !important;
@@ -40,5 +39,22 @@ input {
     -webkit-appearance: none;
     -moz-appearance: textfield;
     margin: 0;
+  }
+}
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 15px;
+    height: 5px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    background: #f7f4ed;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #be853f;
+    border: 3px solid #f7f4ed;
+    border-radius: 100vh;
   }
 }

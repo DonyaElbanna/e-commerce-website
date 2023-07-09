@@ -227,10 +227,10 @@ const Orders = () => {
               columns={columns}
               initialState={{
                 pagination: {
-                  paginationModel: { page: 0, pageSize: 10 },
+                  paginationModel: { page: 0, pageSize: 7 },
                 },
               }}
-              pageSizeOptions={[10, 20]}
+              pageSizeOptions={[7,15, 25]}
               style={{ maxHeight: 500 }}
               sx={{
                 ".MuiDataGrid-columnHeaderTitle": {
