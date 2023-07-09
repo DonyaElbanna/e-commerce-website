@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../../assets/logo.png";
-import cities from "../../../assets/planet-earth.png"
-import order from "../../../assets/plane-ticket.png"
-import wishlist from "../../../assets/add-to-favorites.png"
-import home from "../../../assets/home-page.png"
-import dashboard from "../../../assets/dashboard.png"
-import login from "../../../assets/traveller.png"
-
+import cities from "../../../assets/planet-earth.png";
+import order from "../../../assets/plane-ticket.png";
+import wishlist from "../../../assets/add-to-favorites.png";
+import home from "../../../assets/home-page.png";
+import dashboard from "../../../assets/dashboard.png";
+import login from "../../../assets/traveller.png";
 
 import Style from "./Navbar.module.css";
 import { Box, CardMedia, Container, Typography } from "@mui/material";
@@ -26,7 +25,6 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import Avatar from "@mui/material/Avatar";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 
-
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleAuthType,
@@ -35,7 +33,7 @@ import {
   handleToggleAuthModal,
   handleUserInfo,
 } from "../../../rtk/features/authSlice";
-import Home from '../../../pages/Home';
+import Home from "../../../pages/Home";
 
 const Navbar1 = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -64,7 +62,6 @@ const Navbar1 = () => {
   };
   window.addEventListener("scroll", changeColor);
   let fade = 1 - scroll / 500;
-
 
   window.addEventListener("scroll", changeColor);
 
@@ -210,8 +207,8 @@ const Navbar1 = () => {
                     color: "white",
                     textShadow: "1px 1px 5px black",
                     ":hover": {
-                      backgroundColor: "rgba(255, 255, 255, 0)"
-                    }
+                      backgroundColor: "rgba(255, 255, 255, 0)",
+                    },
                   }}
                 >
                   <Avatar

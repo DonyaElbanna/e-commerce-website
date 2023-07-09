@@ -39,7 +39,29 @@ const WishListContanier = ({ attr }) => {
   console.log(wishlistItems[0]);
   return (
     <div className="container px-5 mx-auto mb-5">
-      <h3 className="text-4xl mb-10 text-center	">Cities</h3>
+      <div className="flex justify-center items-center mt-10 mb-10">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="brown"
+          className="w-12 h-12 mb-8"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+          />
+        </svg>
+        <h1 className="text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white mb-9">
+          My
+          <mark className="px-2 text-white bg-yellow-400 rounded dark:bg-blue-500">
+            WishList
+          </mark>
+        </h1>
+      </div>
+      {/* <h3 className="text-4xl mb-10 text-center">Cities</h3> */}
       {wishlistItems.length == 0 ? (
         <img
           src="https://www.egypttoursportal.com/images/2022/08/5-Days-Cairo-Aswan-Abu-Simbel-Tour-Package-Egypt-Tours-Portal.jpg"
@@ -50,11 +72,11 @@ const WishListContanier = ({ attr }) => {
         <div className="p-10 grid sm:grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-5">
           {wishlistItems.map((cat) => (
             <Link
-              className="m-10 group w-fit h-fit"
+              className="ml-5 mr-9 group w-11/12 h-fit"
               key={cat._id}
               to={`/city/${cat._id}/details`}
             >
-              <div className="md:mr-8 group-hover:scale-105 sm: w-max md:w-80 lg:flex">
+              <div className="md:mr-8 group-hover:scale-105  md:w-80 lg:flex">
                 {/* w-full */}
                 <div
                   className="h-48 rounded-t-xl lg:rounded-r-none lg:rounded-l-xl lg:h-auto lg:w-48 flex-none bg-cover text-center overflow-hidden"
