@@ -1,28 +1,36 @@
 import React from "react";
-import { Virtual } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/virtual";
+import "swiper/css";
+import "swiper/css/autoplay";
+import "swiper/css/keyboard";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import "swiper/css/zoom";
+import { Autoplay, Keyboard, Pagination, Scrollbar, Zoom } from "swiper";
 
 const Categories = ({ cityCats, handleFilter, resetFilters }) => {
   return (
     <>
       <section className="my-8">
         <div className="flex justify-between">
-          <p className="text-3xl text-zinc-500 headerFont ms-8 mb-8">
+          <p className="text-2xl text-zinc-500 ms-8 mb-8">
             Filter Your category
           </p>
           <button
             onClick={resetFilters}
-            className="btn btn-outline btn-accent  headerFont font-medium rounded-full text-md px-4 mr-2 me-16 mb-2"
+            className="btn btn-outline  btn-accent font-medium rounded-full text-md px-3 me-8 mb-2"
           >
             Reset Filters
           </button>
         </div>
         <div className="container px-5 mx-auto flex items-center">
           <Swiper
-            autoplay
-            modules={[Virtual]}
+            modules={[Autoplay, Keyboard, Pagination, Scrollbar, Zoom]}
+            keyboard={true}
+            pagination={true}
+            scrollbar={true}
             breakpoints={{
               300: {
                 width: 300,
@@ -43,9 +51,7 @@ const Categories = ({ cityCats, handleFilter, resetFilters }) => {
             }}
             spaceBetween={0}
             slidesPerView={4}
-            loop={true}
-            virtual
-            className="cursor-grab relative carousel-center w-100 px-4 py-8 bg-stone-600/20 rounded-box"
+            className="cursor-grab relative carousel-center w-100 px-4 pt-8 pb-5 bg-stone-600/20 rounded-box"
           >
             <div>
               {cityCats.map((cat, index) => (
@@ -55,7 +61,7 @@ const Categories = ({ cityCats, handleFilter, resetFilters }) => {
                   onClick={() => handleFilter(cat._id)}
                 >
                   <div className="carousel-item h-32">
-                    <div className="relative block bg-gray-900 group h-28 rounded-md">
+                    <div className="relative  bg-gray-900 group h-28 rounded-md">
                       <img
                         src={cat.image}
                         alt={cat.type}
@@ -70,20 +76,20 @@ const Categories = ({ cityCats, handleFilter, resetFilters }) => {
               ))}
             </div>
           </Swiper>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1}
-            stroke="#be853f"
-            className="w-16 h-8 stroke-2	ml-3 animate-ping	"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
-            />
-          </svg>
+          {/* <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1}
+              stroke="#be853f"
+              className="w-16 h-8 stroke-2	ml-3 animate-ping	"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
+              />
+            </svg> */}
         </div>
       </section>
     </>
