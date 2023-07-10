@@ -8,7 +8,7 @@ const {
   block,
   changeRole,
   getOrders,
-  adminAdd
+  adminAdd,
 } = require("../services/user.service");
 const { signin } = require("./auth.controller");
 const authService = require("../services/auth.service");
@@ -34,7 +34,7 @@ const adminAddUser = async (req, res, next) => {
   try {
     const newUser = await adminAdd(req.body, next);
     if (newUser) {
-      return res.status(201).json({newUser});
+      return res.status(201).json({ newUser });
     } else {
       return next(new AppError(FAILURE, 404));
     }

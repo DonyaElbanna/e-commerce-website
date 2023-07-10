@@ -21,6 +21,7 @@ const RegisterForm = () => {
     password: "",
     confirmPassword: "",
   });
+  const [accept, setAccept] = useState(false);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -59,6 +60,10 @@ const RegisterForm = () => {
         else if (name == "confirmPassword") message = "don't match password";
         errorData[name] = message;
       }
+      setErrors(errorData);
+    } else if (!accept) {
+      const errorData = {};
+      errorData.globalErr = "you have to accept terms and conditions";
       setErrors(errorData);
     } else {
       register();
@@ -122,7 +127,7 @@ const RegisterForm = () => {
         <div className="fixed inset-0 z-10 overflow-y-auto bg-black/50">
           <div className=" p-5 mt-5 items-center sm:p-0">
             <Transition.Child
-              as={Fragment} 
+              as={Fragment}
               enter="ease-out duration-300"
               enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               enterTo="opacity-100 translate-y-0 sm:scale-100"
@@ -225,6 +230,7 @@ const RegisterForm = () => {
                               id="terms"
                               aria-describedby="terms"
                               type="checkbox"
+                              onChange={() => setAccept(!accept)}
                               className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-[#be853f] checked:bg-[#be853f]"
                               required=""
                             />
@@ -279,7 +285,6 @@ const RegisterForm = () => {
 };
 
 export default RegisterForm;
-
 
 // import React, { Fragment, useEffect, useRef, useState } from "react";
 // import { Dialog, Transition } from "@headlessui/react";

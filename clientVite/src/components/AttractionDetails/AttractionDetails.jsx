@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ImagesSlider from "./ImagesSlider";
 import { AttractionDetailsHandlerById } from "../../rtk/features/attrSlice";
 import BookingModal from "../common/BookingModal/BookingModal";
+import { reviewHandler } from "../../rtk/features/reviewSlice";
 
 const AttractionDetails = () => {
   const { id } = useParams();
@@ -19,9 +20,9 @@ const AttractionDetails = () => {
   const dispatch = useDispatch();
   const getAttrs = async () => {
     const { data } = await axios.get(`http://localhost:9999/attraction/${id}`);
-    // console.log(data.Attraction);
+
     setAttrDetails(data.Attraction);
-  
+    dispatch(reviewHandler(data.Attraction.reviews[0]));
   };
 
   useEffect(() => {
@@ -47,7 +48,6 @@ const AttractionDetails = () => {
             <Slider attrDetails={attrDetails} />
 
             <div className="flex w-full justify-between flex-col-reverse  md:flex-row  mt-4 gap-4">
-              
               <Details attrDetails={attrDetails} />
               <BookingCard attrDetails={attrDetails} />
               <BookingModal />

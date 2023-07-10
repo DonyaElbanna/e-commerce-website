@@ -6,16 +6,12 @@ import {
 } from "../../rtk/features/authSlice";
 
 const Details = ({ attrDetails }) => {
-  const { auth } = useSelector((state) => state);
+  const { auth, reviews } = useSelector((state) => state);
+
   const dispatch = useDispatch();
-  const rating =
-    attrDetails.reviews && attrDetails.reviews.length > 0
-      ? attrDetails.reviews[0].avgRating
-      : 0;
-  const reviewCount =
-    attrDetails.reviews && attrDetails.reviews.length > 0
-      ? attrDetails.reviews[0].count
-      : 0;
+  const rating = reviews.Reviews ? reviews.Reviews.avgRating : 0;
+  const reviewCount = reviews.Reviews ? reviews.Reviews.count : 0;
+
   const starClassNames = [];
   (function () {
     const fullStars = Math.floor(rating);

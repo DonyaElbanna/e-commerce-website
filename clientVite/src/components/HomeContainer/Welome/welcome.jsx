@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Style from "./welcome.module.css";
 import video from "../../../assets/video/EgyVideo.mp4";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,24 +9,33 @@ function Welcome() {
   // const [cats, setCats] = useState([]);
   const Navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const getCats = async () => {
-  //     const { data } = await axios.get("http://localhost:9999/category");
-  //     // console.log(data);
-  //     setCats(data.categories);
-  //   };
-  //   getCats();
-  // }, []);
-
   // const handleNavigate = (tar) => {
   //   Navigate(`/city/${tar}`);
   // };
 
+  const toggleVideo = () => {
+    if (isPlaying) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  // let play = "";
   return (
     <>
       <section className={Style.container}>
         <div className={Style.video} onContextMenu={(e) => e.preventDefault()}>
-          <video src={video} type="video/mp4" autoPlay loop muted></video>
+          <video
+            src={video}
+            ref={videoRef}
+            type="video/mp4"
+            onClick={toggleVideo}
+            autoPlay
+            loop
+            muted
+          ></video>
         </div>
         <div className={Style.filter}>
           {/* <p className="text-lg xs:text-xl sm:text-xl md:text-2xl xl:text-3xl my-2">
