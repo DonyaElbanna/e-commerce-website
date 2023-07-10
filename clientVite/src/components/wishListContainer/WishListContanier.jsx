@@ -4,13 +4,13 @@ import React, { useState, useEffect } from "react";
 import wishlistStyle from "./WishListContanier.module.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-
-// const baseURL = "http://localhost:9999/user/64a0892352ffbc8453b77147";
+import gif from "../../assets/gih.gif";
 
 const WishListContanier = ({ attr }) => {
   const [wishlistItems, setWishlistItems] = useState([]);
-  console.log(wishlistItems[0]);
-  const { auth } = useSelector((state) => state);
+
+  const { auth, cities, categories } = useSelector((state) => state);
+
   const baseURL = `http://localhost:9999/user/${auth.userInfo._id}`;
 
   useEffect(() => {
@@ -39,14 +39,14 @@ const WishListContanier = ({ attr }) => {
   };
   return (
     <div className="container px-5 mx-auto mb-5">
-      <div className="flex justify-center items-center mt-10 mb-10">
+      <div className="flex justify-center items-center my-5">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="brown"
-          className="w-12 h-12 mb-8"
+          className="w-8 md:w-10 lg:w-12 h-12"
         >
           <path
             strokeLinecap="round"
@@ -54,8 +54,8 @@ const WishListContanier = ({ attr }) => {
             d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
           />
         </svg>
-        <h1 className="text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white mb-9">
-          My
+        <h1 className="text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
+          My{"   "}
           <mark className="px-2 text-white bg-yellow-400 rounded dark:bg-blue-500">
             WishList
           </mark>
@@ -63,14 +63,19 @@ const WishListContanier = ({ attr }) => {
       </div>
       {/* <h3 className="text-4xl mb-10 text-center">Cities</h3> */}
       {wishlistItems.length == 0 ? (
+        // <img
+        //   src="https://www.egypttoursportal.com/images/2022/08/5-Days-Cairo-Aswan-Abu-Simbel-Tour-Package-Egypt-Tours-Portal.jpg"
+        //   className="mx-auto"
+        //   style={{ width: "150px" }}
+        // />
         <img
-          src="https://www.egypttoursportal.com/images/2022/08/5-Days-Cairo-Aswan-Abu-Simbel-Tour-Package-Egypt-Tours-Portal.jpg"
+          src={gif}
           className="mx-auto"
-          style={{ width: "150px" }}
+          style={{ width: "150px", marginTop: "120px" }}
         />
       ) : (
         // lg:mx-10
-        <div className="py-10 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:gap-2">
+        <div className="py-6 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:gap-2">
           {wishlistItems.map((cat) => (
             <Link
               className="group mx-24 md:mx-3 xl:ml-0 h-fit mt-6"
@@ -86,7 +91,7 @@ const WishListContanier = ({ attr }) => {
                     backgroundImage: `url('${cat.Images[0]}')`,
                   }}
                 ></div>
-                <div className="border-l xl:w-64 group-hover:bg-slate-200 rounded-b-xl lg:rounded-l-none lg:rounded-r-xl xl:h-64 border-gray-400 sm:border-l lg:border-t border-r border-b bg-white p-4 flex flex-col justify-between leading-normal">
+                <div className="border-l xl:w-64 group-hover:bg-slate-200/50 rounded-b-xl lg:rounded-l-none lg:rounded-r-xl xl:h-64 border-gray-400 sm:border-l lg:border-t border-r border-b bg-white p-4 flex flex-col justify-between leading-normal">
                   {/* rounded-b lg:rounded-b-none lg:rounded-r 2xl:rounded-r-xl border-xxl*/}
                   {/* sm:rounded-b-xl md:rounded-b-none */}
                   <div className="mb-8">
@@ -105,10 +110,17 @@ const WishListContanier = ({ attr }) => {
                     </div> */}
                     <div className="flex justify-between mt-5">
                       <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-2 py-1 mx-3 bg-green-200 text-[#be853f] rounded-full w-min">
-                        {/* {cat.category.city} */}
+                        {
+                          cities.cities.find((city) => city._id == cat.category)
+                            .city
+                        }
                       </span>
                       <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-blue-200 text-[#be853f] rounded-full w-min">
-                        {/* {cat.subcategory.type} */}
+                        {
+                          categories.categories.find(
+                            (subcat) => subcat._id == cat.subcategory
+                          ).type
+                        }
                       </span>
                     </div>
                   </div>

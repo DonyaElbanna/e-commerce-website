@@ -23,7 +23,7 @@ const HighestRated = () => {
         <img
           src={gif}
           className="mx-auto"
-          style={{ width: "250px", marginTop: "180px" }}
+          style={{ width: "150px", marginTop: "180px" }}
         />
       ) : (
         <div className="container p-5 mx-auto">

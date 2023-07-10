@@ -7,20 +7,20 @@ import SearchGroup from "./SearchComponent";
 
 function Welcome() {
   // const [cats, setCats] = useState([]);
-  const Navigate = useNavigate();
+  // const Navigate = useNavigate();
 
   // const handleNavigate = (tar) => {
   //   Navigate(`/city/${tar}`);
   // };
 
-  const toggleVideo = () => {
-    if (isPlaying) {
-      videoRef.current.pause();
-    } else {
-      videoRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
+  // const toggleVideo = () => {
+  //   if (isPlaying) {
+  //     videoRef.current.pause();
+  //   } else {
+  //     videoRef.current.play();
+  //   }
+  //   setIsPlaying(!isPlaying);
+  // };
 
   // let play = "";
   return (
@@ -29,9 +29,9 @@ function Welcome() {
         <div className={Style.video} onContextMenu={(e) => e.preventDefault()}>
           <video
             src={video}
-            ref={videoRef}
+            // ref={videoRef}
             type="video/mp4"
-            onClick={toggleVideo}
+            // onClick={toggleVideo}
             autoPlay
             loop
             muted
