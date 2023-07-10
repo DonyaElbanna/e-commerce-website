@@ -13,11 +13,15 @@ import {
   handleOpenAuthModal,
 } from "../../rtk/features/authSlice";
 import axios from "axios";
+import { addReview } from "../../rtk/features/reviewSlice";
 
 const AddReview = () => {
   const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
-  const { auth, attractions } = useSelector((state) => state);
+  const { auth, attractions, reviews } = useSelector((state) => state);
+  const rating = reviews.Reviews ? reviews.Reviews.avgRating : 0;
+  const reviewCount = reviews.Reviews ? reviews.Reviews.count : 0;
+
   const dispatch = useDispatch();
 
   const [form, setForm] = useState({
@@ -97,6 +101,11 @@ const AddReview = () => {
     await axios
       .post("http://localhost:9999/review", newReview)
       .then((response) => {
+        console.log(response);
+        const newRate =
+          (rating * reviewCount + response.data.NewReview.rating) /
+          (reviewCount + 1);
+        dispatch(addReview({ avgRating: newRate, count: reviewCount + 1 }));
         setOpen(false);
       })
       .catch((error) => {
