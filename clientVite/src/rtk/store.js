@@ -33,6 +33,7 @@ import citiesSlice from "./features/citiesSlice";
 import categoriesSlice from "./features/categoriesSlice";
 import ordersSlice from "./features/ordersSlice";
 import usersSlice from "./features/usersSlice";
+import reviewSlice from "./features/reviewSlice";
 
 const persistConfig = {
   key: "root",
@@ -70,6 +71,7 @@ const reducers = combineReducers({
   categories: categoriesSlice,
   orders: ordersSlice,
   users: usersSlice,
+  reviews: reviewSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
