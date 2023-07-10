@@ -209,7 +209,7 @@ const CategoriesTable = () => {
               paginationModel: { page: 0, pageSize: 7 },
             },
           }}
-          pageSizeOptions={[7,15]}
+          pageSizeOptions={[7, 15]}
           hideFooterSelectedRowCount
           sx={{
             ".MuiDataGrid-columnHeaderTitle": {
@@ -218,6 +218,9 @@ const CategoriesTable = () => {
               textAlign: "center",
             },
             paddingLeft: "20px",
+            ".MuiDataGrid-cell": {
+              outline: "none !important",
+            },
           }}
         />
       </div>

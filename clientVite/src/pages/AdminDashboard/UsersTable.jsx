@@ -188,7 +188,9 @@ const Users = () => {
                       <TableCell sx={{ padding: "5px 15px" }}>
                         {user.email}
                       </TableCell>
-                      <TableCell sx={{ padding: "5px 15px" }}>
+                      <TableCell
+                        sx={{ padding: "5px 15px", alignItems: "self-start" }}
+                      >
                         <Box
                           sx={{
                             display: "flex",

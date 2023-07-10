@@ -62,9 +62,7 @@ const RegisterForm = () => {
         errorData[name] = message;
       }
       setErrors(errorData);
-      console.log("errors");
     } else {
-      console.log("else");
       register();
       setErrors({});
     }
@@ -76,75 +74,62 @@ const RegisterForm = () => {
       username: form.userName,
       password: form.password,
     };
-    // if (!users.userEdit) {
+    if (!users.userEdit) {
+      axios
+        .post("http://localhost:9999/user/add", newUser)
+        .then((response) => {
+          dispatch(addUser(response.data.newUser));
+          dispatch(handleOpenAuthModal(false));
+          setOpen(false);
+        })
+        .catch((error) => {
+          console.log("catch post");
+          const errorData = {};
+          console.log(error.response);
+          if (!error.response) {
+            errorData.globalErr =
+              "something went wrong ,please check your connection";
+          } else if (
+            error.response.data.message === "This email is already registered"
+          ) {
+            errorData.email = error.response.data.message;
+          } else {
+            errorData.userName =
+              "this username already exist, please try another one";
+          }
+          setErrors(errorData);
+        });
+    } else {
+      await axios
+        .put(`http://localhost:9999/user/${users.userEdit._id}`, newUser)
+        .then((response) => {
+          console.log("then put");
 
-    try {
-      const { data } = await axios.post(
-        "http://localhost:9999/user/add",
-        newUser
-      );
-      console.log(data);
-    } catch (err) {
-      console.log(err);
+          dispatch(editUser(response.data.user));
+          setOpen(false);
+        })
+        .catch((error) => {
+          console.log("catch put");
+
+          const errorData = {};
+          console.log(error.response);
+          if (!error.response) {
+            errorData.globalErr =
+              "something went wrong ,please check your connection";
+          } else if (
+            error.response.data.message === "This email is already registered"
+          ) {
+            errorData.email = error.response.data.message;
+          } else if (error.response.message == "Something went wrong") {
+            errorData.globalErr = "Something went wrong!";
+          } else {
+            errorData.userName =
+              "this userName already exist , please try another one";
+          }
+
+          setErrors(errorData);
+        });
     }
-
-    // axios
-    //   .post("http://localhost:9999/user/add", newUser)
-    //   .then((response) => {
-    //     console.log("then post");
-    //     dispatch(addUser(response.data.user));
-    //     dispatch(handleOpenAuthModal(false));
-    //     // setOpen(false);
-    //   })
-    //   .catch((error) => {
-    //     console.log("catch post");
-    //     const errorData = {};
-    //     console.log(error.response);
-    //     if (!error.response) {
-    //       errorData.globalErr =
-    //         "something went wrong ,please check your connection";
-    //     } else if (
-    //       error.response.data.message === "This email is already registered"
-    //     ) {
-    //       errorData.email = error.response.data.message;
-    //     } else {
-    //       errorData.userName =
-    //         "this username already exist, please try another one";
-    //     }
-    //     setErrors(errorData);
-    //   });
-    // } else {
-    //   await axios
-    //     .put(`http://localhost:9999/user/${users.userEdit._id}`, newUser)
-    //     .then((response) => {
-    //       console.log("then put");
-
-    //       dispatch(editUser(response.data.user));
-    //       setOpen(false);
-    //     })
-    //     .catch((error) => {
-    //       console.log("catch put");
-
-    //       const errorData = {};
-    //       console.log(error.response);
-    //       if (!error.response) {
-    //         errorData.globalErr =
-    //           "something went wrong ,please check your connection";
-    //       } else if (
-    //         error.response.data.message === "This email is already registered"
-    //       ) {
-    //         errorData.email = error.response.data.message;
-    //       } else if (error.response.message == "Something went wrong") {
-    //         errorData.globalErr = "Something went wrong!";
-    //       } else {
-    //         errorData.userName =
-    //           "this userName already exist , please try another one";
-    //       }
-
-    //       setErrors(errorData);
-    //     });
-    // }
-    console.log("end");
   };
 
   return (

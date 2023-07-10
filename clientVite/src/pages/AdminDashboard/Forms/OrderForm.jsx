@@ -8,6 +8,9 @@ import {
   handleOpenAuthModal,
 } from "../../../rtk/features/authSlice";
 import { addOrder } from "../../../rtk/features/ordersSlice";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 const OrderForm = () => {
   // modal
@@ -15,17 +18,17 @@ const OrderForm = () => {
   const cancelButtonRef = useRef(null);
 
   const { users, cities, attractions } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   const [cityOpt, setCityOpt] = useState("");
   const [attrsOpts, setAttrOpts] = useState([]);
   const [userId, setUserId] = useState("");
+  const [date, setDate] = useState("");
 
-  const dispatch = useDispatch();
   const [form, setForm] = useState({
     attrID: "",
     adults: "",
     children: "",
-    // expectedDate: "",
   });
 
   useEffect(() => {
@@ -41,7 +44,6 @@ const OrderForm = () => {
     attrID: Joi.string().required(),
     adults: Joi.number().min(0).required(),
     children: Joi.number().min(0).required(),
-    // expectedDate: Joi.string().required(),
   });
 
   const handleChangeUserID = (e) => {
@@ -66,7 +68,13 @@ const OrderForm = () => {
       attractions.Attractions.filter((attr) => attr.category._id == cityIdOpt)
     );
   };
-  console.log(attrsOpts);
+
+  const formatDate = (e) => {
+    const slcDate = e.$d.toLocaleDateString();
+    console.log(slcDate);
+    setDate(slcDate);
+  };
+  console.log(date);
 
   const handleChangeForm = (e) => {
     console.log(e.target.value);
@@ -74,7 +82,6 @@ const OrderForm = () => {
       ...form,
       [e.target.name]: e.target.value,
     });
-
   };
 
   const handleAddOrder = async () => {
@@ -83,8 +90,9 @@ const OrderForm = () => {
       attrID: form.attrID,
       adults: form.adults,
       children: form.children,
-      expectedDate: "2023-10-20",
+      expectedDate: "7/13/2023",
     };
+    console.log(newOrder);
     const attr = attractions.Attractions.filter(
       (attr) => attr._id == form.attrID
     )[0];
@@ -216,9 +224,9 @@ const OrderForm = () => {
                                 </option>
                               ))}
                             </select>
-                            {/* <p className="text-red-500 text-xs italic">
-                            {errors.category}
-                          </p> */}
+                            <p className="text-red-500 text-xs italic">
+                              {errors.category}
+                            </p>
                           </div>
                         ) : (
                           <div className="text-center">
@@ -260,7 +268,7 @@ const OrderForm = () => {
                             </p>
                           </div>
                         )}
-                        {attrsOpts.length !== 0 && (
+                        {form.attrID && (
                           <div className="grid grid-rows-12 grid-flow-col gap-5 lg:gap-10 text-center">
                             <div>
                               <label
@@ -307,7 +315,26 @@ const OrderForm = () => {
                             </div>
                           </div>
                         )}
-
+                        {form.adults && form.children && (
+                          <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                              disablePast
+                              selectedSections={"day"}
+                              onChange={(e) => {
+                                formatDate(e);
+                              }}
+                              value={date}
+                              reduceAnimations
+                              sx={{
+                                width: "100%",
+                                ".css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                                  {
+                                    borderColor: "#be853f",
+                                  },
+                              }}
+                            />
+                          </LocalizationProvider>
+                        )}
                         <div>
                           <button
                             type="submit"

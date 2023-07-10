@@ -33,6 +33,9 @@ export default function SearchGroup() {
             fontWeight: "900",
             fontSize: "10px",
             marginTop: "10px",
+            ".MuiFormLabel-root.Mui-focused": {
+              color: "#00000099",
+            },
           }}
           {...params}
           label="City Name"

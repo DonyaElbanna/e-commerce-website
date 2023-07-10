@@ -15,7 +15,6 @@ export const usersSlice = createSlice({
       state.userEdit = action.payload;
     },
     addUser: (state, action) => {
-      console.log("add action", action.payload);
       state.users = [...state.users, action.payload];
     },
     removeUser: (state, action) => {

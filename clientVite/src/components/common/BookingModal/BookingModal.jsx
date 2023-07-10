@@ -31,8 +31,8 @@ const style = {
 };
 const BookingModal = () => {
   const dispatch = useDispatch();
-  const { book,attractions } = useSelector((state) => state);
-  console.log(attractions)
+  const { book, attractions } = useSelector((state) => state);
+  // console.log(attractions)
   return (
     <Modal
       aria-labelledby="transition-modal-title"

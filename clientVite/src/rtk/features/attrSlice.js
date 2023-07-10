@@ -19,7 +19,6 @@ export const attrSlice = createSlice({
       );
     },
     attractionEditHandler: (state, action) => {
-      // console.log("attr edit action", action.payload);
       state.attractionEdit = action.payload;
     },
   },

@@ -33,7 +33,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ py:4 , px:1 }}>
+        <Box sx={{ py: 4, px: 1 }}>
           <Typography component={"div"}>{children}</Typography>
         </Box>
       )}
@@ -71,6 +71,7 @@ export default function VerticalTabs() {
         display: "flex",
         height: "fit-content",
         flexDirection: smallSc ? "row" : "column",
+        alignItems: "flex-start",
       }}
     >
       <Tabs
@@ -83,15 +84,16 @@ export default function VerticalTabs() {
           borderRight: 1,
           borderColor: "divider",
           overflow: "unset",
-          "& .MuiTab-root.Mui-selected": {
+          "&.MuiTab-root.Mui-selected": {
             color: "#be853f",
-            
+          },
+          "&& .MuiTab-root": {
+            alignSelf: "baseline",
           },
         }}
         allowScrollButtonsMobile
         TabIndicatorProps={{
-          style: { backgroundColor: "transparent",
-        },
+          style: { backgroundColor: "orange" },
         }}
       >
         <Tab

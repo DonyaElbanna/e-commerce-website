@@ -211,7 +211,7 @@ const CitiesTable = () => {
               paginationModel: { page: 0, pageSize: 7 },
             },
           }}
-          pageSizeOptions={[7,15, 25]}
+          pageSizeOptions={[7, 15, 25]}
           hideFooterSelectedRowCount
           sx={{
             ".MuiDataGrid-columnHeaderTitle": {
@@ -220,6 +220,9 @@ const CitiesTable = () => {
               textAlign: "center",
             },
             paddingLeft: "20px",
+            ".MuiDataGrid-cell": {
+              outline: "none !important",
+            },
           }}
         />
       </div>

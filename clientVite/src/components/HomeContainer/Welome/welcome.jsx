@@ -6,34 +6,35 @@ import axios from "axios";
 import SearchGroup from "./SearchComponent";
 
 function Welcome() {
-  const [cats, setCats] = useState([]);
+  // const [cats, setCats] = useState([]);
   const Navigate = useNavigate();
 
-  useEffect(() => {
-    const getCats = async () => {
-      const { data } = await axios.get("http://localhost:9999/category");
-      // console.log(data);
-      setCats(data.categories);
-    };
-    getCats();
-  }, []);
+  // useEffect(() => {
+  //   const getCats = async () => {
+  //     const { data } = await axios.get("http://localhost:9999/category");
+  //     // console.log(data);
+  //     setCats(data.categories);
+  //   };
+  //   getCats();
+  // }, []);
 
-  const handleNavigate = (tar) => {
-    Navigate(`/city/${tar}`);
-  };
+  // const handleNavigate = (tar) => {
+  //   Navigate(`/city/${tar}`);
+  // };
+
   return (
     <>
       <section className={Style.container}>
-        <div className={Style.video}>
+        <div className={Style.video} onContextMenu={(e) => e.preventDefault()}>
           <video src={video} type="video/mp4" autoPlay loop muted></video>
         </div>
         <div className={Style.filter}>
-          <p className="text-lg xs:text-xl sm:text-xl md:text-2xl xl:text-3xl my-2">
+          {/* <p className="text-lg xs:text-xl sm:text-xl md:text-2xl xl:text-3xl my-2">
             Our Packages
-          </p>
-          <h1 className="text-2xl xs:text2xl sm:text-3xl md:text-5xl xl:text-6xl my-2">
-            {" "}
-            Search your Holiday
+          </p> */}
+          {/* <h1 className="text-2xl xs:text2xl sm:text-3xl md:text-5xl xl:text-6xl mb-4"> */}
+          <h1 className="text-2xl sm:text-3xl md:text-5xl xl:text-6xl mb-0 md:mb-4">
+            Pick your Holiday
           </h1>
           <SearchGroup />
         </div>

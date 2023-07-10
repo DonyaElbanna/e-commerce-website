@@ -47,7 +47,6 @@ const getSingleUser = async (req, res, next) => {
   const { id } = req.params;
   try {
     const user = await getUser(id, next);
-    console.log(user)
     res.status(200).json(user);
   } catch (err) {
     return next(new AppError(FAILURE, 404));

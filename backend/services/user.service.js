@@ -26,7 +26,6 @@ const add = async (payload, next) => {
 const getUser = async (id, next) => {
   try {
     const user = await User.findById(id).populate("wishlist")
-    console.log(user)
       // .populate("wishlist")
       // .populate({
       //   path: "wishlist",

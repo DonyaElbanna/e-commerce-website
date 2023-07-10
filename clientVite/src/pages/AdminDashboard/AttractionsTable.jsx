@@ -251,7 +251,11 @@ const Attractions = () => {
   return (
     <>
       {common.isLoading ? (
-        <img src={gif} className="mx-auto" style={{ width: "250px", marginTop:'180px' }} />
+        <img
+          src={gif}
+          className="mx-auto"
+          style={{ width: "250px", marginTop: "180px" }}
+        />
       ) : (
         <>
           <Box sx={{ marginBottom: "15px", textAlign: "center" }}>
@@ -284,7 +288,7 @@ const Attractions = () => {
                   paginationModel: { page: 0, pageSize: 7 },
                 },
               }}
-              pageSizeOptions={[7 ,15, 25]}
+              pageSizeOptions={[7, 15, 25]}
               style={{ maxHeight: 500 }}
               sx={{
                 ".MuiDataGrid-columnHeaderTitle": {
@@ -293,7 +297,9 @@ const Attractions = () => {
                   textAlign: "center",
                 },
                 paddingLeft: "20px",
-
+                ".MuiDataGrid-cell": {
+                  outline: "none !important",
+                },
               }}
             />
           </div>
