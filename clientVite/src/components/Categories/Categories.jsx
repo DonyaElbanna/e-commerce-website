@@ -13,14 +13,12 @@ import { Autoplay, Keyboard, Pagination, Scrollbar, Zoom } from "swiper";
 const Categories = ({ cityCats, handleFilter, resetFilters }) => {
   return (
     <>
-      <section className="my-8">
-        <div className="flex justify-between">
-          <p className="text-2xl text-zinc-500 ms-8 mb-8">
-            Filter Your category
-          </p>
+      <div className="my-8">
+        <div className="flex justify-between w-4/5 mb-5 mx-auto">
+          <p className="text-2xl text-zinc-500">Filter Your category</p>
           <button
             onClick={resetFilters}
-            className="btn btn-outline  btn-accent font-medium rounded-full text-md px-3 me-8 mb-2"
+            className="btn btn-outline  btn-accent font-medium rounded-full text-md"
           >
             Reset Filters
           </button>
@@ -91,7 +89,7 @@ const Categories = ({ cityCats, handleFilter, resetFilters }) => {
               />
             </svg> */}
         </div>
-      </section>
+      </div>
     </>
   );
 };

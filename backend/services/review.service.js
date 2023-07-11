@@ -51,7 +51,7 @@ const highestReviews = async () => {
         $sort: { averageRating: -1 },
       },
       {
-        $limit: 6,
+        $limit: 12,
       },
     ]);
 

@@ -40,7 +40,7 @@ const AttractionsList = () => {
         <img src={gif} className=" mx-auto" style={{ width: "150px" }} />
       ) : (
         <div className="container p-5 mx-auto">
-          <h3 className="text-4xl text-center text-zinc-700">{city.city}</h3>
+          <h3 className="text-4xl text-center text-zinc-700 headerFont">{city.city}</h3>
           <Categories
             cityCats={cityCats}
             handleFilter={handleFilter}

@@ -84,8 +84,8 @@ export default function VerticalTabs() {
           borderRight: 1,
           borderColor: "divider",
           overflow: "unset",
-          "&.MuiTab-root.Mui-selected": {
-            color: "#be853f",
+          ".Mui-selected": {
+            color: "#be853f !important",
           },
           "&& .MuiTab-root": {
             alignSelf: "baseline",
