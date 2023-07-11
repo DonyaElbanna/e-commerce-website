@@ -16,8 +16,8 @@ const Home = () => {
       <Welcome />
       <Container>
         <Popular />
-        <h1 className="headerFont text-center text-3xl mt-6 py-6">
-          Filter your Tours
+        <h1 className="text-4xl sm:text-5xl text-center mt-20 pb-8 text-zinc-700 headerFont">
+          <span className="text-[#be853f]">Filter</span> your Tours
         </h1>
         <Grid container spacing={5}>
           <Grid xs={12} sm={4} md={3} sx={{ paddingTop: "0px" }}>

@@ -9,7 +9,6 @@ import {
   handleFilters,
 } from "../../../rtk/features/attrSlice";
 
-
 const CityFilter = () => {
   const dispatch = useDispatch();
 
@@ -26,7 +25,7 @@ const CityFilter = () => {
     <div>
       <FormLabel style={{ display: "none" }}>Cities</FormLabel>
       <RadioGroup>
-        <div className="filter-btns">
+        <div className="flex flex-wrap md:flex-col md:flex-nowrap">
           {cities.cities.map((city) => (
             <FormControlLabel
               key={city._id}
@@ -35,6 +34,11 @@ const CityFilter = () => {
               label={city.city}
               checked={!attractions.filters ? false : slc == city._id}
               onChange={() => handleCityFilter(city._id)}
+              sx={{
+                ".css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked ": {
+                  color: "#be853f",
+                },
+              }}
             />
           ))}
         </div>

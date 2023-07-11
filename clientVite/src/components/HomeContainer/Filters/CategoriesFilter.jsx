@@ -27,15 +27,20 @@ const CategoriesFilter = () => {
     <div>
       <FormLabel style={{ display: "none" }}>Cities</FormLabel>{" "}
       <RadioGroup>
-        <div className="filter-btns">
+        <div>
           {categories.categories.map((cat) => (
             <FormControlLabel
               key={cat._id}
               value={cat._id}
               control={<Radio />}
               label={cat.type}
-              checked={!attractions.filters ? false : slc == cats._id}
+              checked={!attractions.filters ? false : slc == cat._id}
               onChange={() => handleCatFilter(cat._id)}
+              sx={{
+                ".css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked ": {
+                  color: "#be853f",
+                },
+              }}
             />
           ))}
         </div>

@@ -8,8 +8,8 @@ const Popular = () => {
   return (
     <>
       <div>
-        <h1 className="headerFont text-center text-3xl py-6">
-          Our Most Popular Tours
+        <h1 className="text-4xl sm:text-5xl text-center mt-20 pb-8 text-zinc-700 headerFont">
+          Our Most <span className="text-[#be853f]">Popular</span> Tours
         </h1>
         <Grid container spacing={3}>
           {attractions.highestRated.slice(0, 6).map((attr) => (

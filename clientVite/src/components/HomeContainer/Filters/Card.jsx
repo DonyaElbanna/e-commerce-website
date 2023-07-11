@@ -59,11 +59,21 @@ const CardItem = ({ attr }) => {
   }
 
   return (
-    <Link
-      to={`/city/${attr._id}/details`}
-    >
-      <Card>
-        <CardMedia sx={{ height: 140 }} image={attr.Images[0]} alt=" image" />
+    <Link to={`/city/${attr._id}/details`}>
+      <Card
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          height: "320px",
+          justifyContent: "space-between",
+          boxShadow: "5px 5px 18px grey",
+        }}
+      >
+        <CardMedia
+          sx={{ height: "160px" }}
+          image={attr.Images[0]}
+          alt=" image"
+        />
         <p className="text-slate-500 text-right" style={{ marginRight: "3px" }}>
           {attr.category.city || attr.category[0].city}
         </p>
@@ -102,9 +112,12 @@ const CardItem = ({ attr }) => {
                 </svg>
               </button>
             </div>
-            <div className="bg-slate-300 pl-2 flex items-center justify-between transition">
+            <div
+              className="bg-gray-800 hover:bg-gray-900 text-white pl-2 flex items-center justify-between transition"
+              // style={{ position: "sticky", bottom: "0" }}
+            >
               <p>${attr.AdultPrice} /adult</p>
-              <p className="p-2 hover:bg-slate-400">Details</p>
+              <p className="p-2">Details</p>
             </div>
           </Typography>
         </CardContent>
