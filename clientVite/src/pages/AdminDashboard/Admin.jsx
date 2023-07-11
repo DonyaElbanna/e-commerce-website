@@ -97,30 +97,35 @@ export default function VerticalTabs() {
         }}
       >
         <Tab
+          className="w-full"
           icon={<AttractionsOutlinedIcon />}
           iconPosition="start"
           label="Attractions"
           {...a11yProps(0)}
         />
         <Tab
+          className="w-full"
           icon={<PersonPinIcon />}
           iconPosition="start"
           label="Users"
           {...a11yProps(1)}
         />
         <Tab
+          className="w-full"
           icon={<PlaceOutlinedIcon />}
           iconPosition="start"
           label="Cities"
           {...a11yProps(2)}
         />
         <Tab
+          className="w-full"
           icon={<CategoryOutlinedIcon />}
           iconPosition="start"
           label="Categories"
           {...a11yProps(3)}
         />
         <Tab
+          className="w-full"
           icon={<InventoryOutlinedIcon />}
           iconPosition="start"
           label="Orders"
