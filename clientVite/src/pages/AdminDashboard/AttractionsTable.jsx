@@ -68,8 +68,8 @@ const Attractions = () => {
             childAvailability: attr.childAvailable
               ? "Available"
               : "Not available",
-            adultPrice: "$ " + attr.AdultPrice,
-            childPrice: "$ " + attr.ChildPrice,
+            adultPrice: "$" + attr.AdultPrice,
+            childPrice: "$" + attr.ChildPrice,
           }))
         );
       } catch (err) {

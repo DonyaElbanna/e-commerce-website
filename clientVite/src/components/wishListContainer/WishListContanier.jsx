@@ -29,7 +29,10 @@ const WishListContanier = ({ attr }) => {
     );
     setWishlistItems(updatedWishlist);
     try {
-      await axios.post(baseURL, { id: item._id });
+      await axios.post(baseURL, {
+        id: auth.userInfo._id,
+        Attraction: item._id,
+      });
     } catch (err) {
       console.log(err);
     }

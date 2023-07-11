@@ -17,6 +17,8 @@ const {
   extractJwtAdminFromCookie,
 } = require("../middlewares/tokenextractor.middleware");
 const router = express.Router();
+
+
 router.get("/", getAllAttraction);
 router.get("/all", GetAllAttractions);
 router.get("/:id", getAttraction);
@@ -24,7 +26,6 @@ router.get("/category/:id", getAttractionByCategory);
 router.get("/subcat/:id", getAttractionBySubcategory);
 
 //admin route
-
 router.post(
   "/",
   extractJwtAdminFromCookie,

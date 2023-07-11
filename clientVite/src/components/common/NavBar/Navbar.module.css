@@ -13,8 +13,8 @@
 }
 .NavLink {
   text-decoration: none;
-  color: #be853f;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.422);
+  color: white;
+  /* text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.422);*/
   font-weight: bolder;
   height: 100%;
   padding: 5px;
@@ -28,17 +28,17 @@
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
 }
-IconButton:hover{
+IconButton:hover {
   background-color: rgba(255, 255, 255, 0) !important;
-  color:black
+  color: black;
 }
 .NavLink:hover {
-  scale:1.1
+  scale: 1.1;
 }
 .NavLinkTop {
   text-decoration: none;
-  color: grey;
-  text-shadow: 1px 1px 3px rgb(0, 0, 0);
+  color: #ffae73;
+  /* text-shadow: 1px 1px 3px rgb(0, 0, 0);*/
   font-weight: bolder;
   height: 100%;
   padding: 5px;
@@ -54,7 +54,7 @@ IconButton:hover{
 }
 .NavLinkActive {
   color: #be853f;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.252);
+  /*text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.252);*/
   text-decoration: none;
   font-weight: bolder;
   height: 100%;
@@ -68,13 +68,13 @@ IconButton:hover{
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
-  scale:1.1
+  scale: 1.1;
 }
 
-.navbarImg{
+.navbarImg {
   width: 20px;
   height: 20px;
-  margin:2px
+  margin: 2px;
 }
 
 @media (max-width: 768px) {

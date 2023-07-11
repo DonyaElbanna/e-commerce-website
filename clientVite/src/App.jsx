@@ -16,12 +16,17 @@ import ResetPassword from "./components/common/AuthModal/ResetPassword";
 import { useEffect, useState } from "react";
 import { handleAuthType, handleOpenAuthModal } from "./rtk/features/authSlice";
 import axios from "axios";
-import { AttractionGroupHandler } from "./rtk/features/attrSlice";
+import {
+  AttractionGroupHandler,
+  highestAttrsHandler,
+  handleFilters,
+} from "./rtk/features/attrSlice";
 import Orders from "./pages/Orders";
 import AttractionForm from "./pages/AdminDashboard/FormAttraction/AttractionForm";
 import IconMap from "./components/Map/IconMap";
 import { citiesHandler } from "./rtk/features/citiesSlice";
 import { categoriesHandler } from "./rtk/features/categoriesSlice";
+import Error from "./components/Error/Error";
 
 function App() {
   const { auth } = useSelector((state) => state);
@@ -51,6 +56,15 @@ function App() {
       console.log(error);
     }
   };
+  const getHighestRated = async () => {
+    try {
+      const { data } = await axios.get(`http://localhost:9999/review/highest`);
+      dispatch(highestAttrsHandler(data));
+      dispatch(handleFilters());
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     dispatch(handleAuthType("login"));
@@ -58,13 +72,14 @@ function App() {
     getAllAttract();
     getAllCities();
     getAllCats();
+    getHighestRated();
   }, []);
   return (
     <>
       <Navbar1 />
       {auth.openAuthModal ? <AuthModel /> : ""}
-      <div style={{ minHeight:"385px"}}>
-        <Routes className="bg-black" >
+      <div style={{ minHeight: "385px" }}>
+        <Routes className="bg-black">
           <Route path="/" element={<Home />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/order" element={<Orders />} />
@@ -76,8 +91,26 @@ function App() {
           {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
 
           <Route path="/cities" element={<Cities />} />
-          <Route path="/admin" element={auth.userInfo.role === "admin" ? <Admin /> : <Navigate to="/" replace />} />
-          <Route path="/form" element={auth.userInfo.role === "admin" ? <AttractionForm /> : <Navigate to="/" replace />} />
+          <Route
+            path="/admin"
+            element={
+              auth.userInfo.role === "admin" ? (
+                <Admin />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/form"
+            element={
+              auth.userInfo.role === "admin" ? (
+                <AttractionForm />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
           <Route path="/city/:id" element={<AttractionsList />} />
           <Route path="/city/:id/details" element={<AttractionDetails />} />
           <Route path="/*" element={<Error />} />

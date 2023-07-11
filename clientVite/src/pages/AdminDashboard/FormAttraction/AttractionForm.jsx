@@ -196,7 +196,7 @@ const AttractionForm = () => {
 
   return (
     <>
-      <section className="py-16">
+      <div className="py-16">
         <form
           className="w-11/12 md:w-9/12 lg:w-8/12 xl:w-6/12 m-auto p-10 rounded-xl shadow-lg shadow-[#be853f]"
           id="form"
@@ -523,7 +523,7 @@ const AttractionForm = () => {
             </button>
           </div>
         </form>
-      </section>
+      </div>
     </>
   );
 };

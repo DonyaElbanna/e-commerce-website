@@ -80,7 +80,7 @@ const AttractionCard = ({ attr }) => {
     event.preventDefault();
   }
   return (
-    <section className="flex justify-center">
+    <div className="flex justify-center">
       <Link
         to={`/city/${attr._id}/details`}
         className={`card w-96 bg-gray-800 shadow-xl ${Style.enlarge} m-2 hover:bg-gray-900 cursor-pointer`}
@@ -151,7 +151,7 @@ const AttractionCard = ({ attr }) => {
           </figcaption>
         </div>
       </Link>
-    </section>
+    </div>
   );
 };
 
