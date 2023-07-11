@@ -6,6 +6,7 @@ import CardsContainer from "../components/HomeContainer/Filters/CardsContainer";
 import { useSelector } from "react-redux";
 import Popular from "../components/Popular/Popular";
 import Container from "@mui/material/Container";
+import WhyChooseUs from "../components/HomeContainer/WhyChooseUs";
 
 const Home = () => {
   const { attractions } = useSelector((state) => state);
@@ -27,6 +28,7 @@ const Home = () => {
           </Grid>
         </Grid>
       </Container>
+      <WhyChooseUs />
       {/* <Filter />
         <HighestRated /> */}
     </>
