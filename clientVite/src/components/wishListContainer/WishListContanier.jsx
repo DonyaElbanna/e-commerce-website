@@ -10,7 +10,6 @@ const WishListContanier = ({ attr }) => {
   const [wishlistItems, setWishlistItems] = useState([]);
 
   const { auth, cities, categories } = useSelector((state) => state);
-
   const baseURL = `http://localhost:9999/user/${auth.userInfo._id}`;
 
   useEffect(() => {
@@ -20,7 +19,6 @@ const WishListContanier = ({ attr }) => {
     };
     getWishlistItems();
   }, []);
-  // console.log(wishlistItems);
 
   const handleRemoveFromWishlist = async (event, item) => {
     event.preventDefault();
@@ -58,7 +56,7 @@ const WishListContanier = ({ attr }) => {
           />
         </svg>
         <h1 className="text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
-          My{"   "}
+          My
           <mark className="px-2 text-white bg-yellow-400 rounded dark:bg-blue-500">
             WishList
           </mark>
@@ -81,12 +79,13 @@ const WishListContanier = ({ attr }) => {
         <div className="py-6 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:gap-2">
           {wishlistItems.map((cat) => (
             <Link
-              className="group mx-24 md:mx-3 xl:ml-0 h-fit mt-6"
+              className="group mx-24 md:mx-3 lg:w-min xl:ml-0 h- mt-6"
               // ml-5  mr-9 group w-11/12 h-fit
               key={cat._id}
               to={`/city/${cat._id}/details`}
             >
-              <div className="group-hover:scale-105 xl:ml-0 lg:flex">
+              <div className="lg:w-min xl:ml-0 lg:flex">
+                {/* group-hover:scale-105 */}
                 {/* w-full */}
                 <div
                   className="h-48 rounded-t-xl lg:rounded-r-none lg:rounded-l-xl lg:h-auto xl:w-36 lg:w-44 2xl:w-48 flex-none bg-cover text-center overflow-hidden"
@@ -94,7 +93,7 @@ const WishListContanier = ({ attr }) => {
                     backgroundImage: `url('${cat.Images[0]}')`,
                   }}
                 ></div>
-                <div className="border-l xl:w-64 group-hover:bg-slate-200/50 rounded-b-xl lg:rounded-l-none lg:rounded-r-xl xl:h-64 border-gray-400 sm:border-l lg:border-t border-r border-b bg-white p-4 flex flex-col justify-between leading-normal">
+                <div className="h-60 border-l xl:w-64 group-hover:bg-slate-200/50 rounded-b-xl lg:rounded-l-none lg:rounded-r-xl xl:h-64 border-gray-400 sm:border-l lg:border-t border-r border-b bg-white p-4 flex flex-col justify-between leading-normal">
                   {/* rounded-b lg:rounded-b-none lg:rounded-r 2xl:rounded-r-xl border-xxl*/}
                   {/* sm:rounded-b-xl md:rounded-b-none */}
                   <div className="mb-8">
@@ -106,7 +105,7 @@ const WishListContanier = ({ attr }) => {
                       <span className=" bold text-gray-800">
                         ${cat.AdultPrice}
                       </span>
-                      <span className=" text-xs  text-gray-600">/person</span>
+                      <span className="text-xs text-gray-600">/person</span>
                     </h2>
                     {/* <div className="text-gray-600 bold text-xl">
                       duration: {cat.duration}
@@ -131,7 +130,7 @@ const WishListContanier = ({ attr }) => {
                     <div className="flex flex-row-reverse text-center justify-center">
                       <button
                         onClick={ddd}
-                        className=" ml-1 mt-1 bg-blue-500 hover:bg-blue-700 text-white font-bold h-9 py-2 px-4 rounded-full flex w-44"
+                        className="ml-1 mt-1 bg-blue-500 hover:bg-blue-700 text-white font-bold h-9 py-2 px-4 rounded-full flex w-44"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

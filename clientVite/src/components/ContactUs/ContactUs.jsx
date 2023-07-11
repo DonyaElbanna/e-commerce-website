@@ -28,7 +28,7 @@ function ContactUs() {
       <div className="mt-24 mb-24 overflow-hidden w-full min-w-min">
         {/* <div className="grid grid-cols-1 md:grid-cols-2 scroll-ml-7"> */}
         <div className="flex flex-wrap justify-evenly ml-20">
-          <div className="w-full ml-14 md:w-5/12 dark:bg-gray-800">
+          <div className="w-full ml-28 sm:ml-36 md:ml-20  md:w-5/12 dark:bg-gray-800">
             <h1 className="text-4xl sm:text-5xl text-gray-800 dark:text-white font-extrabold tracking-tight">
               Contact Us
             </h1>
@@ -110,7 +110,7 @@ function ContactUs() {
           </div>
 
           <div
-            className="mr-12 mt-10 lg:w-5/12 md:w-11/12 bg-slate-300 rounded-xl"
+            className="mr-12 mt-10 lg:w-5/12 md:w-7/12 bg-slate-300 rounded-xl"
             // style={{ width: "400px" }}
           >
             <form className="p-6 flex flex-col justify-center">
@@ -124,7 +124,7 @@ function ContactUs() {
                   name="name"
                   id="name"
                   placeholder="Full Name"
-                  className=" w-11/12 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-amber-400 border-2 focus:outline-none"
+                  className="w-full mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-amber-400 border-2 focus:outline-none"
                 />
               </div>
               <div className="mt-2">
@@ -137,7 +137,7 @@ function ContactUs() {
                   name="email"
                   id="email"
                   placeholder="Email"
-                  className=" w-11/12 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-amber-400 focus:outline-none"
+                  className="w-full mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-amber-400 focus:outline-none"
                 />
               </div>
               <div className="mt-2">
@@ -150,14 +150,14 @@ function ContactUs() {
                   name="tel"
                   id="tel"
                   placeholder="Telephone Number"
-                  className=" w-11/12 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-amber-400 focus:outline-none"
+                  className="w-full mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-amber-400 focus:outline-none"
                 />
               </div>
 
               <button
                 type="submit"
                 onClick={handleSubmit}
-                className=" bg-amber-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-amber-500  ease-in-out duration-300"
+                className="m-auto w-28 bg-amber-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-amber-500  ease-in-out duration-300"
               >
                 Submit
               </button>
