@@ -22,6 +22,7 @@ import AttractionForm from "./pages/AdminDashboard/FormAttraction/AttractionForm
 import IconMap from "./components/Map/IconMap";
 import { citiesHandler } from "./rtk/features/citiesSlice";
 import { categoriesHandler } from "./rtk/features/categoriesSlice";
+import Error from "./components/Error/Error";
 
 function App() {
   const { auth } = useSelector((state) => state);
@@ -63,8 +64,8 @@ function App() {
     <>
       <Navbar1 />
       {auth.openAuthModal ? <AuthModel /> : ""}
-      <div style={{ minHeight:"385px"}}>
-        <Routes className="bg-black" >
+      <div style={{ minHeight: "385px" }}>
+        <Routes className="bg-black">
           <Route path="/" element={<Home />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/order" element={<Orders />} />
@@ -76,8 +77,26 @@ function App() {
           {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
 
           <Route path="/cities" element={<Cities />} />
-          <Route path="/admin" element={auth.userInfo.role === "admin" ? <Admin /> : <Navigate to="/" replace />} />
-          <Route path="/form" element={auth.userInfo.role === "admin" ? <AttractionForm /> : <Navigate to="/" replace />} />
+          <Route
+            path="/admin"
+            element={
+              auth.userInfo.role === "admin" ? (
+                <Admin />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/form"
+            element={
+              auth.userInfo.role === "admin" ? (
+                <AttractionForm />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
           <Route path="/city/:id" element={<AttractionsList />} />
           <Route path="/city/:id/details" element={<AttractionDetails />} />
           <Route path="/*" element={<Error />} />
