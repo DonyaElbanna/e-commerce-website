@@ -8,6 +8,7 @@ import {
   handleToggleAuthModal,
 } from "../../../rtk/features/authSlice";
 import Rating from "@mui/material/Rating";
+import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 
 const AttractionCard = ({ attr }) => {
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -38,6 +39,7 @@ const AttractionCard = ({ attr }) => {
         const { data } = await axios.get(
           `http://localhost:9999/user/${auth.userInfo._id}`
         );
+        // console.log(data.wishlist);
         setWishlistItems(data.wishlist);
       };
       getWishlistItems();
@@ -94,6 +96,7 @@ const AttractionCard = ({ attr }) => {
   function handleAddRating(event) {
     event.preventDefault();
   }
+
   return (
     <div className="flex justify-center">
       <Link
@@ -130,7 +133,7 @@ const AttractionCard = ({ attr }) => {
             </button>
           </div>
           <figcaption className="px-4 pb-4 ">
-            <h2 className="card-title mb-5">{attr?.name}</h2>
+            <h2 className="card-title mb-5 text-white">{attr?.name}</h2>
             <article className="flex justify-between items-center">
               <div className="text-[#be853f] font-bold text-lg">
                 <p>{attr.category.city || attr.category[0].city}</p>
@@ -157,12 +160,18 @@ const AttractionCard = ({ attr }) => {
               </div> */}
               <Rating
                 value={
-                  attr.review.length !== 0
+                  attr.review && attr.review.length !== 0
                     ? calculateAverageRating(attr.review)
                     : 0
                 }
                 precision={0.25}
                 readOnly
+                emptyIcon={
+                  <StarBorderOutlinedIcon
+                    fontSize="inherit"
+                    sx={{ color: "#6b7280" }}
+                  />
+                }
               />
               <span className="text-sm text-gray-500">
                 <span className="text-2xl font-bold text-gray-200 dark:text-white">

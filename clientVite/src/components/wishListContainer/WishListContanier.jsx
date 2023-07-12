@@ -5,6 +5,8 @@ import wishlistStyle from "./WishListContanier.module.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import gif from "../../assets/gih.gif";
+import Style from "../HomeContainer/AttractionCard/AttractionCard.module.css";
+import AttractionCard from "../HomeContainer/AttractionCard/AttractionCard";
 
 const WishListContanier = ({ attr }) => {
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -15,6 +17,7 @@ const WishListContanier = ({ attr }) => {
   useEffect(() => {
     const getWishlistItems = async () => {
       const { data } = await axios.get(baseURL);
+      console.log(data.wishlist);
       setWishlistItems(data.wishlist);
     };
     getWishlistItems();
@@ -76,105 +79,95 @@ const WishListContanier = ({ attr }) => {
         />
       ) : (
         // lg:mx-10
-        <div className="py-6 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:gap-2">
-          {wishlistItems.map((cat) => (
-            <Link
-              className="group mx-24 md:mx-3 lg:w-min xl:ml-0 h- mt-6"
-              // ml-5  mr-9 group w-11/12 h-fit
-              key={cat._id}
-              to={`/city/${cat._id}/details`}
-            >
-              <div className="lg:w-min xl:ml-0 lg:flex">
-                {/* group-hover:scale-105 */}
-                {/* w-full */}
-                <div
-                  className="h-48 rounded-t-xl lg:rounded-r-none lg:rounded-l-xl lg:h-auto xl:w-36 lg:w-44 2xl:w-48 flex-none bg-cover text-center overflow-hidden"
-                  style={{
-                    backgroundImage: `url('${cat.Images[0]}')`,
-                  }}
-                ></div>
-                <div className="h-60 border-l xl:w-64 group-hover:bg-slate-200/50 rounded-b-xl lg:rounded-l-none lg:rounded-r-xl xl:h-64 border-gray-400 sm:border-l lg:border-t border-r border-b bg-white p-4 flex flex-col justify-between leading-normal">
-                  {/* rounded-b lg:rounded-b-none lg:rounded-r 2xl:rounded-r-xl border-xxl*/}
-                  {/* sm:rounded-b-xl md:rounded-b-none */}
-                  <div className="mb-8">
-                    <div className="text-gray-900 font-bold text-xl mb-2">
-                      {cat.name}
-                    </div>
-                    <h2 className="card-title justify-between w-32">
-                      <span className="bold">Price:</span>
-                      <span className=" bold text-gray-800">
-                        ${cat.AdultPrice}
-                      </span>
-                      <span className="text-xs text-gray-600">/person</span>
-                    </h2>
-                    {/* <div className="text-gray-600 bold text-xl">
-                      duration: {cat.duration}
-                    </div> */}
-                    <div className="flex justify-between mt-5">
-                      <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-2 py-1 mx-3 bg-green-200 text-[#be853f] rounded-full w-min">
-                        {
-                          cities.cities.find((city) => city._id == cat.category)
-                            .city
-                        }
-                      </span>
-                      <span className="text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-blue-200 text-[#be853f] rounded-full w-min">
-                        {
-                          categories.categories.find(
-                            (subcat) => subcat._id == cat.subcategory
-                          ).type
-                        }
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex justify-evenly">
-                    <div className="flex flex-row-reverse text-center justify-center">
-                      <button
-                        onClick={ddd}
-                        className="ml-1 mt-1 bg-blue-500 hover:bg-blue-700 text-white font-bold h-9 py-2 px-4 rounded-full flex w-44"
+        <div className="py-6 mx-5 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
+          {wishlistItems.map((attr) => (
+            <div className="flex justify-center" key={attr._id}>
+              <Link
+                to={`/city/${attr._id}/details`}
+                className={`card w-80 mt-10 bg-gray-800 shadow-xl ${Style.enlarge} m-2 hover:bg-gray-900 cursor-pointer`}
+              >
+                <figure>
+                  <img
+                    src={attr?.Images[0]}
+                    className="h-52 rounded-t-xl w-full"
+                  />
+                </figure>
+
+                <div className=" z-10">
+                  <div className=" flex justify-end p-1">
+                    <button className="btn btn-ghost btn-circle">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6 text-white"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                          />
-                        </svg>
-                        <p className="ml-3 w-32">Add To Cart</p>
-                      </button>
-                    </div>
-                    <div className=" flex justify-end p-1"></div>
-                    <div className="flex flex-row-reverse text-center justify-start">
-                      <button className="btn btn-ghost btn-circle">
-                        <svg
-                          onClick={(event) =>
-                            handleRemoveFromWishlist(event, cat)
-                          }
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill={"#FF0000"}
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="#DC143C"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                          />
-                        </svg>
-                      </button>
-                    </div>
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                        />
+                      </svg>
+                    </button>
+                    <button className="btn btn-ghost btn-circle">
+                      <svg
+                        onClick={(e) => handleRemoveFromWishlist(e, attr)}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill={
+                          wishlistItems.some((item) => item._id === attr._id) ||
+                          isFilled
+                            ? "#FF0000"
+                            : "none"
+                        }
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="#DC143C"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                        />
+                      </svg>
+                    </button>
                   </div>
+                  <figcaption className="px-4 pb-4 ">
+                    <h2 className="card-title mb-5 text-white">{attr?.name}</h2>
+                    <article className="flex justify-between items-center">
+                      <div className="text-[#be853f] font-bold text-lg">
+                        <p>
+                          {
+                            cities.cities.find(
+                              (city) => city._id === attr.category
+                            ).city
+                          }
+                        </p>
+                      </div>
+                      <div className="p-2 text-center text-xs leading-sm uppercase border border-gray-400 rounded-full text-[#be853f] ">
+                        <p>
+                          {
+                            categories.categories.find(
+                              (category) => category._id === attr.subcategory
+                            ).type
+                          }
+                        </p>
+                      </div>
+                    </article>
+                    <article className="flex items-center justify-between my-5">
+                      <span className="text-sm text-gray-500">
+                        <span className="text-2xl font-bold text-gray-200 dark:text-white">
+                          ${attr.AdultPrice}
+                        </span>
+                        /person
+                      </span>
+                    </article>
+                  </figcaption>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
           ))}
         </div>
       )}

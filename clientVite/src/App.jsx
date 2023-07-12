@@ -8,6 +8,7 @@ import Footer from "./components/common/Footer/Footer";
 import Wishlist from "./pages/Wishlist";
 import { useDispatch, useSelector } from "react-redux";
 import Cities from "./components/Cities/Cities";
+import CategoriesList from "./components/CategoriesList/CategoriesList";
 import AboutUs from "./components/AboutUs/AboutUs";
 import ContactUs from "./components/ContactUs/ContactUs";
 import AuthModel from "./components/common/AuthModal/AuthModel";
@@ -16,11 +17,7 @@ import ResetPassword from "./components/common/AuthModal/ResetPassword";
 import { useEffect, useState } from "react";
 import { handleAuthType, handleOpenAuthModal } from "./rtk/features/authSlice";
 import axios from "axios";
-import {
-  AttractionGroupHandler,
-  highestAttrsHandler,
-  handleFilters,
-} from "./rtk/features/attrSlice";
+import { AttractionGroupHandler } from "./rtk/features/attrSlice";
 import Orders from "./pages/Orders";
 import AttractionForm from "./pages/AdminDashboard/FormAttraction/AttractionForm";
 import IconMap from "./components/Map/IconMap";
@@ -57,15 +54,6 @@ function App() {
       console.log(error);
     }
   };
-  const getHighestRated = async () => {
-    try {
-      const { data } = await axios.get(`http://localhost:9999/review/highest`);
-      dispatch(highestAttrsHandler(data));
-      dispatch(handleFilters());
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   useEffect(() => {
     dispatch(handleAuthType("login"));
@@ -73,7 +61,6 @@ function App() {
     getAllAttract();
     getAllCities();
     getAllCats();
-    getHighestRated();
   }, []);
   return (
     <>
@@ -114,7 +101,9 @@ function App() {
             }
           />
           <Route path="/city/:id" element={<AttractionsList />} />
+          <Route path="/category/:id" element={<CategoriesList />} />
           <Route path="/city/:id/details" element={<AttractionDetails />} />
+
           <Route path="/*" element={<Error />} />
         </Routes>
       </div>
