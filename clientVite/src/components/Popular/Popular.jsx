@@ -4,6 +4,7 @@ import CardItem from "../HomeContainer/Filters/Card";
 
 const Popular = () => {
   const { attractions } = useSelector((state) => state);
+  
 
   return (
     <>

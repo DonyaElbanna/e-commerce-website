@@ -113,6 +113,7 @@ function App() {
           />
           <Route path="/city/:id" element={<AttractionsList />} />
           <Route path="/city/:id/details" element={<AttractionDetails />} />
+          
           <Route path="/*" element={<Error />} />
         </Routes>
       </div>

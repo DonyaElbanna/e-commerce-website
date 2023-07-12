@@ -98,6 +98,18 @@ const Map = () => {
             title="Egypt desert safari"
           />
         </a>
+        <a
+          href="https://www.youregypttours.com/what-to-do/egypt-day-tours/alexandria-day-tours"
+          className="dahab small-img"
+        >
+          <h3 className="title">Dahab</h3>
+          <img
+            src="http://res.cloudinary.com/drntnt5uf/image/upload/v1687718972/Images/jywpovtj2rov5pnwkhyr.jpg"
+            alt="Alxandria Egypt"
+            title="Alxandria Egypt"
+            className="mask mask-circle "
+          />
+        </a>
       </div>
     </div>
   );
