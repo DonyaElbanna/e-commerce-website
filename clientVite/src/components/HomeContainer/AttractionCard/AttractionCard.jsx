@@ -8,6 +8,7 @@ import {
   handleToggleAuthModal,
 } from "../../../rtk/features/authSlice";
 import Rating from "@mui/material/Rating";
+import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 
 const AttractionCard = ({ attr }) => {
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -94,6 +95,7 @@ const AttractionCard = ({ attr }) => {
   function handleAddRating(event) {
     event.preventDefault();
   }
+
   return (
     <div className="flex justify-center">
       <Link
@@ -163,6 +165,12 @@ const AttractionCard = ({ attr }) => {
                 }
                 precision={0.25}
                 readOnly
+                emptyIcon={
+                  <StarBorderOutlinedIcon
+                    fontSize="inherit"
+                    sx={{ color: "#6b7280" }}
+                  />
+                }
               />
               <span className="text-sm text-gray-500">
                 <span className="text-2xl font-bold text-gray-200 dark:text-white">

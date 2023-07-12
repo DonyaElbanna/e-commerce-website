@@ -8,6 +8,7 @@ import Footer from "./components/common/Footer/Footer";
 import Wishlist from "./pages/Wishlist";
 import { useDispatch, useSelector } from "react-redux";
 import Cities from "./components/Cities/Cities";
+import CategoriesList from "./components/CategoriesList/CategoriesList";
 import AboutUs from "./components/AboutUs/AboutUs";
 import ContactUs from "./components/ContactUs/ContactUs";
 import AuthModel from "./components/common/AuthModal/AuthModel";
@@ -87,9 +88,6 @@ function App() {
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/map" element={<IconMap />} />
-
-          {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
-
           <Route path="/cities" element={<Cities />} />
           <Route
             path="/admin"
@@ -112,6 +110,7 @@ function App() {
             }
           />
           <Route path="/city/:id" element={<AttractionsList />} />
+          <Route path="/category/:id" element={<CategoriesList />} />
           <Route path="/city/:id/details" element={<AttractionDetails />} />
           <Route path="/*" element={<Error />} />
         </Routes>
