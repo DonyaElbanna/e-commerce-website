@@ -8,7 +8,7 @@ const Popular = () => {
   return (
     <>
       <div>
-        <h1 className="text-4xl sm:text-5xl text-center mt-20 pb-8 text-zinc-700 headerFont">
+        <h1 className="text-4xl sm:text-5xl text-center mt-12 pb-8 text-zinc-700 headerFont">
           Our Most <span className="text-[#be853f]">Popular</span> Tours
         </h1>
         <Grid container spacing={3}>

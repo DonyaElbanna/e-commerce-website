@@ -1,0 +1,173 @@
+small {
+    font-size: 80%
+}
+
+
+
+img {
+    vertical-align: middle;
+    border-style: none
+}
+
+.small,small {
+    font-size: 80%;
+    font-weight: 400
+}
+
+.map {
+    position: relative;
+    top: 0;
+    left: 0;
+    box-shadow: 0 0 10px rgba(80,156,231,.85);
+    border-radius: 10px
+}
+
+.map img {
+    display: block!important;
+    width: 100%!important
+}
+
+.map .small-img {
+    display: block;
+    text-decoration: none;
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    box-sizing: border-box;
+    transition: all .5s ease-in-out
+}
+
+.map .small-img::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 3px solid #2193b0;
+    border-radius: 50%
+}
+
+.map .small-img::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(0,22,51,.5);
+    border-radius: 50%;
+    opacity: 0
+}
+
+.map .small-img .title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 80px;
+    color: #f1faff;
+    line-height: 80px;
+    font-size: 16px;
+    text-transform: uppercase;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    font-family: Arial,Helvetica,sans-serif;
+    letter-spacing: 1.1px;
+    z-index: 5;
+    transition: all .5s;
+    opacity: 0
+}
+
+@keyframes animate {
+    100% {
+        transform: scale(1.6);
+        opacity: 0
+    }
+}
+
+.map .small-img:hover {
+    transform: scale(1.06)
+}
+
+.map .small-img:hover.small-img::before {
+    animation: animate .7s linear infinite
+}
+
+.map .small-img:hover.small-img::after {
+    opacity: 1
+}
+
+.map .small-img:hover .title {
+    opacity: 1
+}
+
+.map .small-img img {
+    display: block;
+    width: 100%
+}
+
+.alex {
+    top: 3%;
+    left: 10%
+}
+
+.aswan {
+    bottom: 5%;
+    right: 33%
+}
+
+.sharm {
+    top: 21%;
+    right: 25%
+}
+
+.redsea {
+    top: 33%;
+    right: 35%
+}
+
+.luxor {
+    bottom: 28%;
+    right: 28%
+}
+
+.giza {
+    top: 11%;
+    left: 32%
+}
+
+.cairo {
+    top: 7%;
+    left: 47%
+}
+
+.desert {
+    top: 50%;
+    left: 10%
+}
+
+@media (max-width: 767px) {
+    .map .small-img {
+        width:50px!important;
+        height: 50px!important
+    }
+
+    .map .small-img .title {
+        font-size: 10px!important
+    }
+}
+
+@media (min-width: 768px) and (max-width:992px) {
+    .map .small-img {
+        width:55px!important;
+        height: 55px!important
+    }
+
+    .map .small-img .title {
+        font-size: 14px
+    }
+}

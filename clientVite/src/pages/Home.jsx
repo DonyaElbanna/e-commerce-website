@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import Popular from "../components/Popular/Popular";
 import Container from "@mui/material/Container";
 import WhyChooseUs from "../components/HomeContainer/WhyChooseUs";
+import Map from "../components/Map/Map";
 
 const Home = () => {
   const { attractions } = useSelector((state) => state);
@@ -29,6 +30,9 @@ const Home = () => {
         </Grid>
       </Container>
       <WhyChooseUs />
+      <Container>
+        {/* <Map /> */}
+      </Container>
       {/* <Filter />
         <HighestRated /> */}
     </>

@@ -251,7 +251,7 @@ const Navbar1 = () => {
                     alt="Remy Sharp"
                     src={auth.userInfo && auth.userInfo.avatar}
                     sx={{
-                      border: "2px solid #be853f",
+                      border: "2px solid #ffae73",
                       borderRadius: "50%",
                     }}
                   />

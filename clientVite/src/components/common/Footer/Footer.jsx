@@ -6,26 +6,40 @@ const Footer = () => {
     <>
       <footer>
         <div
-          style={{ backgroundColor: "rgb(10 10 10 / 80%)",marginTop:"50px"}}
+          style={{ backgroundColor: "rgb(10 10 10 / 80%)", marginTop: "50px" }}
           className="flex flex-column items-center pb-7 px-5"
         >
-          <article className="footer footer-center row" style={{rowGap:"1.5rem",lineHeight:"0rem"}}>
+          <article
+            className="footer footer-center row"
+            style={{ rowGap: "1.5rem", lineHeight: "0rem" }}
+          >
             <div className="self-center">
-              <p className="font-serif text-2xl pt-10 md:text-5xl lg:text-5xl text-slate-300">
+              <p className="headerFont text-2xl pt-10 md:text-5xl lg:text-5xl text-slate-300">
                 EGYPTION TICKETS
               </p>
             </div>
             <div className="grid grid-flow-col gap-4 md:gap-10 lg:gap-22">
-              <Link to={`/about`} className="footerLink text-sm md:text-xl">
+              <Link
+                to={`/about`}
+                className="footerLink text-sm md:text-xl text-zinc-400"
+              >
                 About us
               </Link>
-              <Link to={`/contact`} className="footerLink text-sm md:text-xl">
+              <Link
+                to={`/contact`}
+                className="footerLink text-sm md:text-xl text-zinc-400"
+              >
                 Contact
               </Link>
-              <Link to={`/map`} className="footerLink text-sm md:text-xl">
+              <Link
+                to={`/map`}
+                className="footerLink text-sm md:text-xl text-zinc-400"
+              >
                 Places
               </Link>
-              <Link className="footerLink text-sm md:text-xl">Category</Link>
+              {/* <Link className="footerLink text-sm md:text-xl text-zinc-400">
+                Category
+              </Link> */}
             </div>
 
             <div>

@@ -3,7 +3,7 @@ const WhyChooseUs = () => {
   return (
     <>
       <div className="container p-5 mx-auto">
-        <h3 className="text-4xl sm:text-5xl text-center mt-20 pb-8 text-zinc-700 headerFont">
+        <h3 className="text-4xl sm:text-5xl text-center mt-16 pb-8 text-zinc-700 headerFont">
           Why <span className="text-[#be853f]">Choose</span> Us?
         </h3>
         <div className="container p-5 px-20 mx-auto">

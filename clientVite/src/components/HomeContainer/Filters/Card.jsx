@@ -14,6 +14,8 @@ import {
 } from "../../../rtk/features/authSlice";
 import { highestAttrsHandler } from "../../../rtk/features/attrSlice";
 import Rating from "@mui/material/Rating";
+import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
+import Button from "@mui/material/Button";
 
 const CardItem = ({ attr }) => {
   const { attractions, auth } = useSelector((state) => state);
@@ -64,9 +66,13 @@ const CardItem = ({ attr }) => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          height: "320px",
+          height: "350px",
           justifyContent: "space-between",
           boxShadow: "5px 5px 18px grey",
+
+          "&:hover": {
+            transform: "scale3d(1.03, 1.03, 1)",
+          },
         }}
       >
         <CardMedia
@@ -74,9 +80,20 @@ const CardItem = ({ attr }) => {
           image={attr.Images[0]}
           alt=" image"
         />
-        <p className="text-slate-500 text-right" style={{ marginRight: "3px" }}>
-          {attr.category.city || attr.category[0].city}
-        </p>
+        <div className="flex justify-between items-center">
+          <p
+            className="text-slate-500 text-left font-semibold"
+            style={{ marginLeft: "10px" }}
+          >
+            {attr.category.city || attr.category[0].city}
+          </p>
+          <p
+            className="text-slate-500 text-right border border-zinc-700 py-0.5 px-1.5 rounded-full mt-1"
+            style={{ marginRight: "10px" }}
+          >
+            {attr.subcategory.type || attr.subcategory[0].type}
+          </p>
+        </div>
         <CardContent sx={{ padding: "0px", paddingBottom: "0px !important" }}>
           <Typography variant="h5" component="div" sx={{ padding: "0px 10px" }}>
             {attr.name}
@@ -116,8 +133,18 @@ const CardItem = ({ attr }) => {
               className="bg-gray-800 hover:bg-gray-900 text-white pl-2 flex items-center justify-between transition"
               // style={{ position: "sticky", bottom: "0" }}
             >
-              <p>${attr.AdultPrice} /adult</p>
-              <p className="p-2">Details</p>
+              <p className="text-xl pr-1">
+                ${attr.AdultPrice} <sub className=" text-zinc-400">/adult</sub>
+              </p>
+              <p className="p-2 text-xl">
+                <Button
+                  // variant="contained"
+                  sx={{ color: "white" }}
+                  endIcon={<ArrowForwardIosOutlinedIcon />}
+                >
+                  Details
+                </Button>
+              </p>
             </div>
           </Typography>
         </CardContent>

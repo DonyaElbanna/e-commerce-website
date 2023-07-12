@@ -24,7 +24,26 @@ const CityFilter = () => {
   return (
     <div>
       <FormLabel style={{ display: "none" }}>Cities</FormLabel>
-      <RadioGroup>
+      <RadioGroup
+        sx={{
+          maxHeight: 300,
+          overflow: "auto",
+          "&::-webkit-scrollbar": {
+            width: "0.4em",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "white",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "#ffae73",
+            outline: "1px solid #be853f",
+            borderRadius: "8px",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            background: "#be853f",
+          },
+        }}
+      >
         <div className="flex flex-wrap md:flex-col md:flex-nowrap">
           {cities.cities.map((city) => (
             <FormControlLabel
