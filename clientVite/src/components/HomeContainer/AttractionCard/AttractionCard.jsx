@@ -38,6 +38,7 @@ const AttractionCard = ({ attr }) => {
         const { data } = await axios.get(
           `http://localhost:9999/user/${auth.userInfo._id}`
         );
+        // console.log(data.wishlist);
         setWishlistItems(data.wishlist);
       };
       getWishlistItems();
@@ -130,7 +131,7 @@ const AttractionCard = ({ attr }) => {
             </button>
           </div>
           <figcaption className="px-4 pb-4 ">
-            <h2 className="card-title mb-5">{attr?.name}</h2>
+            <h2 className="card-title mb-5 text-white">{attr?.name}</h2>
             <article className="flex justify-between items-center">
               <div className="text-[#be853f] font-bold text-lg">
                 <p>{attr.category.city || attr.category[0].city}</p>
@@ -157,7 +158,7 @@ const AttractionCard = ({ attr }) => {
               </div> */}
               <Rating
                 value={
-                  attr.review.length !== 0
+                  attr.review && attr.review.length !== 0
                     ? calculateAverageRating(attr.review)
                     : 0
                 }
