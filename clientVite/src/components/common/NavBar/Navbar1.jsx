@@ -142,27 +142,7 @@ const Navbar1 = () => {
                   Tours
                 </Typography>
               </NavLink>
-              {/* categories */}
-              {/* <NavLink
-                to="/cities"
-                className={({ isActive }) =>
-                  isActive
-                    ? Style.NavLinkActive
-                    : !window.scrollY
-                    ? Style.NavLinkTop
-                    : Style.NavLink
-                }
-              >
-                <CategoryOutlinedIcon className="visible md:invisible" />
-                <CategoryOutlinedIcon className="visible md:invisible text-[#be853f]" />
-                {/* <img className={Style.navbarImg} src={cities}></img> */}
-                <Typography
-                  fontWeight={{ xs: 600, md: 700 }}
-                  className="hidden md:visible md:inline-flex"
-                >
-                  Categories
-                </Typography>
-              </NavLink> */}
+
               {/* wishlist */}
               <NavLink
                 to="/wishlist"
