@@ -66,7 +66,7 @@ const CardItem = ({ attr }) => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          height: "350px",
+          height: "360px",
           justifyContent: "space-between",
           boxShadow: "5px 5px 18px grey",
 
@@ -100,7 +100,7 @@ const CardItem = ({ attr }) => {
           </Typography>
           <Typography variant="body1" color="text.info" component="span">
             <div className="flex items-center justify-between pl-2">
-              <Rating value={attr.averageRating} precision={0.5} readOnly />
+              <Rating value={attr.averageRating} precision={0.25} readOnly />
               <button
                 className="btn btn-ghost btn-circle"
                 onClick={

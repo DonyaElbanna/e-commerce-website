@@ -15,7 +15,8 @@ const getAllAttract = async () => {
   const attractions = await attractionModel
     .find()
     .populate("category")
-    .populate("subcategory");
+    .populate("subcategory")
+    .populate("review");
   if (!attractions) errorHandler(AppError.namespace.NOT_FOUND);
   return attractions;
 };
