@@ -139,11 +139,11 @@ const Navbar1 = () => {
                   // display={{ xs: "none", md: "inline-flex" }}
                   className="hidden md:visible md:inline-flex"
                 >
-                  Cities
+                  Tours
                 </Typography>
               </NavLink>
               {/* categories */}
-              <NavLink
+              {/* <NavLink
                 to="/cities"
                 className={({ isActive }) =>
                   isActive
@@ -153,16 +153,16 @@ const Navbar1 = () => {
                     : Style.NavLink
                 }
               >
+                <CategoryOutlinedIcon className="visible md:invisible" />
                 <CategoryOutlinedIcon className="visible md:invisible text-[#be853f]" />
                 {/* <img className={Style.navbarImg} src={cities}></img> */}
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
-                  // display={{ xs: "none", md: "inline-flex" }}
                   className="hidden md:visible md:inline-flex"
                 >
                   Categories
                 </Typography>
-              </NavLink>
+              </NavLink> */}
               {/* wishlist */}
               <NavLink
                 to="/wishlist"
@@ -361,11 +361,11 @@ const Navbar1 = () => {
                   // display={{ xs: "none", md: "inline-flex" }}
                   className="hidden md:visible md:inline-flex"
                 >
-                  Cities
+                  Tours
                 </Typography>
               </NavLink>
               {/* categories */}
-              <NavLink
+              {/* <NavLink
                 to="/cities"
                 className={({ isActive }) =>
                   isActive
@@ -376,15 +376,13 @@ const Navbar1 = () => {
                 }
               >
                 <CategoryOutlinedIcon className="visible md:invisible" />
-                {/* <img className={Style.navbarImg} src={cities}></img> */}
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
-                  // display={{ xs: "none", md: "inline-flex" }}
                   className="hidden md:visible md:inline-flex"
                 >
                   Categories
                 </Typography>
-              </NavLink>
+              </NavLink> */}
               <span
                 className={!window.scrollY ? Style.NavLinkTop : Style.NavLink}
                 // className={Style.NavLink}

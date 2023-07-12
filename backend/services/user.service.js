@@ -25,28 +25,28 @@ const add = async (payload, next) => {
 
 const getUser = async (id, next) => {
   try {
-    const user = await User.findById(id).populate("wishlist")
-      // .populate("wishlist")
-      // .populate({
-      //   path: "wishlist",
-      //   populate: {
-      //     path: "category",
-      //     model: "Category",
-      //   },
-      // })
-      // .populate({
-      //   path: "wishlist",
-      //   populate: {
-      //     path: "subcategory",
-      //     model: "Subcategory",
-      //   },
-      // })
-      // .populate("orders")
-      // .exec();
+    const user = await User.findById(id).populate("wishlist");
+    // .populate("wishlist")
+    // .populate({
+    //   path: "wishlist",
+    //   populate: {
+    //     path: "category",
+    //     model: "Category",
+    //   },
+    // })
+    // .populate({
+    //   path: "wishlist",
+    //   populate: {
+    //     path: "subcategory",
+    //     model: "Subcategory",
+    //   },
+    // })
+    // .populate("orders")
+    // .exec();
     if (!user) {
       return next(new AppError(NOT_FOUND, 404));
     }
-    console.log(user)
+    // console.log(user)
     return user;
   } catch (err) {
     return next(new AppError(NOT_FOUND, 404));
@@ -95,13 +95,13 @@ const addRemoveWishlist = async (id, attractionID, next) => {
     } else {
       if (user.wishlist.includes(attractionID)) {
         updatedUser = await User.findOneAndUpdate(
-          {_id:id},
+          { _id: id },
           { $pull: { wishlist: attractionID } },
           { upsert: true, new: true }
         ).populate("wishlist");
       } else {
         updatedUser = await User.findOneAndUpdate(
-          {_id:id},
+          { _id: id },
           { $addToSet: { wishlist: attractionID } },
           { upsert: true, new: true }
         ).populate("wishlist");
