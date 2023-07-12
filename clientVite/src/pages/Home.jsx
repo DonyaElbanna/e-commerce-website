@@ -31,7 +31,7 @@ const Home = () => {
       </Container>
       <WhyChooseUs />
       <Container>
-        {/* <Map /> */}
+        <Map />
       </Container>
       {/* <Filter />
         <HighestRated /> */}

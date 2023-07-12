@@ -17,11 +17,7 @@ import ResetPassword from "./components/common/AuthModal/ResetPassword";
 import { useEffect, useState } from "react";
 import { handleAuthType, handleOpenAuthModal } from "./rtk/features/authSlice";
 import axios from "axios";
-import {
-  AttractionGroupHandler,
-  highestAttrsHandler,
-  handleFilters,
-} from "./rtk/features/attrSlice";
+import { AttractionGroupHandler } from "./rtk/features/attrSlice";
 import Orders from "./pages/Orders";
 import AttractionForm from "./pages/AdminDashboard/FormAttraction/AttractionForm";
 import IconMap from "./components/Map/IconMap";
@@ -57,15 +53,6 @@ function App() {
       console.log(error);
     }
   };
-  const getHighestRated = async () => {
-    try {
-      const { data } = await axios.get(`http://localhost:9999/review/highest`);
-      dispatch(highestAttrsHandler(data));
-      dispatch(handleFilters());
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   useEffect(() => {
     dispatch(handleAuthType("login"));
@@ -73,7 +60,6 @@ function App() {
     getAllAttract();
     getAllCities();
     getAllCats();
-    getHighestRated();
   }, []);
   return (
     <>
@@ -112,6 +98,7 @@ function App() {
           <Route path="/city/:id" element={<AttractionsList />} />
           <Route path="/category/:id" element={<CategoriesList />} />
           <Route path="/city/:id/details" element={<AttractionDetails />} />
+          
           <Route path="/*" element={<Error />} />
         </Routes>
       </div>

@@ -7,7 +7,7 @@ const WhyChooseUs = () => {
           Why <span className="text-[#be853f]">Choose</span> Us?
         </h3>
         <div className="container p-5 px-20 mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
             <div
               className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
               style={{ boxShadow: "5px 5px 18px grey" }}
@@ -83,61 +83,6 @@ const WhyChooseUs = () => {
             </div>
           </div>
         </div>
-        {/* <div
-          className="wow zoomIn wpb_column col-sm-12 col-md-4 animated"
-          style={{ visibility: "visible", animationName: "zoomIn" }}
-        >
-          <div className="vc_column-inner">
-            <div className="wpb_wrapper">
-              <div className="ct-icon-box  feature_home">
-                <i className="icon_set_1_icon-30"></i>
-                <h3>
-                  <b>+100000</b> Customers
-                </h3>
-                <p className="">
-                  <strong>
-                    Strong offices across the country that ensure to add an
-                    authentic local taste to your holiday.
-                  </strong>
-                </p>
-                <p>&nbsp;</p>
-                <hr />
-                <p>
-                  <strong>
-                    Saving your money by recommending offers, moving a date,
-                    changing a hotel, re-routing!
-                  </strong>
-                </p>
-              </div>
-              <div className="ct-icon-box  feature_home">
-                <i className="icon_set_1_icon-37"></i>
-                <h3>
-                  <span style={{ color: "#33cccc" }}>Personalized</span> Tours
-                </h3>
-                <p>
-                  <strong>
-                    With{" "}
-                    <span style={{ color: "#ff9900" }}>Sun Pyramids Tours</span>{" "}
-                    have privacy
-                  </strong>
-                </p>
-                <p>&nbsp;</p>
-                <hr />
-                <p>
-                  <span style={{ color: "#999999" }}>
-                    <strong>
-                      If you are searching for a private customized tour, this
-                      is the right place where accuracy and proficiency are
-                      guaranteed. Choose the details of your own story now!
-                    </strong>
-                  </span>
-                </p>
-                <h4></h4>
-                <p></p>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
     </>
   );

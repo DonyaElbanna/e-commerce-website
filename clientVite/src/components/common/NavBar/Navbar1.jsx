@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../../assets/logo.png";
-import cities from "../../../assets/planet-earth.png";
-import order from "../../../assets/plane-ticket.png";
-import wishlist from "../../../assets/add-to-favorites.png";
-import home from "../../../assets/home-page.png";
-import dashboard from "../../../assets/dashboard.png";
-import login from "../../../assets/traveller.png";
 
 import Style from "./Navbar.module.css";
 import { Box, CardMedia, Container, Typography } from "@mui/material";
@@ -117,7 +111,7 @@ const Navbar1 = () => {
                     : Style.NavLink
                 }
               >
-                <HomeOutlinedIcon className="visible md:invisible" />
+                <HomeOutlinedIcon className="visible md:invisible text-[#be853f]" />
                 {/* <img className={Style.navbarImg} src={home}></img> */}
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
@@ -138,7 +132,7 @@ const Navbar1 = () => {
                     : Style.NavLink
                 }
               >
-                <PublicOutlinedIcon className="visible md:invisible" />
+                <PublicOutlinedIcon className="visible md:invisible text-[#be853f]" />
                 {/* <img className={Style.navbarImg} src={cities}></img> */}
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
@@ -160,6 +154,8 @@ const Navbar1 = () => {
                 }
               >
                 <CategoryOutlinedIcon className="visible md:invisible" />
+                <CategoryOutlinedIcon className="visible md:invisible text-[#be853f]" />
+                {/* <img className={Style.navbarImg} src={cities}></img> */}
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
                   className="hidden md:visible md:inline-flex"
@@ -178,7 +174,7 @@ const Navbar1 = () => {
                     : Style.NavLink
                 }
               >
-                <FavoriteBorderOutlinedIcon className="visible md:invisible" />
+                <FavoriteBorderOutlinedIcon className="visible md:invisible text-[#be853f]" />
                 {/* <img className={Style.navbarImg} src={wishlist}></img> */}
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
@@ -199,7 +195,7 @@ const Navbar1 = () => {
                     : Style.NavLink
                 }
               >
-                <ConfirmationNumberOutlinedIcon className="visible md:invisible" />
+                <ConfirmationNumberOutlinedIcon className="visible md:invisible text-[#be853f]" />
                 {/* <img className={Style.navbarImg} src={order}></img> */}
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
@@ -221,7 +217,7 @@ const Navbar1 = () => {
                   }
                   to="/admin"
                 >
-                  <DashboardIcon className="visible md:invisible" />
+                  <DashboardIcon className="visible md:invisible text-[#be853f]" />
 
                   <Typography
                     fontWeight={{ xs: 600, md: 700 }}
@@ -249,7 +245,7 @@ const Navbar1 = () => {
                     alt="Remy Sharp"
                     src={auth.userInfo && auth.userInfo.avatar}
                     sx={{
-                      border: "2px solid #ffae73",
+                      border: "2px solid #be853f",
                       borderRadius: "50%",
                     }}
                   />
@@ -257,7 +253,10 @@ const Navbar1 = () => {
                     m={0.5}
                     // fontWeight="700"
                     display={{ xs: "none", md: "flex" }}
-                    sx={{ color: "white" }}
+                    sx={{
+                      color: "#eba121",
+                      textShadow: "1px 1px 2px rgb(0, 0, 0)",
+                    }}
                   >
                     {auth.userInfo.username.substring(0, 10)}..
                   </Typography>
