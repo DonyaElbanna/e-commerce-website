@@ -8,12 +8,9 @@ export const reviewsSlice = createSlice({
   initialState,
   reducers: {
     reviewHandler: (state, action) => {
-      console.log("action", action.payload);
       state.Reviews = action.payload;
     },
     addReview: (state, action) => {
-      console.log("add review ", action.payload);
-
       state.Reviews = {
         ...state.Reviews,
         avgRating: action.payload.avgRating,

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { styled } from "@mui/material/styles";
 import Radio from "@mui/material/Radio";
-import RadioGroup, { useRadioGroup } from "@mui/material/RadioGroup";
+import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import PropTypes from "prop-types";
 import FormLabel from "@mui/material/FormLabel";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -33,7 +31,7 @@ const CityFilter = () => {
     <div>
       <FormLabel style={{ display: "none" }}>Cities</FormLabel>{" "}
       <RadioGroup>
-        <div className="filter-btns">
+        <div>
           {prices.map((price) => (
             <FormControlLabel
               key={price.id}
@@ -42,6 +40,11 @@ const CityFilter = () => {
               label={price.range}
               checked={!attractions.filters ? false : slc == price.id}
               onChange={() => handlePriceFilter(price.id)}
+              sx={{
+                ".css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked ": {
+                  color: "#be853f",
+                },
+              }}
             />
           ))}
         </div>

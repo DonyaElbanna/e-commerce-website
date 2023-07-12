@@ -14,16 +14,18 @@ import { useDispatch } from "react-redux";
 import { handleFilters } from "../../../rtk/features/attrSlice";
 
 const FilterButton = styled(Button)({
-  color: "#be853f",
   textTransform: "none",
   fontSize: "1.25rem",
   padding: "3px 10px",
-  backgroundColor: "transparent",
-  border: "2px solid #be853f ",
   marginBottom: "5px",
+  backgroundColor: "white",
+  color: "#1f2937",
+  border: "2px solid #1f2937 ",
+  transition: "0.001s",
   "&:hover": {
-    backgroundColor: "#e1d9d9",
-    // color: "black",
+    color: "white",
+    backgroundColor: "#1f2937",
+    border: "2px solid transparent ",
   },
 });
 
@@ -39,9 +41,8 @@ const Accordion = styled((props) => (
 
 const AccordionSummary = styled((props) => (
   <MuiAccordionSummary
-    sx={{ backgroundColor: "green" }}
     expandIcon={
-      <ArrowForwardIosSharpIcon sx={{ fontSize: "1.2rem", color: "#be853f" }} />
+      <ArrowForwardIosSharpIcon sx={{ fontSize: "1.2rem", color: "white" }} />
     }
     {...props}
   />
@@ -90,11 +91,9 @@ const Filter = () => {
           aria-controls="panel1d-content"
           id="panel1d-header"
           sx={{
-            color: "#be853f",
-            backgroundColor: "#cbd5e1",
-            borderBottom: "1px solid #be853f",
+            color: "white",
+            backgroundColor: "#1f2937",
           }}
-          // style={{ color: "#be853f" }}
         >
           <Typography
             component="span"
@@ -103,7 +102,7 @@ const Filter = () => {
             Cities
           </Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{ backgroundColor: "white" }}>
           <Typography component="span">
             <CityFilter />
           </Typography>
@@ -118,10 +117,9 @@ const Filter = () => {
           aria-controls="panel1d-content"
           id="panel1d-header"
           sx={{
-            backgroundColor: "#cbd5e1",
-            borderBottom: "1px solid #be853f",
+            color: "white",
+            backgroundColor: "#1f2937",
           }}
-          style={{ color: "#be853f" }}
         >
           <Typography
             component="span"
@@ -130,7 +128,7 @@ const Filter = () => {
             Categories
           </Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{ backgroundColor: "white" }}>
           <Typography component="span">
             <CategoriesFilter />
           </Typography>
@@ -145,10 +143,9 @@ const Filter = () => {
           aria-controls="panel1d-content"
           id="panel1d-header"
           sx={{
-            backgroundColor: "#cbd5e1",
-            borderBottom: "1px solid #be853f",
+            color: "white",
+            backgroundColor: "#1f2937",
           }}
-          style={{ color: "#be853f" }}
         >
           <Typography
             component="span"
@@ -157,7 +154,7 @@ const Filter = () => {
             Prices
           </Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{ backgroundColor: "white" }}>
           <Typography component="span">
             <PricesFilter />
           </Typography>

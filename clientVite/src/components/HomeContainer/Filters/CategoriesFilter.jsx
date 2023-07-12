@@ -26,8 +26,27 @@ const CategoriesFilter = () => {
   return (
     <div>
       <FormLabel style={{ display: "none" }}>Cities</FormLabel>{" "}
-      <RadioGroup>
-        <div className="filter-btns">
+      <RadioGroup
+        sx={{
+          maxHeight: 300,
+          overflow: "auto",
+          "&::-webkit-scrollbar": {
+            width: "0.4em",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "white",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "#ffae73",
+            outline: "1px solid #be853f",
+            borderRadius: "8px",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            background: "#be853f",
+          },
+        }}
+      >
+        <div>
           {categories.categories.map((cat) => (
             <FormControlLabel
               key={cat._id}
@@ -36,6 +55,11 @@ const CategoriesFilter = () => {
               label={cat.type}
               checked={!attractions.filters ? false : slc == cat._id}
               onChange={() => handleCatFilter(cat._id)}
+              sx={{
+                ".css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked ": {
+                  color: "#be853f",
+                },
+              }}
             />
           ))}
         </div>

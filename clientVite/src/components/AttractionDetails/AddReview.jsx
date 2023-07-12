@@ -14,6 +14,7 @@ import {
 } from "../../rtk/features/authSlice";
 import axios from "axios";
 import { addReview } from "../../rtk/features/reviewSlice";
+import Rating from "@mui/material/Rating";
 
 const AddReview = () => {
   const [open, setOpen] = useState(true);
@@ -28,6 +29,7 @@ const AddReview = () => {
     description: "",
     rate: 0,
   });
+
   const [errors, setErrors] = useState({});
   useEffect(() => {
     if (!open) {
@@ -47,7 +49,6 @@ const AddReview = () => {
   };
 
   const starClassNames = [];
-
   const makeStar = () => {
     const fullStars = Math.floor(form.rate);
     const hasHalfStar = form.rate - fullStars >= 0.5;
@@ -70,11 +71,10 @@ const AddReview = () => {
 
   const handleRate = (index) => {
     setForm({ ...form, rate: index + 1 });
-    console.log(index);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const err = schema.validate(form);
     const { error } = err;
     if (error) {
@@ -90,6 +90,7 @@ const AddReview = () => {
       AddNewReview();
     }
   };
+
   const AddNewReview = async () => {
     const newReview = {
       review: form.description,
@@ -116,6 +117,7 @@ const AddReview = () => {
         setErrors(errorData);
       });
   };
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -170,7 +172,7 @@ const AddReview = () => {
                         </div>
                         <div className="flex items-center mt-3 mb-3">
                           <p className="ml-2 mr-5 text-l font-medium text-zinc-600 dark:text-gray-400 ">
-                            your rate :
+                            Your rating:
                           </p>
                           {starClassNames.map((className, index) => (
                             <svg
@@ -185,8 +187,17 @@ const AddReview = () => {
                               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                             </svg>
                           ))}
+                          {/* <Rating
+                            value={form.rate}
+                            name="rate"
+                            onChange={(value) => handleChange(value)}
+                            precision={1}
+                          /> */}
                         </div>
-                        <p className="text-red-500 text-xs italic">
+                        <p
+                          className="text-red-500 text-xs italic"
+                          style={{ marginTop: "0px" }}
+                        >
                           {errors.rate}
                         </p>
                         <p className="text-red-500 text-xs italic">

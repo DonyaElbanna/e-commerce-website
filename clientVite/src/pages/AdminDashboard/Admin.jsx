@@ -97,41 +97,48 @@ export default function VerticalTabs() {
         }}
       >
         <Tab
-          className="w-full"
+          disableRipple
+          sx={{ fontWeight: "bolder" }}
           icon={<AttractionsOutlinedIcon />}
           iconPosition="start"
           label="Attractions"
           {...a11yProps(0)}
         />
         <Tab
-          className="w-full"
+          disableRipple
+          sx={{ fontWeight: "bolder" }}
           icon={<PersonPinIcon />}
           iconPosition="start"
           label="Users"
           {...a11yProps(1)}
         />
         <Tab
-          className="w-full"
+          disableRipple
+          sx={{ fontWeight: "bolder" }}
           icon={<PlaceOutlinedIcon />}
           iconPosition="start"
           label="Cities"
           {...a11yProps(2)}
         />
         <Tab
-          className="w-full"
+          disableRipple
+          sx={{ fontWeight: "bolder" }}
           icon={<CategoryOutlinedIcon />}
           iconPosition="start"
           label="Categories"
           {...a11yProps(3)}
         />
         <Tab
-          className="w-full"
+          disableRipple
+          sx={{ fontWeight: "bolder" }}
           icon={<InventoryOutlinedIcon />}
           iconPosition="start"
           label="Orders"
           {...a11yProps(4)}
         />
         <Tab
+          disableRipple
+          sx={{ fontWeight: "bolder" }}
           icon={<PaidOutlinedIcon />}
           iconPosition="start"
           label="Transactions"

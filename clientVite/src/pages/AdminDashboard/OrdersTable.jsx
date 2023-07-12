@@ -37,7 +37,6 @@ const style = {
 
 const Orders = () => {
   const { common, orders } = useSelector((state) => state);
-  console.log("redux orders", orders.orders);
 
   const dispatch = useDispatch();
 
@@ -45,7 +44,6 @@ const Orders = () => {
   const [open, setOpen] = useState(false);
   const [slcOrderID, setSlcOrderID] = useState(null);
   const [slcOrderUserID, setSlcOrderUserID] = useState(null);
-  // const [finalOrdersArr, setFinalOrdersArr] = useState([]);
 
   useEffect(() => {
     dispatch(handleIsLoadingToggle());

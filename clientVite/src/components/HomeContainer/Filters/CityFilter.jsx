@@ -9,7 +9,6 @@ import {
   handleFilters,
 } from "../../../rtk/features/attrSlice";
 
-
 const CityFilter = () => {
   const dispatch = useDispatch();
 
@@ -25,8 +24,27 @@ const CityFilter = () => {
   return (
     <div>
       <FormLabel style={{ display: "none" }}>Cities</FormLabel>
-      <RadioGroup>
-        <div className="filter-btns">
+      <RadioGroup
+        sx={{
+          maxHeight: 300,
+          overflow: "auto",
+          "&::-webkit-scrollbar": {
+            width: "0.4em",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "white",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "#ffae73",
+            outline: "1px solid #be853f",
+            borderRadius: "8px",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            background: "#be853f",
+          },
+        }}
+      >
+        <div className="flex flex-wrap md:flex-col md:flex-nowrap">
           {cities.cities.map((city) => (
             <FormControlLabel
               key={city._id}
@@ -35,6 +53,11 @@ const CityFilter = () => {
               label={city.city}
               checked={!attractions.filters ? false : slc == city._id}
               onChange={() => handleCityFilter(city._id)}
+              sx={{
+                ".css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked ": {
+                  color: "#be853f",
+                },
+              }}
             />
           ))}
         </div>

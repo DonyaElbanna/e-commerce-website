@@ -12,7 +12,7 @@ const Categories = () => {
         Cities
       </h3>
       <h3 className="text-2xl md:text-3xl mb-10 text-center text-zinc-500	headerFont">
-        Take a look for amazing Egypt Cities
+        Browse our <span className="text-[#be853f]">amazing</span> destinations
       </h3>
       {cities.cities.length == 0 ? (
         <img

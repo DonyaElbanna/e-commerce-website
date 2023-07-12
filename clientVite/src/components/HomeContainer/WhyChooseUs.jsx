@@ -3,12 +3,15 @@ const WhyChooseUs = () => {
   return (
     <>
       <div className="container p-5 mx-auto">
-        <h3 className="text-4xl sm:text-5xl text-center my-16 text-zinc-700 headerFont">
-          Why <span className="text-[#be853f]">Choose</span> Us ?
+        <h3 className="text-4xl sm:text-5xl text-center mt-16 pb-8 text-zinc-700 headerFont">
+          Why <span className="text-[#be853f]">Choose</span> Us?
         </h3>
         <div className="container p-5 px-20 mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
-            <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-20">
+            <div
+              className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+              style={{ boxShadow: "5px 5px 18px grey" }}
+            >
               <div className="flex flex-col items-center pb-10">
                 <img
                   className="w-24 h-24 m-5 rounded-full shadow-lg"
@@ -30,7 +33,10 @@ const WhyChooseUs = () => {
                 </div>
               </div>
             </div>
-            <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div
+              className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+              style={{ boxShadow: "5px 5px 18px grey" }}
+            >
               <div className="flex flex-col items-center pb-10">
                 <img
                   className="w-24 h-24 m-5 rounded-full shadow-lg"
@@ -51,7 +57,10 @@ const WhyChooseUs = () => {
                 </div>
               </div>
             </div>
-            <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div
+              className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+              style={{ boxShadow: "5px 5px 18px grey" }}
+            >
               <div className="flex flex-col items-center pb-10">
                 <img
                   className="w-24 h-24 m-5 rounded-full shadow-lg"
