@@ -7,7 +7,7 @@ const WhyChooseUs = () => {
           Why <span className="text-[#be853f]">Choose</span> Us ?
         </h3>
         <div className="container p-5 px-20 mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
             <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
               <div className="flex flex-col items-center pb-10">
                 <img

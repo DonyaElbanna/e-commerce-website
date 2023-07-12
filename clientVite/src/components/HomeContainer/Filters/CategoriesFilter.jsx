@@ -34,7 +34,7 @@ const CategoriesFilter = () => {
               value={cat._id}
               control={<Radio />}
               label={cat.type}
-              checked={!attractions.filters ? false : slc == cats._id}
+              checked={!attractions.filters ? false : slc == cat._id}
               onChange={() => handleCatFilter(cat._id)}
             />
           ))}
