@@ -4,6 +4,7 @@ import {
   handleAuthType,
   handleToggleAuthModal,
 } from "../../rtk/features/authSlice";
+import Rating from "@mui/material/Rating";
 
 const Details = ({ attrDetails }) => {
   const { auth, reviews } = useSelector((state) => state);
@@ -27,15 +28,18 @@ const Details = ({ attrDetails }) => {
       starClassNames.push("text-zinc-400 dark:text-gray-500");
     }
   })();
+
   function handleAddRating(event) {
     event.preventDefault();
     dispatch(handleAuthType("review"));
     dispatch(handleToggleAuthModal());
   }
+
   function redirectToLogin(event) {
     dispatch(handleAuthType("login"));
     dispatch(handleToggleAuthModal());
   }
+
   return (
     <>
       <div className="md:w-2/3 ">
@@ -58,6 +62,15 @@ const Details = ({ attrDetails }) => {
               </svg>
             </button>
           ))}
+          {/* <Rating
+              value={
+                attrDetails.reviews.length !== 0
+                  ? attrDetails.reviews[0].avgRating
+                  : 0
+              }
+              onClick={auth.userInfo.email ? handleAddRating : redirectToLogin}
+              precision={0.25}
+            /> */}
           <p className="text-zinc-700 ml-5">{Number(rating).toFixed(2)}</p>
           <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
           <p className="text-zinc-700">{reviewCount} reviews</p>

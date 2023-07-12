@@ -9,8 +9,6 @@ const AttractionsList = () => {
   let { id } = useParams();
 
   const { cities, categories, attractions } = useSelector((state) => state);
-  // console.log(cities.cities, categories.categories, attractions.Attractions);
-
   const [filteredAttrs, setFilteredAttrs] = useState([]);
 
   const city = cities.cities.find((city) => city._id == id);
@@ -40,7 +38,9 @@ const AttractionsList = () => {
         <img src={gif} className=" mx-auto" style={{ width: "150px" }} />
       ) : (
         <div className="container p-5 mx-auto">
-          <h3 className="text-4xl text-center text-zinc-700 headerFont">{city.city}</h3>
+          <h3 className="text-4xl text-center text-zinc-700 headerFont">
+            {city.city}
+          </h3>
           <Categories
             cityCats={cityCats}
             handleFilter={handleFilter}
