@@ -96,7 +96,7 @@ export default function VerticalTabs() {
       >
         <Tab
           disableRipple
-          sx={{ fontWeight: "bolder" }}
+          sx={{ fontWeight: "bolder"}}
           icon={<AttractionsOutlinedIcon />}
           iconPosition="start"
           label="Attractions"
@@ -104,7 +104,7 @@ export default function VerticalTabs() {
         />
         <Tab
           disableRipple
-          sx={{ fontWeight: "bolder" }}
+          sx={{ fontWeight: "bolder"}}
           icon={<PersonPinIcon />}
           iconPosition="start"
           label="Users"
@@ -112,7 +112,7 @@ export default function VerticalTabs() {
         />
         <Tab
           disableRipple
-          sx={{ fontWeight: "bolder" }}
+          sx={{ fontWeight: "bolder"}}
           icon={<PlaceOutlinedIcon />}
           iconPosition="start"
           label="Cities"
@@ -120,7 +120,7 @@ export default function VerticalTabs() {
         />
         <Tab
           disableRipple
-          sx={{ fontWeight: "bolder" }}
+          sx={{ fontWeight: "bolder"}}
           icon={<CategoryOutlinedIcon />}
           iconPosition="start"
           label="Categories"

@@ -66,7 +66,7 @@ function App() {
     <>
       <Navbar1 />
       {auth.openAuthModal ? <AuthModel /> : ""}
-      <div style={{ minHeight: "385px" }}>
+      <div style={{ minHeight: "444px" }}>
         <Routes className="bg-black">
           <Route path="/" element={<Home />} />
           <Route path="/wishlist" element={<Wishlist />} />
