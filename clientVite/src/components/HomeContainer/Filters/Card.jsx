@@ -1,9 +1,7 @@
 import Card from "@mui/material/Card";
-import Grid from "@mui/material/Unstable_Grid2";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Badge from "@mui/material/Badge";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -12,13 +10,12 @@ import {
   handleAuthType,
   handleToggleAuthModal,
 } from "../../../rtk/features/authSlice";
-import { highestAttrsHandler } from "../../../rtk/features/attrSlice";
 import Rating from "@mui/material/Rating";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import Button from "@mui/material/Button";
 
 const CardItem = ({ attr }) => {
-  const { attractions, auth } = useSelector((state) => state);
+  const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -58,6 +55,21 @@ const CardItem = ({ attr }) => {
     event.preventDefault();
     dispatch(handleAuthType("login"));
     dispatch(handleToggleAuthModal());
+  }
+
+  function calculateAverageRating(ratings) {
+    var sum = 0;
+    var count = 0;
+
+    for (var i = 0; i < ratings.length; i++) {
+      var rating = ratings[i];
+      if (typeof rating.rating === "number") {
+        sum += rating.rating;
+        count++;
+      }
+    }
+    var average = count > 0 ? sum / count : 0;
+    return average;
   }
 
   return (
@@ -100,7 +112,7 @@ const CardItem = ({ attr }) => {
           </Typography>
           <Typography variant="body1" color="text.info" component="span">
             <div className="flex items-center justify-between pl-2">
-              <Rating value={attr.averageRating} precision={0.25} readOnly />
+              <Rating value={attr.averageRating || calculateAverageRating(attr.review)} precision={0.25} readOnly />
               <button
                 className="btn btn-ghost btn-circle"
                 onClick={

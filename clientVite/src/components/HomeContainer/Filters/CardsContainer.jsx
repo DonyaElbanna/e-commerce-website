@@ -4,7 +4,7 @@ import CardItem from "./Card";
 
 const CardsContainer = () => {
   const { attractions } = useSelector((state) => state);
-  // console.log(attractions.filters, attractions);
+  console.log(attractions);
 
   return (
     <>

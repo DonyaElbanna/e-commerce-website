@@ -54,7 +54,11 @@ IconButton:hover {
 }
 .NavLinkActive {
   color: #be853f;
-  text-decoration: none;
+  /**/
+  text-decoration: underline;
+  text-underline-position: under;
+  text-shadow: 1px 1px 2px rgb(0, 0, 0);
+  /**/
   font-weight: bolder;
   height: 100%;
   padding: 5px;
