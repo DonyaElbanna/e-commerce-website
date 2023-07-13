@@ -17,7 +17,7 @@ const WishListContanier = ({ attr }) => {
   useEffect(() => {
     const getWishlistItems = async () => {
       const { data } = await axios.get(baseURL);
-      console.log(data.wishlist);
+      // console.log(data.wishlist);
       setWishlistItems(data.wishlist);
     };
     getWishlistItems();
@@ -59,13 +59,12 @@ const WishListContanier = ({ attr }) => {
           />
         </svg>
         <h1 className="text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
-          My
+          My{" "}
           <mark className="px-2 text-white bg-yellow-400 rounded dark:bg-blue-500">
             WishList
           </mark>
         </h1>
       </div>
-      {/* <h3 className="text-4xl mb-10 text-center">Cities</h3> */}
       {wishlistItems.length == 0 ? (
         // <img
         //   src="https://www.egypttoursportal.com/images/2022/08/5-Days-Cairo-Aswan-Abu-Simbel-Tour-Package-Egypt-Tours-Portal.jpg"

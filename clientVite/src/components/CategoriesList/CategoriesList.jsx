@@ -26,16 +26,18 @@ const CategoriesList = () => {
 
   return (
     <>
-      <div>
+      <div className="">
         {Object.keys(groupedData).map((city, i) => (
-          <div className="container p-5 mx-auto" key={i}>
-            <h3 className="text-4xl text-center text-zinc-700 headerFont">
+          <div className="container mx-auto" key={i}>
+            <h3 className="text-4xl text-center text-zinc-700 headerFont my-5">
               {city}
             </h3>
-            <div className="flex flex-warp justify-center">
+            <div className="">
+              {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"> */}
               {groupedData[city].map((attr) => (
                 <AttractionCard key={attr._id} attr={attr} />
               ))}
+              {/* </div> */}
             </div>
           </div>
         ))}

@@ -111,11 +111,9 @@ const Navbar1 = () => {
                     : Style.NavLink
                 }
               >
-                <HomeOutlinedIcon className="visible md:invisible text-[#be853f]" />
-                {/* <img className={Style.navbarImg} src={home}></img> */}
+                <HomeOutlinedIcon focusable className="visible md:invisible " />
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
-                  // display={{ xs: "none", md: "inline-flex" }}
                   className="hidden md:visible md:inline-flex"
                 >
                   Home
@@ -132,37 +130,14 @@ const Navbar1 = () => {
                     : Style.NavLink
                 }
               >
-                <PublicOutlinedIcon className="visible md:invisible text-[#be853f]" />
-                {/* <img className={Style.navbarImg} src={cities}></img> */}
+                <PublicOutlinedIcon className="visible md:invisible" />
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
-                  // display={{ xs: "none", md: "inline-flex" }}
                   className="hidden md:visible md:inline-flex"
                 >
                   Tours
                 </Typography>
               </NavLink>
-              {/* categories */}
-              {/* <NavLink
-                to="/cities"
-                className={({ isActive }) =>
-                  isActive
-                    ? Style.NavLinkActive
-                    : !window.scrollY
-                    ? Style.NavLinkTop
-                    : Style.NavLink
-                }
-              >
-                <CategoryOutlinedIcon className="visible md:invisible" />
-                <CategoryOutlinedIcon className="visible md:invisible text-[#be853f]" />
-                {/* <img className={Style.navbarImg} src={cities}></img> */}
-                <Typography
-                  fontWeight={{ xs: 600, md: 700 }}
-                  className="hidden md:visible md:inline-flex"
-                >
-                  Categories
-                </Typography>
-              </NavLink> */}
               {/* wishlist */}
               <NavLink
                 to="/wishlist"
@@ -174,7 +149,7 @@ const Navbar1 = () => {
                     : Style.NavLink
                 }
               >
-                <FavoriteBorderOutlinedIcon className="visible md:invisible text-[#be853f]" />
+                <FavoriteBorderOutlinedIcon className="visible md:invisible" />
                 {/* <img className={Style.navbarImg} src={wishlist}></img> */}
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
@@ -195,7 +170,7 @@ const Navbar1 = () => {
                     : Style.NavLink
                 }
               >
-                <ConfirmationNumberOutlinedIcon className="visible md:invisible text-[#be853f]" />
+                <ConfirmationNumberOutlinedIcon className="visible md:invisible" />
                 {/* <img className={Style.navbarImg} src={order}></img> */}
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
@@ -217,7 +192,7 @@ const Navbar1 = () => {
                   }
                   to="/admin"
                 >
-                  <DashboardIcon className="visible md:invisible text-[#be853f]" />
+                  <DashboardIcon className="visible md:invisible " />
 
                   <Typography
                     fontWeight={{ xs: 600, md: 700 }}
@@ -303,26 +278,6 @@ const Navbar1 = () => {
               alignItems="center"
               spacing={{ md: 2, lg: 2 }}
             >
-              {/* <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  isActive
-                    ? Style.NavLinkActive
-                    : !window.scrollY
-                    ? Style.NavLinkTop
-                    : Style.NavLink
-                }
-              >
-                <img className={Style.navbarImg} src={home}></img>
-
-                <Typography
-                  fontWeight={{ xs: 600, md: 700 }}
-                  display={{ xs: "none", md: "inline-flex" }}
-                >
-                  Home
-                </Typography>
-              </NavLink> */}
-              {/* home */}
               <NavLink
                 to="/"
                 className={({ isActive }) =>
@@ -334,10 +289,8 @@ const Navbar1 = () => {
                 }
               >
                 <HomeOutlinedIcon className="visible md:invisible" />
-                {/* <img className={Style.navbarImg} src={home}></img> */}
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
-                  // display={{ xs: "none", md: "inline-flex" }}
                   className="hidden md:visible md:inline-flex"
                 >
                   Home
@@ -355,41 +308,17 @@ const Navbar1 = () => {
                 }
               >
                 <PublicOutlinedIcon className="visible md:invisible" />
-                {/* <img className={Style.navbarImg} src={cities}></img> */}
                 <Typography
                   fontWeight={{ xs: 600, md: 700 }}
-                  // display={{ xs: "none", md: "inline-flex" }}
                   className="hidden md:visible md:inline-flex"
                 >
                   Tours
                 </Typography>
               </NavLink>
-              {/* categories */}
-              {/* <NavLink
-                to="/cities"
-                className={({ isActive }) =>
-                  isActive
-                    ? Style.NavLinkActive
-                    : !window.scrollY
-                    ? Style.NavLinkTop
-                    : Style.NavLink
-                }
-              >
-                <CategoryOutlinedIcon className="visible md:invisible" />
-                <Typography
-                  fontWeight={{ xs: 600, md: 700 }}
-                  className="hidden md:visible md:inline-flex"
-                >
-                  Categories
-                </Typography>
-              </NavLink> */}
               <span
                 className={!window.scrollY ? Style.NavLinkTop : Style.NavLink}
-                // className={Style.NavLink}
                 onClick={() => dispatch(handleToggleAuthModal())}
               >
-                {/* <Person2OutlinedIcon /> */}
-                {/* <img className={Style.navbarImg} src={login}></img> */}
                 <PersonOutlineOutlinedIcon className="visible md:invisible" />
                 <span className="hidden md:visible md:inline-flex">Log in</span>
               </span>

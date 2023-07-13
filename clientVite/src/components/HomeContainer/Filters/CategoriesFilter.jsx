@@ -46,7 +46,7 @@ const CategoriesFilter = () => {
           },
         }}
       >
-        <div>
+        <div className="flex flex-wrap md:flex-col md:flex-nowrap">
           {categories.categories.map((cat) => (
             <FormControlLabel
               key={cat._id}
