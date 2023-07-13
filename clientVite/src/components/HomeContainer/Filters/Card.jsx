@@ -64,6 +64,7 @@ const CardItem = ({ attr }) => {
     <Link to={`/city/${attr._id}/details`}>
       <Card
         sx={{
+          borderRadius: "3%",
           display: "flex",
           flexDirection: "column",
           height: "360px",

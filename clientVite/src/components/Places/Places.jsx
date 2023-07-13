@@ -124,10 +124,10 @@ export const Places = () => {
     <div>
       {id > 0 && id <= cities.length ? (
         <div>
-          <div className=" bg-slate-400 rounded-xl p-5 w-max mb-20 mt-20 ml-80 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-            Trips in Government {name}
+          <div className=" bg-slate-400 rounded-xl p-5 w-max mb-20 mt-20 m-auto text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+            Trips in {name}
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          <div className="m-auto w-11/12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3 mb-20">
             {cities[id - 1].map((attr) => (
               <AttractionCard key={attr._id} attr={attr} />
             ))}
