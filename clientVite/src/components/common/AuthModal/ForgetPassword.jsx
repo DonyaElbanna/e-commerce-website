@@ -113,15 +113,15 @@ const ForgetPassword = () => {
                 <Dialog.Title>
                   <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                      <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-gray-900 md:text-2xl dark:text-white">
-                        Reset Password
+                      <h1 className="text-xl font-bold leading-tight tracking-tight text-center text-zinc-700 md:text-2xl dark:text-white">
+                        Reset Email
                       </h1>
                       <form className="space-y-4 md:space-y-6" action="#">
                         <div>
                           <input
                             type="email"
                             placeholder="ayazain@gmail.com"
-                            className="bg-gray-50 border outline-indigo-300 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="bg-gray-50 border outline-none border-gray-300 text-zinc-800 sm:text-sm rounded-lg focus:ring-[#be853f] focus:border-[#be853f] block w-full p-2.5 "
                             value={email}
                             onChange={(value) => handleChange(value)}
                           />
@@ -135,7 +135,7 @@ const ForgetPassword = () => {
                         <div>
                           <button
                             type="submit"
-                            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm enabled:hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            className="flex w-full justify-center rounded-md bg-[#be853f] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm enabled:hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             onClick={handleSubmit}
                             disabled={sending === "sending"}
                           >

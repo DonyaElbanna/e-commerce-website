@@ -6,7 +6,7 @@ const Footer = () => {
     <>
       <footer>
         <div
-          style={{ backgroundColor: "rgb(10 10 10 / 80%)", marginTop: "50px" }}
+          style={{ backgroundColor: "rgb(10 10 10 / 80%)"}}
           className="flex flex-column items-center pb-7 px-5"
         >
           <article

@@ -137,7 +137,7 @@ const Navbar1 = () => {
                 >
                   Tours
                 </Typography>
-              </NavLink>
+              </NavLink>        
               {/* wishlist */}
               <NavLink
                 to="/wishlist"

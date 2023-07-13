@@ -24,6 +24,7 @@ import IconMap from "./components/Map/IconMap";
 import { citiesHandler } from "./rtk/features/citiesSlice";
 import { categoriesHandler } from "./rtk/features/categoriesSlice";
 import Error from "./components/Error/Error";
+import { Places } from "./components/places/Places";
 
 function App() {
   const { auth } = useSelector((state) => state);
@@ -74,6 +75,10 @@ function App() {
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/map" element={<IconMap />} />
+          <Route path="/map/:id" element={<Places />} />
+
+          {/* <Route path="/AttractionDetails" element={<AttractionDetails />} /> */}
+
           <Route path="/cities" element={<Cities />} />
           <Route
             path="/admin"
@@ -98,7 +103,7 @@ function App() {
           <Route path="/city/:id" element={<AttractionsList />} />
           <Route path="/category/:id" element={<CategoriesList />} />
           <Route path="/city/:id/details" element={<AttractionDetails />} />
-          
+
           <Route path="/*" element={<Error />} />
         </Routes>
       </div>
