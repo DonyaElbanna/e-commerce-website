@@ -46,8 +46,10 @@ const AttractionsList = () => {
             handleFilter={handleFilter}
             resetFilters={resetFilters}
           />
-          <h3 className="text-4xl mb-8 text-center text-zinc-700">Tours</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          <h3 className="text-4xl mb-8 text-center text-[#be853f] font-medium">
+            Tours
+          </h3>
+          <div className="container px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
             {filteredAttrs.length == 0
               ? cityAttrs.map((attr) => (
                   <AttractionCard key={attr._id} attr={attr} />

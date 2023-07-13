@@ -15,7 +15,7 @@ const Categories = ({ cityCats, handleFilter, resetFilters }) => {
     <>
       <div className="my-8">
         <div className="flex justify-between w-4/5 mb-5 mx-auto">
-          <p className="text-2xl text-zinc-500">Filter Your category</p>
+          <p className="text-2xl font-medium text-zinc-500">Filter Your category</p>
           <button
             onClick={resetFilters}
             className="btn btn-outline  btn-accent font-medium rounded-full text-md"
@@ -23,7 +23,7 @@ const Categories = ({ cityCats, handleFilter, resetFilters }) => {
             Reset Filters
           </button>
         </div>
-        <div className="container px-5 mx-auto flex items-center">
+        <div className="container mx-auto px-3 flex items-center w-4/5">
           <Swiper
             modules={[Autoplay, Keyboard, Pagination, Scrollbar, Zoom]}
             keyboard={true}
@@ -49,7 +49,7 @@ const Categories = ({ cityCats, handleFilter, resetFilters }) => {
             }}
             spaceBetween={0}
             slidesPerView={4}
-            className="cursor-grab relative carousel-center w-100 px-4 pt-8 pb-5 bg-stone-600/20 rounded-box"
+            className="cursor-grab relative carousel-center w-100 px-4 pt-8 pb-4 bg-stone-600/20 rounded-box"
           >
             <div>
               {cityCats.map((cat, index) => (

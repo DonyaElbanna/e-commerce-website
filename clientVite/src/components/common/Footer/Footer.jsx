@@ -31,14 +31,11 @@ const Footer = () => {
               >
                 Contact
               </Link>
-              <Link
+              {/* <Link
                 to={`/map`}
                 className="footerLink text-sm md:text-xl text-zinc-400"
               >
                 Places
-              </Link>
-              {/* <Link className="footerLink text-sm md:text-xl text-zinc-400">
-                Category
               </Link> */}
             </div>
 
