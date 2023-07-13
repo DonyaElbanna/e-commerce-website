@@ -65,11 +65,6 @@ const Navbar1 = () => {
 
   return (
     <div
-      // className={
-      //   scroll
-      //     ? "navbar sticky top-0  z-50  px-4 md:px-5 bg-black"
-      //     : "navbar sticky top-0  z-50 md:bg-slate-800/0 bg-slate-100/90 px-4 md:px-5"
-      // }
       className={`navbar sticky top-0 z-50 px-4 md:px-5`}
       style={{
         backgroundColor: `rgba(0, 0, 0, ${1 - fade})`,
@@ -119,9 +114,28 @@ const Navbar1 = () => {
                   Home
                 </Typography>
               </NavLink>
-              {/* cities */}
+              {/* tours */}
               <NavLink
                 to="/cities"
+                className={({ isActive }) =>
+                  isActive
+                    ? Style.NavLinkActive
+                    : !window.scrollY
+                    ? Style.NavLinkTop
+                    : Style.NavLink
+                }
+              >
+                <CategoryOutlinedIcon className="visible md:invisible" />
+                <Typography
+                  fontWeight={{ xs: 600, md: 700 }}
+                  className="hidden md:visible md:inline-flex"
+                >
+                  Tours
+                </Typography>
+              </NavLink>
+              {/* map */}
+              <NavLink
+                to="/map"
                 className={({ isActive }) =>
                   isActive
                     ? Style.NavLinkActive
@@ -135,9 +149,9 @@ const Navbar1 = () => {
                   fontWeight={{ xs: 600, md: 700 }}
                   className="hidden md:visible md:inline-flex"
                 >
-                  Tours
+                  Map
                 </Typography>
-              </NavLink>        
+              </NavLink>
               {/* wishlist */}
               <NavLink
                 to="/wishlist"
@@ -278,6 +292,7 @@ const Navbar1 = () => {
               alignItems="center"
               spacing={{ md: 2, lg: 2 }}
             >
+              {/* home */}
               <NavLink
                 to="/"
                 className={({ isActive }) =>
@@ -296,9 +311,28 @@ const Navbar1 = () => {
                   Home
                 </Typography>
               </NavLink>
-              {/* cities */}
+              {/* tours */}
               <NavLink
                 to="/cities"
+                className={({ isActive }) =>
+                  isActive
+                    ? Style.NavLinkActive
+                    : !window.scrollY
+                    ? Style.NavLinkTop
+                    : Style.NavLink
+                }
+              >
+                <CategoryOutlinedIcon className="visible md:invisible" />
+                <Typography
+                  fontWeight={{ xs: 600, md: 700 }}
+                  className="hidden md:visible md:inline-flex"
+                >
+                  Tours
+                </Typography>
+              </NavLink>
+              {/* map */}
+              <NavLink
+                to="/map"
                 className={({ isActive }) =>
                   isActive
                     ? Style.NavLinkActive
@@ -312,9 +346,10 @@ const Navbar1 = () => {
                   fontWeight={{ xs: 600, md: 700 }}
                   className="hidden md:visible md:inline-flex"
                 >
-                  Tours
+                  Map
                 </Typography>
               </NavLink>
+              {/* user */}
               <span
                 className={!window.scrollY ? Style.NavLinkTop : Style.NavLink}
                 onClick={() => dispatch(handleToggleAuthModal())}
