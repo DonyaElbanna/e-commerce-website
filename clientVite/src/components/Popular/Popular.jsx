@@ -4,7 +4,6 @@ import CardItem from "../HomeContainer/Filters/Card";
 
 const Popular = () => {
   const { attractions } = useSelector((state) => state);
-  
 
   return (
     <>
@@ -13,7 +12,7 @@ const Popular = () => {
           Our Most <span className="text-[#be853f]">Popular</span> Tours
         </h1>
         <Grid container spacing={3}>
-          {attractions.highestRated.slice(0, 6).map((attr) => (
+          {attractions.highestRated.slice(0, 8).map((attr) => (
             <Grid xs={12} sm={6} md={4} lg={3} key={attr._id}>
               <CardItem attr={attr} />
             </Grid>

@@ -71,51 +71,14 @@ const OrderForm = () => {
 
   const formatDate = (e) => {
     const slcDate = e.$d.toLocaleDateString();
-    console.log(slcDate);
     setDate(slcDate);
   };
-  console.log(date);
 
   const handleChangeForm = (e) => {
-    console.log(e.target.value);
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
-  };
-
-  const handleAddOrder = async () => {
-    const newOrder = {
-      userID: userId,
-      attrID: form.attrID,
-      adults: form.adults,
-      children: form.children,
-      expectedDate: "7/13/2023",
-    };
-    console.log(newOrder);
-    const attr = attractions.Attractions.filter(
-      (attr) => attr._id == form.attrID
-    )[0];
-    const user = users.users.filter((user) => user._id == userId)[0];
-    // console.log(users.users.filter((user) => user._id == userId)[0]);
-    // console.log(newOrder);
-    await axios
-      .post("http://localhost:9999/order", newOrder)
-      .then((response) => {
-        const order = { ...response.data, attraction: attr, user: user };
-        dispatch(addOrder(order));
-        setOpen(false);
-      })
-      .catch((error) => {
-        const errorData = {};
-        if (!error.response) {
-          errorData.globalErr =
-            "something went wrong, please check your connection!";
-        } else {
-          errorData.globalErr = "Request wasn't sent, please check your data!";
-        }
-        setErrors(errorData);
-      });
   };
 
   const handleSubmit = (e) => {
@@ -137,6 +100,46 @@ const OrderForm = () => {
       handleAddOrder();
       setErrors({});
     }
+  };
+
+  const handleAddOrder = async () => {
+    const user = users.users.find((user) => user._id == userId);
+    const attr = attractions.Attractions.find(
+      (attr) => attr._id == form.attrID
+    );
+    const newOrder = {
+      email: user.email,
+      userID: userId,
+      attrID: attr._id,
+      tourname: attr.name,
+      MainImage: attr.Images[0],
+      adults: form.adults,
+      children: form.children,
+      expectedDate: date,
+      bookingRefId: "108080604",
+      barCodeImagePath:
+        "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Example",
+      ticketNumber: "e78n66w87",
+      LogoImage:
+        "https://res.cloudinary.com/dc2rtsfhi/image/upload/v1689256910/logo1_cen4ps.jpg",
+    };
+    await axios
+      .post("http://localhost:9999/order", newOrder)
+      .then((response) => {
+        const order = { ...response.data, attraction: attr, user: user };
+        dispatch(addOrder(order));
+        setOpen(false);
+      })
+      .catch((error) => {
+        const errorData = {};
+        if (!error.response) {
+          errorData.globalErr =
+            "something went wrong, please check your connection!";
+        } else {
+          errorData.globalErr = "Request wasn't sent, please check your data!";
+        }
+        setErrors(errorData);
+      });
   };
 
   return (

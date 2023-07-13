@@ -8,6 +8,7 @@ import {
   handleFilters,
   getFilteredAttrsByCat,
 } from "../../../rtk/features/attrSlice";
+import { handlePage } from "../../../rtk/features/paginationSlice";
 
 const CategoriesFilter = () => {
   const dispatch = useDispatch();
@@ -15,9 +16,8 @@ const CategoriesFilter = () => {
   const { categories, attractions } = useSelector((state) => state);
   const [slc, setSlc] = useState("");
 
-  // console.log(cities.cities);
-
   const handleCatFilter = (catID) => {
+    dispatch(handlePage(1));
     setSlc(catID);
     dispatch(handleFilters({ category: true }));
     dispatch(getFilteredAttrsByCat(catID));
@@ -28,7 +28,7 @@ const CategoriesFilter = () => {
       <FormLabel style={{ display: "none" }}>Cities</FormLabel>{" "}
       <RadioGroup
         sx={{
-          maxHeight: 300,
+          maxHeight: 200,
           overflow: "auto",
           "&::-webkit-scrollbar": {
             width: "0.4em",

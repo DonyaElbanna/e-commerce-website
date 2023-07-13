@@ -8,8 +8,9 @@ import {
   handleFilters,
   getFilteredAttrsByPrice,
 } from "../../../rtk/features/attrSlice";
+import { handlePage } from "../../../rtk/features/paginationSlice";
 
-const CityFilter = () => {
+const PricesFilter = () => {
   const { attractions } = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const CityFilter = () => {
   const [slc, setSlc] = useState("");
 
   const handlePriceFilter = (id) => {
+    dispatch(handlePage(1));
     setSlc(id);
     dispatch(handleFilters({ prices: true }));
     dispatch(getFilteredAttrsByPrice(id));
@@ -31,7 +33,7 @@ const CityFilter = () => {
     <div>
       <FormLabel style={{ display: "none" }}>Cities</FormLabel>{" "}
       <RadioGroup>
-        <div>
+        <div className="flex flex-wrap md:flex-col md:flex-nowrap">
           {prices.map((price) => (
             <FormControlLabel
               key={price.id}
@@ -53,4 +55,4 @@ const CityFilter = () => {
   );
 };
 
-export default CityFilter;
+export default PricesFilter;

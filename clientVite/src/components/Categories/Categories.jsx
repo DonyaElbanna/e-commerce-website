@@ -9,19 +9,41 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/zoom";
 import { Autoplay, Keyboard, Pagination, Scrollbar, Zoom } from "swiper";
+import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
+
+const ClearButton = styled(Button)({
+  textTransform: "none",
+  fontSize: "1.25rem",
+  padding: "3px 10px",
+  marginBottom: "5px",
+  backgroundColor: "white",
+  color: "#1f2937",
+  border: "2px solid #1f2937 ",
+  transition: "0.001s",
+  borderRadius: "10px",
+  "&:hover": {
+    color: "white",
+    backgroundColor: "#1f2937",
+    border: "2px solid transparent ",
+  },
+});
 
 const Categories = ({ cityCats, handleFilter, resetFilters }) => {
   return (
     <>
       <div className="my-8">
         <div className="flex justify-between w-4/5 mb-5 mx-auto">
-          <p className="text-2xl font-medium text-zinc-500">Filter Your category</p>
-          <button
+          <p className="text-2xl font-medium text-zinc-500">
+            Filter Your category
+          </p>
+          <ClearButton onClick={resetFilters}>Reset Filters</ClearButton>
+          {/* <button
             onClick={resetFilters}
             className="btn btn-outline  btn-accent font-medium rounded-full text-md"
           >
             Reset Filters
-          </button>
+          </button> */}
         </div>
         <div className="container mx-auto px-3 flex items-center w-4/5">
           <Swiper

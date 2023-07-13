@@ -9,7 +9,6 @@ import Attractions from "./AttractionsTable";
 import CitiesTable from "./CitiesTable";
 import CategoriesTable from "./CategoriesTable";
 import Orders from "./OrdersTable";
-import TransactionsTable from "./TransactionsTable";
 
 // icons
 import PersonPinIcon from "@mui/icons-material/PersonPin";
@@ -17,7 +16,6 @@ import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import InventoryOutlinedIcon from "@mui/icons-material/InventoryOutlined";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import AttractionsOutlinedIcon from "@mui/icons-material/AttractionsOutlined";
-import PaidOutlinedIcon from "@mui/icons-material/PaidOutlined";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 function TabPanel(props) {
@@ -136,14 +134,6 @@ export default function VerticalTabs() {
           label="Orders"
           {...a11yProps(4)}
         />
-        <Tab
-          disableRipple
-          sx={{ fontWeight: "bolder" }}
-          icon={<PaidOutlinedIcon />}
-          iconPosition="start"
-          label="Transactions"
-          {...a11yProps(5)}
-        />
       </Tabs>
       <TabPanel value={value} index={0}>
         <Attractions />
@@ -159,9 +149,6 @@ export default function VerticalTabs() {
       </TabPanel>
       <TabPanel value={value} index={4}>
         <Orders />
-      </TabPanel>
-      <TabPanel value={value} index={5}>
-        <TransactionsTable />
       </TabPanel>
     </Box>
   );

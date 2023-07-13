@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Welcome from "../components/HomeContainer/Welome/welcome";
 import HighestRated from "../components/HomeContainer/HighestRated/HighestRated";
 import Filter from "../components/HomeContainer/Filters/Filter";
@@ -30,9 +31,7 @@ const Home = () => {
         </Grid>
       </Container>
       <WhyChooseUs />
-      <Container>
-        {/* <Map /> */}
-      </Container>
+      <Container>{/* <Map /> */}</Container>
       {/* <Filter />
         <HighestRated /> */}
     </>

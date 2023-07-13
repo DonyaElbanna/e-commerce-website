@@ -42,7 +42,7 @@ const AttractionDetails = () => {
         />
       ) : (
         <div className="container px-3 mx-auto my-5">
-          <h2 className="text-4xl mb-10 text-center	text-zinc-700 ">
+          <h2 className="text-4xl mb-10 text-center	text-zinc-700 font-medium">
             {attrDetails.name}
           </h2>
           <div className="w-3/4 m-auto mt-5 ">
@@ -62,4 +62,3 @@ const AttractionDetails = () => {
 };
 
 export default AttractionDetails;
-

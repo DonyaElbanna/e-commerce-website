@@ -8,6 +8,7 @@ const initialState = {
   filteredCatAttrs: [],
   filteredPriceAttrs: [],
   highestRated: [],
+  filteredAttrs: [],
   filters: [],
 };
 
@@ -33,25 +34,30 @@ export const attrSlice = createSlice({
       state.filteredCityAttrs = state.Attractions.filter(
         (attr) => attr.category._id == action.payload
       );
+      state.filteredAttrs = state.filteredCityAttrs;
     },
     getFilteredAttrsByCat: (state, action) => {
       state.filteredCatAttrs = state.filteredCityAttrs.filter(
         (attr) => attr.subcategory._id == action.payload
       );
+      state.filteredAttrs = state.filteredCatAttrs;
     },
     getFilteredAttrsByPrice: (state, action) => {
       if (action.payload == 0) {
-        state.filteredPriceAttrs = state.filteredCatAttrs.filter(
-          (attr) => attr.AdultPrice > 0 && attr.AdultPrice <= 500
-        );
+        state.filteredPriceAttrs = (
+          state.filteredCatAttrs || state.filteredAttrs
+        ).filter((attr) => attr.AdultPrice > 0 && attr.AdultPrice <= 500);
+        state.filteredAttrs = state.filteredPriceAttrs;
       } else if (action.payload == 1) {
-        state.filteredPriceAttrs = state.filteredCatAttrs.filter(
-          (attr) => attr.AdultPrice > 500 && attr.AdultPrice <= 1000
-        );
+        state.filteredPriceAttrs = (
+          state.filteredCatAttrs || state.filteredAttrs
+        ).filter((attr) => attr.AdultPrice > 500 && attr.AdultPrice <= 1000);
+        state.filteredAttrs = state.filteredPriceAttrs;
       } else {
-        state.filteredPriceAttrs = state.filteredCatAttrs.filter(
-          (attr) => attr.AdultPrice > 1000
-        );
+        state.filteredPriceAttrs = (
+          state.filteredCatAttrs || state.filteredAttrs
+        ).filter((attr) => attr.AdultPrice > 1000);
+        state.filteredAttrs = state.filteredPriceAttrs;
       }
     },
     handleFilters: (state, action) => {

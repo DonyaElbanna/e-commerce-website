@@ -12,6 +12,7 @@ import PricesFilter from "./PricesFilter";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { handleFilters } from "../../../rtk/features/attrSlice";
+import { handlePage } from "../../../rtk/features/paginationSlice";
 
 const FilterButton = styled(Button)({
   textTransform: "none",
@@ -66,11 +67,13 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 const Filter = () => {
   const [expanded, setExpanded] = useState("");
   const dispatch = useDispatch();
+
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
 
   const clearFilters = () => {
+    dispatch(handlePage(1));
     dispatch(handleFilters());
   };
 

@@ -3,18 +3,18 @@ import { useDispatch } from "react-redux";
 import { handleToggleBookModal } from "../../rtk/features/bookingSlice";
 const BookingCard = ({ attrDetails }) => {
   const [openForm, setOpenForm] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   return (
     <>
       <div className="">
         <div className="max-w-md rounded-3xl p-px bg-gradient-to-b from-yellow-200 to-green-300">
           <div className="rounded-[calc(1.5rem-1px)] p-10 bg-white dark:bg-gray-900 text-center">
             <div className="flex font-bold justify-between text-zinc-700">
-               <p>Start From</p>
-               <p className="text-[#be853f]">
-                ${attrDetails.AdultPrice}<sub className="text-zinc-700">/person</sub>
-               </p>{" "}
-              
+              <p>Start From</p>
+              <p className="text-[#be853f]">
+                ${attrDetails.AdultPrice}
+                <sub className="text-zinc-700">/person</sub>
+              </p>{" "}
             </div>
 
             <p className="text-zinc-500 mt-2">All taxes and fees included</p>
@@ -22,7 +22,7 @@ const BookingCard = ({ attrDetails }) => {
               className="bg-[#be853f] mt-3 w-full hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-full"
               onClick={() => dispatch(handleToggleBookModal())}
             >
-              Booking Now
+              Book Now
             </button>
           </div>
         </div>
@@ -32,7 +32,6 @@ const BookingCard = ({ attrDetails }) => {
 };
 
 export default BookingCard;
-
 
 // import React, { useState } from "react";
 // const BookingCard = ({ attrDetails }) => {

@@ -8,6 +8,7 @@ import {
   getFilteredAttrsByCity,
   handleFilters,
 } from "../../../rtk/features/attrSlice";
+import { handlePage } from "../../../rtk/features/paginationSlice";
 
 const CityFilter = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const CityFilter = () => {
   const [slc, setSlc] = useState("");
 
   const handleCityFilter = (cityID) => {
+    dispatch(handlePage(1));
     setSlc(cityID);
     dispatch(handleFilters({ city: true }));
     dispatch(getFilteredAttrsByCity(cityID));
@@ -26,7 +28,7 @@ const CityFilter = () => {
       <FormLabel style={{ display: "none" }}>Cities</FormLabel>
       <RadioGroup
         sx={{
-          maxHeight: 300,
+          maxHeight: 200,
           overflow: "auto",
           "&::-webkit-scrollbar": {
             width: "0.4em",

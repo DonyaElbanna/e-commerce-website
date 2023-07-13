@@ -1,4 +1,3 @@
-
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
   persistStore,
@@ -35,6 +34,7 @@ import categoriesSlice from "./features/categoriesSlice";
 import ordersSlice from "./features/ordersSlice";
 import usersSlice from "./features/usersSlice";
 import reviewSlice from "./features/reviewSlice";
+import paginationSlice from "./features/paginationSlice";
 
 const persistConfig = {
   key: "root",
@@ -73,6 +73,7 @@ const reducers = combineReducers({
   orders: ordersSlice,
   users: usersSlice,
   reviews: reviewSlice,
+  pagination: paginationSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
