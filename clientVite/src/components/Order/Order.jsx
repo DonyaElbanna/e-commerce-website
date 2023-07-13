@@ -21,7 +21,6 @@ const Order = () => {
       const { data } = await axios.get(
         `http://localhost:9999/user/orders/${auth.userInfo._id}`
       );
-      console.log(data.order);
       setAllData(data)
       setOrders(data.order);
       dispatch(handleIsLoadingToggle())

@@ -37,6 +37,30 @@ export const bookingSlice = createSlice({
   name: "Booking",
   initialState,
   reducers: {
+    handlerResetBooking :(state,action)=>{
+      state.bookingStep = 0 
+      state.bookingInfo = {
+        parkId: null,
+        ticketTypeId: null,
+        inventoryTypeId: null,
+        grandTotal: 0,
+        name: "",
+        email: "",
+        adultCount: 0,
+        childCount: 0,
+        AdultTotalGrand:0,
+        ChildTotalGrand:0,
+        travelDate: null,
+        contactNo: null, 
+        dateValue:null,
+        bookingPaxDtls: [
+          {
+            name: null,
+          },
+        ],
+      },
+      state.openBookModal = false
+    },
     handleToggleBookModal: (state, action) => {
       state.openBookModal = !state.openBookModal;
     },
@@ -109,7 +133,8 @@ export const {
   handleGrandTotal,
   handleTransToken,
   handleTicketInfo,
-  handleResetStep
+  handleResetStep,
+  handlerResetBooking
 } = bookingSlice.actions;
 
 export default bookingSlice.reducer;

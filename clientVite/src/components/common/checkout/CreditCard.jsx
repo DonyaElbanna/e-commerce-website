@@ -11,8 +11,7 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { handleBookInfo, handleToggleBookModal } from "../../../rtk/features/bookingSlice";
-import { PageNumHandler } from "../../../rtk/features/parkSlice";
+import { handlerResetBooking } from "../../../rtk/features/bookingSlice";
 const CreditCard = () => {
   const { book,parkGroup} = useSelector((state) => state);
   const dispatch = useDispatch()
@@ -85,10 +84,7 @@ const CreditCard = () => {
         expectedDate: book.bookingInfo.travelDate,
         email:book.bookingInfo.email
       })
-      dispatch(handleToggleBookModal())
-      dispatch(PageNumHandler(1))
-      dispatch(handleBookInfo({}))
-      console.log(order)
+      dispatch(handlerResetBooking())
     } catch (error) {
       console.log(error)
     }
@@ -102,14 +98,16 @@ const CreditCard = () => {
         name={value.name}
         number={value.number}
       />
-      <FormControl
+      <Box
         sx={{
           marginY: "10px",
           width: "100%",
           gap: "10px",
         }}
       >
+
         <Box display="flex" flexDirection="column">
+      <FormControl>
           <FilledInput
             type="tel"
             name="number"
@@ -122,6 +120,7 @@ const CreditCard = () => {
             fullWidth
             value={value.number}
           />
+      </FormControl>
           <Typography
             sx={{
               color: "red",
@@ -133,7 +132,8 @@ const CreditCard = () => {
             {errorMessage.number}
           </Typography>
         </Box>
-        <Box display="flex">
+        <Box display="flex"  flexDirection="column">
+      <FormControl>
           <FilledInput
             type="text"
             name="name"
@@ -145,6 +145,7 @@ const CreditCard = () => {
             fullWidth
             value={value.name}
           />
+      </FormControl>
           <Typography
             sx={{
               color: "red",
@@ -158,6 +159,7 @@ const CreditCard = () => {
         </Box>
         <Grid container spacing={1}>
           <Grid item xs={6}>
+          <FormControl>
             <FilledInput
               type="tel"
               name="expiry"
@@ -169,10 +171,11 @@ const CreditCard = () => {
               onFocus={handleInputFocus}
               value={value.expiry}
               fullWidth
-              onInvalid={<Typography>111</Typography>}
             />
+          </FormControl>
           </Grid>
           <Grid item xs={6}>
+          <FormControl>
             <FilledInput
               type="tel"
               name="cvc"
@@ -186,6 +189,7 @@ const CreditCard = () => {
               value={value.cvc}
               fullWidth
             />
+          </FormControl>
           </Grid>
           <Typography
             sx={{
@@ -217,7 +221,7 @@ const CreditCard = () => {
         >
           Pay
         </Button>
-      </FormControl>
+      </Box>
     </Box>
   );
 };

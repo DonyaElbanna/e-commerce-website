@@ -186,7 +186,6 @@ const steps = [
 ];
 export default function CustomizedSteppers() {
   const { book } = useSelector((state) => state);
-  console.log(book.bookingStep)
   const [ErrorMessage, setErrorMessage] = React.useState("");
   const [activeStep, setActiveStep] = React.useState(book.bookingStep);
   const dispatch = useDispatch();
