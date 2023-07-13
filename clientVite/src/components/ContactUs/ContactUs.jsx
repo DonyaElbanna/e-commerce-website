@@ -187,7 +187,12 @@ function ContactUs() {
               your massage send successfully
             </p>
             <div className="modal-action">
-              <button className="btn border-0 bg-zinc-700 hover:bg-[#be853f] text-white">
+              <button
+                onClick={() => {
+                  navigate("/");
+                }}
+                className="btn border-0 bg-zinc-700 hover:bg-[#be853f] text-white"
+              >
                 Close
               </button>
             </div>

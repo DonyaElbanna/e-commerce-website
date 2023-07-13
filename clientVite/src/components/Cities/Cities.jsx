@@ -30,7 +30,7 @@ const Categories = () => {
             {cities.cities.map((city) => (
               <div
                 key={city._id}
-                className="w-full justify-center mx-auto flex h-42 overflow-hidden"
+                className="rounded-xl w-full justify-center mx-auto flex h-42 overflow-hidden"
               >
                 <Link
                   className="relative block bg-gray-900 group h-42 overflow-hidden rounded"
@@ -71,7 +71,7 @@ const Categories = () => {
                 className="w-full justify-center mx-auto flex h-42 overflow-hidden"
               >
                 <Link
-                  className="relative block bg-gray-900 group h-42 overflow-hidden rounded"
+                  className=" rounded-xl relative block bg-gray-900 group h-42 overflow-hidden"
                   to={`/category/${cat._id}`}
                 >
                   <img

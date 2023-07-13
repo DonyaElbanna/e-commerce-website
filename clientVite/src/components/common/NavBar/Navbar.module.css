@@ -28,6 +28,13 @@
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
 }
+.vl {
+  border: 1px solid;
+  border-radius: 3px;
+  color: rgb(194, 194, 194);
+  height: 25px;
+  width: 1px;
+}
 IconButton:hover {
   background-color: rgba(255, 255, 255, 0) !important;
   color: black;

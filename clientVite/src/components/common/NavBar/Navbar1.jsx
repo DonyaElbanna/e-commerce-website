@@ -1,3 +1,6 @@
+{
+  /* <div className={Style.vl}></div> */
+}
 import React, { useEffect, useState } from "react";
 import Logo from "../../../assets/logo.png";
 
@@ -114,6 +117,8 @@ const Navbar1 = () => {
                   Home
                 </Typography>
               </NavLink>
+              {/* <div className={Style.vl}></div> */}
+
               {/* tours */}
               <NavLink
                 to="/cities"
