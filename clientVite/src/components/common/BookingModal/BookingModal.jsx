@@ -10,7 +10,7 @@ import {
   handleBookInfo,
   handleToggleBookModal,
 } from "../../../rtk/features/bookingSlice";
-// // import CreditCard from "../../checkout/CreditCard";
+import CreditCard from "../checkout/CreditCard";
 // import axios from "axios";
 // import {
 //   handleErrorMessage,

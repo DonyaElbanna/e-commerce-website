@@ -10,7 +10,10 @@ const orderSchema = new Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: [true, "A user Must Belong To an order"],
+    },
+    guest:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Guest",
     },
     adultCount: {
       type: Number,
@@ -31,10 +34,36 @@ const orderSchema = new Schema(
     totalPrice: {
       type: Number,
     },
-    // email:{
-    //     type:String,
-    //     required:[true, "Email Must Belong To a Order"]
-    // }
+    //attraction integration 
+    bookingRefId: {
+      type: String,
+      required: true,
+    },
+    barCodeImagePath: {
+      type: String,
+      required: true,
+    },
+    ticketNumber: {
+      type: String,
+      required: true,
+    },
+    //website logo 
+    LogoImage: {
+      type: String,
+      default:"https://res.cloudinary.com/dc2rtsfhi/image/upload/v1689256910/logo1_cen4ps.jpg"
+    },
+    tourname:{
+      type:String,
+      required:true
+    },
+    MainImage:{
+      type:String,
+      required:true
+    },
+    email:{
+        type:String,
+        required:[true, "Email Must Belong To a Order"]
+    }
   },
   {
     toJSON: { virtuals: true },

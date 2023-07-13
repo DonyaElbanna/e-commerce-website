@@ -74,9 +74,11 @@ const ContactInformationModal = () => {
           <Grid item xs={12}>
             <FormControl
               sx={{
+                borderColor:"#e69e22",
                 width: "100%",
                 height: { xs: 40, sm: 50 },
                 fontSize: { xs: 12, sm: 14 },
+                      
               }}
               variant="filled"
               error={FormError.email}
@@ -84,6 +86,7 @@ const ContactInformationModal = () => {
               <FilledInput
                 id="filled-adornment-password"
                 placeholder="Enter Your Email"
+                
                 type="text"
                 value={book.bookingInfo.email}
                 pattern="/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g"
@@ -106,7 +109,9 @@ const ContactInformationModal = () => {
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton edge="end" disabled>
-                      <EmailIcon color="primary" />
+                      <EmailIcon sx={{
+                        color:"#e69e22"
+                      }}/>
                     </IconButton>
                   </InputAdornment>
                 }
@@ -151,7 +156,9 @@ const ContactInformationModal = () => {
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton edge="end" disabled>
-                      <PersonIcon color="primary" />
+                      <PersonIcon sx={{
+                        color:"#e69e22"
+                      }} />
                     </IconButton>
                   </InputAdornment>
                 }
@@ -166,7 +173,7 @@ const ContactInformationModal = () => {
           <Grid item xs={12} position="relative">
             <MuiTelInput
               value={book.bookingInfo.contactNo}
-              defaultCountry="AE"
+              defaultCountry="EG"
               
               forceCallingCode
               placeholder="Enter Your Mobile Number"
@@ -183,7 +190,7 @@ const ContactInformationModal = () => {
               }}
             />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             {
               <Button
                 onClick={paymentHandler}
@@ -219,7 +226,7 @@ const ContactInformationModal = () => {
                 )}
               </Button>
             }
-          </Grid>
+          </Grid> */}
           {error && <Typography color="red">{error}</Typography>}
         </Grid>
       </Box>

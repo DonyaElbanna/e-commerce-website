@@ -40,7 +40,7 @@ const persistConfig = {
   key: "root",
   storage,
   whitelist: [
-    "book",
+    // "book",
     "auth",
     "attractions",
     "cities",

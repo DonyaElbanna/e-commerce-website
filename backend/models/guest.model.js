@@ -13,12 +13,6 @@ const guestSchema = new Schema({
       ref: "Attraction",
     },
   ],
-  orders: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Order",
-    },
-  ],
   avatar: {
     type: String,
     default: "https://shorturl.at/lorFV",
@@ -27,7 +21,17 @@ const guestSchema = new Schema({
     type: String,
     default: "guest",
   },
+},  {
+  timestamps: true,
+  versionKey: false,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
+  id: false,
 });
-
+guestSchema.virtual("order", {
+  ref: "Order",
+  localField: "_id",
+  foreignField: "guest",
+}); //get All order related to user
 const Guest = mongoose.model("Guest", guestSchema);
 module.exports = Guest;

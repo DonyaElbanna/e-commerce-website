@@ -165,15 +165,8 @@ const changeRole = async (id, next) => {
 
 const getOrders = async (id, next) => {
   try {
-    const user = await User.findById(id)
-      .populate("orders")
-      .populate({
-        path: "orders",
-        populate: {
-          path: "attraction",
-          model: "Attraction",
-        },
-      });
+    const user =await Guest.findById(id).populate("order") ||  await User.findById(id).populate("order")
+    console.log(user)
     if (!user) {
       return next(new AppError(NOT_FOUND, 404));
     }

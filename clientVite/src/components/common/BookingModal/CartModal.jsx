@@ -4,6 +4,7 @@ import CartButton from "./CartButton";
 import { useSelector } from "react-redux";
 const CartModal = () => {
   const { parkGroup, book } = useSelector((state) => state);
+  console.log(parkGroup)
   return (
     <Card
       sx={{

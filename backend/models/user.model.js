@@ -34,12 +34,12 @@ const UserSchema = new Schema(
         ref: "Attraction",
       },
     ],
-    orders: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Order",
-      },
-    ],
+    // orders: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Order", 
+    //   },
+    // ],
     isVerified: {
       type: Boolean,
       default: false,
@@ -81,5 +81,9 @@ UserSchema.pre("findOneAndUpdate", async function (next) {
 
   return next();
 });
-
+UserSchema.virtual("order", {
+  ref: "Order",
+  localField: "_id",
+  foreignField: "user",
+}); //get All Review related to attraction
 module.exports = mongoose.model("User", UserSchema);

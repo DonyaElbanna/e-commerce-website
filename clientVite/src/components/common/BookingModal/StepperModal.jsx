@@ -100,13 +100,13 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
       backgroundImage:
-        "linear-gradient( 136deg, rgb(0,0,255) 0%, rgb(0,100,250) 50%, rgb(0,150,255) 100%)",
+        "linear-gradient( 136deg,#e69e22 0%, #e69e10 50%,#e69e05 100%)",
     },
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
       backgroundImage:
-        "linear-gradient( 136deg, rgb(0,0,255) 0%, rgb(0,100,250) 50%, rgb(0,150,255) 100%)",
+        "linear-gradient( 136deg,#e69e22 0%, #e69e10 50%,#e69e05 100%)",
     },
   },
   [`& .${stepConnectorClasses.line}`]: {
@@ -131,12 +131,12 @@ const ColorlibStepIconRoot = styled("div")(({ theme, ownerState }) => ({
   alignItems: "center",
   ...(ownerState.active && {
     backgroundImage:
-      "linear-gradient( 136deg, rgb(0,0,255) 0%, rgb(0,100,250) 50%, rgb(0,150,255) 100%)",
+      "linear-gradient( 136deg,#e69e22 0%, #e69e10 50%,#e69e05 100%)",
     boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
   }),
   ...(ownerState.completed && {
     backgroundImage:
-      "linear-gradient( 136deg, rgb(0,0,255) 0%, rgb(0,100,250) 50%, rgb(0,150,255) 100%)",
+      "linear-gradient( 136deg,#e69e22 0%, #e69e10 50%,#e69e05 100%)",
   }),
 }));
 
@@ -147,7 +147,7 @@ function ColorlibStepIcon(props) {
     1: <CalendarMonthIcon sx={{ fontSize: { xs: 20, md: 25, lg: 28 } }} />,
     2: <ShoppingCartIcon sx={{ fontSize: { xs: 20, md: 25, lg: 28 } }} />,
     3: <ContactMailIcon sx={{ fontSize: { xs: 20, md: 25, lg: 28 } }} />,
-    // 4: <PaymentIcon sx={{ fontSize: { xs: 20, md: 25, lg: 28 } }} />,
+    4: <PaymentIcon sx={{ fontSize: { xs: 20, md: 25, lg: 28 } }} />,
   };
 
   return (
@@ -182,10 +182,11 @@ const steps = [
   "Date Selection",
   "Add To Cart",
   "Contact Information",
-  // "Payment",
+  "Payment",
 ];
 export default function CustomizedSteppers() {
   const { book } = useSelector((state) => state);
+  console.log(book.bookingStep)
   const [ErrorMessage, setErrorMessage] = React.useState("");
   const [activeStep, setActiveStep] = React.useState(book.bookingStep);
   const dispatch = useDispatch();
@@ -266,11 +267,12 @@ export default function CustomizedSteppers() {
       >
         {ErrorMessage}
       </Typography>
-      <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+      <Box  sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
         <Button
           disabled={book.bookingStep === 0}
           onClick={handleBack}
           sx={{
+            color:"#e69e22 ",
             mr: 1,
             fontWeight: { xs: 600, md: 900 },
             fontSize: { xs: 14, md: 18 },
@@ -283,6 +285,7 @@ export default function CustomizedSteppers() {
           <Button
             onClick={handleNext}
             sx={{
+              color:"#e69e22 ",
               fontWeight: { xs: 600, md: 900 },
               fontSize: { xs: 14, md: 18 },
             }}

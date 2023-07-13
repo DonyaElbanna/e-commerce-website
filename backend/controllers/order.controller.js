@@ -2,6 +2,7 @@ const AppError = require("../utils/AppError.util");
 const { FAILURE } = require("../utils/namespace.util").namespace;
 const Order = require("../models/order.model");
 const User = require("../models/user.model");
+const Guest = require("../models/guest.model");
 const Attraction = require("../models/attraction.model");
 const {
   add,
@@ -13,18 +14,18 @@ const {
 
 const addOrder = async (req, res, next) => {
   // const { id } = req.params;
-  const { userID, attrID, adults, children, expectedDate } = req.body;
-  const user = await User.find({ _id: userID });
-  const attr = await Attraction.findById(attrID);
-
+  const { attrID, adults, children, expectedDate,email} = req.body;
+  const user = await User.findById( res.locals.decodedToken._id ) || await Guest.findById(res.locals.decodedToken._id) ;
+  const attr = await Attraction.findById(attrID); 
   const details = {
-    userID,
-    attrID,
+    userId:res.locals.decodedToken._id,
     date: new Date(expectedDate),
     adults,
     childNo: attr.childAvailable ? children : 0,
-    adultPrice: attr.AdultPrice * adults,
-    childPrice: attr.ChildPrice * children,
+    adultPrice: attr.AdultPrice * adults || 0,
+    childPrice: attr.ChildPrice * children || 0,
+    attr,
+    email
   };
 
   if (user && attr && attr.status == "available") {

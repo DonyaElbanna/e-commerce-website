@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import Order from "../components/Order/Order";
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const { auth } = useSelector((state) => state);
-  useEffect(() => {
-    const getOrders = async () => {
-      const { data } = await axios.get(
-        `http://localhost:9999/user/orders/${auth.userInfo._id}`
-      );
-      console.log(data.orders);
-      setOrders(data.orders);
-    };
-    getOrders();
-  }, []);
+  // useEffect(() => {
+  //   const getOrders = async () => {
+  //     const { data } = await axios.get(
+  //       `http://localhost:9999/user/orders/${auth.userInfo._id}`
+  //     );
+  //     console.log(data.order);
+  //     // setOrders(data);
+  //   };
+  //   getOrders();
+  // }, []);
   return (
     <>
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5 w-2/3 m-auto">
+      <Order />
+      {/* <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5 w-2/3 m-auto">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 gap-20 border-separate border-spacing-y-3">
           <thead className="text-l text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -64,7 +66,7 @@ const Orders = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div> */}
     </>
   );
 };

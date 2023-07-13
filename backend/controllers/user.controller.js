@@ -130,6 +130,7 @@ const changeUserRole = async (req, res, next) => {
 const getUserOrders = async (req, res, next) => {
   // const { id } = req.params;
   const id = res.locals.decodedToken._id;
+  console.log(id)
   // console.log(id);
   try {
     const user = await getOrders(id, next);

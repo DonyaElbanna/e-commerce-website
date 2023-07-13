@@ -8,8 +8,8 @@ const {
   editOrder,
   deleteOrder,
 } = require("../controllers/order.controller");
-const { extractJwtAdminFromCookie } = require("../middlewares/tokenextractor.middleware");
-router.post("", addOrder);
+const { extractJwtAdminFromCookie, extractJwtFromCookie } = require("../middlewares/tokenextractor.middleware");
+router.post("",extractJwtFromCookie, addOrder);
 router.get("/:id", getSingleOrder);
 
 //admin route

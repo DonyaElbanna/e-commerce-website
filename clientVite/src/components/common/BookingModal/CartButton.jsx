@@ -60,7 +60,7 @@ const CartButton = ({ name, parkDetails }) => {
           fontSize={{ xs: 14, md: 18, lg: 20 }}
           marginRight={{ xs: 0.5, md: 1 }}
         >
-          AED{" "}
+          ${" "}
           {name === "Child" ? parkDetails.ChildPrice : parkDetails.AdultPrice}
         </Typography>
         <Box display="flex" alignItems="center">
@@ -83,7 +83,7 @@ const CartButton = ({ name, parkDetails }) => {
           </IconButton>
           <Typography
             fontWeight="bolder"
-            bgcolor="#0071eb"
+            bgcolor="#e69e22"
             width={{ xs: 25, md: 30, lg: 40 }}
             height={{ xs: 25, md: 30, lg: 40 }}
             marginX={0.5}
