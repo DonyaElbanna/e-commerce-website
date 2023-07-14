@@ -46,6 +46,7 @@ const persistConfig = {
     "categories",
     "orders",
     "users",
+    "attractions",
   ], // include slice name to persist
 };
 

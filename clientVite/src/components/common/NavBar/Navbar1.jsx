@@ -137,7 +137,7 @@ const Navbar1 = () => {
                 </Typography>
               </NavLink>
               {/* map */}
-              <NavLink
+              {/* <NavLink
                 to="/map"
                 className={({ isActive }) =>
                   isActive
@@ -154,7 +154,7 @@ const Navbar1 = () => {
                 >
                   Map
                 </Typography>
-              </NavLink>
+              </NavLink> */}
               {/* wishlist */}
               <NavLink
                 to="/wishlist"
@@ -334,7 +334,7 @@ const Navbar1 = () => {
                 </Typography>
               </NavLink>
               {/* map */}
-              <NavLink
+              {/* <NavLink
                 to="/map"
                 className={({ isActive }) =>
                   isActive
@@ -351,7 +351,7 @@ const Navbar1 = () => {
                 >
                   Map
                 </Typography>
-              </NavLink>
+              </NavLink> */}
               {/* user */}
               <span
                 className={!window.scrollY ? Style.NavLinkTop : Style.NavLink}

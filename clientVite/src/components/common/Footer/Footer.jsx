@@ -6,7 +6,7 @@ const Footer = () => {
     <>
       <footer>
         <div
-          style={{ backgroundColor: "rgb(10 10 10 / 80%)"}}
+          style={{ backgroundColor: "rgb(10 10 10 / 80%)" }}
           className="flex flex-column items-center pb-7 px-5"
         >
           <article
@@ -31,12 +31,12 @@ const Footer = () => {
               >
                 Contact
               </Link>
-              {/* <Link
+              <Link
                 to={`/map`}
                 className="footerLink text-sm md:text-xl text-zinc-400"
               >
                 Places
-              </Link> */}
+              </Link>
             </div>
 
             <div>

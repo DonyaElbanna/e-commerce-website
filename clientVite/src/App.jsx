@@ -17,7 +17,10 @@ import ResetPassword from "./components/common/AuthModal/ResetPassword";
 import { useEffect, useState } from "react";
 import { handleAuthType, handleOpenAuthModal } from "./rtk/features/authSlice";
 import axios from "axios";
-import { AttractionGroupHandler } from "./rtk/features/attrSlice";
+import {
+  AttractionGroupHandler,
+  highestAttrsHandler,
+} from "./rtk/features/attrSlice";
 import Orders from "./pages/Orders";
 import AttractionForm from "./pages/AdminDashboard/FormAttraction/AttractionForm";
 import IconMap from "./components/Map/IconMap";
@@ -54,6 +57,14 @@ function App() {
       console.log(error);
     }
   };
+  const getHighest = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:9999/review/highest");
+      dispatch(highestAttrsHandler(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     dispatch(handleAuthType("login"));
@@ -61,6 +72,7 @@ function App() {
     getAllAttract();
     getAllCities();
     getAllCats();
+    getHighest();
   }, []);
   return (
     <>
