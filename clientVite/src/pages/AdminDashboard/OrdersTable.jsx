@@ -146,7 +146,7 @@ const Orders = () => {
                   component="h2"
                   sx={{ marginBottom: "20px" }}
                 >
-                  Are you sure you want to delete this attraction item?
+                  Are you sure you want to delete this record?
                 </Typography>
                 <Stack
                   direction="row"

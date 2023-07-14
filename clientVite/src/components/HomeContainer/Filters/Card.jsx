@@ -17,7 +17,6 @@ import Button from "@mui/material/Button";
 const CardItem = ({ attr }) => {
   const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
-
   const [wishlistItems, setWishlistItems] = useState([]);
 
   useEffect(() => {
@@ -113,7 +112,13 @@ const CardItem = ({ attr }) => {
           </Typography>
           <Typography variant="body1" color="text.info" component="span">
             <div className="flex items-center justify-between pl-2">
-              <Rating value={attr.averageRating || calculateAverageRating(attr.review)} precision={0.25} readOnly />
+              <Rating
+                value={
+                  attr.averageRating || calculateAverageRating(attr.review)
+                }
+                precision={0.25}
+                readOnly
+              />
               <button
                 className="btn btn-ghost btn-circle"
                 onClick={

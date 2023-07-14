@@ -37,6 +37,7 @@ function App() {
     try {
       const { data } = await axios.get("http://localhost:9999/attraction");
       dispatch(AttractionGroupHandler(data.AllAttraction));
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
