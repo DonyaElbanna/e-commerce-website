@@ -74,7 +74,7 @@ const Filter = () => {
 
   const clearFilters = () => {
     dispatch(handlePage(1));
-    dispatch(handleFilters());
+    dispatch(handleFilters(null));
   };
 
   return (

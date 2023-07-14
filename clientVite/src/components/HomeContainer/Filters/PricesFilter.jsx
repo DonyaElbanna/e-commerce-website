@@ -4,10 +4,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  handleFilters,
-  getFilteredAttrsByPrice,
-} from "../../../rtk/features/attrSlice";
+import { getFilteredAttrsByPrice } from "../../../rtk/features/attrSlice";
 import { handlePage } from "../../../rtk/features/paginationSlice";
 
 const PricesFilter = () => {
@@ -25,7 +22,6 @@ const PricesFilter = () => {
   const handlePriceFilter = (id) => {
     dispatch(handlePage(1));
     setSlc(id);
-    dispatch(handleFilters({ prices: true }));
     dispatch(getFilteredAttrsByPrice(id));
   };
 
@@ -40,7 +36,7 @@ const PricesFilter = () => {
               value={price.id}
               control={<Radio />}
               label={price.range}
-              checked={!attractions.filters ? false : slc == price.id}
+              checked={!attractions.priceID ? false : slc == price.id}
               onChange={() => handlePriceFilter(price.id)}
               sx={{
                 ".css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked ": {

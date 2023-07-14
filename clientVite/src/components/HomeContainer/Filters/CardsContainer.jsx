@@ -9,11 +9,14 @@ import Pagination from "@mui/material/Pagination";
 
 const CardsContainer = () => {
   const dispatch = useDispatch();
+
   const { attractions, pagination } = useSelector((state) => state);
-  console.log(attractions.filteredAttrs, attractions.filters);
-  const count = !attractions.filters
-    ? Math.ceil(attractions.highestRated.slice(6).length / 3)
-    : Math.ceil(attractions.filteredAttrs.length / 3);
+  console.log(attractions);
+
+  const count =
+    !attractions.cityID && !attractions.catID && !attractions.priceID
+      ? Math.ceil(attractions.highestRated.slice(6).length / 3)
+      : Math.ceil(attractions.filteredAttrs.length / 3);
 
   const handlePages = (e, value) => {
     dispatch(handlePage(value));
@@ -32,7 +35,7 @@ const CardsContainer = () => {
   return (
     <>
       <Grid container spacing={3}>
-        {!attractions.filters ? (
+        {!attractions.cityID && !attractions.catID && !attractions.priceID ? (
           paginate(attractions.highestRated.slice(6).reverse(), 3)[
             pagination.page - 1
           ].map((attr) => (
@@ -40,26 +43,7 @@ const CardsContainer = () => {
               <CardItem attr={attr} />
             </Grid>
           ))
-        ) : attractions.filters.city &&
-          attractions.filteredAttrs.length !== 0 ? (
-          paginate(attractions.filteredAttrs, 3)[pagination.page - 1].map(
-            (attr) => (
-              <Grid xs={12} md={6} lg={4} key={attr._id}>
-                <CardItem attr={attr} />
-              </Grid>
-            )
-          )
-        ) : attractions.filters.category &&
-          attractions.filteredAttrs.length !== 0 ? (
-          paginate(attractions.filteredAttrs, 3)[pagination.page - 1].map(
-            (attr) => (
-              <Grid xs={12} md={6} lg={4} key={attr._id}>
-                <CardItem attr={attr} />
-              </Grid>
-            )
-          )
-        ) : attractions.filters.prices &&
-          attractions.filteredAttrs.length !== 0 ? (
+        ) : attractions.filteredAttrs.length !== 0 ? (
           paginate(attractions.filteredAttrs, 3)[pagination.page - 1].map(
             (attr) => (
               <Grid xs={12} md={6} lg={4} key={attr._id}>
@@ -82,7 +66,7 @@ const CardsContainer = () => {
           </div>
         )}
       </Grid>
-      {count && (
+      {count > 1 && (
         <Pagination
           count={count}
           page={pagination.page}

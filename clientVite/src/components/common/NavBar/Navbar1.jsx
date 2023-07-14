@@ -117,8 +117,6 @@ const Navbar1 = () => {
                   Home
                 </Typography>
               </NavLink>
-              {/* <div className={Style.vl}></div> */}
-
               {/* tours */}
               <NavLink
                 to="/cities"

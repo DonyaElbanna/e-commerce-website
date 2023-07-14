@@ -42,7 +42,6 @@ const persistConfig = {
   whitelist: [
     // "book",
     "auth",
-    "attractions",
     "cities",
     "categories",
     "orders",

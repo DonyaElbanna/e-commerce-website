@@ -4,10 +4,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  handleFilters,
-  getFilteredAttrsByCat,
-} from "../../../rtk/features/attrSlice";
+import { getFilteredAttrsByCat } from "../../../rtk/features/attrSlice";
 import { handlePage } from "../../../rtk/features/paginationSlice";
 
 const CategoriesFilter = () => {
@@ -19,7 +16,6 @@ const CategoriesFilter = () => {
   const handleCatFilter = (catID) => {
     dispatch(handlePage(1));
     setSlc(catID);
-    dispatch(handleFilters({ category: true }));
     dispatch(getFilteredAttrsByCat(catID));
   };
 
@@ -53,7 +49,7 @@ const CategoriesFilter = () => {
               value={cat._id}
               control={<Radio />}
               label={cat.type}
-              checked={!attractions.filters ? false : slc == cat._id}
+              checked={!attractions.catID ? false : slc == cat._id}
               onChange={() => handleCatFilter(cat._id)}
               sx={{
                 ".css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked ": {

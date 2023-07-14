@@ -6,7 +6,6 @@ import FormLabel from "@mui/material/FormLabel";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getFilteredAttrsByCity,
-  handleFilters,
 } from "../../../rtk/features/attrSlice";
 import { handlePage } from "../../../rtk/features/paginationSlice";
 
@@ -19,7 +18,6 @@ const CityFilter = () => {
   const handleCityFilter = (cityID) => {
     dispatch(handlePage(1));
     setSlc(cityID);
-    dispatch(handleFilters({ city: true }));
     dispatch(getFilteredAttrsByCity(cityID));
   };
 
@@ -53,7 +51,7 @@ const CityFilter = () => {
               value={city._id}
               control={<Radio />}
               label={city.city}
-              checked={!attractions.filters ? false : slc == city._id}
+              checked={!attractions.cityID ? false : slc == city._id}
               onChange={() => handleCityFilter(city._id)}
               sx={{
                 ".css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked ": {
