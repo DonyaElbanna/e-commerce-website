@@ -110,6 +110,9 @@ const CreditCard = () => {
       <FormControl>
           <FilledInput
             type="tel"
+            sx={{
+              px:"5px"
+            }}
             name="number"
             className="form-control"
             placeholder="Card Number   (E.g.: 49..., 51..., 36..., 37...)"
@@ -135,6 +138,9 @@ const CreditCard = () => {
         <Box display="flex"  flexDirection="column">
       <FormControl>
           <FilledInput
+            sx={{
+              px:"5px"
+            }}
             type="text"
             name="name"
             className="form-control"
@@ -162,6 +168,9 @@ const CreditCard = () => {
           <FormControl>
             <FilledInput
               type="tel"
+              sx={{
+                px:"5px"
+            }}
               name="expiry"
               className="form-control"
               placeholder="MM/YY"
@@ -177,6 +186,9 @@ const CreditCard = () => {
           <Grid item xs={6}>
           <FormControl>
             <FilledInput
+                        sx={{
+              px:"5px"
+            }}
               type="tel"
               name="cvc"
               className="form-control"

@@ -54,28 +54,36 @@ const BookingModal = () => {
           >
             <Typography
               textAlign="center"
-              color="#0071eb"
+              color="black"
               fontWeight={{ xs: 700, md: 800, lg: 900 }}
               fontSize={{ xs: 14, md: 16 }}
-              p={1}
+              p={{
+                xs:1,md:1.5,lg:2
+              }}
+              mb={{
+                xs:1,md:1.5,lg:2
+              }}
               width="100%"
             >
               {attractions.AttractionDetails?.name} - Tickets - Booking
             </Typography>
             <Box
+                      mb={{
+                xs:1,md:1.5,lg:2
+              }}
               sx={{
-                backgroundColor: "rgb(233,64,87)",
                 color: "white ",
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                padding: "10px",
                 cursor: "pointer",
               }}
               onClick={() => dispatch(handleToggleBookModal())}
             >
-              <CloseIcon />
+              <CloseIcon  sx={{
+                color:"black !important",
+              }}/>
             </Box>
           </Box>
           <CustomizedSteppers />
