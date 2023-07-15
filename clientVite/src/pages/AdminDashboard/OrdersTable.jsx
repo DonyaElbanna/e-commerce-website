@@ -224,7 +224,7 @@ const Orders = () => {
               margin: "auto",
             }}
           >
-            <DataGrid
+{finalOrders &&             <DataGrid
               rows={finalOrders}
               columns={columns}
               initialState={{
@@ -245,7 +245,7 @@ const Orders = () => {
                   outline: "none !important",
                 },
               }}
-            />
+            />}
           </div>
         </>
       )}
