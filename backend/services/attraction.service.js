@@ -106,7 +106,7 @@ const getAttractByCategory = async (id) => {
   //   .populate("category")
   //   .populate("subcategory");
   // ! to get avg rating to be put in card
-  const attract = await attractionModel.aggregate([
+const attract = await attractionModel.aggregate([
     { $match: { category: new mongoose.Types.ObjectId(id) } },
     {
       $lookup: {

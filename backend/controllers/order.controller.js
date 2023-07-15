@@ -19,7 +19,7 @@ const addOrder = async (req, res, next) => {
   const attr = await Attraction.findById(attrID); 
   const details = {
     userId:res.locals.decodedToken._id,
-    date: new Date(expectedDate),
+    date: new Date(expectedDate), 
     adults,
     childNo: attr.childAvailable ? children : 0,
     adultPrice: attr.AdultPrice * adults || 0,

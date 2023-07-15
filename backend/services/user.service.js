@@ -24,8 +24,9 @@ const add = async (payload, next) => {
 };
 
 const getUser = async (id, next) => {
+  console.log(id)
   try {
-    const user = await User.findById(id).populate("wishlist");
+    const user = await User.findById(id).populate("wishlist") || await Guest.findById(id).populate("wishlist");
     // .populate("wishlist")
     // .populate({
     //   path: "wishlist",
@@ -94,17 +95,34 @@ const addRemoveWishlist = async (id, attractionID, next) => {
       return next(new AppError(NOT_FOUND, 404));
     } else {
       if (user.wishlist.includes(attractionID)) {
-        updatedUser = await User.findOneAndUpdate(
-          { _id: id },
-          { $pull: { wishlist: attractionID } },
-          { upsert: true, new: true }
-        ).populate("wishlist");
+
+           if (user.role !== "guest") {
+          updatedUser = await User.findOneAndUpdate(
+            { _id: id },
+            { $pull: { wishlist: attractionID } },
+            { upsert: true, new: true }
+          ).populate("wishlist");
+        } else {
+          updatedUser = await Guest.findOneAndUpdate(
+            { _id: id },
+            { $pull: { wishlist: attractionID } },
+            { upsert: true, new: true }
+          ).populate("wishlist");
+        }
       } else {
-        updatedUser = await User.findOneAndUpdate(
-          { _id: id },
-          { $addToSet: { wishlist: attractionID } },
-          { upsert: true, new: true }
-        ).populate("wishlist");
+        if (user.role !== "guest") {
+          updatedUser = await User.findOneAndUpdate(
+            { _id: id },
+            { $addToSet: { wishlist: attractionID } },
+            { upsert: true, new: true }
+          ).populate("wishlist");
+        } else {
+          updatedUser = await Guest.findOneAndUpdate(
+            { _id: id },
+            { $addToSet: { wishlist: attractionID } },
+            { upsert: true, new: true }
+          ).populate("wishlist");
+        }
       }
     }
     return updatedUser;
@@ -166,7 +184,6 @@ const changeRole = async (id, next) => {
 const getOrders = async (id, next) => {
   try {
     const user =await Guest.findById(id).populate("order") ||  await User.findById(id).populate("order")
-    console.log(user)
     if (!user) {
       return next(new AppError(NOT_FOUND, 404));
     }

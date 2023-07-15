@@ -44,7 +44,7 @@ const adminAddUser = async (req, res, next) => {
 };
 
 const getSingleUser = async (req, res, next) => {
-  const { id } = req.params;
+  const id  = res.locals.decodedToken._id;
   try {
     const user = await getUser(id, next);
     res.status(200).json(user);

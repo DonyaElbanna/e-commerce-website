@@ -16,9 +16,15 @@ const WishListContanier = ({ attr }) => {
 
   useEffect(() => {
     const getWishlistItems = async () => {
-      const { data } = await axios.get(baseURL);
-      // console.log(data.wishlist);
-      setWishlistItems(data.wishlist);
+      try {
+        
+        const { data } = await axios.get(baseURL);
+        // console.log(data.wishlist);
+        console.log(data)
+        setWishlistItems(data.wishlist);
+      } catch (error) {
+        console.log(error)
+      }
     };
     getWishlistItems();
   }, []);

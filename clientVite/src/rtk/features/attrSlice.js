@@ -15,7 +15,7 @@ export const attrSlice = createSlice({
   name: "AttractionGroup",
   initialState,
   reducers: {
-    AttractionGroupHandler: (state, action) => {
+    AttractionGroupHandler: (state, action) => { 
       state.Attractions = action.payload;
     },
     AttractionDetailsHandlerById: (state, action) => {
