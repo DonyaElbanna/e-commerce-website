@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Welcome from "../components/HomeContainer/Welome/welcome";
 import HighestRated from "../components/HomeContainer/HighestRated/HighestRated";
 import Filter from "../components/HomeContainer/Filters/Filter";
@@ -9,10 +9,22 @@ import Popular from "../components/Popular/Popular";
 import Container from "@mui/material/Container";
 import WhyChooseUs from "../components/HomeContainer/WhyChooseUs";
 import Map from "../components/Map/Map";
+import { highestAttrsHandler } from "../rtk/features/attrSlice";
 
 const Home = () => {
   const { attractions } = useSelector((state) => state);
-
+  const dispatch = useSelector(state=>state)
+  // useEffect(()=>{
+  // const getHighest = async () => {
+  //   try {
+  //     const { data } = await axios.get("http://localhost:9999/review/highest");
+  //     dispatch(highestAttrsHandler(data));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // getHighest()
+  // },[])
   return (
     <>
       <Welcome />
