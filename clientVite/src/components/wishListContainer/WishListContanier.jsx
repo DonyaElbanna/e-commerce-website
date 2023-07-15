@@ -1,23 +1,26 @@
-import { Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import wishlistStyle from "./WishListContanier.module.css";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import gif from "../../assets/gih.gif";
 import Style from "../HomeContainer/AttractionCard/AttractionCard.module.css";
 import AttractionCard from "../HomeContainer/AttractionCard/AttractionCard";
+import { handleIsLoadingToggle } from "../../rtk/features/commonSlice";
 
 const WishListContanier = ({ attr }) => {
   const [wishlistItems, setWishlistItems] = useState([]);
 
   const { auth, cities, categories } = useSelector((state) => state);
   const baseURL = `http://localhost:9999/user/${auth.userInfo._id}`;
-
+  const {common} = useSelector((state)=>state)
+  const dispatch = useDispatch()
   useEffect(() => {
+    
     const getWishlistItems = async () => {
+      dispatch(handleIsLoadingToggle())
       try {
-        
         const { data } = await axios.get(baseURL);
         // console.log(data.wishlist);
         console.log(data)
@@ -25,8 +28,10 @@ const WishListContanier = ({ attr }) => {
       } catch (error) {
         console.log(error)
       }
+      dispatch(handleIsLoadingToggle())
     };
     getWishlistItems();
+
   }, []);
 
   const handleRemoveFromWishlist = async (event, item) => {
@@ -71,7 +76,7 @@ const WishListContanier = ({ attr }) => {
           </mark>
         </h1>
       </div>
-      {wishlistItems.length == 0 ? (
+      {common.isLoading ? (
         // <img
         //   src="https://www.egypttoursportal.com/images/2022/08/5-Days-Cairo-Aswan-Abu-Simbel-Tour-Package-Egypt-Tours-Portal.jpg"
         //   className="mx-auto"
@@ -83,7 +88,10 @@ const WishListContanier = ({ attr }) => {
           style={{ width: "150px", marginTop: "120px" }}
         />
       ) : (
-        // lg:mx-10
+        <Box>
+        {!wishlistItems.length && <Typography variant="h4" textAlign="center" sx={{
+          color:"#be853f"
+        }}>Your WishList Is Empty</Typography> }
         <div className="py-6 mx-5 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
           {wishlistItems.map((attr) => (
             <div className="flex justify-center" key={attr._id}>
@@ -175,6 +183,7 @@ const WishListContanier = ({ attr }) => {
             </div>
           ))}
         </div>
+        </Box>
       )}
     </div>
   );
