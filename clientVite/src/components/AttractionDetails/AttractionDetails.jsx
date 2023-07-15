@@ -20,11 +20,15 @@ const AttractionDetails = () => {
   const { attractions } = useSelector((state) => state);
   const dispatch = useDispatch();
   const getAttrs = async () => {
-    const { data } = await axios.get(`http://localhost:9999/attraction/${id}`);
+    try {
+      const { data } = await axios.get(`http://localhost:9999/attraction/${id}`);      
+      dispatch(parkDetailsHandler(data.Attraction));
+      setAttrDetails(data.Attraction);
+      dispatch(reviewHandler(data.Attraction.reviews[0]));
+    } catch (error) {
+      console.log(error)
+    }
 
-    dispatch(parkDetailsHandler(data.Attraction));
-    setAttrDetails(data.Attraction);
-    dispatch(reviewHandler(data.Attraction.reviews[0]));
   };
 
   useEffect(() => {

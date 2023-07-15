@@ -10,8 +10,13 @@ const WishListContanier = ({ attr }) => {
   const [wishlistItems, setWishlistItems] = useState([]);
   useEffect(() => {
     const getWishlistItems = async () => {
-      const { data } = await axios.get(baseURL);
-      setWishlistItems(data.wishlist);
+      try {
+        
+        const { data } = await axios.get(baseURL);
+        setWishlistItems(data.wishlist);
+      } catch (error) {
+        console.log(error)
+      }
     };
     getWishlistItems();
   }, []);

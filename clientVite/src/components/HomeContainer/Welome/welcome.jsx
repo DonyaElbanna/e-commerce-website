@@ -19,7 +19,7 @@ function Welcome() {
             Our Packages
           </p> */}
           {/* <h1 className="text-2xl xs:text2xl sm:text-3xl md:text-5xl xl:text-6xl mb-4"> */}
-          <p className="text-2xl sm:text-3xl md:text-5xl xl:text-6xl mb-0 md:mb-4">
+          <p className="text-2xl sm:text-3xl md:text-5xl xl:text-6xl mb-0 md:mb-4 headerFont">
             Pick your Holiday
           </p>
           <SearchGroup />

@@ -18,12 +18,17 @@ const Order = () => {
   useEffect(() => {
     const getOrders = async () => {
       dispatch(handleIsLoadingToggle())
-      const { data } = await axios.get(
-        `http://localhost:9999/user/orders/${auth.userInfo._id}`
-      );
-      setAllData(data)
-      setOrders(data.order);
-      dispatch(handleIsLoadingToggle())
+      try {
+        const { data } = await axios.get(
+          `http://localhost:9999/user/orders/${auth.userInfo._id}`
+        );
+        setAllData(data)
+        setOrders(data.order);
+        dispatch(handleIsLoadingToggle())
+        
+      } catch (error) {
+       console.log(error) 
+      }
 
     };
     getOrders();

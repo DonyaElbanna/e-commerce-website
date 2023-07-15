@@ -36,11 +36,15 @@ const AttractionCard = ({ attr }) => {
   useEffect(() => {
     if (auth.userInfo._id) {
       const getWishlistItems = async () => {
-        const { data } = await axios.get(
-          `http://localhost:9999/user/${auth.userInfo._id}`
-        );
-        // console.log(data.wishlist);
-        setWishlistItems(data.wishlist);
+        try {
+          const { data } = await axios.get(
+            `http://localhost:9999/user/${auth.userInfo._id}`
+          );
+          // console.log(data.wishlist);
+          setWishlistItems(data.wishlist);
+        } catch (error) {
+          console.log(error)
+        }
       };
       getWishlistItems();
     }

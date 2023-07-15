@@ -8,9 +8,14 @@ const HighestRated = () => {
 
   useEffect(() => {
     const getPackages = async () => {
-      const { data } = await axios.get(`http://localhost:9999/review/highest`);
-      // console.log(data);
-      setPackages(data);
+      try {
+        
+        const { data } = await axios.get(`http://localhost:9999/review/highest`);
+        // console.log(data);
+        setPackages(data);
+      } catch (error) {
+        console.log(error)
+      }
     };
 
     getPackages();
