@@ -24,7 +24,6 @@ const add = async (payload, next) => {
 };
 
 const getUser = async (id, next) => {
-  console.log(id)
   try {
     const user = await User.findById(id).populate("wishlist") || await Guest.findById(id).populate("wishlist");
     // .populate("wishlist")

@@ -1,9 +1,18 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { handleToggleBookModal } from "../../rtk/features/bookingSlice";
+import { handleToggleAuthModal } from "../../rtk/features/authSlice";
 const BookingCard = ({ attrDetails }) => {
   const [openForm, setOpenForm] = useState(false);
+  const {auth} = useSelector(state=>state)
   const dispatch = useDispatch();
+  const bookingHandler = ()=>{
+    if(auth.isLoggedIn){
+      dispatch(handleToggleBookModal())
+    }else{
+      dispatch(handleToggleAuthModal())
+    }
+  }
   return (
     <>
       <div className="">
@@ -20,7 +29,7 @@ const BookingCard = ({ attrDetails }) => {
             <p className="text-zinc-500 mt-2">All taxes and fees included</p>
             <button
               className="bg-[#be853f] mt-3 w-full hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-full"
-              onClick={() => dispatch(handleToggleBookModal())}
+              onClick={bookingHandler}
             >
               Book Now
             </button>
