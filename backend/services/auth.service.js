@@ -7,19 +7,19 @@ const AppError = require("../utils/AppError.util");
 const { INVALID_CREDENTIALS } = require("../utils/namespace.util").namespace;
 
 const signin = async (payload) => {
+  console.log(payload)
   try {
     const user = await userModel
-      .findOne({
-        $and: [
-          { $or: [{ username: payload.username }, { email: payload.email }] },
-        ],
-      })
+      .findOne({ email: payload.email },
+  )
       .select("+password");
+      console.log(user)
     if (!user) {
       const err = new AppError(INVALID_CREDENTIALS, 409);
       throw err;
     }
     const isPasswordMatch = await user.comparePassword(payload.password);
+    console.log(isPasswordMatch)
     if (!isPasswordMatch) {
       const err = new AppError(INVALID_CREDENTIALS, 409);
       throw err;
