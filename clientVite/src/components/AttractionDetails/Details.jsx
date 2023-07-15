@@ -48,7 +48,7 @@ const Details = ({ attrDetails }) => {
           {starClassNames.map((className, index) => (
             <button
               key={index}
-              onClick={auth.userInfo.email ? handleAddRating : redirectToLogin}
+              onClick={auth.isLoggedIn ? handleAddRating : redirectToLogin}
               className="text-zinc-500"
             >
               <svg
