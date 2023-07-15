@@ -140,7 +140,7 @@ const AttractionCard = ({ attr }) => {
             <h2 className="card-title mb-5 text-white">{attr?.name}</h2>
             <article className="flex justify-between items-center">
               <div className="text-[#be853f] font-bold text-lg">
-                <p>{attr.category.city || attr.category[0].city}</p>
+                <p className="text-center">{attr.category.city || attr.category[0].city}</p>
               </div>
               <div className="p-2 text-center text-xs leading-sm uppercase border border-gray-400 rounded-full text-[#be853f] ">
                 <p>{attr.subcategory.type || attr.subcategory[0].type}</p>

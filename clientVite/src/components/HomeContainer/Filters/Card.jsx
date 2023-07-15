@@ -100,13 +100,13 @@ const CardItem = ({ attr }) => {
         <div className="flex justify-between items-center">
           <p
             className="text-slate-500 text-left font-semibold"
-            style={{ marginLeft: "10px" }}
+            style={{ marginLeft: "5px" }}
           >
             {attr.category.city || attr.category[0].city}
           </p>
           <p
             className="text-slate-500 text-right border border-zinc-700 py-0.5 px-1.5 rounded-full mt-1"
-            style={{ marginRight: "10px" }}
+            style={{ marginRight: "5px" }}
           >
             {attr.subcategory.type || attr.subcategory[0].type}
           </p>
