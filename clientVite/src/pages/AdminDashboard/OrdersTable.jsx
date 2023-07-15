@@ -60,7 +60,7 @@ const Orders = () => {
   }, []);
 
   // rows
-  const finalOrders = orders?.orders.map((order) => ({
+  const finalOrders = orders?.orders?.map((order) => ({
     id: order._id,
     name: order.user.username,
     attr: order.attraction.name,
@@ -224,28 +224,30 @@ const Orders = () => {
               margin: "auto",
             }}
           >
-{finalOrders &&             <DataGrid
-              rows={finalOrders}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 7 },
-                },
-              }}
-              pageSizeOptions={[7, 15, 25]}
-              style={{ maxHeight: 500 }}
-              sx={{
-                ".MuiDataGrid-columnHeaderTitle": {
-                  fontWeight: "bold !important",
-                  fontSize: "15px",
-                  textAlign: "center",
-                },
-                paddingLeft: "20px",
-                ".MuiDataGrid-cell": {
-                  outline: "none !important",
-                },
-              }}
-            />}
+            {finalOrders && (
+              <DataGrid
+                rows={finalOrders}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: { page: 0, pageSize: 7 },
+                  },
+                }}
+                pageSizeOptions={[7, 15, 25]}
+                style={{ maxHeight: 500 }}
+                sx={{
+                  ".MuiDataGrid-columnHeaderTitle": {
+                    fontWeight: "bold !important",
+                    fontSize: "15px",
+                    textAlign: "center",
+                  },
+                  paddingLeft: "20px",
+                  ".MuiDataGrid-cell": {
+                    outline: "none !important",
+                  },
+                }}
+              />
+            )}
           </div>
         </>
       )}
